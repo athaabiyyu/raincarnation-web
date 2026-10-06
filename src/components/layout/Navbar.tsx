@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Link from "next/link";// import Image from "next/image"; // aktifkan lagi bersama blok <Image> saat logo siap
 import { Zap, MessageCircle } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { topbarMessages } from "@/constants/topbar";
@@ -55,15 +55,15 @@ export default async function Navbar() {
                {/* Navbar utama */}
                <div className="bg-surface-container-lowest/95 backdrop-blur-xl shadow-[0_4px_20px_rgba(0,107,95,0.06)]">
                     <div className="h-20 max-w-7xl mx-auto px-gutter flex items-center justify-between gap-space-md">
-                         <a href="/" className="flex items-center gap-space-sm shrink-0">
-                              <Image
+                         <Link href="/" className="flex items-center gap-space-sm shrink-0">
+                              {/* <Image
                                    src="/logo.webp"
                                    alt={`Logo ${siteConfig.name}`}
                                    width={40}
                                    height={40}
                                    priority
                                    className="w-10 h-10 rounded-xl object-cover shadow-[0_4px_12px_rgba(0,107,95,0.2)]"
-                              />
+                              /> */}
                               <div className="flex flex-col">
                                    <span className="font-headline-sm text-headline-sm text-primary tracking-tight leading-tight font-bold">
                                         {siteConfig.name}
@@ -72,7 +72,7 @@ export default async function Navbar() {
                                         {siteConfig.tagline}
                                    </span>
                               </div>
-                         </a>
+                         </Link>
 
                          <NavLinks />
 

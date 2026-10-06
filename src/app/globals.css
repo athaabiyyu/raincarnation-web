@@ -118,6 +118,22 @@
   --font-label-sm: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
 }
 
+/* Ukuran teks lebih kecil di HP (< 768px). Nama kelas tidak berubah. */
+@media (max-width: 767.98px) {
+  :root {
+    --text-display: 32px;
+    --text-display--line-height: 40px;
+    --text-headline-lg: 28px;
+    --text-headline-lg--line-height: 36px;
+    --text-headline-md: 22px;
+    --text-headline-md--line-height: 30px;
+    --text-headline-sm: 18px;
+    --text-headline-sm--line-height: 26px;
+    --text-body-lg: 16px;
+    --text-body-lg--line-height: 24px;
+  }
+}
+
 html {
   color-scheme: light;
 }
