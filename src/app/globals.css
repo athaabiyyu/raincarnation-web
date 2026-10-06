@@ -1,30 +1,123 @@
 @import "tailwindcss";
 
-@theme inline {
-  /* Warna brand */
-  --color-primary: #00a896;
-  --color-secondary: #028090;
-  --color-tertiary: #02c39a;
-  --color-neutral: #2d3748;
+@theme {
+  /* Surface (latar) */
+  --color-background: #f9f9ff;
+  --color-on-background: #121c2c;
+  --color-surface: #f9f9ff;
+  --color-surface-dim: #d0daf0;
+  --color-surface-bright: #f9f9ff;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f0f3ff;
+  --color-surface-container: #e7eeff;
+  --color-surface-container-high: #dee8ff;
+  --color-surface-container-highest: #d9e3f9;
+  --color-surface-variant: #d9e3f9;
+  --color-surface-tint: #006b5f;
+  --color-on-surface: #121c2c;
+  --color-on-surface-variant: #3c4946;
+  --color-inverse-surface: #273141;
+  --color-inverse-on-surface: #ebf1ff;
+  --color-outline: #6c7a76;
+  --color-outline-variant: #bbcac5;
 
-  /* Latar */
-  --color-mist: #f7fafc;
-  --color-segment: #edf2f7;
+  /* Primary */
+  --color-primary: #006b5f;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #00a896;
+  --color-on-primary-container: #00352e;
+  --color-inverse-primary: #59dbc7;
+  --color-primary-fixed: #79f7e3;
+  --color-primary-fixed-dim: #59dbc7;
+  --color-on-primary-fixed: #00201c;
+  --color-on-primary-fixed-variant: #005047;
 
-  /* Status */
-  --color-alert: #e53e3e;
-  --color-gold: #d69e2e;
+  /* Secondary */
+  --color-secondary: #006876;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #92edff;
+  --color-on-secondary-container: #006d7b;
+  --color-secondary-fixed: #9eefff;
+  --color-secondary-fixed-dim: #77d4e5;
+  --color-on-secondary-fixed: #001f24;
+  --color-on-secondary-fixed-variant: #004e59;
 
-  /* Font */
-  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  /* Tertiary */
+  --color-tertiary: #006b54;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #00a985;
+  --color-on-tertiary-container: #003528;
+  --color-tertiary-fixed: #65fbcf;
+  --color-tertiary-fixed-dim: #40deb3;
+  --color-on-tertiary-fixed: #002117;
+  --color-on-tertiary-fixed-variant: #00513e;
 
-  /* Bayangan  */
-  --shadow-card: 0 2px 8px rgba(45, 55, 72, 0.06);
-  --shadow-float: 0 8px 24px rgba(0, 168, 150, 0.12);
-  --shadow-modal: 0 16px 40px rgba(45, 55, 72, 0.16);
+  /* Error */
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+
+  /* Spacing */
+  --spacing-space-xs: 0.25rem;
+  --spacing-space-sm: 0.5rem;
+  --spacing-space-md: 1rem;
+  --spacing-space-lg: 1.5rem;
+  --spacing-space-xl: 2.5rem;
+  --spacing-gutter: 1.5rem;
+  --spacing-margin: 1.5rem;
+
+  /* Ukuran teks: ukuran, tinggi baris, ketebalan */
+  --text-display: 48px;
+  --text-display--line-height: 56px;
+  --text-display--font-weight: 800;
+  --text-headline-lg: 36px;
+  --text-headline-lg--line-height: 44px;
+  --text-headline-lg--font-weight: 700;
+  --text-headline-lg-mobile: 28px;
+  --text-headline-lg-mobile--line-height: 36px;
+  --text-headline-lg-mobile--font-weight: 700;
+  --text-headline-md: 24px;
+  --text-headline-md--line-height: 32px;
+  --text-headline-md--font-weight: 700;
+  --text-headline-sm: 20px;
+  --text-headline-sm--line-height: 28px;
+  --text-headline-sm--font-weight: 600;
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 28px;
+  --text-body-lg--font-weight: 400;
+  --text-body-md: 16px;
+  --text-body-md--line-height: 24px;
+  --text-body-md--font-weight: 400;
+  --text-body-sm: 14px;
+  --text-body-sm--line-height: 20px;
+  --text-body-sm--font-weight: 400;
+  --text-label-lg: 16px;
+  --text-label-lg--line-height: 24px;
+  --text-label-lg--font-weight: 700;
+  --text-label-md: 14px;
+  --text-label-md--line-height: 20px;
+  --text-label-md--font-weight: 600;
+  --text-label-sm: 12px;
+  --text-label-sm--line-height: 16px;
+  --text-label-sm--font-weight: 600;
 }
 
-body {
-  color: var(--color-neutral);
-  background: #ffffff;
+@theme inline {
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-headline-lg: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-headline-lg-mobile: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-headline-md: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-headline-sm: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-body-lg: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-body-md: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-body-sm: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-label-lg: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-label-md: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-label-sm: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  color-scheme: light;
 }
