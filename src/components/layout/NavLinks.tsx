@@ -8,7 +8,7 @@ export default function NavLinks() {
      const pathname = usePathname();
 
      return (
-          <nav className="hidden xl:flex items-center gap-1 font-label-md text-label-md">
+          <nav className="hidden xl:flex items-center gap-space-lg font-label-md text-label-md">
                {mainNav.map((item) => {
                     const isActive = pathname === item.href;
                     return (

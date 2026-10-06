@@ -15,7 +15,7 @@ export default function TravelHero() {
 
                <div className="relative mx-auto max-w-7xl px-gutter pt-space-lg">
                     {/* Breadcrumb + badge */}
-                    <div className="mb-space-md flex flex-wrap items-center justify-between gap-space-sm">
+                    <div className="mt-space-md mb-space-md hidden flex-wrap items-center justify-between gap-space-sm md:flex">
                          <div className="flex items-center gap-space-xs font-label-sm text-label-sm text-on-surface-variant">
                               <span>{heroContent.breadcrumbParent}</span>
                               <ChevronRight size={14} aria-hidden />
@@ -41,7 +41,7 @@ export default function TravelHero() {
                               <h1 className="font-headline-lg text-headline-lg leading-tight tracking-tight text-on-surface">
                                    {heroContent.title}
                               </h1>
-                              <p className="max-w-2xl pt-space-xs font-body-lg text-body-lg text-on-surface-variant">
+                              <p className="hidden max-w-2xl pt-space-xs font-body-lg text-body-lg text-on-surface-variant md:block">
                                    {heroContent.description}
                               </p>
                          </div>

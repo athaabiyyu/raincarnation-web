@@ -58,6 +58,11 @@
   --color-error-container: #ffdad6;
   --color-on-error-container: #93000a;
 
+  /* WhatsApp */
+  --color-whatsapp: #25d366;
+  --color-whatsapp-hover: #1ebe5b;
+  --color-on-whatsapp: #ffffff;
+
   /* Spacing */
   --spacing-space-xs: 0.25rem;
   --spacing-space-sm: 0.5rem;
