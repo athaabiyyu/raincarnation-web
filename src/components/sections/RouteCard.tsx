@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Clock, Car, MessageSquareText, Route as RouteIcon } from "lucide-react";
 import type { Route } from "@/types/route";
 import type { Armada } from "@/types/armada";
@@ -207,6 +208,16 @@ export default function RouteCard({
                                         {fleetNames.join(", ")}
                                    </span>
                               </div>
+                         )}
+
+                         {route.slug && (
+                              <Link
+                                   href={`/rute/${route.slug}`}
+                                   aria-label={`Lihat detail travel ${displayTitle}`}
+                                   className="inline-block font-label-md text-label-md font-bold text-primary hover:underline"
+                              >
+                                   Lihat detail →
+                              </Link>
                          )}
                     </div>
                </div>
