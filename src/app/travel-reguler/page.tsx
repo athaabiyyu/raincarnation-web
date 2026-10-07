@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+import BookingSteps from "@/components/sections/BookingSteps";
+import CtaBanner from "@/components/sections/CtaBanner";
+import Facilities from "@/components/sections/Facilities";
 import FeaturedRoutes from "@/components/sections/FeaturedRoutes";
 import RouteSearchForm from "@/components/sections/RouteSearchForm";
 import TravelHero from "@/components/sections/TravelHero";
@@ -61,6 +64,9 @@ export default async function TravelRegulerPage() {
                          whatsapp={whatsapp}
                     />
                )}
+               <Facilities />
+               <BookingSteps />
+               {whatsapp && <CtaBanner whatsapp={whatsapp} />}
           </main>
      );
 }

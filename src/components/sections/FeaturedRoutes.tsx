@@ -85,7 +85,7 @@ export default function FeaturedRoutes({
 
      return (
           <section className="w-full py-space-xl px-gutter bg-surface">
-               <div className="max-w-7xl mx-auto space-y-space-lg">
+               <div className="max-w-6xl mx-auto space-y-space-lg">
                     <div className="space-y-space-xs">
                          <h2 className="font-headline-lg text-headline-lg text-on-surface tracking-tight">
                               {content.title}

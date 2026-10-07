@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, MessageCircle, MessageSquareText } from "lucide-react";
+import { Menu, X, MessageSquareText } from "lucide-react";
 import { mainNav } from "@/config/navigation";
 
 type Props = {
