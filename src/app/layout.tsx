@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
+import { siteConfig } from "@/config/site";
 import "./globals.css";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -11,6 +12,7 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: "Raincarnation",
   description: "Travel dan Sewa Mobil Malang, Surabaya, Pasuruan, dan Sekitarnya",
 };

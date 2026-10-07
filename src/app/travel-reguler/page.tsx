@@ -13,9 +13,12 @@ import type { Route } from "@/types/route";
 import { getRoutePairs } from "@/utils/route-pairs";
 
 export const metadata: Metadata = {
-     title: "Travel Malang Surabaya Pasuruan | Jemput Door to Door | Raincarnation",
+     title: "Travel Malang Surabaya Pasuruan | Raincarnation",
      description:
-          "Travel reguler per kursi Malang, Surabaya, dan Pasuruan. Dijemput di depan rumah, sudah termasuk tol, BBM, dan driver. Pesan lewat WhatsApp.",
+          "Travel reguler per kursi Malang, Surabaya, dan Pasuruan. Sudah termasuk tol, BBM, dan driver. Pesan lewat WhatsApp.",
+     alternates: {
+          canonical: "/travel-reguler",
+     },
 };
 
 async function loadRoutes(): Promise<Route[]> {
