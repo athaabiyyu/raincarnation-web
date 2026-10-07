@@ -36,3 +36,15 @@ export const quickRoutes = [
      { from: "Surabaya", to: "Malang" },
      { from: "Pasuruan", to: "Malang" },
 ];
+
+export const featuredRoutesContent = {
+     title: "Rute Unggulan & Jam Keberangkatan",
+     description: "Tarif all-in per kursi, sudah termasuk tol, BBM, dan jasa driver",
+     fareLabel: "Tarif All-in / Kursi",
+     roundTripLabel: "Tarif Pulang-Pergi",
+     scheduleLabel: "Jadwal:",
+     fleetLabel: "Armada:",
+     orderLabel: "Pesan",
+     helpText: "Butuh rute lain yang belum terdaftar? Tanyakan ketersediaannya ke admin.",
+     helpLinkLabel: "Tanyakan Rute Anda ke Admin",
+};

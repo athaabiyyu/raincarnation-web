@@ -1,10 +1,9 @@
 import type { Route } from "@/types/route";
+import { capitalizeFirst } from "@/utils/capitalize-first";
 
 export type RoutePair = { from: string; to: string; times: string[] };
 
-// "06.00, 08.00, 10.00" -> ["06.00", "08.00", "10.00"]
-// Bagian kosong dibuang, duplikat dihapus.
-function parseSchedule(jadwal?: string): string[] {
+export function parseSchedule(jadwal?: string): string[] {
      if (!jadwal) return [];
      const times = jadwal
           .split(",")
@@ -13,15 +12,13 @@ function parseSchedule(jadwal?: string): string[] {
      return [...new Set(times)];
 }
 
-// Mengubah daftar rute CMS menjadi pasangan asal-tujuan yang unik.
-// Rute yang kota asal atau tujuannya kosong dilewati.
 export function getRoutePairs(routes: Route[]): RoutePair[] {
      const seen = new Set<string>();
      const pairs: RoutePair[] = [];
 
      for (const route of routes) {
-          const from = route.acf?.kota_asal?.trim();
-          const to = route.acf?.kota_tujuan?.trim();
+          const from = capitalizeFirst(route.acf?.kota_asal);
+          const to = capitalizeFirst(route.acf?.kota_tujuan);
           if (!from || !to) continue;
 
           const key = `${from}|${to}`;

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Zap, MessageCircle } from "lucide-react";
+import { Zap, MessageCircle, MessageSquareText } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { topbarMessages } from "@/constants/topbar";
 import { getSiteConfig } from "@/lib/wordpress/config";
@@ -80,9 +80,9 @@ export default async function Navbar() {
                                         href={waOrder}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="hidden sm:inline-flex items-center justify-center gap-1 px-space-md py-space-sm rounded-lg bg-whatsapp text-on-whatsapp font-label-md text-label-md shadow-[0_4px_16px_rgba(37,211,102,0.35)] hover:bg-whatsapp-hover transition-all duration-150"
+                                        className="hidden sm:inline-flex items-center justify-center gap-space-sm px-space-md py-space-sm rounded-lg bg-whatsapp text-on-whatsapp font-label-md text-label-md shadow-[0_4px_16px_rgba(37,211,102,0.35)] hover:bg-whatsapp-hover transition-all duration-150"
                                    >
-                                        <MessageCircle size={18} aria-hidden />
+                                        <MessageSquareText size={18} aria-hidden />
                                         Pesan via WhatsApp
                                    </a>
                               )}

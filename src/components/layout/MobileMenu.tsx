@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, MessageCircle } from "lucide-react";
+import { Menu, X, MessageCircle, MessageSquareText } from "lucide-react";
 import { mainNav } from "@/config/navigation";
 
 type Props = {
@@ -57,9 +57,9 @@ export default function MobileMenu({ waOrder }: Props) {
                                         href={waOrder}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="sm:hidden mt-space-sm inline-flex items-center justify-center gap-1 px-space-md py-space-sm rounded-lg bg-whatsapp text-on-whatsapp font-label-md text-label-md hover:bg-whatsapp-hover transition-all"
+                                        className="sm:hidden mt-space-sm inline-flex items-center justify-center gap-space-sm px-space-md py-space-sm rounded-lg bg-whatsapp text-on-whatsapp font-label-md text-label-md hover:bg-whatsapp-hover transition-all"
                                    >
-                                        <MessageCircle size={18} aria-hidden />
+                                        <MessageSquareText size={18} aria-hidden />
                                         Pesan via WhatsApp
                                    </a>
                               )}

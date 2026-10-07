@@ -8,7 +8,7 @@ import {
      Clock,
      LocateFixed,
      MapPin,
-     MessageCircle,
+     MessageSquareText,
      Search,
      Timer,
      Users,
@@ -120,7 +120,8 @@ export default function RouteSearchForm({ pairs, whatsapp }: Props) {
                                    {searchFormContent.title}
                               </h2>
                               <p className="font-body-sm text-body-sm text-on-surface-variant">
-                                   {searchFormContent.subtitle}
+                                   <span className="sm:hidden">Pilih rute antar kota</span>
+                                   <span className="hidden sm:inline">{searchFormContent.subtitle}</span>
                               </p>
                          </div>
                     </div>
@@ -133,10 +134,10 @@ export default function RouteSearchForm({ pairs, whatsapp }: Props) {
 
                <form
                     onSubmit={handleSubmit}
-                    className="grid grid-cols-2 items-end gap-space-md lg:grid-cols-12"
+                    className="grid grid-cols-2 items-end gap-x-space-sm gap-y-space-md lg:grid-cols-12 lg:gap-x-space-md"
                >
                     {/* Asal */}
-                    <div className="col-span-2 space-y-1.5 md:col-span-1 lg:col-span-3">
+                    <div className="col-span-1 min-w-0 space-y-1.5 lg:col-span-3">
                          <label htmlFor="search-origin" className={labelClass}>
                               <LocateFixed size={14} className="text-primary" aria-hidden />
                               {searchFormContent.originLabel}
@@ -159,7 +160,7 @@ export default function RouteSearchForm({ pairs, whatsapp }: Props) {
                     </div>
 
                     {/* Tujuan */}
-                    <div className="col-span-2 space-y-1.5 md:col-span-1 lg:col-span-3">
+                    <div className="col-span-1 min-w-0 space-y-1.5 lg:col-span-3">
                          <label htmlFor="search-destination" className={labelClass}>
                               <MapPin size={14} className="text-secondary" aria-hidden />
                               {searchFormContent.destinationLabel}
@@ -181,11 +182,8 @@ export default function RouteSearchForm({ pairs, whatsapp }: Props) {
                          </div>
                     </div>
 
-                    {/* Tanggal (melebar penuh kalau tidak ada kolom jam) */}
-                    <div
-                         className={`space-y-1.5 lg:col-span-2 ${times.length > 0 ? "col-span-1" : "col-span-2"
-                              }`}
-                    >
+                    {/* Tanggal */}
+                    <div className="col-span-1 min-w-0 space-y-1.5 lg:col-span-2">
                          <label htmlFor="search-date" className={labelClass}>
                               <CalendarDays size={14} className="text-primary" aria-hidden />
                               {searchFormContent.dateLabel}
@@ -197,13 +195,13 @@ export default function RouteSearchForm({ pairs, whatsapp }: Props) {
                               min={today}
                               value={date}
                               onChange={(e) => setPickedDate(e.target.value)}
-                              className="h-[2.75rem] w-full min-w-0 rounded-lg bg-surface-container-low px-3 font-label-md text-label-md text-on-surface transition-colors focus:bg-surface-container-high focus:outline-none"
+                              className="h-[2.75rem] w-full min-w-0 appearance-none rounded-lg bg-surface-container-low px-3 text-left font-label-md text-label-md text-on-surface transition-colors focus:bg-surface-container-high focus:outline-none [&::-webkit-date-and-time-value]:text-left"
                          />
                     </div>
 
                     {/* Jam (hanya tampil kalau rute punya jadwal) */}
                     {times.length > 0 && (
-                         <div className="col-span-1 space-y-1.5 lg:col-span-2">
+                         <div className="col-span-1 min-w-0 space-y-1.5 lg:col-span-2">
                               <label htmlFor="search-time" className={labelClass}>
                                    <Clock size={14} className="text-primary" aria-hidden />
                                    {searchFormContent.timeLabel}
@@ -226,8 +224,11 @@ export default function RouteSearchForm({ pairs, whatsapp }: Props) {
                          </div>
                     )}
 
-                    {/* Penumpang */}
-                    <div className="col-span-2 space-y-1.5 lg:col-span-2">
+                    {/* Penumpang (selebar layar kalau ada kolom jam, sebaris dengan tanggal kalau tidak) */}
+                    <div
+                         className={`min-w-0 space-y-1.5 lg:col-span-2 ${times.length > 0 ? "col-span-2" : "col-span-1"
+                              }`}
+                    >
                          <label htmlFor="search-passengers" className={labelClass}>
                               <Users size={14} className="text-primary" aria-hidden />
                               {searchFormContent.passengerLabel}
@@ -252,28 +253,30 @@ export default function RouteSearchForm({ pairs, whatsapp }: Props) {
                     {/* Rute Cepat + Tombol */}
                     <div className="col-span-2 flex flex-col gap-space-md pt-space-xs sm:flex-row sm:items-center sm:justify-between lg:col-span-12">
                          {availableQuickRoutes.length > 0 && (
-                              <div className="flex flex-wrap items-center gap-space-xs font-label-sm text-label-sm text-on-surface-variant">
-                                   <span className="font-bold text-on-surface">
+                              <div className="min-w-0 space-y-space-xs font-label-sm text-label-sm text-on-surface-variant sm:flex sm:flex-wrap sm:items-center sm:gap-space-xs sm:space-y-0">
+                                   <span className="block font-bold text-on-surface">
                                         {searchFormContent.quickRoutesLabel}
                                    </span>
-                                   {availableQuickRoutes.map((q) => (
-                                        <button
-                                             key={`${q.from}|${q.to}`}
-                                             type="button"
-                                             onClick={() => pickQuickRoute(q.from, q.to)}
-                                             className="rounded-lg bg-surface-container px-3 py-1.5 transition-colors hover:bg-surface-container-high"
-                                        >
-                                             {q.from} - {q.to}
-                                        </button>
-                                   ))}
+                                   <div className="flex flex-wrap gap-space-xs">
+                                        {availableQuickRoutes.map((q) => (
+                                             <button
+                                                  key={`${q.from}|${q.to}`}
+                                                  type="button"
+                                                  onClick={() => pickQuickRoute(q.from, q.to)}
+                                                  className="whitespace-nowrap rounded-lg bg-surface-container px-2.5 py-1.5 transition-colors hover:bg-surface-container-high"
+                                             >
+                                                  {q.from} - {q.to}
+                                             </button>
+                                        ))}
+                                   </div>
                               </div>
                          )}
 
                          <button
                               type="submit"
-                              className="inline-flex w-full items-center justify-center gap-space-xs rounded-lg bg-whatsapp px-space-lg py-3 font-label-lg text-label-lg text-on-whatsapp shadow-md transition-all duration-150 hover:bg-whatsapp-hover sm:ml-auto sm:w-auto"
+                              className="inline-flex w-full items-center justify-center gap-space-sm rounded-lg bg-primary-container px-space-md py-2.5 text-center font-label-md text-label-md text-on-primary shadow-md transition-all duration-150 hover:bg-primary sm:ml-auto sm:w-auto sm:gap-space-md sm:px-space-lg sm:py-3 sm:font-label-lg sm:text-label-lg"
                          >
-                              <MessageCircle size={20} aria-hidden />
+                              <MessageSquareText className="h-4 w-4 shrink-0 sm:h-5 sm:w-5" aria-hidden />
                               {searchFormContent.submitLabel}
                          </button>
                     </div>
