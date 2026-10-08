@@ -9,6 +9,11 @@ export const heroContent = {
           "Nikmati kepraktisan perjalanan tanpa repot ke terminal atau pool. Cukup tunggu di rumah, armada kami yang bersih dan terawat siap menjemput tepat waktu.",
      guaranteeTitle: "100% All-in Garansi",
      guaranteeText: "Sudah Termasuk Tol, BBM & Jasa Driver",
+     charterLink: {
+          text: "Butuh satu mobil khusus rombongan?",
+          label: "Lihat Sewa Mobil Carter",
+          href: "/sewa-mobil",
+     },
 };
 
 export const searchFormContent = {

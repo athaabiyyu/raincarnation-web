@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ChevronRight, BadgeCheck } from "lucide-react";
 import { heroContent } from "@/constants/travel-reguler";
 
@@ -43,6 +44,16 @@ export default function TravelHero() {
                               </h1>
                               <p className="hidden max-w-2xl pt-space-xs font-body-lg text-body-lg text-on-surface-variant md:block">
                                    {heroContent.description}
+                              </p>
+                              <p className="pt-space-xs font-body-md text-body-md text-on-surface-variant">
+                                   {heroContent.charterLink.text}{" "}
+                                   <Link
+                                        href={heroContent.charterLink.href}
+                                        className="font-bold text-primary underline underline-offset-4 hover:text-primary-container"
+                                   >
+                                        {heroContent.charterLink.label}
+                                   </Link>
+                                   .
                               </p>
                          </div>
 
