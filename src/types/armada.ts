@@ -3,6 +3,8 @@ export type ArmadaAcf = {
      jumlah_penumpang?: string;
      bbm?: string;
      kata_kunci_utama?: string;
+     koper?: string;
+     label?: string;
 };
 
 export type Armada = {

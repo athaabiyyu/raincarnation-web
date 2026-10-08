@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { BadgeCheck, Calculator, MessageCircle } from "lucide-react";
 import { sewaMobilHero } from "@/constants/sewa-mobil";
 import { buildWhatsAppUrl } from "@/utils/whatsapp";
@@ -78,6 +79,17 @@ export default function SewaMobilHero({ whatsapp }: SewaMobilHeroProps) {
                                    </a>
                               )}
                          </div>
+
+                         <p className="font-body-md text-body-md text-on-surface-variant">
+                              {content.regularLink.text}{" "}
+                              <Link
+                                   href={content.regularLink.href}
+                                   className="font-bold text-primary underline underline-offset-4 hover:text-primary-container"
+                              >
+                                   {content.regularLink.label}
+                              </Link>
+                              .
+                         </p>
                     </div>
                </div>
           </section>
