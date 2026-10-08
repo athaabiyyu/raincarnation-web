@@ -87,14 +87,14 @@ export default async function Footer() {
                          {/* Rute populer, hanya bila ada nomor WA dan data rute */}
                          {whatsapp && popularRoutes.length > 0 && (
                               <div>
-                                   <h4 className={headingClass}>
+                                   <h2 className={headingClass}>
                                         <RouteIcon
                                              size={16}
                                              className="shrink-0 text-primary"
                                              aria-hidden="true"
                                         />
                                         {c.popularRoutesTitle}
-                                   </h4>
+                                   </h2>
                                    <ul className="space-y-space-sm font-body-sm text-body-sm text-on-surface-variant">
                                         {popularRoutes.map((pair) => (
                                              <li key={`${pair.from}-${pair.to}`}>
@@ -117,14 +117,14 @@ export default async function Footer() {
 
                          {/* Layanan & navigasi */}
                          <div>
-                              <h4 className={headingClass}>
+                              <h2 className={headingClass}>
                                    <Bus
                                         size={16}
                                         className="shrink-0 text-primary"
                                         aria-hidden="true"
                                    />
                                    {c.servicesTitle}
-                              </h4>
+                              </h2>
                               <ul className="space-y-space-sm font-body-sm text-body-sm text-on-surface-variant">
                                    {c.serviceLinks.map((link) => (
                                         <li key={link.href}>
@@ -142,14 +142,14 @@ export default async function Footer() {
                          {/* Pusat dukungan, hanya bila ada nomor WA */}
                          {whatsapp && (
                               <div className="space-y-space-md">
-                                   <h4 className={headingClass}>
+                                   <h2 className={headingClass}>
                                         <Headset
                                              size={16}
                                              className="shrink-0 text-primary"
                                              aria-hidden="true"
                                         />
                                         {c.supportTitle}
-                                   </h4>
+                                   </h2>
                                    <div className="space-y-space-xs font-body-sm text-body-sm text-on-surface-variant">
                                         <p className="font-bold text-on-surface">{c.whatsappLabel}</p>
                                         <p className="font-label-md text-label-md font-bold text-primary">
