@@ -16,5 +16,6 @@ export type Route = {
   title: string;
   status?: string;
   modified?: string;
+  content?: string;
   acf?: RouteAcf;
 };
