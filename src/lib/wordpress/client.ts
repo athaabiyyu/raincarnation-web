@@ -6,8 +6,6 @@ type ApiResponse<T> = {
   meta?: unknown;
 };
 
-// Saat development selalu ambil data terbaru.
-// Di produksi, hasil disimpan 1 jam supaya halaman cepat.
 const REVALIDATE_SECONDS = process.env.NODE_ENV === "development" ? 0 : 3600;
 
 export async function wpFetch<T>(path: string): Promise<T> {
