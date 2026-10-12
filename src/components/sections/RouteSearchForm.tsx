@@ -10,10 +10,10 @@ import {
      MapPin,
      MessageSquareText,
      Search,
-     Timer,
      Users,
 } from "lucide-react";
-import { quickRoutes, searchFormContent } from "@/constants/travel-reguler";
+import { searchFormContent } from "@/constants/travel-reguler";
+import { formatPrice } from "@/utils/format-price";
 import { buildWhatsAppUrl } from "@/utils/whatsapp";
 import type { RoutePair } from "@/utils/route-pairs";
 
@@ -44,7 +44,8 @@ const chevronClass =
 export default function RouteSearchForm({ pairs, whatsapp }: Props) {
      const origins = [...new Set(pairs.map((p) => p.from))];
 
-     const [origin, setOrigin] = useState(origins[0] ?? "");
+     // Asal, tujuan, dan jam mulai kosong supaya tarif tidak langsung tampil.
+     const [origin, setOrigin] = useState("");
      const [destination, setDestination] = useState("");
      const [time, setTime] = useState("");
      const [pickedDate, setPickedDate] = useState<string | null>(null);
@@ -56,27 +57,38 @@ export default function RouteSearchForm({ pairs, whatsapp }: Props) {
      const today = useSyncExternalStore(subscribe, todayLocal, () => "");
      const date = pickedDate ?? today;
 
-     const destinations = pairs.filter((p) => p.from === origin).map((p) => p.to);
+     const destinations = origin
+          ? pairs.filter((p) => p.from === origin).map((p) => p.to)
+          : [];
      const selectedDestination = destinations.includes(destination)
           ? destination
-          : (destinations[0] ?? "");
+          : "";
 
-     // Jam mengikuti rute (asal + tujuan) yang terpilih.
-     const times =
-          pairs.find((p) => p.from === origin && p.to === selectedDestination)
-               ?.times ?? [];
-     const selectedTime = times.includes(time) ? time : (times[0] ?? "");
+     // Rute (asal + tujuan) yang terpilih: sumber jam dan tarif.
+     const selectedPair =
+          origin && selectedDestination
+               ? pairs.find((p) => p.from === origin && p.to === selectedDestination)
+               : undefined;
 
-     // Rute Cepat hanya tampil kalau rutenya ada di CMS.
-     const availableQuickRoutes = quickRoutes.filter((q) =>
-          pairs.some((p) => p.from === q.from && p.to === q.to),
-     );
+     // Jam mengikuti rute yang terpilih. Mulai kosong sampai dipilih.
+     const times = selectedPair?.times ?? [];
+     const selectedTime = times.includes(time) ? time : "";
 
-     function pickQuickRoute(from: string, to: string) {
-          setOrigin(from);
-          setDestination(to);
-          setTime("");
-     }
+     // Jam wajib diisi hanya bila rute punya jadwal.
+     const timeRequired = times.length > 0;
+
+     // Harga hanya tampil bila SEMUA isian sudah terisi.
+     const allFilled =
+          Boolean(selectedPair) &&
+          Boolean(date) &&
+          (!timeRequired || Boolean(selectedTime)) &&
+          Boolean(passengers);
+
+     // Tarif per kursi dari CMS. Kosong atau 0 = kotak tarif disembunyikan.
+     const priceText =
+          allFilled && selectedPair?.price
+               ? formatPrice(String(selectedPair.price))
+               : null;
 
      function handleSubmit(event: FormEvent<HTMLFormElement>) {
           event.preventDefault();
@@ -110,25 +122,18 @@ export default function RouteSearchForm({ pairs, whatsapp }: Props) {
      return (
           <div className="relative z-20 rounded-xl bg-surface-container-lowest p-space-md shadow-xl lg:p-space-lg">
                {/* Header form */}
-               <div className="mb-space-md flex flex-col gap-space-sm sm:flex-row sm:items-center sm:justify-between">
-                    <div className="flex items-center gap-space-sm">
+               <div className="mb-space-md flex items-center justify-between gap-space-sm">
+                    <div className="flex min-w-0 items-center gap-space-sm">
                          <span className="shrink-0 rounded-lg bg-primary-container/10 p-2 text-primary">
                               <Search size={22} aria-hidden />
                          </span>
-                         <div>
-                              <h2 className="font-label-lg text-label-lg text-on-surface">
-                                   {searchFormContent.title}
-                              </h2>
-                              <p className="font-body-sm text-body-sm text-on-surface-variant">
-                                   <span className="sm:hidden">Pilih rute antar kota</span>
-                                   <span className="hidden sm:inline">{searchFormContent.subtitle}</span>
-                              </p>
-                         </div>
+                         <h2 className="whitespace-nowrap font-label-lg text-label-lg text-on-surface">
+                              Detail Travel Reguler
+                         </h2>
                     </div>
 
-                    <div className="inline-flex shrink-0 items-center gap-space-xs self-start rounded-lg bg-surface-container-low px-3 py-1.5 font-label-sm text-label-sm text-primary sm:self-auto">
-                         <Timer size={16} aria-hidden />
-                         {searchFormContent.responseBadge}
+                    <div className="inline-flex shrink-0 items-center whitespace-nowrap rounded-lg bg-surface-container-low px-3 py-1.5 font-label-sm text-label-sm text-primary">
+                         Cek Tarif
                     </div>
                </div>
 
@@ -145,10 +150,12 @@ export default function RouteSearchForm({ pairs, whatsapp }: Props) {
                          <div className="relative">
                               <select
                                    id="search-origin"
+                                   required
                                    value={origin}
                                    onChange={(e) => setOrigin(e.target.value)}
                                    className={selectClass}
                               >
+                                   <option value="">Pilih</option>
                                    {origins.map((city) => (
                                         <option key={city} value={city}>
                                              {city}
@@ -168,10 +175,12 @@ export default function RouteSearchForm({ pairs, whatsapp }: Props) {
                          <div className="relative">
                               <select
                                    id="search-destination"
+                                   required
                                    value={selectedDestination}
                                    onChange={(e) => setDestination(e.target.value)}
                                    className={selectClass}
                               >
+                                   <option value="">Pilih</option>
                                    {destinations.map((city) => (
                                         <option key={city} value={city}>
                                              {city}
@@ -199,36 +208,33 @@ export default function RouteSearchForm({ pairs, whatsapp }: Props) {
                          />
                     </div>
 
-                    {/* Jam (hanya tampil kalau rute punya jadwal) */}
-                    {times.length > 0 && (
-                         <div className="col-span-1 min-w-0 space-y-1.5 lg:col-span-2">
-                              <label htmlFor="search-time" className={labelClass}>
-                                   <Clock size={14} className="text-primary" aria-hidden />
-                                   {searchFormContent.timeLabel}
-                              </label>
-                              <div className="relative">
-                                   <select
-                                        id="search-time"
-                                        value={selectedTime}
-                                        onChange={(e) => setTime(e.target.value)}
-                                        className={selectClass}
-                                   >
-                                        {times.map((t) => (
-                                             <option key={t} value={t}>
-                                                  {t}
-                                             </option>
-                                        ))}
-                                   </select>
-                                   <ChevronDown size={16} className={chevronClass} aria-hidden />
-                              </div>
+                    {/* Jam (selalu tampil, mulai kosong) */}
+                    <div className="col-span-1 min-w-0 space-y-1.5 lg:col-span-2">
+                         <label htmlFor="search-time" className={labelClass}>
+                              <Clock size={14} className="text-primary" aria-hidden />
+                              {searchFormContent.timeLabel}
+                         </label>
+                         <div className="relative">
+                              <select
+                                   id="search-time"
+                                   required={timeRequired}
+                                   value={selectedTime}
+                                   onChange={(e) => setTime(e.target.value)}
+                                   className={selectClass}
+                              >
+                                   <option value="">Pilih</option>
+                                   {times.map((t) => (
+                                        <option key={t} value={t}>
+                                             {t}
+                                        </option>
+                                   ))}
+                              </select>
+                              <ChevronDown size={16} className={chevronClass} aria-hidden />
                          </div>
-                    )}
+                    </div>
 
-                    {/* Penumpang (selebar layar kalau ada kolom jam, sebaris dengan tanggal kalau tidak) */}
-                    <div
-                         className={`min-w-0 space-y-1.5 lg:col-span-2 ${times.length > 0 ? "col-span-2" : "col-span-1"
-                              }`}
-                    >
+                    {/* Penumpang */}
+                    <div className="col-span-2 min-w-0 space-y-1.5 lg:col-span-2">
                          <label htmlFor="search-passengers" className={labelClass}>
                               <Users size={14} className="text-primary" aria-hidden />
                               {searchFormContent.passengerLabel}
@@ -250,31 +256,27 @@ export default function RouteSearchForm({ pairs, whatsapp }: Props) {
                          </div>
                     </div>
 
-                    {/* Rute Cepat + Tombol */}
-                    <div className="col-span-2 flex flex-col gap-space-md pt-space-xs sm:flex-row sm:items-center sm:justify-between lg:col-span-12">
-                         {availableQuickRoutes.length > 0 && (
-                              <div className="min-w-0 space-y-space-xs font-label-sm text-label-sm text-on-surface-variant sm:flex sm:flex-wrap sm:items-center sm:gap-space-xs sm:space-y-0">
-                                   <span className="block font-bold text-on-surface">
-                                        {searchFormContent.quickRoutesLabel}
+                    {/* Tarif (kiri) + Tombol (kanan) */}
+                    <div className="col-span-2 flex flex-col gap-space-md pt-space-xs sm:flex-row sm:items-center sm:justify-between sm:border-t sm:border-surface-container sm:pt-space-md lg:col-span-12">
+                         {priceText && (
+                              <div className="flex items-baseline justify-center gap-2 whitespace-nowrap rounded-lg bg-primary-container/10 px-space-md py-2 sm:flex-col sm:items-start sm:justify-start sm:gap-0 sm:bg-transparent sm:px-0 sm:py-0">
+                                   <span className="font-label-sm text-label-lg text-on-surface-variant">
+                                        Mulai
                                    </span>
-                                   <div className="flex flex-wrap gap-space-xs">
-                                        {availableQuickRoutes.map((q) => (
-                                             <button
-                                                  key={`${q.from}|${q.to}`}
-                                                  type="button"
-                                                  onClick={() => pickQuickRoute(q.from, q.to)}
-                                                  className="whitespace-nowrap rounded-lg bg-surface-container px-2.5 py-1.5 transition-colors hover:bg-surface-container-high"
-                                             >
-                                                  {q.from} - {q.to}
-                                             </button>
-                                        ))}
-                                   </div>
+                                   <span className="flex items-baseline gap-1">
+                                        <span className=" font-headline-sm text-headline-sm font-bold leading-none text-primary">
+                                             {priceText}
+                                        </span>
+                                        <span className="font-label-sm text-label-sm text-on-surface-variant">
+                                             / kursi
+                                        </span>
+                                   </span>
                               </div>
                          )}
 
                          <button
                               type="submit"
-                              className="inline-flex w-full items-center justify-center gap-space-sm rounded-lg bg-primary-container px-space-md py-2.5 text-center font-label-md text-label-md text-on-primary shadow-md transition-all duration-150 hover:bg-primary sm:ml-auto sm:w-auto sm:gap-space-md sm:px-space-lg sm:py-3 sm:font-label-lg sm:text-label-lg"
+                              className="inline-flex w-full items-center justify-center gap-space-sm rounded-lg bg-whatsapp px-space-md py-2.5 text-center font-label-md text-label-md text-on-whatsapp shadow-[0_4px_16px_rgba(37,211,102,0.35)] transition-all duration-150 hover:bg-whatsapp-hover sm:ml-auto sm:w-auto sm:gap-space-md sm:px-space-lg sm:py-3 sm:font-label-lg sm:text-label-lg"
                          >
                               <MessageSquareText className="h-4 w-4 shrink-0 sm:h-5 sm:w-5" aria-hidden />
                               {searchFormContent.submitLabel}

@@ -8,10 +8,12 @@ import { siteConfig } from "@/config/site";
 import { getSiteConfig } from "@/lib/wordpress/config";
 import { getPaketSewaList } from "@/lib/wordpress/paket-sewa";
 import { getArmadaList } from "@/lib/wordpress/armada";
+import { getRuteCarterList } from "@/lib/wordpress/rute-carter";
 import { capitalizeFirst } from "@/utils/capitalize-first";
 import { decodeHtml } from "@/utils/decode-html";
 import type { PaketSewa } from "@/types/paket-sewa";
 import type { Armada } from "@/types/armada";
+import type { RuteCarter } from "@/types/rute-carter";
 
 export const metadata: Metadata = {
      title: "Sewa Mobil Carter dengan Driver | Raincarnation",
@@ -49,20 +51,28 @@ async function loadArmada(): Promise<Armada[]> {
      }
 }
 
+async function loadRuteCarter(): Promise<RuteCarter[]> {
+     try {
+          return await getRuteCarterList();
+     } catch (error) {
+          console.error("Gagal memuat rute carter:", error);
+          return [];
+     }
+}
+
 export default async function SewaMobilPage() {
-     const [config, prices, armada] = await Promise.all([
+     const [config, prices, armada, ruteCarter] = await Promise.all([
           getSiteConfig(),
           loadPrices(),
           loadArmada(),
+          loadRuteCarter(),
      ]);
      const whatsapp = config.contact?.whatsapp ?? "";
 
-     const packageOptions = prices.map((item) =>
-          capitalizeFirst(decodeHtml(item.title)),
-     );
-     const fleetOptions = armada.map((item) =>
-          capitalizeFirst(decodeHtml(item.title)),
-     );
+     const fleet = armada.map((item) => ({
+          id: item.id,
+          name: capitalizeFirst(decodeHtml(item.title)),
+     }));
 
      return (
           <main className="w-full bg-surface">
@@ -77,8 +87,8 @@ export default async function SewaMobilPage() {
                <SewaMobilFleet armada={armada} whatsapp={whatsapp} />
                <SewaMobilPillars />
                <SewaMobilForm
-                    packageOptions={packageOptions}
-                    fleetOptions={fleetOptions}
+                    routes={ruteCarter}
+                    fleet={fleet}
                     whatsapp={whatsapp}
                />
           </main>

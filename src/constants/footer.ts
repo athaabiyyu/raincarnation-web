@@ -1,20 +1,11 @@
+// BELUM DIKONFIRMASI BOS: klaim di file ini bersifat sementara.
 export const footerContent = {
      description:
-          "Layanan travel reguler door-to-door dan sewa mobil / carter drop terpercaya di Malang, Surabaya, dan Pasuruan. Alur pemesanan mudah, cepat, dan transparan langsung terhubung dengan admin resmi WhatsApp.",
-
-     rating: {
-          score: "4,9",
-          title: "Ulasan Terverifikasi Google",
-          subtitle: "Berdasarkan 2.400+ penumpang puas",
-     },
-
-     guarantee: "Garansi Penjemputan Tepat Waktu & Driver Berpengalaman",
-
-     popularRoutesTitle: "Rute Populer",
+          "Raincarnation menyediakan layanan sewa mobil dengan sopir atau lepas kunci di Malang, Batu, dan Surabaya, serta travel reguler per kursi untuk rute tertentu. Hubungi admin kami melalui WhatsApp untuk informasi tarif, jadwal keberangkatan, dan ketersediaan layanan.",
 
      servicesTitle: "Layanan & Navigasi",
      serviceLinks: [
-          { label: "Travel Reguler (Door to Door)", href: "/travel-reguler" },
+          { label: "Travel Reguler", href: "/travel-reguler" },
           { label: "Carter Drop Satu Arah (One Way)", href: "/sewa-mobil" },
           { label: "Pilihan Armada & Spesifikasi", href: "/armada" },
           { label: "Profil Perusahaan & Driver", href: "/tentang-kami" },
@@ -22,22 +13,15 @@ export const footerContent = {
           { label: "FAQ & Hubungi Layanan Bantuan", href: "/pusat-bantuan" },
      ],
 
-     supportTitle: "Pusat Dukungan & Booking",
+     supportTitle: "Pusat Bantuan & Pemesanan",
      addressLabel: "Operasional Dispatcher & Pemesanan:",
      whatsappLabel: "WhatsApp Layanan Pelanggan:",
-     whatsappNote: "(Siaga 24 Jam)",
      whatsappButton: "Pesan via WhatsApp",
      whatsappMessage: "Halo Admin Raincarnation, saya butuh bantuan booking travel",
 
      reservationTitle: "Kemudahan Reservasi & Konfirmasi WhatsApp:",
-     reservationChips: [
-          "Fast Response 24/7",
-          "Konfirmasi Tiket Instan",
-          "Pilihan Kursi Bebas",
-          "Jemput Alamat Rumah",
-          "Driver Terverifikasi",
-     ],
+     reservationChips: ["Pilihan Kursi Bebas", "Transfer Antar Jemput", "Konfirmasi Cepat"],
 
-     companyName: "PT Raincarnation Multi Solusi Transportasi",
+     companyName: "PT Raincarnation Indonesia",
      copyrightSuffix: "Hak Cipta Dilindungi Undang-Undang.",
 };

@@ -8,6 +8,7 @@ export type RouteAcf = {
   armada?: number[];
   deskripsi_singkat?: string;
   label?: string;
+  unggulan?: boolean;
 };
 
 export type Route = {

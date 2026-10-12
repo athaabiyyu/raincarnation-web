@@ -98,8 +98,8 @@ export const sewaMobilPillars = {
 
 
 export const sewaMobilForm = {
-     eyebrow: "Kalkulator & Estimasi Langsung",
-     title: "Simulasi Kebutuhan Carter Anda",
+     eyebrow: "Cek Tarif & Reservasi",
+     title: "Detail Sewa Mobil",
      description:
           "Isi form sederhana di samping. Rincian pesanan akan dirapikan otomatis sehingga langsung terbaca jelas oleh Admin WhatsApp Raincarnation untuk konfirmasi.",
      trustItems: [
@@ -120,13 +120,13 @@ export const sewaMobilForm = {
           message: "Halo Admin Raincarnation, saya butuh penanganan cepat hari ini.",
      },
      labels: {
-          packageType: "Jenis Paket Sewa",
-          fleet: "Pilihan Unit Armada",
+          packageType: "Jenis layanan",
+          fleet: "Pilihan Armada",
           origin: "Kota Asal / Titik Jemput",
-          destination: "Kota Tujuan / Destinasi",
+          destination: "Kota Tujuan",
           date: "Tanggal Berangkat",
           time: "Jam Berangkat",
-          passengers: "Jumlah Penumpang & Koper",
+          passengers: "Jumlah Penumpang dan Koper",
           notes: "Catatan Rute / Permintaan Khusus (Opsional)",
      },
      placeholders: {
@@ -137,7 +137,7 @@ export const sewaMobilForm = {
      },
      otherOption: "Lainnya / Belum yakin",
      previewLabel: "Format Reservasi WhatsApp Otomatis:",
-     submitLabel: "Kirim Rincian & Reservasi via WhatsApp",
+     submitLabel: "Reservasi Sekarang",
      footnote:
           "Tanpa komitmen uang muka sebelum unit & driver dikonfirmasi oleh admin kami.",
 };

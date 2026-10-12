@@ -26,7 +26,7 @@ export const searchFormContent = {
      timeLabel: "Pilihan Jam",
      passengerLabel: "Penumpang",
      quickRoutesLabel: "Rute Cepat:",
-     submitLabel: "Cek Kursi & Pesan via WhatsApp",
+     submitLabel: "Reservasi Sekarang",
      passengerOptions: [
           "1 Orang",
           "2 Orang",
@@ -43,8 +43,8 @@ export const quickRoutes = [
 ];
 
 export const featuredRoutesContent = {
-     title: "Rute Unggulan & Jam Keberangkatan",
-     description: "Tarif all-in per kursi, sudah termasuk tol, BBM, dan jasa driver",
+     title: "Rute Travel Reguler dan Jadwal Keberangkatan",
+     description: "Temukan layanan travel reguler per kursi dari Malang, Batu, Surabaya, dan Bandara Juanda menuju kota tujuan yang tersedia. Lihat jadwal dan tarif setiap rute sebelum melakukan pemesanan.",
      fareLabel: "Tarif All-in / Kursi",
      roundTripLabel: "Tarif Pulang-Pergi",
      scheduleLabel: "Jadwal:",

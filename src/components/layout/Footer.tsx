@@ -1,47 +1,26 @@
 import Image from "next/image";
 import Link from "next/link";
-import {
-     Bus,
-     Headset,
-     MessageSquareText,
-     Route as RouteIcon,
-     ShieldCheck,
-     Star,
-} from "lucide-react";
+import { Bus, Headset, MessageSquareText } from "lucide-react";
 import { footerContent } from "@/constants/footer";
 import { getSiteConfig } from "@/lib/wordpress/config";
-import { getRoutes } from "@/lib/wordpress/routes";
-import type { Route } from "@/types/route";
 import { formatPhoneDisplay } from "@/utils/format-phone";
-import { getRoutePairs } from "@/utils/route-pairs";
 import { buildWhatsAppUrl } from "@/utils/whatsapp";
-
-// getRoutes tidak tahan error di lib, jadi dijaga di sini.
-async function loadRoutes(): Promise<Route[]> {
-     try {
-          return await getRoutes();
-     } catch (error) {
-          console.error("[Footer] Gagal mengambil rute dari CMS:", error);
-          return [];
-     }
-}
 
 const headingClass =
      "mb-space-md flex items-center gap-2 font-label-lg text-label-lg text-on-surface";
 
 export default async function Footer() {
-     const [config, routes] = await Promise.all([getSiteConfig(), loadRoutes()]);
+     const config = await getSiteConfig();
      const whatsapp = config.contact?.whatsapp;
-     const popularRoutes = getRoutePairs(routes).slice(0, 6);
      const year = new Date().getFullYear();
      const c = footerContent;
 
      return (
           <footer className="w-full bg-surface-container-low pb-space-lg pt-space-xl text-on-surface">
                <div className="mx-auto max-w-6xl px-gutter">
-                    <div className="grid grid-cols-1 gap-gutter pb-space-xl sm:grid-cols-2 lg:grid-cols-5">
+                    <div className="grid grid-cols-1 gap-x-gutter gap-y-space-lg pb-space-xl lg:grid-cols-12">
                          {/* Brand */}
-                         <div className="space-y-space-md sm:col-span-2">
+                         <div className="space-y-space-md lg:col-span-5">
                               <Image
                                    src="/logo.webp"
                                    alt="Raincarnation"
@@ -52,71 +31,10 @@ export default async function Footer() {
                               <p className="max-w-md font-body-sm text-body-sm text-on-surface-variant">
                                    {c.description}
                               </p>
-
-                              <div className="inline-flex items-center gap-space-md rounded-xl bg-surface-container-lowest p-space-sm shadow-sm">
-                                   <div className="flex items-center gap-1 rounded-lg bg-surface-container-high px-space-sm py-1 text-primary">
-                                        <Star
-                                             size={16}
-                                             className="shrink-0 fill-current text-primary-container"
-                                             aria-hidden="true"
-                                        />
-                                        <span className="font-label-lg text-label-lg font-bold">
-                                             {c.rating.score}
-                                        </span>
-                                   </div>
-                                   <div className="flex flex-col">
-                                        <span className="font-label-sm text-label-sm font-bold text-on-surface">
-                                             {c.rating.title}
-                                        </span>
-                                        <span className="font-label-sm text-label-sm text-on-surface-variant">
-                                             {c.rating.subtitle}
-                                        </span>
-                                   </div>
-                              </div>
-
-                              <div className="flex items-center gap-space-sm text-on-surface-variant">
-                                   <ShieldCheck
-                                        size={20}
-                                        className="shrink-0 text-primary-container"
-                                        aria-hidden="true"
-                                   />
-                                   <span className="font-label-sm text-label-sm">{c.guarantee}</span>
-                              </div>
                          </div>
 
-                         {/* Rute populer, hanya bila ada nomor WA dan data rute */}
-                         {whatsapp && popularRoutes.length > 0 && (
-                              <div>
-                                   <h2 className={headingClass}>
-                                        <RouteIcon
-                                             size={16}
-                                             className="shrink-0 text-primary"
-                                             aria-hidden="true"
-                                        />
-                                        {c.popularRoutesTitle}
-                                   </h2>
-                                   <ul className="space-y-space-sm font-body-sm text-body-sm text-on-surface-variant">
-                                        {popularRoutes.map((pair) => (
-                                             <li key={`${pair.from}-${pair.to}`}>
-                                                  <a
-                                                       href={buildWhatsAppUrl(
-                                                            whatsapp,
-                                                            `Halo Admin, saya mau tanya info rute ${pair.from} ${pair.to}`,
-                                                       )}
-                                                       target="_blank"
-                                                       rel="noopener noreferrer"
-                                                       className="transition-colors hover:text-primary"
-                                                  >
-                                                       {pair.from} - {pair.to}
-                                                  </a>
-                                             </li>
-                                        ))}
-                                   </ul>
-                              </div>
-                         )}
-
                          {/* Layanan & navigasi */}
-                         <div>
+                         <div className="lg:col-span-3">
                               <h2 className={headingClass}>
                                    <Bus
                                         size={16}
@@ -141,7 +59,7 @@ export default async function Footer() {
 
                          {/* Pusat dukungan, hanya bila ada nomor WA */}
                          {whatsapp && (
-                              <div className="space-y-space-md">
+                              <div className="space-y-space-md lg:col-span-4">
                                    <h2 className={headingClass}>
                                         <Headset
                                              size={16}
@@ -152,11 +70,8 @@ export default async function Footer() {
                                    </h2>
                                    <div className="space-y-space-xs font-body-sm text-body-sm text-on-surface-variant">
                                         <p className="font-bold text-on-surface">{c.whatsappLabel}</p>
-                                        <p className="font-label-md text-label-md font-bold text-primary">
-                                             <span className="whitespace-nowrap">
-                                                  {formatPhoneDisplay(whatsapp)}
-                                             </span>{" "}
-                                             <span className="whitespace-nowrap">{c.whatsappNote}</span>
+                                        <p className="whitespace-nowrap font-label-md text-label-md font-bold text-primary">
+                                             {formatPhoneDisplay(whatsapp)}
                                         </p>
                                    </div>
                                    <a

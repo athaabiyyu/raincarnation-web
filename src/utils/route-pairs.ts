@@ -1,7 +1,12 @@
 import type { Route } from "@/types/route";
 import { capitalizeFirst } from "@/utils/capitalize-first";
 
-export type RoutePair = { from: string; to: string; times: string[] };
+export type RoutePair = {
+     from: string;
+     to: string;
+     times: string[];
+     price: number;
+};
 
 export function parseSchedule(jadwal?: string): string[] {
      if (!jadwal) return [];
@@ -25,7 +30,14 @@ export function getRoutePairs(routes: Route[]): RoutePair[] {
           if (seen.has(key)) continue;
           seen.add(key);
 
-          pairs.push({ from, to, times: parseSchedule(route.acf?.jadwal) });
+          const price = Number(route.acf?.tarif);
+
+          pairs.push({
+               from,
+               to,
+               times: parseSchedule(route.acf?.jadwal),
+               price: Number.isFinite(price) && price > 0 ? price : 0,
+          });
      }
 
      return pairs;

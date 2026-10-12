@@ -15,6 +15,8 @@ export default function FleetCarousel({ children }: FleetCarouselProps) {
      const scrollerRef = useRef<HTMLDivElement>(null);
      const [canPrev, setCanPrev] = useState(false);
      const [canNext, setCanNext] = useState(false);
+     const [activeIndex, setActiveIndex] = useState(0);
+     const count = Children.count(children);
 
      useEffect(() => {
           const scroller = scrollerRef.current;
@@ -26,8 +28,14 @@ export default function FleetCarousel({ children }: FleetCarouselProps) {
                     scroller.scrollLeft + scroller.clientWidth <
                     scroller.scrollWidth - 1,
                );
+               const firstCard = scroller.firstElementChild as HTMLElement | null;
+               const step = (firstCard?.offsetWidth ?? 300) + GAP_PX;
+               setActiveIndex(
+                    Math.min(count - 1, Math.max(0, Math.round(scroller.scrollLeft / step))),
+               );
           };
 
+          update();
           scroller.addEventListener("scroll", update, { passive: true });
           const observer = new ResizeObserver(update);
           observer.observe(scroller);
@@ -36,7 +44,7 @@ export default function FleetCarousel({ children }: FleetCarouselProps) {
                scroller.removeEventListener("scroll", update);
                observer.disconnect();
           };
-     }, []);
+     }, [count]);
 
      function scrollByCard(direction: 1 | -1) {
           const scroller = scrollerRef.current;
@@ -52,34 +60,12 @@ export default function FleetCarousel({ children }: FleetCarouselProps) {
           });
      }
 
-     const showButtons = canPrev || canNext;
+     const showControls = canPrev || canNext;
      const buttonClass =
-          "absolute top-[7.5rem] z-10 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-primary text-on-primary shadow-lg ring-2 ring-surface-container-lowest transition-all hover:bg-primary-container disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-primary md:top-1/2 md:h-11 md:w-11";
-     return (
-          <div className="relative">
-               {showButtons && (
-                    <>
-                         <button
-                              type="button"
-                              onClick={() => scrollByCard(-1)}
-                              disabled={!canPrev}
-                              aria-label="Armada sebelumnya"
-                              className={`${buttonClass} left-1 md:left-0 md:-translate-x-1/2`}
-                         >
-                              <ChevronLeft size={22} aria-hidden="true" />
-                         </button>
-                         <button
-                              type="button"
-                              onClick={() => scrollByCard(1)}
-                              disabled={!canNext}
-                              aria-label="Armada berikutnya"
-                              className={`${buttonClass} right-1 md:right-0 md:translate-x-1/2`}
-                         >
-                              <ChevronRight size={22} aria-hidden="true" />
-                         </button>
-                    </>
-               )}
+          "inline-flex h-10 w-10 items-center justify-center rounded-full border border-primary/30 bg-surface-container-lowest text-primary shadow-sm transition-colors hover:bg-primary/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-surface-container-lowest";
 
+     return (
+          <div>
                <div
                     ref={scrollerRef}
                     className="-my-4 flex snap-x snap-mandatory gap-gutter overflow-x-auto py-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
@@ -90,6 +76,47 @@ export default function FleetCarousel({ children }: FleetCarouselProps) {
                          </div>
                     ))}
                </div>
+
+               {showControls && (
+                    <div className="mt-space-md flex items-center justify-center gap-space-md">
+                         <button
+                              type="button"
+                              onClick={() => scrollByCard(-1)}
+                              disabled={!canPrev}
+                              aria-label="Armada sebelumnya"
+                              className={buttonClass}
+                         >
+                              <ChevronLeft size={20} aria-hidden="true" />
+                         </button>
+
+                         {count > 1 && (
+                              <div
+                                   className="flex items-center gap-2 md:hidden"
+                                   aria-hidden="true"
+                              >
+                                   {Array.from({ length: count }).map((_, index) => (
+                                        <span
+                                             key={index}
+                                             className={`h-2 rounded-full transition-all ${index === activeIndex
+                                                       ? "w-5 bg-primary"
+                                                       : "w-2 bg-primary/25"
+                                                  }`}
+                                        />
+                                   ))}
+                              </div>
+                         )}
+
+                         <button
+                              type="button"
+                              onClick={() => scrollByCard(1)}
+                              disabled={!canNext}
+                              aria-label="Armada berikutnya"
+                              className={buttonClass}
+                         >
+                              <ChevronRight size={20} aria-hidden="true" />
+                         </button>
+                    </div>
+               )}
           </div>
      );
 }

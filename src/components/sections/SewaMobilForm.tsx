@@ -2,37 +2,49 @@
 
 import { useState } from "react";
 import {
-     CalendarCheck,
-     Headset,
+     Briefcase,
+     CalendarDays,
+     Car,
+     ChevronDown,
+     Clock,
+     LocateFixed,
+     MapPin,
      MessageSquareText,
-     PhoneCall,
-     Send,
-     Wallet,
+     Users,
 } from "lucide-react";
 import { sewaMobilForm } from "@/constants/sewa-mobil";
+import type { RuteCarter } from "@/types/rute-carter";
+import { capitalizeFirst } from "@/utils/capitalize-first";
+import { formatPrice } from "@/utils/format-price";
 import { buildWhatsAppUrl } from "@/utils/whatsapp";
 
+type FleetOption = { id: number; name: string };
+
 type SewaMobilFormProps = {
-     packageOptions: string[];
-     fleetOptions: string[];
+     routes: RuteCarter[];
+     fleet: FleetOption[];
      whatsapp: string;
+     /** true = hanya kartu form (tanpa section pembungkus), dipakai di tab Beranda */
+     embedded?: boolean;
 };
 
 type FormValues = {
-     packageType: string;
-     fleet: string;
-     origin: string;
-     destination: string;
      date: string;
      time: string;
      passengers: string;
-     notes: string;
 };
 
-const INPUT_CLASS =
-     "w-full rounded-xl border border-surface-container-high bg-surface-container-lowest p-3 font-body-lg text-body-lg text-on-surface shadow-sm transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary";
-const LABEL_CLASS =
-     "mb-1.5 block font-label-md text-label-md font-bold text-on-surface";
+const selectClass =
+     "h-[2.75rem] w-full appearance-none cursor-pointer rounded-lg bg-surface-container-low px-3 pr-8 font-label-md text-label-md text-on-surface transition-colors focus:bg-surface-container-high focus:outline-none";
+
+const inputClass =
+     "h-[2.75rem] w-full min-w-0 appearance-none rounded-lg bg-surface-container-low px-3 text-left font-label-md text-label-md text-on-surface transition-colors placeholder:text-on-surface-variant focus:bg-surface-container-high focus:outline-none [&::-webkit-date-and-time-value]:text-left";
+
+const labelClass =
+     "flex items-center gap-1 font-label-sm text-label-sm text-on-surface-variant";
+
+const chevronClass =
+     "pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant";
 
 function formatDate(value: string): string {
      if (!value) return "";
@@ -45,17 +57,29 @@ function formatDate(value: string): string {
      });
 }
 
-function buildMessage(values: FormValues): string {
+function unique(items: string[]): string[] {
+     return [...new Set(items.filter(Boolean))];
+}
+
+type MessageInput = {
+     packageType: string;
+     fleetName: string;
+     origin: string;
+     destination: string;
+     values: FormValues;
+};
+
+function buildMessage(input: MessageInput): string {
+     const { packageType, fleetName, origin, destination, values } = input;
      const details = [
-          `- Layanan: ${values.packageType}`,
-          `- Unit: ${values.fleet}`,
-          values.origin.trim() && `- Penjemputan: ${values.origin.trim()}`,
-          values.destination.trim() && `- Tujuan: ${values.destination.trim()}`,
+          packageType && `- Layanan: ${packageType}`,
+          fleetName && `- Unit: ${fleetName}`,
+          origin && `- Penjemputan: ${origin}`,
+          destination && `- Tujuan: ${destination}`,
           values.date && `- Tanggal: ${formatDate(values.date)}`,
           values.time && `- Jam: ${values.time}`,
           values.passengers.trim() &&
           `- Penumpang & koper: ${values.passengers.trim()}`,
-          values.notes.trim() && `- Catatan: ${values.notes.trim()}`,
      ].filter(Boolean);
 
      return [
@@ -69,35 +93,89 @@ function buildMessage(values: FormValues): string {
 }
 
 export default function SewaMobilForm({
-     packageOptions,
-     fleetOptions,
+     routes,
+     fleet,
      whatsapp,
+     embedded = false,
 }: SewaMobilFormProps) {
      const content = sewaMobilForm;
-     const packages = [...packageOptions, content.otherOption];
-     const fleet = [...fleetOptions, content.otherOption];
 
+     const [packageType, setPackageType] = useState("");
+     const [fleetId, setFleetId] = useState("");
+     const [origin, setOrigin] = useState("");
+     const [destination, setDestination] = useState("");
      const [values, setValues] = useState<FormValues>({
-          packageType: packages[0],
-          fleet: fleet[0],
-          origin: "",
-          destination: "",
           date: "",
           time: "",
           passengers: "",
-          notes: "",
      });
 
-     if (!whatsapp) return null;
+     if (!whatsapp || routes.length === 0) return null;
 
      function update(field: keyof FormValues, value: string) {
           setValues((prev) => ({ ...prev, [field]: value }));
      }
 
-     const message = buildMessage(values);
+     // Pilihan diambil dari data CMS. Semua pilihan mulai kosong.
+     const packages = unique(routes.map((r) => r.acf?.paket_sewa ?? ""));
+     const fleetOptions = fleet.filter((f) =>
+          routes.some((r) => r.acf?.armada?.some((a) => a.ID === f.id)),
+     );
+     const origins = unique(
+          routes.map((r) => capitalizeFirst(r.acf?.kota_asal)),
+     );
+
+     const selectedPackage = packages.includes(packageType) ? packageType : "";
+     const selectedFleet = fleetOptions.find((f) => String(f.id) === fleetId);
+     const selectedOrigin = origins.includes(origin) ? origin : "";
+
+     // Tujuan hanya yang punya rute dari kota asal terpilih.
+     const destinations = selectedOrigin
+          ? unique(
+               routes
+                    .filter(
+                         (r) => capitalizeFirst(r.acf?.kota_asal) === selectedOrigin,
+                    )
+                    .map((r) => capitalizeFirst(r.acf?.kota_tujuan)),
+          )
+          : [];
+     const selectedDestination = destinations.includes(destination)
+          ? destination
+          : "";
+
+     // Harga hanya dihitung bila SEMUA isian sudah terisi.
+     const allFilled =
+          Boolean(selectedPackage) &&
+          selectedFleet !== undefined &&
+          Boolean(selectedOrigin) &&
+          Boolean(selectedDestination) &&
+          Boolean(values.date) &&
+          Boolean(values.time) &&
+          Boolean(values.passengers.trim());
+
+     // Satu entri CMS = satu kombinasi paket + armada + rute.
+     const match = allFilled
+          ? routes.find(
+               (r) =>
+                    r.acf?.paket_sewa === selectedPackage &&
+                    r.acf?.armada?.some((a) => a.ID === selectedFleet?.id) &&
+                    capitalizeFirst(r.acf?.kota_asal) === selectedOrigin &&
+                    capitalizeFirst(r.acf?.kota_tujuan) === selectedDestination,
+          )
+          : undefined;
+     const price = Number(match?.acf?.harga);
+     const priceText =
+          Number.isFinite(price) && price > 0 ? formatPrice(String(price)) : null;
 
      function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
           event.preventDefault();
+          const message = buildMessage({
+               packageType: selectedPackage,
+               fleetName: selectedFleet?.name ?? "",
+               origin: selectedOrigin,
+               destination: selectedDestination,
+               values,
+          });
           window.open(
                buildWhatsAppUrl(whatsapp, message),
                "_blank",
@@ -105,230 +183,216 @@ export default function SewaMobilForm({
           );
      }
 
-     const trustIcons = [Wallet, CalendarCheck];
+     const card = (
+          <div className="rounded-xl bg-surface-container-lowest p-space-md shadow-xl lg:p-space-lg">
+               {/* Header form */}
+               <div className="mb-space-md flex items-center justify-between gap-space-sm">
+                    <div className="flex min-w-0 items-center gap-space-sm">
+                         <span className="shrink-0 rounded-lg bg-primary-container/10 p-2 text-primary">
+                              <Car size={22} aria-hidden />
+                         </span>
+                                                  <h2 className="whitespace-nowrap font-label-lg text-label-lg text-on-surface">
+                              {content.title}
+                         </h2>
+                    </div>
+
+                    <div className="inline-flex shrink-0 items-center whitespace-nowrap rounded-lg bg-surface-container-low px-3 py-1.5 font-label-sm text-label-sm text-primary">
+                         <span className="sm:hidden">Cek Tarif</span>
+                         <span className="hidden sm:inline">{content.eyebrow}</span>
+                    </div>
+               </div>
+
+               <form
+                    onSubmit={handleSubmit}
+                    className="grid grid-cols-2 items-end gap-x-space-sm gap-y-space-md lg:grid-cols-12 lg:gap-x-space-md"
+               >
+                    {/* Paket */}
+                    <div className="col-span-2 min-w-0 space-y-1.5 lg:col-span-3">
+                         <label htmlFor="sm-package" className={labelClass}>
+                              <Briefcase size={14} className="text-primary" aria-hidden />
+                              {content.labels.packageType}
+                         </label>
+                         <div className="relative">
+                              <select
+                                   id="sm-package"
+                                   required
+                                   value={selectedPackage}
+                                   onChange={(e) => setPackageType(e.target.value)}
+                                   className={selectClass}
+                              >
+                                   <option value="">Pilih</option>
+                                   {packages.map((option) => (
+                                        <option key={option} value={option}>
+                                             {option}
+                                        </option>
+                                   ))}
+                              </select>
+                              <ChevronDown size={16} className={chevronClass} aria-hidden />
+                         </div>
+                    </div>
+
+                    {/* Armada */}
+                    <div className="col-span-2 min-w-0 space-y-1.5 lg:col-span-3">
+                         <label htmlFor="sm-fleet" className={labelClass}>
+                              <Car size={14} className="text-primary" aria-hidden />
+                              {content.labels.fleet}
+                         </label>
+                         <div className="relative">
+                              <select
+                                   id="sm-fleet"
+                                   required
+                                   value={selectedFleet ? String(selectedFleet.id) : ""}
+                                   onChange={(e) => setFleetId(e.target.value)}
+                                   className={selectClass}
+                              >
+                                   <option value="">Pilih</option>
+                                   {fleetOptions.map((option) => (
+                                        <option key={option.id} value={String(option.id)}>
+                                             {option.name}
+                                        </option>
+                                   ))}
+                              </select>
+                              <ChevronDown size={16} className={chevronClass} aria-hidden />
+                         </div>
+                    </div>
+
+                    {/* Asal */}
+                    <div className="col-span-1 min-w-0 space-y-1.5 lg:col-span-3">
+                         <label htmlFor="sm-origin" className={labelClass}>
+                              <LocateFixed size={14} className="text-primary" aria-hidden />
+                              {content.labels.origin}
+                         </label>
+                         <div className="relative">
+                              <select
+                                   id="sm-origin"
+                                   required
+                                   value={selectedOrigin}
+                                   onChange={(e) => setOrigin(e.target.value)}
+                                   className={selectClass}
+                              >
+                                   <option value="">Pilih</option>
+                                   {origins.map((option) => (
+                                        <option key={option} value={option}>
+                                             {option}
+                                        </option>
+                                   ))}
+                              </select>
+                              <ChevronDown size={16} className={chevronClass} aria-hidden />
+                         </div>
+                    </div>
+
+                    {/* Tujuan */}
+                    <div className="col-span-1 min-w-0 space-y-1.5 lg:col-span-3">
+                         <label htmlFor="sm-destination" className={labelClass}>
+                              <MapPin size={14} className="text-secondary" aria-hidden />
+                              {content.labels.destination}
+                         </label>
+                         <div className="relative">
+                              <select
+                                   id="sm-destination"
+                                   required
+                                   value={selectedDestination}
+                                   onChange={(e) => setDestination(e.target.value)}
+                                   className={selectClass}
+                              >
+                                   <option value="">Pilih</option>
+                                   {destinations.map((option) => (
+                                        <option key={option} value={option}>
+                                             {option}
+                                        </option>
+                                   ))}
+                              </select>
+                              <ChevronDown size={16} className={chevronClass} aria-hidden />
+                         </div>
+                    </div>
+
+                    {/* Tanggal */}
+                    <div className="col-span-1 min-w-0 space-y-1.5 lg:col-span-3">
+                         <label htmlFor="sm-date" className={labelClass}>
+                              <CalendarDays size={14} className="text-primary" aria-hidden />
+                              {content.labels.date}
+                         </label>
+                         <input
+                              id="sm-date"
+                              type="date"
+                              required
+                              value={values.date}
+                              onChange={(e) => update("date", e.target.value)}
+                              className={inputClass}
+                         />
+                    </div>
+
+                    {/* Jam */}
+                    <div className="col-span-1 min-w-0 space-y-1.5 lg:col-span-3">
+                         <label htmlFor="sm-time" className={labelClass}>
+                              <Clock size={14} className="text-primary" aria-hidden />
+                              {content.labels.time}
+                         </label>
+                         <input
+                              id="sm-time"
+                              type="time"
+                              required
+                              value={values.time}
+                              onChange={(e) => update("time", e.target.value)}
+                              className={inputClass}
+                         />
+                    </div>
+
+                    {/* Penumpang */}
+                    <div className="col-span-2 min-w-0 space-y-1.5 lg:col-span-6">
+                         <label htmlFor="sm-passengers" className={labelClass}>
+                              <Users size={14} className="text-primary" aria-hidden />
+                              {content.labels.passengers}
+                         </label>
+                         <input
+                              id="sm-passengers"
+                              type="text"
+                              required
+                              value={values.passengers}
+                              onChange={(e) => update("passengers", e.target.value)}
+                              placeholder={content.placeholders.passengers}
+                              className={inputClass}
+                         />
+                    </div>
+
+                    {/* Harga (kiri) + Tombol (kanan) */}
+                    <div className="col-span-2 flex flex-col gap-space-md pt-space-xs sm:flex-row sm:items-center sm:justify-between sm:border-t sm:border-surface-container sm:pt-space-md lg:col-span-12">
+                         {priceText && (
+                              <div className="flex items-baseline justify-center gap-2 whitespace-nowrap rounded-lg bg-primary-container/10 px-space-md py-2 sm:flex-col sm:items-start sm:justify-start sm:gap-0 sm:bg-transparent sm:px-0 sm:py-0">
+                                   <span className="font-label-sm text-label-sm text-on-surface-variant">
+                                        Harga mulai
+                                   </span>
+                                   <span className="flex items-baseline gap-1">
+                                        <span className="font-headline-sm text-headline-sm font-bold leading-none text-primary">
+                                             {priceText}
+                                        </span>
+                                        <span className="font-label-sm text-label-sm text-on-surface-variant">
+                                             /hari
+                                        </span>
+                                   </span>
+                              </div>
+                         )}
+
+                         <button
+                              type="submit"
+                                                       className="inline-flex w-full items-center justify-center gap-space-sm rounded-lg bg-whatsapp px-space-md py-2.5 text-center font-label-md text-label-md text-on-whatsapp shadow-[0_4px_16px_rgba(37,211,102,0.35)] transition-all duration-150 hover:bg-whatsapp-hover sm:ml-auto sm:w-auto sm:gap-space-md sm:px-space-lg sm:py-3 sm:font-label-lg sm:text-label-lg"
+                         >
+                              <MessageSquareText className="h-4 w-4 shrink-0 sm:h-5 sm:w-5" aria-hidden />
+                              {content.submitLabel}
+                         </button>
+                    </div>
+               </form>
+          </div>
+     );
+
+     if (embedded) return card;
 
      return (
           <section
                id="simulasi-carter"
                className="w-full scroll-mt-32 bg-surface py-space-xl"
           >
-               <div className="mx-auto max-w-6xl px-gutter">
-                    <div className="rounded-3xl border border-surface-container-high/80 bg-surface-container-lowest p-gutter shadow-2xl lg:p-space-xl">
-                         <div className="grid grid-cols-1 gap-gutter lg:grid-cols-12">
-                              <div className="flex flex-col gap-space-lg lg:col-span-5">
-                                   <div className="flex flex-col gap-space-sm">
-                                        <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-surface-container px-3.5 py-1 font-label-sm text-label-sm font-bold text-primary ring-1 ring-primary/20">
-                                             <Headset size={14} aria-hidden="true" />
-                                             {content.eyebrow}
-                                        </span>
-                                        <h2 className="font-headline-lg text-headline-lg font-extrabold tracking-tight text-on-surface">
-                                             {content.title}
-                                        </h2>
-                                        <p className="font-body-md text-body-md leading-relaxed text-on-surface-variant">
-                                             {content.description}
-                                        </p>
-                                   </div>
-
-                                   <div className="flex flex-col gap-space-sm">
-                                        {content.trustItems.map((item, index) => {
-                                             const Icon = trustIcons[index % trustIcons.length];
-                                             return (
-                                                  <div
-                                                       key={item.title}
-                                                       className="flex items-start gap-3.5 rounded-2xl border border-surface-container-high/60 bg-surface-container-low p-space-md"
-                                                  >
-                                                       <Icon
-                                                            size={24}
-                                                            className="mt-0.5 shrink-0 text-primary-container"
-                                                            aria-hidden="true"
-                                                       />
-                                                       <div>
-                                                            <span className="block font-label-md text-label-md font-bold text-on-surface">
-                                                                 {item.title}
-                                                            </span>
-                                                            <span className="mt-0.5 block font-body-sm text-body-sm leading-relaxed text-on-surface-variant">
-                                                                 {item.description}
-                                                            </span>
-                                                       </div>
-                                                  </div>
-                                             );
-                                        })}
-                                   </div>
-
-                                   <div className="flex items-center gap-3.5 rounded-2xl border border-surface-container-high bg-surface-container p-space-md">
-                                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-surface-container-lowest text-primary shadow-sm">
-                                             <PhoneCall size={20} aria-hidden="true" />
-                                        </div>
-                                        <div className="flex flex-col">
-                                             <span className="font-label-sm text-label-sm font-medium text-on-surface-variant">
-                                                  {content.emergency.question}
-                                             </span>
-                                             <a
-                                                  href={buildWhatsAppUrl(
-                                                       whatsapp,
-                                                       content.emergency.message,
-                                                  )}
-                                                  target="_blank"
-                                                  rel="noopener noreferrer"
-                                                  className="font-label-md text-label-md font-bold text-primary hover:underline"
-                                             >
-                                                  {content.emergency.linkLabel}
-                                             </a>
-                                        </div>
-                                   </div>
-                              </div>
-
-                              <div className="rounded-3xl border border-surface-container-high bg-surface-container-low/70 p-space-md shadow-inner sm:p-space-lg lg:col-span-7">
-                                   <form
-                                        onSubmit={handleSubmit}
-                                        className="flex flex-col gap-space-md"
-                                   >
-                                        <div className="grid grid-cols-1 gap-space-sm sm:grid-cols-2">
-                                             <div>
-                                                  <label htmlFor="sm-package" className={LABEL_CLASS}>
-                                                       {content.labels.packageType}
-                                                  </label>
-                                                  <select
-                                                       id="sm-package"
-                                                       value={values.packageType}
-                                                       onChange={(e) => update("packageType", e.target.value)}
-                                                       className={INPUT_CLASS}
-                                                  >
-                                                       {packages.map((option) => (
-                                                            <option key={option} value={option}>
-                                                                 {option}
-                                                            </option>
-                                                       ))}
-                                                  </select>
-                                             </div>
-                                             <div>
-                                                  <label htmlFor="sm-fleet" className={LABEL_CLASS}>
-                                                       {content.labels.fleet}
-                                                  </label>
-                                                  <select
-                                                       id="sm-fleet"
-                                                       value={values.fleet}
-                                                       onChange={(e) => update("fleet", e.target.value)}
-                                                       className={INPUT_CLASS}
-                                                  >
-                                                       {fleet.map((option) => (
-                                                            <option key={option} value={option}>
-                                                                 {option}
-                                                            </option>
-                                                       ))}
-                                                  </select>
-                                             </div>
-                                             <div>
-                                                  <label htmlFor="sm-origin" className={LABEL_CLASS}>
-                                                       {content.labels.origin}
-                                                  </label>
-                                                  <input
-                                                       id="sm-origin"
-                                                       type="text"
-                                                       required
-                                                       value={values.origin}
-                                                       onChange={(e) => update("origin", e.target.value)}
-                                                       placeholder={content.placeholders.origin}
-                                                       className={INPUT_CLASS}
-                                                  />
-                                             </div>
-                                             <div>
-                                                  <label htmlFor="sm-destination" className={LABEL_CLASS}>
-                                                       {content.labels.destination}
-                                                  </label>
-                                                  <input
-                                                       id="sm-destination"
-                                                       type="text"
-                                                       required
-                                                       value={values.destination}
-                                                       onChange={(e) => update("destination", e.target.value)}
-                                                       placeholder={content.placeholders.destination}
-                                                       className={INPUT_CLASS}
-                                                  />
-                                             </div>
-                                             <div>
-                                                  <label htmlFor="sm-date" className={LABEL_CLASS}>
-                                                       {content.labels.date}
-                                                  </label>
-                                                  <input
-                                                       id="sm-date"
-                                                       type="date"
-                                                       required
-                                                       value={values.date}
-                                                       onChange={(e) => update("date", e.target.value)}
-                                                       className={INPUT_CLASS}
-                                                  />
-                                             </div>
-                                             <div>
-                                                  <label htmlFor="sm-time" className={LABEL_CLASS}>
-                                                       {content.labels.time}
-                                                  </label>
-                                                  <input
-                                                       id="sm-time"
-                                                       type="time"
-                                                       value={values.time}
-                                                       onChange={(e) => update("time", e.target.value)}
-                                                       className={INPUT_CLASS}
-                                                  />
-                                             </div>
-                                             <div className="sm:col-span-2">
-                                                  <label htmlFor="sm-passengers" className={LABEL_CLASS}>
-                                                       {content.labels.passengers}
-                                                  </label>
-                                                  <input
-                                                       id="sm-passengers"
-                                                       type="text"
-                                                       value={values.passengers}
-                                                       onChange={(e) => update("passengers", e.target.value)}
-                                                       placeholder={content.placeholders.passengers}
-                                                       className={INPUT_CLASS}
-                                                  />
-                                             </div>
-                                        </div>
-
-                                        <div>
-                                             <label htmlFor="sm-notes" className={LABEL_CLASS}>
-                                                  {content.labels.notes}
-                                             </label>
-                                             <textarea
-                                                  id="sm-notes"
-                                                  rows={2}
-                                                  value={values.notes}
-                                                  onChange={(e) => update("notes", e.target.value)}
-                                                  placeholder={content.placeholders.notes}
-                                                  className={`${INPUT_CLASS} resize-none`}
-                                             />
-                                        </div>
-
-                                        <div className="flex flex-col gap-1.5 rounded-2xl border border-surface-container-high bg-surface-container p-space-md">
-                                             <span className="flex items-center gap-1.5 font-label-sm text-label-sm font-bold text-on-surface-variant">
-                                                  <MessageSquareText
-                                                       size={16}
-                                                       className="text-primary"
-                                                       aria-hidden="true"
-                                                  />
-                                                  {content.previewLabel}
-                                             </span>
-                                             <p className="whitespace-pre-line font-body-sm text-body-sm italic leading-relaxed text-on-surface">
-                                                  {message}
-                                             </p>
-                                        </div>
-
-                                        <button
-                                             type="submit"
-                                             className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-whatsapp px-space-md py-3.5 font-label-lg text-label-lg text-on-whatsapp shadow-[0_4px_16px_rgba(37,211,102,0.35)] transition-all hover:bg-whatsapp-hover active:scale-[0.98]"
-                                        >
-                                             <Send size={20} aria-hidden="true" />
-                                             {content.submitLabel}
-                                        </button>
-                                        <p className="text-center font-label-sm text-label-sm font-medium text-on-surface-variant">
-                                             {content.footnote}
-                                        </p>
-                                   </form>
-                              </div>
-                         </div>
-                    </div>
-               </div>
+               <div className="mx-auto max-w-6xl px-gutter">{card}</div>
           </section>
      );
 }
