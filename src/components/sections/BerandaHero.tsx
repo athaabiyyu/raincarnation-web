@@ -1,24 +1,8 @@
 import Image from "next/image";
-import Link from "next/link";
-import {
-     ArrowRight,
-     BadgeCheck,
-     CircleCheck,
-     MessageCircle,
-     Users,
-} from "lucide-react";
+import { BadgeCheck, CircleCheck } from "lucide-react";
 import { berandaHero } from "@/constants/beranda";
-import { buildWhatsAppUrl } from "@/utils/whatsapp";
 
-type BerandaHeroProps = {
-     whatsapp: string;
-};
-
-export default function BerandaHero({ whatsapp }: BerandaHeroProps) {
-     const whatsappUrl = whatsapp
-          ? buildWhatsAppUrl(whatsapp, berandaHero.whatsappMessage)
-          : null;
-
+export default function BerandaHero() {
      return (
           <section className="w-full bg-linear-to-b from-surface-container-high/40 via-surface to-surface pt-space-md pb-space-xl md:pt-space-xl">
                <div className="mx-auto flex max-w-6xl flex-col gap-space-lg px-gutter">
@@ -68,34 +52,6 @@ export default function BerandaHero({ whatsapp }: BerandaHeroProps) {
                               <p className="font-body-lg text-body-lg text-on-surface-variant">
                                    {berandaHero.description}
                               </p>
-
-                              {/* <div className="flex flex-wrap items-center gap-space-md pt-space-xs">
-                                   <Link
-                                        href={berandaHero.travelButton.href}
-                                        className="inline-flex items-center gap-2 rounded-xl bg-primary px-space-lg py-space-sm font-label-md text-label-md text-on-primary shadow-md transition-all hover:bg-on-primary-fixed-variant active:scale-95"
-                                   >
-                                        {berandaHero.travelButton.label}
-                                        <ArrowRight size={18} aria-hidden="true" />
-                                   </Link>
-                                   <Link
-                                        href={berandaHero.charterButton.href}
-                                        className="inline-flex items-center gap-2 rounded-xl border border-surface-container bg-surface-container-lowest px-space-md py-space-sm font-label-md text-label-md text-primary shadow-sm transition-all hover:bg-surface-container"
-                                   >
-                                        <Users size={18} aria-hidden="true" />
-                                        {berandaHero.charterButton.label}
-                                   </Link>
-                                   {whatsappUrl && (
-                                        <a
-                                             href={whatsappUrl}
-                                             target="_blank"
-                                             rel="noopener noreferrer"
-                                             className="inline-flex items-center gap-2 rounded-xl bg-whatsapp px-space-md py-space-sm font-label-md text-label-md text-on-whatsapp shadow-[0_4px_16px_rgba(37,211,102,0.35)] transition-all hover:bg-whatsapp-hover active:scale-95"
-                                        >
-                                             <MessageCircle size={18} aria-hidden="true" />
-                                             {berandaHero.whatsappButton}
-                                        </a>
-                                   )}
-                              </div> */}
                          </div>
                     </div>
 
