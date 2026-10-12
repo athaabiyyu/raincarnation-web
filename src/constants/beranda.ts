@@ -1,3 +1,4 @@
+// BELUM DIKONFIRMASI BOS: klaim paket sewa (All In, Carter Drop Off 1 Arah, Lepas Kunci) dan durasi sewa 12 jam di file ini dipasang sementara.
 export type BerandaTrustIcon = "car" | "route" | "message-circle";
 export type BerandaServiceIcon = "armchair" | "car";
 export type BerandaWhyIcon =
@@ -87,9 +88,9 @@ export const berandaBooking = {
 
 
 export const berandaServices = {
-     title: "Pilih Layanan Perjalanan Sesuai Kebutuhan Anda",
+     title: "Layanan Sewa Mobil Malang dan Travel Reguler",
      description:
-          "Tersedia layanan sewa mobil di Malang, Batu, dan Surabaya, serta travel reguler per kursi untuk rute tertentu. Pilih layanan yang sesuai dengan kebutuhan perjalanan Anda.",
+          "Sewa mobil Malang (sering disebut rental mobil Malang) dengan sopir atau lepas kunci untuk perjalanan di Malang, Batu, dan Surabaya. Butuh kursi saja untuk rute tertentu? Pilih travel reguler per kursi.",
      items: [
           {
                icon: "armchair",
@@ -113,8 +114,8 @@ export const berandaServices = {
                description:
                     "Pilih sewa mobil dengan sopir atau lepas kunci sesuai ketersediaan layanan dan kebutuhan perjalanan Anda.",
                points: [
-                    "Pilihan layanan sesuai kebutuhan",
-                    "Tersedia area layanan Malang, Batu, dan Surabaya",
+                    "Tiga paket: All In, Carter Drop Off 1 Arah, dan Lepas Kunci",
+                    "Durasi sewa 12 jam",
                     "Informasi armada dan pemesanan melalui WhatsApp",
                ],
                button: "Lihat Sewa Mobil",
