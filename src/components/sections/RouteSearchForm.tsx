@@ -20,6 +20,8 @@ import type { RoutePair } from "@/utils/route-pairs";
 type Props = {
      pairs: RoutePair[];
      whatsapp: string;
+     /** Tingkat heading judul form. Beranda memakai "h3" (anak dari "Cari Perjalanan Anda"). */
+     headingLevel?: "h2" | "h3";
 };
 
 // Tanggal hari ini menurut zona waktu pengunjung, format YYYY-MM-DD.
@@ -41,7 +43,12 @@ const labelClass =
 const chevronClass =
      "pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant";
 
-export default function RouteSearchForm({ pairs, whatsapp }: Props) {
+export default function RouteSearchForm({
+     pairs,
+     whatsapp,
+     headingLevel = "h2",
+}: Props) {
+     const Heading = headingLevel;
      const origins = [...new Set(pairs.map((p) => p.from))];
 
      // Asal, tujuan, dan jam mulai kosong supaya tarif tidak langsung tampil.
@@ -127,9 +134,9 @@ export default function RouteSearchForm({ pairs, whatsapp }: Props) {
                          <span className="shrink-0 rounded-lg bg-primary-container/10 p-2 text-primary">
                               <Search size={22} aria-hidden />
                          </span>
-                         <h2 className="whitespace-nowrap font-label-lg text-label-lg text-on-surface">
+                         <Heading className="whitespace-nowrap font-label-lg text-label-lg text-on-surface">
                               Detail Travel Reguler
-                         </h2>
+                         </Heading>
                     </div>
 
                     <div className="inline-flex shrink-0 items-center whitespace-nowrap rounded-lg bg-surface-container-low px-3 py-1.5 font-label-sm text-label-sm text-primary">

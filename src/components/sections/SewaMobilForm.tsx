@@ -183,6 +183,9 @@ export default function SewaMobilForm({
           );
      }
 
+
+     const Heading = embedded ? "h3" : "h2";
+
      const card = (
           <div className="rounded-xl bg-surface-container-lowest p-space-md shadow-xl lg:p-space-lg">
                {/* Header form */}
@@ -191,9 +194,9 @@ export default function SewaMobilForm({
                          <span className="shrink-0 rounded-lg bg-primary-container/10 p-2 text-primary">
                               <Car size={22} aria-hidden />
                          </span>
-                                                  <h2 className="whitespace-nowrap font-label-lg text-label-lg text-on-surface">
+                         <Heading className="whitespace-nowrap font-label-lg text-label-lg text-on-surface">
                               {content.title}
-                         </h2>
+                         </Heading>
                     </div>
 
                     <div className="inline-flex shrink-0 items-center whitespace-nowrap rounded-lg bg-surface-container-low px-3 py-1.5 font-label-sm text-label-sm text-primary">
@@ -375,7 +378,7 @@ export default function SewaMobilForm({
 
                          <button
                               type="submit"
-                                                       className="inline-flex w-full items-center justify-center gap-space-sm rounded-lg bg-whatsapp px-space-md py-2.5 text-center font-label-md text-label-md text-on-whatsapp shadow-[0_4px_16px_rgba(37,211,102,0.35)] transition-all duration-150 hover:bg-whatsapp-hover sm:ml-auto sm:w-auto sm:gap-space-md sm:px-space-lg sm:py-3 sm:font-label-lg sm:text-label-lg"
+                              className="inline-flex w-full items-center justify-center gap-space-sm rounded-lg bg-whatsapp px-space-md py-2.5 text-center font-label-md text-label-md text-on-whatsapp shadow-[0_4px_16px_rgba(37,211,102,0.35)] transition-all duration-150 hover:bg-whatsapp-hover sm:ml-auto sm:w-auto sm:gap-space-md sm:px-space-lg sm:py-3 sm:font-label-lg sm:text-label-lg"
                          >
                               <MessageSquareText className="h-4 w-4 shrink-0 sm:h-5 sm:w-5" aria-hidden />
                               {content.submitLabel}
