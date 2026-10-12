@@ -15,6 +15,8 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: "Raincarnation",
   description: "Travel dan Sewa Mobil Malang, Surabaya, Pasuruan, dan Sekitarnya",
+  // SEMENTARA: hapus baris robots ini saat domain asli dipasang dan siap rilis.
+  robots: { index: false, follow: false },
 };
 
 export default function RootLayout({
