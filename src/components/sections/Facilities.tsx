@@ -87,9 +87,9 @@ export default function Facilities() {
                                              <span className="inline-block rounded bg-primary px-2.5 py-0.5 font-label-sm text-label-sm text-on-primary">
                                                   {photo.badge}
                                              </span>
-                                             <h4 className="font-headline-sm text-headline-sm font-bold text-on-primary">
+                                             <h3 className="font-headline-sm text-headline-sm font-bold text-on-primary">
                                                   {photo.title}
-                                             </h4>
+                                             </h3>
                                              <p className="max-w-lg font-body-sm text-body-sm text-surface-container-low">
                                                   {photo.description}
                                              </p>
@@ -106,9 +106,9 @@ export default function Facilities() {
                                              className="shrink-0 text-primary"
                                              aria-hidden="true"
                                         />
-                                        <h4 className="font-label-lg text-label-lg text-on-surface">
+                                        <h3 className="font-label-lg text-label-lg text-on-surface">
                                              {safety.title}
-                                        </h4>
+                                        </h3>
                                    </div>
                                    <ul className="space-y-space-sm font-body-sm text-body-sm text-on-surface-variant">
                                         {safety.points.map((point) => (

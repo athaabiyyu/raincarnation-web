@@ -12,6 +12,8 @@ import { getSiteConfig } from "@/lib/wordpress/config";
 import { getRoutes } from "@/lib/wordpress/routes";
 import type { Armada } from "@/types/armada";
 import type { Route } from "@/types/route";
+import { capitalizeFirst } from "@/utils/capitalize-first";
+import { decodeHtml } from "@/utils/decode-html";
 import { getRoutePairs } from "@/utils/route-pairs";
 import { siteConfig } from "@/config/site";
 
@@ -76,6 +78,22 @@ export default async function TravelRegulerPage() {
      const pairs = getRoutePairs(routes);
      const charterLink = heroContent.charterLink;
 
+     const routeListItems = routes
+          .filter((route) => route.slug)
+          .map((route, index) => ({
+               "@type": "ListItem",
+               position: index + 1,
+               name: capitalizeFirst(decodeHtml(route.title)),
+               url: `${siteConfig.url}/rute/${route.slug}`,
+          }));
+
+     const itemListJsonLd = {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "Rute Travel Reguler",
+          itemListElement: routeListItems,
+     };
+
      return (
           <main className="w-full bg-surface">
                <script
@@ -84,6 +102,14 @@ export default async function TravelRegulerPage() {
                          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
                     }}
                />
+               {routeListItems.length > 0 && (
+                    <script
+                         type="application/ld+json"
+                         dangerouslySetInnerHTML={{
+                              __html: JSON.stringify(itemListJsonLd).replace(/</g, "\\u003c"),
+                         }}
+                    />
+               )}
                <TravelHero />
 
                <section className="w-full bg-surface-container-low py-space-xl">

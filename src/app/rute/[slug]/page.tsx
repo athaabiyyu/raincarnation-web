@@ -46,19 +46,34 @@ export async function generateMetadata({
                     ? `${from} ${to}`
                     : capitalizeFirst(decodeHtml(route.title));
           const jalur = capitalizeFirst(route.acf?.jalur ?? "");
-          const tarif = formatPrice(route.acf?.tarif);
 
           const parts = [
                `Travel reguler per kursi ${name}.`,
                jalur ? `Lewat jalur ${jalur}.` : "",
-               tarif ? `Tarif mulai ${tarif}.` : "",
-               "Tersedia layanan antar-jemput sesuai area. Pesan lewat WhatsApp.",
+               "Lihat jadwal keberangkatan dan tarif per kursi, lalu pesan lewat WhatsApp.",
           ].filter(Boolean);
 
+          const title = `Travel ${name} per Kursi | Raincarnation`;
+          const description = parts.join(" ");
+
           return {
-               title: `Travel ${name} | Raincarnation`,
-               description: parts.join(" "),
+               title,
+               description,
                alternates: { canonical: `/rute/${slug}` },
+               openGraph: {
+                    type: "website",
+                    locale: "id_ID",
+                    siteName: siteConfig.name,
+                    url: `/rute/${slug}`,
+                    title,
+                    description,
+                    images: [
+                         {
+                              url: "/images/interior-armada.webp",
+                              alt: "Interior armada Raincarnation yang bersih dan nyaman",
+                         },
+                    ],
+               },
           };
      } catch {
           return {};
@@ -129,12 +144,37 @@ export default async function RoutePage({ params }: PageProps) {
                : {}),
      };
 
+     const breadcrumbJsonLd = {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+               {
+                    "@type": "ListItem",
+                    position: 1,
+                    name: "Travel Reguler",
+                    item: `${siteConfig.url}/travel-reguler`,
+               },
+               {
+                    "@type": "ListItem",
+                    position: 2,
+                    name: title,
+                    item: `${siteConfig.url}/rute/${slug}`,
+               },
+          ],
+     };
+
      return (
           <main className="w-full bg-surface">
                <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{
                          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+                    }}
+               />
+               <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                         __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, "\\u003c"),
                     }}
                />
 
@@ -179,12 +219,6 @@ export default async function RoutePage({ params }: PageProps) {
                               </ul>
                          )}
 
-                         {content && (
-                              <div
-                                   className="mt-space-md max-w-3xl font-body-lg text-body-lg text-on-surface-variant [&_a]:text-primary [&_a]:underline [&_li]:mt-space-xs [&_ol]:list-decimal [&_ol]:pl-6 [&_p:first-child]:mt-0 [&_p]:mt-space-sm [&_ul]:list-disc [&_ul]:pl-6"
-                                   dangerouslySetInnerHTML={{ __html: content }}
-                              />
-                         )}
                     </div>
                </section>
 
@@ -277,6 +311,18 @@ export default async function RoutePage({ params }: PageProps) {
                                                   </li>
                                              ))}
                                         </ul>
+                                   </div>
+                              )}
+
+                              {content && (
+                                   <div>
+                                        <h2 className="font-headline-md text-headline-md font-extrabold tracking-tight text-on-surface">
+                                             Tentang Rute Ini
+                                        </h2>
+                                        <div
+                                             className="mt-space-sm max-w-3xl font-body-lg text-body-lg text-on-surface-variant [&_a]:text-primary [&_a]:underline [&_li]:mt-space-xs [&_ol]:list-decimal [&_ol]:pl-6 [&_p:first-child]:mt-0 [&_p]:mt-space-sm [&_ul]:list-disc [&_ul]:pl-6"
+                                             dangerouslySetInnerHTML={{ __html: content }}
+                                        />
                                    </div>
                               )}
 

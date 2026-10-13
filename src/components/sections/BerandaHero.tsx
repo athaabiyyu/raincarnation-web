@@ -23,7 +23,14 @@ export default function BerandaHero() {
                               </h1>
                          </div>
 
-                         {/* Foto: HP di antara H1 dan deskripsi; laptop di kanan, membentang 2 baris */}
+                         {/* Blok B: deskripsi (laptop: kolom kiri, baris bawah) */}
+                         <div className="flex flex-col gap-space-md lg:col-start-1 lg:row-start-2 lg:self-start">
+                              <p className="font-body-lg text-body-lg text-on-surface-variant">
+                                   {berandaHero.description}
+                              </p>
+                         </div>
+
+                         {/* Foto: HP di bawah deskripsi; laptop di kanan, membentang 2 baris */}
                          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl shadow-lg lg:col-start-2 lg:row-span-2 lg:row-start-1">
                               <Image
                                    src={berandaHero.image.src}
@@ -45,13 +52,6 @@ export default function BerandaHero() {
                                         {berandaHero.imageCard.description}
                                    </p>
                               </div>
-                         </div>
-
-                         {/* Blok B: deskripsi (laptop: kolom kiri, baris bawah) */}
-                         <div className="flex flex-col gap-space-md lg:col-start-1 lg:row-start-2 lg:self-start">
-                              <p className="font-body-lg text-body-lg text-on-surface-variant">
-                                   {berandaHero.description}
-                              </p>
                          </div>
                     </div>
 

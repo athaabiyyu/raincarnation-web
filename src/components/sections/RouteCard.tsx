@@ -114,7 +114,7 @@ export default function RouteCard({ route, whatsapp }: RouteCardProps) {
                               <Link
                                    href={`/rute/${route.slug}`}
                                    aria-label={`Lihat detail travel ${displayTitle}`}
-                                                                      className="flex items-center justify-center whitespace-nowrap rounded-lg bg-primary/10 px-space-sm py-2.5 font-label-md text-label-md font-bold text-primary transition-colors hover:bg-primary/15"
+                                   className="flex items-center justify-center whitespace-nowrap rounded-lg bg-primary/10 px-space-sm py-2.5 font-label-md text-label-md font-bold text-primary transition-colors hover:bg-primary/15"
                               >
                                    {DETAIL_LABEL}
                               </Link>
@@ -125,7 +125,8 @@ export default function RouteCard({ route, whatsapp }: RouteCardProps) {
                               href={orderUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                                                            className="flex items-center justify-center gap-space-xs whitespace-nowrap rounded-lg bg-whatsapp px-space-sm py-2.5 font-label-md text-label-md font-bold text-on-whatsapp shadow-[0_4px_16px_rgba(37,211,102,0.35)] transition-colors hover:bg-whatsapp-hover"
+                              aria-label={`Pesan travel ${displayTitle} via WhatsApp`}
+                              className="flex items-center justify-center gap-space-xs whitespace-nowrap rounded-lg bg-whatsapp px-space-sm py-2.5 font-label-md text-label-md font-bold text-on-whatsapp shadow-[0_4px_16px_rgba(37,211,102,0.35)] transition-colors hover:bg-whatsapp-hover"
                          >
                               <MessageSquareText className="h-4 w-4" aria-hidden />
                               {content.orderLabel}

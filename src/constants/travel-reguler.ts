@@ -38,7 +38,7 @@ export const quickRoutes = [
 export const featuredRoutesContent = {
      title: "Rute Travel Reguler dan Jadwal Keberangkatan",
      description: "Temukan layanan travel reguler per kursi dari Malang, Batu, Surabaya, dan Bandara Juanda menuju kota tujuan yang tersedia. Lihat jadwal dan tarif setiap rute sebelum melakukan pemesanan.",
-     fareLabel: "Tarif All-in / Kursi",
+     fareLabel: "Tarif / Kursi",
      roundTripLabel: "Tarif Pulang-Pergi",
      scheduleLabel: "Jadwal:",
      fleetLabel: "Armada:",
