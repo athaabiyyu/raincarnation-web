@@ -6,8 +6,8 @@ export default function BerandaHero() {
           <section className="w-full bg-linear-to-b from-surface-container-high/40 via-surface to-surface pt-space-md pb-space-xl md:pt-space-xl">
                <div className="mx-auto flex max-w-6xl flex-col gap-space-lg px-gutter">
                     <div className="grid gap-space-lg lg:grid-cols-2 lg:content-center lg:gap-y-space-md">
-                         {/* Blok A: H1 (laptop: kolom kiri, baris atas) */}
-                         <div className="flex flex-col gap-space-md lg:self-end">
+                         {/* Blok A: Title H1 (Mobile: Urutan 1) */}
+                         <div className="order-1 flex flex-col gap-space-md lg:order-none lg:self-end">
                               <h1 className="font-display text-display font-extrabold tracking-tight text-on-surface">
                                    {berandaHero.titleStart}{" "}
                                    <span className="text-primary-container">
@@ -17,15 +17,8 @@ export default function BerandaHero() {
                               </h1>
                          </div>
 
-                         {/* Blok B: deskripsi (laptop: kolom kiri, baris bawah) */}
-                         <div className="flex flex-col gap-space-md lg:col-start-1 lg:row-start-2 lg:self-start">
-                              <p className="font-body-lg text-body-lg text-on-surface-variant">
-                                   {berandaHero.description}
-                              </p>
-                         </div>
-
-                         {/* Foto: HP di bawah deskripsi; laptop di kanan, membentang 2 baris */}
-                         <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl shadow-lg lg:col-start-2 lg:row-span-2 lg:row-start-1">
+                         {/* Foto/Gambar (Mobile: Urutan 2 -> Berada di Tengah) */}
+                         <div className="order-2 relative aspect-[4/3] w-full overflow-hidden rounded-3xl shadow-lg lg:order-none lg:col-start-2 lg:row-span-2 lg:row-start-1">
                               <Image
                                    src={berandaHero.image.src}
                                    alt={berandaHero.image.alt}
@@ -46,6 +39,13 @@ export default function BerandaHero() {
                                         {berandaHero.imageCard.description}
                                    </p>
                               </div>
+                         </div>
+
+                         {/* Blok B: Deskripsi (Mobile: Urutan 3 -> Berada di Bawah Gambar) */}
+                         <div className="order-3 flex flex-col gap-space-md lg:order-none lg:col-start-1 lg:row-start-2 lg:self-start">
+                              <p className="font-body-lg text-body-lg text-on-surface-variant">
+                                   {berandaHero.description}
+                              </p>
                          </div>
                     </div>
                </div>
