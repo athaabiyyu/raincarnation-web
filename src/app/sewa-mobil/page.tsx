@@ -20,6 +20,21 @@ export const metadata: Metadata = {
      description:
           "Sewa mobil Malang, Batu, dan Surabaya dengan sopir atau lepas kunci, durasi sewa 12 jam. Tarif menyesuaikan komponen biaya seperti BBM dan parkir. Tanyakan rinciannya lewat WhatsApp.",
      alternates: { canonical: "/sewa-mobil" },
+     openGraph: {
+          type: "website",
+          locale: "id_ID",
+          siteName: siteConfig.name,
+          url: "/sewa-mobil",
+          title: "Sewa Mobil Malang dengan Sopir atau Lepas Kunci | Raincarnation",
+          description:
+               "Sewa mobil Malang, Batu, dan Surabaya dengan sopir atau lepas kunci, durasi sewa 12 jam. Tarif menyesuaikan komponen biaya seperti BBM dan parkir. Tanyakan rinciannya lewat WhatsApp.",
+          images: [
+               {
+                    url: "/images/interior-armada.webp",
+                    alt: "Interior armada Raincarnation yang bersih dan nyaman",
+               },
+          ],
+     },
 };
 
 const jsonLd = {
