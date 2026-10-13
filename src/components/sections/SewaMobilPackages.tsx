@@ -3,7 +3,7 @@ import {
      Briefcase,
      Calendar,
      CircleCheck,
-     MessageCircle,
+     MessageSquareText,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { sewaMobilPackages } from "@/constants/sewa-mobil";
@@ -48,7 +48,7 @@ export default function SewaMobilPackages({
      return (
           <section className="w-full bg-surface py-space-xl">
                <div className="mx-auto flex max-w-6xl flex-col gap-space-lg px-gutter">
-                                        <div className="flex flex-col gap-space-xs">
+                    <div className="flex flex-col gap-space-xs">
                          <h2 className="font-headline-lg text-headline-lg font-extrabold tracking-tight text-on-surface">
                               {content.title}
                          </h2>
@@ -100,7 +100,7 @@ export default function SewaMobilPackages({
 
                                              {points.length > 0 && (
                                                   <ul className="space-y-2.5 pt-space-xs font-body-sm text-body-sm text-on-surface-variant">
-                                                                                                              {points.map((point, pointIndex) => (
+                                                       {points.map((point, pointIndex) => (
                                                             <li key={`${pointIndex}-${point}`} className="flex items-start gap-2.5">
                                                                  <CircleCheck
                                                                       size={18}
@@ -115,11 +115,11 @@ export default function SewaMobilPackages({
 
                                         <div className="mt-space-md flex flex-col gap-space-sm">
                                              {(formatted || priceText) && (
-                                                  <div className="flex items-center justify-between rounded-2xl border border-surface-container-high bg-surface-container-low/80 p-space-sm px-space-md">
+                                                  <div className="border-t border-surface-container-high pt-space-sm">
                                                        <span className="font-label-sm text-label-sm font-medium text-on-surface-variant">
                                                             {formatted ? "Mulai dari" : "Penawaran"}
                                                        </span>
-                                                       <div className="flex flex-col items-end text-right">
+                                                       <p className="flex items-baseline gap-1.5">
                                                             <span className="font-headline-sm text-headline-sm font-extrabold tracking-tight text-primary">
                                                                  {formatted ?? priceText}
                                                             </span>
@@ -128,7 +128,7 @@ export default function SewaMobilPackages({
                                                                       {unit}
                                                                  </span>
                                                             )}
-                                                       </div>
+                                                       </p>
                                                   </div>
                                              )}
 
@@ -140,9 +140,9 @@ export default function SewaMobilPackages({
                                                        )}
                                                        target="_blank"
                                                        rel="noopener noreferrer"
-                                                       className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-whatsapp px-space-md py-3 font-label-lg text-label-lg text-on-whatsapp shadow-[0_4px_16px_rgba(37,211,102,0.35)] transition-all hover:bg-whatsapp-hover active:scale-95"
+                                                       className="mt-space-sm inline-flex w-full items-center justify-center gap-2 rounded-xl bg-whatsapp px-space-md py-3 font-label-lg text-label-lg text-on-whatsapp shadow-[0_4px_16px_rgba(37,211,102,0.35)] transition-all hover:bg-whatsapp-hover active:scale-95"
                                                   >
-                                                       <MessageCircle size={20} />
+                                                       <MessageSquareText size={20} />
                                                        Tanya via WhatsApp
                                                   </a>
                                              )}
