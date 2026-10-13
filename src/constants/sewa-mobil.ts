@@ -40,7 +40,7 @@ export const sewaMobilPackages = {
      eyebrow: "Kategori Fleksibel",
      title: "Pilihan Paket Sewa & Drop Penuh",
      description:
-          "Sesuaikan skenario mobilitas Anda, mulai dari sekali antar antarprovinsi hingga pemakaian berhari-hari.",
+          "Pilih paket sewa mobil dengan sopir atau lepas kunci, durasi sewa 12 jam, untuk perjalanan di Malang, Batu, dan Surabaya.",
 };
 
 export const sewaMobilFleet = {
