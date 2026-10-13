@@ -21,20 +21,16 @@ const icons: Record<FacilityIcon, LucideIcon> = {
 };
 
 export default function Facilities() {
-     const { eyebrow, title, description, items, photo, safety } =
-          facilitiesContent;
+     const { title, description, items, photo, safety } = facilitiesContent;
 
      return (
-          <section className="w-full bg-surface-container-low px-gutter py-space-lg md:py-space-xl">
-               <div className="mx-auto max-w-6xl space-y-space-lg">
-                    <div className="max-w-2xl space-y-space-xs">
-                         <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
-                              {eyebrow}
-                         </span>
+          <section className="w-full bg-surface-container-low py-space-lg md:py-space-xl">
+               <div className="mx-auto max-w-6xl space-y-space-lg px-gutter">
+                    <div className="space-y-space-xs">
                          <h2 className="font-headline-lg text-headline-lg tracking-tight text-on-surface">
                               {title}
                          </h2>
-                         <p className="font-body-md text-body-md text-on-surface-variant">
+                         <p className="max-w-3xl font-body-md text-body-md text-on-surface-variant">
                               {description}
                          </p>
                     </div>

@@ -21,19 +21,16 @@ const icons: Record<BookingStepIcon, LucideIcon> = {
 };
 
 export default function BookingSteps() {
-     const { eyebrow, title, description, steps } = bookingStepsContent;
+     const { title, description, steps } = bookingStepsContent;
 
      return (
-          <section className="w-full bg-surface px-gutter py-space-lg md:py-space-xl">
-               <div className="mx-auto max-w-6xl space-y-space-lg">
-                    <div className="mx-auto max-w-2xl space-y-space-xs text-center">
-                         <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
-                              {eyebrow}
-                         </span>
+          <section className="w-full bg-surface py-space-lg md:py-space-xl">
+               <div className="mx-auto max-w-6xl space-y-space-lg px-gutter">
+                    <div className="space-y-space-xs">
                          <h2 className="font-headline-lg text-headline-lg tracking-tight text-on-surface">
                               {title}
                          </h2>
-                         <p className="font-body-md text-body-md text-on-surface-variant">
+                         <p className="max-w-3xl font-body-md text-body-md text-on-surface-variant">
                               {description}
                          </p>
                     </div>

@@ -1,24 +1,51 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import BookingSteps from "@/components/sections/BookingSteps";
 import CtaBanner from "@/components/sections/CtaBanner";
 import Facilities from "@/components/sections/Facilities";
 import FeaturedRoutes from "@/components/sections/FeaturedRoutes";
 import RouteSearchForm from "@/components/sections/RouteSearchForm";
 import TravelHero from "@/components/sections/TravelHero";
+import { heroContent } from "@/constants/travel-reguler";
 import { getArmadaList } from "@/lib/wordpress/armada";
 import { getSiteConfig } from "@/lib/wordpress/config";
 import { getRoutes } from "@/lib/wordpress/routes";
 import type { Armada } from "@/types/armada";
 import type { Route } from "@/types/route";
 import { getRoutePairs } from "@/utils/route-pairs";
+import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
-     title: "Travel Malang Surabaya Pasuruan | Raincarnation",
+     title: "Travel Malang Surabaya per Kursi, Jadwal & Tarif | Raincarnation",
      description:
-          "Travel reguler per kursi Malang, Surabaya, dan Pasuruan. Sudah termasuk tol, BBM, dan driver. Pesan lewat WhatsApp.",
+          "Travel reguler per kursi dari Malang, Batu, Surabaya, Juanda, dan Pandaan. Cek jadwal dan tarif per rute, lalu pesan lewat WhatsApp.",
      alternates: {
           canonical: "/travel-reguler",
      },
+     openGraph: {
+          type: "website",
+          locale: "id_ID",
+          siteName: siteConfig.name,
+          url: "/travel-reguler",
+          title: "Travel Malang Surabaya per Kursi, Jadwal & Tarif | Raincarnation",
+          description:
+               "Travel reguler per kursi dari Malang, Batu, Surabaya, Juanda, dan Pandaan. Cek jadwal dan tarif per rute, lalu pesan lewat WhatsApp.",
+          images: [
+               {
+                    url: "/images/interior-armada.webp",
+                    alt: "Interior armada Raincarnation yang bersih dan nyaman",
+               },
+          ],
+     },
+};
+
+const jsonLd = {
+     "@context": "https://schema.org",
+     "@type": "Service",
+     name: "Travel Reguler per Kursi",
+     serviceType: "Travel reguler per kursi",
+     areaServed: ["Malang", "Batu", "Surabaya", "Juanda", "Pandaan"],
+     url: `${siteConfig.url}/travel-reguler`,
 };
 
 async function loadRoutes(): Promise<Route[]> {
@@ -47,18 +74,36 @@ export default async function TravelRegulerPage() {
      ]);
      const whatsapp = config.contact?.whatsapp;
      const pairs = getRoutePairs(routes);
+     const charterLink = heroContent.charterLink;
 
      return (
           <main className="w-full bg-surface">
+               <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                         __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+                    }}
+               />
                <TravelHero />
 
-               {whatsapp && pairs.length > 0 && (
-                    <section className="w-full bg-surface-container-low pb-space-xl">
-                         <div className="mx-auto max-w-7xl px-gutter">
+               <section className="w-full bg-surface-container-low py-space-xl">
+                    <div className="mx-auto max-w-6xl space-y-space-md px-gutter">
+                         {whatsapp && pairs.length > 0 && (
                               <RouteSearchForm pairs={pairs} whatsapp={whatsapp} />
-                         </div>
-                    </section>
-               )}
+                         )}
+
+                         <p className="pt-space-sm text-center font-body-md text-body-md text-on-surface-variant">
+                              {charterLink.text}{" "}
+                              <Link
+                                   href={charterLink.href}
+                                   className="font-bold text-primary underline underline-offset-4 hover:text-primary-container"
+                              >
+                                   {charterLink.label}
+                              </Link>
+                              .
+                         </p>
+                    </div>
+               </section>
 
                {whatsapp && routes.length > 0 && (
                     <FeaturedRoutes
