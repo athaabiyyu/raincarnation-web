@@ -8,13 +8,18 @@ import {
 import type { LucideIcon } from "lucide-react";
 import { sewaMobilPackages } from "@/constants/sewa-mobil";
 import type { PaketSewa } from "@/types/paket-sewa";
-import PackagesCarousel from "@/components/sections/PackagesCarousel";
 import { capitalizeFirst } from "@/utils/capitalize-first";
 import { decodeHtml } from "@/utils/decode-html";
 import { formatPrice } from "@/utils/format-price";
 import { buildWhatsAppUrl } from "@/utils/whatsapp";
 
 const icons: LucideIcon[] = [ArrowRight, Calendar, Briefcase];
+
+const LG_COLS: Record<number, string> = {
+     1: "lg:grid-cols-1",
+     2: "lg:grid-cols-2",
+     3: "lg:grid-cols-3",
+};
 
 type SewaMobilPackagesProps = {
      prices: PaketSewa[];
@@ -36,24 +41,26 @@ export default function SewaMobilPackages({
 
      if (prices.length === 0) return null;
 
+     const lgCols = Math.min(prices.length, 3);
+     const mdCols = prices.length === 1 ? "md:grid-cols-1" : "md:grid-cols-2";
+     const listClass = `grid grid-cols-1 gap-space-md ${mdCols} ${LG_COLS[lgCols]}`;
+
      return (
-          <section className="w-full border-b border-surface-container-high/40 bg-surface-container-low py-space-xl">
+          <section className="w-full bg-surface py-space-xl">
                <div className="mx-auto flex max-w-6xl flex-col gap-space-lg px-gutter">
-                    <div className="flex flex-col justify-between gap-space-sm md:flex-row md:items-end">
-                         <div className="flex flex-col">
-                              <span className="font-label-sm text-label-sm font-bold uppercase tracking-widest text-primary">
-                                   {content.eyebrow}
-                              </span>
-                              <h2 className="font-headline-lg text-headline-lg font-extrabold tracking-tight text-on-surface">
-                                   {content.title}
-                              </h2>
-                         </div>
-                         <p className="max-w-md font-body-md text-body-md text-on-surface-variant">
+                    <div className="flex flex-col gap-space-xs">
+                         <span className="font-label-sm text-label-sm font-bold uppercase tracking-widest text-primary">
+                              {content.eyebrow}
+                         </span>
+                         <h2 className="font-headline-lg text-headline-lg font-extrabold tracking-tight text-on-surface">
+                              {content.title}
+                         </h2>
+                         <p className="max-w-3xl font-body-md text-body-md text-on-surface-variant">
                               {content.description}
                          </p>
                     </div>
 
-                    <PackagesCarousel>
+                    <div className={listClass}>
                          {prices.map((item, index) => {
                               const Icon = icons[index % icons.length];
                               const title = capitalizeFirst(decodeHtml(item.title));
@@ -96,8 +103,8 @@ export default function SewaMobilPackages({
 
                                              {points.length > 0 && (
                                                   <ul className="space-y-2.5 pt-space-xs font-body-sm text-body-sm text-on-surface-variant">
-                                                       {points.map((point) => (
-                                                            <li key={point} className="flex items-start gap-2.5">
+                                                                                                              {points.map((point, pointIndex) => (
+                                                            <li key={`${pointIndex}-${point}`} className="flex items-start gap-2.5">
                                                                  <CircleCheck
                                                                       size={18}
                                                                       className="mt-0.5 shrink-0 text-primary"
@@ -146,7 +153,7 @@ export default function SewaMobilPackages({
                                    </div>
                               );
                          })}
-                    </PackagesCarousel>
+                    </div>
                </div>
           </section>
      );

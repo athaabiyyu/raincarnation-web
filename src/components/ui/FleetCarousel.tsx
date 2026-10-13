@@ -62,60 +62,55 @@ export default function FleetCarousel({ children }: FleetCarouselProps) {
 
      const showControls = canPrev || canNext;
      const buttonClass =
-          "inline-flex h-10 w-10 items-center justify-center rounded-full border border-primary/30 bg-surface-container-lowest text-primary shadow-sm transition-colors hover:bg-primary/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-surface-container-lowest";
+          "absolute top-1/2 z-10 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-primary text-on-primary shadow-md transition-colors hover:bg-on-primary-fixed-variant focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-primary md:h-10 md:w-10";
+     "absolute top-1/2 z-10 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-primary/30 bg-surface-container-lowest text-primary shadow-md transition-colors hover:bg-surface-container-low focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary md:h-10 md:w-10";
 
      return (
           <div>
-               <div
-                    ref={scrollerRef}
-                    className="-my-4 flex snap-x snap-mandatory gap-gutter overflow-x-auto py-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-               >
-                    {Children.map(children, (child) => (
-                         <div className="flex w-full shrink-0 snap-start md:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-3rem)/3)] [&>*]:w-full">
-                              {child}
-                         </div>
-                    ))}
+               <div className="relative">
+                    <div
+                         ref={scrollerRef}
+                         className="-my-8 flex snap-x snap-mandatory gap-gutter overflow-x-auto py-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                    >
+                         {Children.map(children, (child) => (
+                              <div className="flex w-full shrink-0 snap-start md:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-3rem)/3)] [&>*]:w-full">
+                                   {child}
+                              </div>
+                         ))}
+                    </div>
+
+                    {showControls && (
+                         <>
+                              <button
+                                   type="button"
+                                   onClick={() => scrollByCard(-1)}
+                                   disabled={!canPrev}
+                                   aria-label="Armada sebelumnya"
+                                   className={`${buttonClass} -left-3 md:-left-5`}
+                              >
+                                   <ChevronLeft size={20} aria-hidden="true" />
+                              </button>
+
+                              <button
+                                   type="button"
+                                   onClick={() => scrollByCard(1)}
+                                   disabled={!canNext}
+                                   aria-label="Armada berikutnya"
+                                   className={`${buttonClass} -right-3 md:-right-5`}
+                              >
+                                   <ChevronRight size={20} aria-hidden="true" />
+                              </button>
+                         </>
+                    )}
                </div>
 
-               {showControls && (
-                    <div className="mt-space-md flex items-center justify-center gap-space-md">
-                         <button
-                              type="button"
-                              onClick={() => scrollByCard(-1)}
-                              disabled={!canPrev}
-                              aria-label="Armada sebelumnya"
-                              className={buttonClass}
-                         >
-                              <ChevronLeft size={20} aria-hidden="true" />
-                         </button>
-
-                         {count > 1 && (
-                              <div
-                                   className="flex items-center gap-2 md:hidden"
-                                   aria-hidden="true"
-                              >
-                                   {Array.from({ length: count }).map((_, index) => (
-                                        <span
-                                             key={index}
-                                             className={`h-2 rounded-full transition-all ${index === activeIndex
-                                                       ? "w-5 bg-primary"
-                                                       : "w-2 bg-primary/25"
-                                                  }`}
-                                        />
-                                   ))}
-                              </div>
-                         )}
-
-                         <button
-                              type="button"
-                              onClick={() => scrollByCard(1)}
-                              disabled={!canNext}
-                              aria-label="Armada berikutnya"
-                              className={buttonClass}
-                         >
-                              <ChevronRight size={20} aria-hidden="true" />
-                         </button>
-                    </div>
+               {showControls && count > 1 && (
+                    <p
+                         className="mt-space-md text-center font-label-md text-label-md tabular-nums text-on-surface-variant md:hidden"
+                         aria-live="polite"
+                    >
+                         {activeIndex + 1} / {count}
+                    </p>
                )}
           </div>
      );

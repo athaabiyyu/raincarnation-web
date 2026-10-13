@@ -12,16 +12,16 @@ const ICONS: Record<SewaMobilPillarIcon, LucideIcon> = {
 
 export default function SewaMobilPillars() {
      return (
-          <section className="w-full border-y border-surface-container-high/40 bg-surface-container-low py-space-xl">
+                    <section className="w-full bg-surface py-space-xl">
                <div className="mx-auto flex max-w-6xl flex-col gap-space-lg px-gutter">
-                    <div className="mx-auto flex max-w-2xl flex-col gap-2 text-center">
+                    <div className="flex flex-col gap-space-xs">
                          <span className="font-label-sm text-label-sm font-bold uppercase tracking-widest text-primary">
                               {sewaMobilPillars.eyebrow}
                          </span>
                          <h2 className="font-headline-lg text-headline-lg font-extrabold tracking-tight text-on-surface">
                               {sewaMobilPillars.title}
                          </h2>
-                         <p className="font-body-md text-body-md leading-relaxed text-on-surface-variant">
+                         <p className="max-w-3xl font-body-md text-body-md text-on-surface-variant">
                               {sewaMobilPillars.description}
                          </p>
                     </div>

@@ -26,6 +26,8 @@ type SewaMobilFormProps = {
      whatsapp: string;
      /** true = hanya kartu form (tanpa section pembungkus), dipakai di tab Beranda */
      embedded?: boolean;
+     /** tingkat judul form; bila kosong: embedded = h3, selain itu h2 */
+     headingLevel?: "h2" | "h3";
 };
 
 type FormValues = {
@@ -97,6 +99,7 @@ export default function SewaMobilForm({
      fleet,
      whatsapp,
      embedded = false,
+     headingLevel,
 }: SewaMobilFormProps) {
      const content = sewaMobilForm;
 
@@ -184,7 +187,7 @@ export default function SewaMobilForm({
      }
 
 
-     const Heading = embedded ? "h3" : "h2";
+     const Heading = headingLevel ?? (embedded ? "h3" : "h2");
 
      const card = (
           <div className="rounded-xl bg-surface-container-lowest p-space-md shadow-xl lg:p-space-lg">

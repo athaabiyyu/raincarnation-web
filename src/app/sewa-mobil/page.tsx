@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import SewaMobilHero from "@/components/sections/SewaMobilHero";
+import SewaMobilBooking from "@/components/sections/SewaMobilBooking";
 import SewaMobilPackages from "@/components/sections/SewaMobilPackages";
 import SewaMobilFleet from "@/components/sections/SewaMobilFleet";
 import SewaMobilPillars from "@/components/sections/SewaMobilPillars";
-import SewaMobilForm from "@/components/sections/SewaMobilForm";
 import { siteConfig } from "@/config/site";
 import { getSiteConfig } from "@/lib/wordpress/config";
 import { getPaketSewaList } from "@/lib/wordpress/paket-sewa";
@@ -16,20 +16,18 @@ import type { Armada } from "@/types/armada";
 import type { RuteCarter } from "@/types/rute-carter";
 
 export const metadata: Metadata = {
-     title: "Sewa Mobil Carter dengan Driver | Raincarnation",
+     title: "Sewa Mobil Malang dengan Sopir atau Lepas Kunci | Raincarnation",
      description:
-          "Sewa mobil carter dengan driver, satu mobil khusus rombongan Anda. Sudah termasuk mobil, sopir, dan BBM. Pesan lewat WhatsApp.",
+          "Sewa mobil Malang, Batu, dan Surabaya dengan sopir atau lepas kunci, durasi sewa 12 jam. Tarif menyesuaikan komponen biaya seperti BBM dan parkir. Tanyakan rinciannya lewat WhatsApp.",
      alternates: { canonical: "/sewa-mobil" },
 };
 
-// Data terstruktur untuk Google. Sengaja tanpa provider, rating, alamat,
-// telepon, dan harga sampai bos mengonfirmasi data aslinya.
 const jsonLd = {
      "@context": "https://schema.org",
      "@type": "Service",
-     name: "Sewa Mobil Carter dengan Driver",
-     serviceType: "Sewa mobil carter dengan driver",
-     areaServed: ["Malang", "Surabaya", "Pasuruan"],
+     name: "Sewa Mobil dengan Sopir atau Lepas Kunci",
+     serviceType: "Sewa mobil dengan sopir atau lepas kunci",
+     areaServed: ["Malang", "Batu", "Surabaya"],
      url: `${siteConfig.url}/sewa-mobil`,
 };
 
@@ -82,15 +80,15 @@ export default async function SewaMobilPage() {
                          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
                     }}
                />
-               <SewaMobilHero whatsapp={whatsapp} />
+               <SewaMobilHero />
+               <SewaMobilBooking
+                    whatsapp={whatsapp}
+                    routes={ruteCarter}
+                    fleet={fleet}
+               />
                <SewaMobilPackages prices={prices} whatsapp={whatsapp} />
                <SewaMobilFleet armada={armada} whatsapp={whatsapp} />
                <SewaMobilPillars />
-               <SewaMobilForm
-                    routes={ruteCarter}
-                    fleet={fleet}
-                    whatsapp={whatsapp}
-               />
           </main>
      );
 }
