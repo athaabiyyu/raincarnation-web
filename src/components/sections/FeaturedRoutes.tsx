@@ -1,13 +1,11 @@
 import Link from "next/link";
-import { Info, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import type { Route } from "@/types/route";
 import type { Armada } from "@/types/armada";
 import { featuredRoutesContent } from "@/constants/travel-reguler";
-import { buildWhatsAppUrl } from "@/utils/whatsapp";
 import RouteCard from "@/components/sections/RouteCard";
 
 const MAX_FEATURED = 3;
-const SEE_ALL_LABEL = "Lihat Semua Rute";
 
 type FeaturedRoutesProps = {
      routes: Route[];
@@ -36,21 +34,33 @@ export default function FeaturedRoutes({
      const hasMore = Boolean(seeAllHref) && routes.length < allRoutes.length;
 
      const content = featuredRoutesContent;
-     const helpUrl = buildWhatsAppUrl(
-          whatsapp,
-          "Halo Admin, saya mau tanya ketersediaan rute travel lain",
-     );
 
      return (
           <section className="w-full bg-surface py-space-xl">
                <div className="mx-auto max-w-6xl space-y-space-lg px-gutter">
-                    <div className="space-y-space-xs">
-                         <h2 className="font-headline-lg text-headline-lg text-on-surface tracking-tight">
-                              {content.title}
-                         </h2>
-                         <p className="font-body-md text-body-md text-on-surface-variant max-w-3xl">
-                              {content.description}
-                         </p>
+                    <div className="flex flex-col gap-space-md md:flex-row md:items-end md:justify-between">
+                         <div className="space-y-space-xs">
+                              <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
+                                   JADWAL DAN TARIF TERBUKA
+                              </span>
+                              <h2 className="font-headline-lg text-headline-lg tracking-tight text-on-surface">
+                                   {content.title}
+                              </h2>
+                              <p className="max-w-3xl font-body-md text-body-md text-on-surface-variant">
+                                   {content.description}
+                              </p>
+                         </div>
+
+                         {/* Tampil di desktop/laptop saja (1024px ke atas) */}
+                         {hasMore && seeAllHref ? (
+                              <Link
+                                   href={seeAllHref}
+                                   className="hidden shrink-0 items-center gap-2 rounded-full bg-surface-container px-space-md py-2.5 font-label-md text-label-md font-bold text-primary transition-colors hover:bg-primary/10 lg:inline-flex lg:self-auto"
+                              >
+                                   Lihat Semua Rute
+                                   <ArrowRight className="h-4 w-4" aria-hidden />
+                              </Link>
+                         ) : null}
                     </div>
 
                     {/* HP: kartu bertumpuk ke bawah. md: 2 kolom, lg: 3 kolom. */}
@@ -61,38 +71,24 @@ export default function FeaturedRoutes({
                                         route={route}
                                         armadaList={armadaList}
                                         whatsapp={whatsapp}
+                                        soft={onlyFeatured}
                                    />
                               </div>
                          ))}
                     </div>
 
+                    {/* Tampil di bawah ukuran laptop penuh (layar di bawah 1024px): diletakkan setelah kartu rute */}
                     {hasMore && seeAllHref ? (
-                         <Link
-                              href={seeAllHref}
-                                                            className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-space-lg py-4 font-label-lg text-label-lg font-bold text-white transition-colors hover:bg-on-primary-fixed-variant"
-                         >
-                              {SEE_ALL_LABEL}
-                              <ArrowRight className="h-5 w-5" aria-hidden />
-                         </Link>
-                    ) : null}
-
-                    <div className="p-space-md rounded-xl bg-surface-container flex flex-col md:flex-row items-start md:items-center justify-between gap-space-md">
-                         <div className="flex items-center gap-space-sm">
-                              <Info className="w-6 h-6 shrink-0 text-primary" />
-                              <p className="font-body-sm text-body-sm text-on-surface">
-                                   {content.helpText}
-                              </p>
+                         <div className="lg:hidden">
+                              <Link
+                                   href={seeAllHref}
+                                   className="flex w-full items-center justify-center gap-2 rounded-xl bg-surface-container py-3 font-label-md text-label-md font-bold text-primary transition-colors hover:bg-primary/10"
+                              >
+                                   Lihat Semua Rute
+                                   <ArrowRight className="h-4 w-4" aria-hidden />
+                              </Link>
                          </div>
-                         <a
-                              href={helpUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="whitespace-nowrap font-label-md text-label-md text-primary hover:text-on-primary-fixed-variant transition-colors flex items-center gap-1 font-bold"
-                         >
-                              {content.helpLinkLabel}
-                              <ArrowRight className="w-4 h-4" />
-                         </a>
-                    </div>
+                    ) : null}
                </div>
           </section>
      );

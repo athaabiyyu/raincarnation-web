@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { ReactNode } from "react";
+import { CarIcon, SeatIcon } from "@/components/ui/BookingIcons";
 
 type BerandaBookingTabsProps = {
      regulerLabel: string;
@@ -12,8 +13,8 @@ type BerandaBookingTabsProps = {
 
 type TabKey = "reguler" | "carter";
 
-// Memecah "Carter Drop (1 Mobil Penuh)" menjadi dua bagian.
-// HP: bagian dalam kurung turun ke baris baru. Tablet ke atas: satu baris.
+// Memecah "Sewa Mobil (Satu Mobil Penuh)" menjadi dua bagian.
+// HP: hanya bagian depan ("Sewa Mobil"). Tablet ke atas: lengkap dengan kurung.
 function renderLabel(label: string) {
      const index = label.indexOf("(");
      if (index === -1) return label;
@@ -23,8 +24,8 @@ function renderLabel(label: string) {
 
      return (
           <>
-               <span className="block md:inline">{main}</span>{" "}
-               <span className="block md:inline">{note}</span>
+               <span>{main}</span>
+               <span className="hidden md:inline">{" "}{note}</span>
           </>
      );
 }
@@ -38,7 +39,7 @@ export default function BerandaBookingTabs({
      const [active, setActive] = useState<TabKey>("carter");
 
      const tabClass = (key: TabKey) =>
-          `flex-1 rounded-lg px-space-md py-space-sm text-center font-label-md text-label-md transition-all ${active === key
+          `flex flex-1 items-center justify-center gap-space-xs rounded-lg px-space-md py-space-sm text-center font-label-md text-label-md transition-all ${active === key
                ? "bg-surface-container-lowest font-bold text-primary shadow-sm"
                : "text-on-surface-variant hover:text-on-surface"
           }`;
@@ -59,7 +60,8 @@ export default function BerandaBookingTabs({
                          onClick={() => setActive("carter")}
                          className={tabClass("carter")}
                     >
-                         {renderLabel(carterLabel)}
+                         <CarIcon />
+                         <span>{renderLabel(carterLabel)}</span>
                     </button>
                     <button
                          type="button"
@@ -70,7 +72,8 @@ export default function BerandaBookingTabs({
                          onClick={() => setActive("reguler")}
                          className={tabClass("reguler")}
                     >
-                         {renderLabel(regulerLabel)}
+                         <SeatIcon />
+                         <span>{renderLabel(regulerLabel)}</span>
                     </button>
                </div>
 

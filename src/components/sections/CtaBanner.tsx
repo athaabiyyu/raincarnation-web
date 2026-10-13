@@ -11,7 +11,7 @@ export default function CtaBanner({ whatsapp }: CtaBannerProps) {
           ctaBannerContent;
 
      return (
-          <section className="w-full bg-surface pb-space-lg md:pb-space-xl">
+          <section className="w-full bg-surface py-space-xl">
                <div className="mx-auto max-w-6xl px-gutter">
                     <div className="relative overflow-hidden rounded-xl bg-linear-to-r from-primary via-tertiary to-primary-container p-space-lg text-on-primary shadow-xl lg:p-space-xl">
                          <Bus

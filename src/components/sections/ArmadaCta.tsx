@@ -1,4 +1,4 @@
-import { Check, Headset, MessageCircle } from "lucide-react";
+import { Check, MessageCircle } from "lucide-react";
 import { armadaCta } from "@/constants/armada";
 import { buildWhatsAppUrl } from "@/utils/whatsapp";
 
@@ -16,10 +16,6 @@ export default function ArmadaCta({ whatsapp }: ArmadaCtaProps) {
                <div className="mx-auto max-w-6xl px-gutter">
                     <div className="flex flex-col items-center justify-between gap-space-xl rounded-3xl border border-white/15 bg-surface-container-lowest/10 p-space-xl shadow-xl backdrop-blur-xl lg:flex-row">
                          <div className="flex max-w-2xl flex-col gap-space-sm">
-                              <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-primary-fixed px-3 py-1 font-label-sm text-label-sm font-bold text-on-primary-fixed shadow-sm">
-                                   <Headset size={16} aria-hidden="true" />
-                                   {armadaCta.badge}
-                              </span>
                               <h2 className="font-headline-lg text-headline-lg font-extrabold tracking-tight">
                                    {armadaCta.title}
                               </h2>
@@ -50,9 +46,6 @@ export default function ArmadaCta({ whatsapp }: ArmadaCtaProps) {
                                    <MessageCircle size={22} aria-hidden="true" />
                                    {armadaCta.buttonLabel}
                               </a>
-                              <p className="text-center font-label-sm text-label-sm text-surface-container-high">
-                                   {armadaCta.note}
-                              </p>
                          </div>
                     </div>
                </div>

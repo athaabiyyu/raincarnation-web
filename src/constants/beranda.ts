@@ -8,13 +8,12 @@ export type BerandaWhyIcon =
      | "message-square-text";
 
 export const berandaHero = {
-     badge: "Jasa Travel Reguler & Sewa Mobil",
      titleStart: "Sewa Mobil",
      titleHighlight: "Malang, Batu & Surabaya",
-     titleEnd: "untuk Berbagai Kebutuhan Perjalanan",
+     titleEnd: "Plus Driver & Lepas Kunci",
      image: {
           src: "/images/interior-armada.webp",
-          alt: "Interior armada Raincarnation yang bersih dan nyaman",
+          alt: "Interior bersih dan nyaman armada sewa mobil Malang Raincarnation",
      },
      imageCard: {
           tag: "PILIHAN SEWA FLEKSIBEL",
@@ -24,11 +23,6 @@ export const berandaHero = {
      },
      description:
           "Sewa mobil dengan sopir atau lepas kunci di Malang, Batu, dan Surabaya. Raincarnation juga melayani travel reguler per kursi untuk rute tertentu. Hubungi admin kami melalui WhatsApp untuk informasi dan pemesanan.",
-     checks: [
-          "Pilihan Sewa dengan Sopir atau Lepas Kunci",
-          "Layanan di Malang, Batu & Surabaya",
-          "Informasi dan Pemesanan via WhatsApp",
-     ],
      travelButton: {
           label: "Lihat Travel Reguler",
           href: "/travel-reguler",
@@ -41,7 +35,6 @@ export const berandaHero = {
      whatsappMessage:
           "Halo Admin Raincarnation, saya ingin bertanya tentang layanan travel reguler atau sewa mobil.",
 };
-
 
 export const berandaTrust = {
      items: [
@@ -86,7 +79,6 @@ export const berandaBooking = {
      },
 };
 
-
 export const berandaServices = {
      title: "Layanan Sewa Mobil Malang dan Travel Reguler",
      description:
@@ -103,7 +95,7 @@ export const berandaServices = {
                     "Tersedia rute tertentu sesuai jadwal",
                     "Cek rute dan informasi keberangkatan",
                ],
-               button: "Lihat Travel Reguler",
+               button: "Lihat Jadwal & Rute Travel Reguler",
                href: "/travel-reguler",
                featured: false,
           },
@@ -118,7 +110,7 @@ export const berandaServices = {
                     "Durasi sewa 12 jam",
                     "Informasi armada dan pemesanan melalui WhatsApp",
                ],
-               button: "Lihat Sewa Mobil",
+               button: "Pilihan Unit & Sewa Mobil Malang",
                href: "/sewa-mobil",
                featured: true,
           },
@@ -173,8 +165,37 @@ export const berandaWhy = {
      }[],
 };
 
-export const berandaBookingIntro = {
-     title: "Cari Perjalanan Anda",
+export const berandaFaq = {
+     eyebrow: "PERTANYAAN UMUM",
+     title: "Pertanyaan Sering Diajukan Seputar Sewa Mobil Malang",
      description:
-          "Pilih layanan sewa mobil atau travel reguler, lalu masukkan detail perjalanan untuk melihat estimasi tarif dan melanjutkan pemesanan melalui WhatsApp.",
+          "Temukan jawaban cepat mengenai layanan sewa mobil, paket driver, lepas kunci, dan travel reguler di Raincarnation.",
+     items: [
+          {
+               question: "Apakah Raincarnation menyediakan layanan sewa mobil Malang plus driver?",
+               answer:
+                    "Ya, kami menyediakan paket sewa mobil plus driver profesional untuk area Malang, Batu, Surabaya, hingga Bromo. Driver kami berpengalaman, ramah, dan paham rute wisata lokal.",
+          },
+          {
+               question: "Apakah tersedia pilihan sewa mobil lepas kunci di Malang?",
+               answer:
+                    "Tersedia untuk unit dan kriteria tertentu. Anda dapat menghubungi admin reservasi kami via WhatsApp untuk mengetahui syarat dan ketentuan sewa mobil lepas kunci.",
+          },
+          {
+               question: "Apa saja jenis armada yang tersedia untuk disewa?",
+               answer:
+                    "Kami menyediakan beragam pilihan kendaraan mulai dari mobil keluarga seperti Avanza dan Innova Zenix, hingga armada premium dan rombongan seperti Toyota Hiace dan Alphard.",
+          },
+          {
+               question: "Apakah melayani penjemputan dari Bandara Juanda atau Stasiun Malang?",
+               answer:
+                    "Ya, kami melayani carter drop-off maupun antar-jemput langsung dari Bandara Juanda Surabaya, Stasiun Malang, hotel, serta area perumahan di Malang dan Batu.",
+          },
+          {
+               question: "Bagaimana cara melakukan pemesanan sewa mobil di Raincarnation?",
+               answer:
+                    "Pemesanan sangat mudah! Cukup klik tombol WhatsApp yang tersedia, tentukan tanggal, rute, dan jenis armada yang Anda butuhkan, lalu admin kami akan mengonfirmasi ketersediaan dan total biaya.",
+          },
+     ],
 };
+

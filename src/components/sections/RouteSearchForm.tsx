@@ -9,9 +9,9 @@ import {
      LocateFixed,
      MapPin,
      MessageSquareText,
-     Search,
      Users,
 } from "lucide-react";
+import { SeatIcon } from "@/components/ui/BookingIcons";
 import { searchFormContent } from "@/constants/travel-reguler";
 import { formatPrice } from "@/utils/format-price";
 import { buildWhatsAppUrl } from "@/utils/whatsapp";
@@ -132,15 +132,15 @@ export default function RouteSearchForm({
                <div className="mb-space-md flex items-center justify-between gap-space-sm">
                     <div className="flex min-w-0 items-center gap-space-sm">
                          <span className="shrink-0 rounded-lg bg-primary-container/10 p-2 text-primary">
-                              <Search size={22} aria-hidden />
+                              <SeatIcon className="h-[22px] w-[22px]" />
                          </span>
                          <Heading className="whitespace-nowrap font-label-lg text-label-lg text-on-surface">
-                              Detail Travel Reguler
+                              Cari Jadwal Travel
                          </Heading>
                     </div>
 
                     <div className="inline-flex shrink-0 items-center whitespace-nowrap rounded-lg bg-surface-container-low px-3 py-1.5 font-label-sm text-label-sm text-primary">
-                         Cek Tarif
+                         Tarif per Kursi
                     </div>
                </div>
 

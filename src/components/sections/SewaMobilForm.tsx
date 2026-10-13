@@ -12,6 +12,7 @@ import {
      MessageSquareText,
      Users,
 } from "lucide-react";
+import { CarIcon } from "@/components/ui/BookingIcons";
 import { sewaMobilForm } from "@/constants/sewa-mobil";
 import type { RuteCarter } from "@/types/rute-carter";
 import { capitalizeFirst } from "@/utils/capitalize-first";
@@ -195,7 +196,7 @@ export default function SewaMobilForm({
                <div className="mb-space-md flex items-center justify-between gap-space-sm">
                     <div className="flex min-w-0 items-center gap-space-sm">
                          <span className="shrink-0 rounded-lg bg-primary-container/10 p-2 text-primary">
-                              <Car size={22} aria-hidden />
+                              <CarIcon className="h-[22px] w-[22px]" />
                          </span>
                          <Heading className="whitespace-nowrap font-label-lg text-label-lg text-on-surface">
                               {content.title}
@@ -203,7 +204,7 @@ export default function SewaMobilForm({
                     </div>
 
                     <div className="inline-flex shrink-0 items-center whitespace-nowrap rounded-lg bg-surface-container-low px-3 py-1.5 font-label-sm text-label-sm text-primary">
-                         <span className="sm:hidden">Cek Tarif</span>
+                         <span className="sm:hidden">Tarif & Reservasi</span>
                          <span className="hidden sm:inline">{content.eyebrow}</span>
                     </div>
                </div>

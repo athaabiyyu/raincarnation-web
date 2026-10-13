@@ -97,8 +97,8 @@ export const sewaMobilPillars = {
 
 
 export const sewaMobilForm = {
-     eyebrow: "Cek Tarif & Reservasi",
-     title: "Detail Sewa Mobil",
+     eyebrow: "Tarif & Reservasi",
+     title: "Cari Sewa Mobil",
      description:
           "Isi form sederhana di samping. Rincian pesanan akan dirapikan otomatis sehingga langsung terbaca jelas oleh Admin WhatsApp Raincarnation untuk konfirmasi.",
      trustItems: [

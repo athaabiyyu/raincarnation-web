@@ -1,4 +1,4 @@
-
+import type { Armada } from "@/types/armada";
 
 export type ArmadaStatIcon = "badge-check" | "fan" | "smile" | "armchair";
 
@@ -11,50 +11,19 @@ export type ArmadaAmenityIcon =
      | "fan";
 
 export const armadaHero = {
-     badge: "Standar Eksekutif Raincarnation",
      title: "Armada Modern, Terawat untuk Setiap Kilometer Perjalanan Anda",
      description:
-          "Dari perjalanan dinas cepat antarkota, mudik keluarga nyaman, hingga tur rombongan. Seluruh armada kami melalui pembersihan kabin dan servis berkala tiap 5.000 km.",
+          "Dari perjalanan dinas antarkota, mudik keluarga, hingga tur rombongan. Pilih armada sesuai jumlah penumpang, lalu hubungi admin lewat WhatsApp untuk informasi tarif dan ketersediaan unit.",
      primaryButton: "Cek Ketersediaan Unit Hari Ini",
      primaryMessage:
           "Halo Admin Raincarnation, saya ingin cek ketersediaan armada hari ini.",
      secondaryButton: "Lihat Spesifikasi Unit",
-     stats: [
-          {
-               icon: "badge-check",
-               tag: "ATPM",
-               value: "5.000",
-               label: "Km Servis Rutin Resmi ATPM",
-          },
-          {
-               icon: "fan",
-               tag: "Dingin",
-               value: "100%",
-               label: "Double Blower AC Dingin Segar",
-          },
-          {
-               icon: "smile",
-               tag: "Steril",
-               value: "Zero",
-               label: "Bebas Bau Asap & Steril Debu",
-          },
-          {
-               icon: "armchair",
-               tag: "Fleksibel",
-               value: "4 - 19",
-               label: "Kapasitas Kursi Sesuai Kebutuhan",
-          },
-     ] satisfies {
-          icon: ArmadaStatIcon;
-          tag: string;
-          value: string;
-          label: string;
-     }[],
 };
 
 export const armadaCatalog = {
      id: "katalog-armada",
      title: "Pilihan Armada untuk Sewa Mobil di Malang",
+     pageTitle: "Daftar Armada Raincarnation",
      description:
           "Temukan pilihan kendaraan Raincarnation untuk perjalanan pribadi, keluarga, maupun kebutuhan dinas. Pilih armada yang sesuai dengan jumlah penumpang dan kebutuhan perjalanan Anda, lalu hubungi admin untuk informasi tarif dan ketersediaan unit.",
      priceLabel: "Mulai",
@@ -62,25 +31,24 @@ export const armadaCatalog = {
 };
 
 export const armadaMaintenance = {
-     badge: "Protokol Keselamatan Terjadwal",
-     title: "Standar Perawatan Preventif Tanpa Kompromi",
+     title: "Perawatan Armada Berkala",
      description:
-          "Kami tidak menunggu armada mengalami kendala di jalan raya. Setiap unit dirawat berkala sebelum dipakai melayani perjalanan Anda.",
+          "Setiap unit dirawat berkala sebelum dipakai melayani perjalanan Anda.",
      points: [
           {
-               title: "Ganti Oli Mesin & Filter Berkala 5.000 KM",
+               title: "Servis Mesin Berkala",
                description:
-                    "Menjaga performa mesin tetap responsif, halus, dan ramah lingkungan.",
+                    "Menjaga performa mesin tetap responsif dan halus.",
           },
           {
-               title: "Inspeksi Sistem Pengereman & Ban Harian",
+               title: "Pemeriksaan Ban & Rem",
                description:
                     "Kondisi ban dan rem diperiksa sebelum unit berangkat.",
           },
           {
-               title: "Fogging Antibakteri & Cuci Steam",
+               title: "Kabin Dibersihkan",
                description:
-                    "Dibersihkan setelah setiap trip supaya kabin tetap segar dan higienis.",
+                    "Kabin dibersihkan supaya tetap segar dan nyaman.",
           },
      ],
 };
@@ -135,17 +103,15 @@ export const armadaAmenities = {
 };
 
 export const armadaCta = {
-     badge: "Customer Service 24 Jam Siaga",
      title: "Butuh Rekomendasi Unit yang Paling Cocok?",
      description:
           "Konsultasikan jumlah rombongan, kota tujuan, dan jadwal perjalanan Anda. Admin kami akan mengirimkan ketersediaan unit beserta foto armada lewat WhatsApp.",
      checks: [
-          "Tanpa Biaya Tersembunyi",
-          "Driver Sopan & Berpengalaman",
-          "Jemput Depan Rumah",
+          "Konsultasi lewat WhatsApp",
+          "Titik jemput dikonfirmasi admin",
+          "Tarif dan ketersediaan dikonfirmasi admin",
      ],
-     buttonLabel: "Hubungi CS WhatsApp Sekarang",
-     note: "Respon Cepat Rata-rata < 2 Menit",
+     buttonLabel: "Hubungi Admin via WhatsApp",
      message:
           "Halo Admin Raincarnation, saya ingin cek ketersediaan armada hari ini.",
 };

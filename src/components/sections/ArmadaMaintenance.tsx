@@ -1,4 +1,4 @@
-import { CircleCheck, ShieldCheck } from "lucide-react";
+import { CircleCheck } from "lucide-react";
 import { armadaMaintenance } from "@/constants/armada";
 
 export default function ArmadaMaintenance() {
@@ -6,10 +6,6 @@ export default function ArmadaMaintenance() {
           <section className="mt-space-xl w-full border-y border-surface-variant bg-surface-container py-space-xl">
                <div className="mx-auto max-w-6xl px-gutter">
                     <div className="flex max-w-3xl flex-col gap-space-md">
-                         <span className="inline-flex w-fit items-center gap-space-xs rounded-full border border-primary/20 bg-surface-container-lowest px-space-sm py-1 font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary shadow-sm">
-                              <ShieldCheck size={16} aria-hidden="true" />
-                              {armadaMaintenance.badge}
-                         </span>
                          <h2 className="font-headline-lg text-headline-lg font-bold tracking-tight text-on-surface">
                               {armadaMaintenance.title}
                          </h2>

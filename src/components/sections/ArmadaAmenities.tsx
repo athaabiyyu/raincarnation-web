@@ -14,7 +14,7 @@ const amenityIcons: Record<ArmadaAmenityIcon, LucideIcon> = {
 
 export default function ArmadaAmenities() {
      return (
-          <section className="mx-auto w-full max-w-6xl px-gutter pb-space-xl">
+          <section className="mx-auto w-full max-w-6xl px-gutter py-space-xl">
                <div className="mx-auto mb-space-xl flex max-w-2xl flex-col gap-space-xs text-center">
                     <p className="font-label-sm text-label-sm font-bold uppercase tracking-widest text-primary">
                          {armadaAmenities.eyebrow}

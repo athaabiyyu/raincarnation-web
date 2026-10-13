@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { BadgeCheck, CircleCheck } from "lucide-react";
 import { berandaHero } from "@/constants/beranda";
 
 export default function BerandaHero() {
@@ -7,13 +6,8 @@ export default function BerandaHero() {
           <section className="w-full bg-linear-to-b from-surface-container-high/40 via-surface to-surface pt-space-md pb-space-xl md:pt-space-xl">
                <div className="mx-auto flex max-w-6xl flex-col gap-space-lg px-gutter">
                     <div className="grid gap-space-lg lg:grid-cols-2 lg:content-center lg:gap-y-space-md">
-                         {/* Blok A: badge + H1 (laptop: kolom kiri, baris atas) */}
+                         {/* Blok A: H1 (laptop: kolom kiri, baris atas) */}
                          <div className="flex flex-col gap-space-md lg:self-end">
-                              <span className="inline-flex w-fit max-w-full items-start gap-space-xs rounded-2xl bg-primary-container/15 px-space-md py-1.5 font-label-sm text-label-sm font-bold uppercase tracking-wide text-primary sm:items-center sm:rounded-full sm:py-1">
-                                   <BadgeCheck size={14} className="mt-0.5 shrink-0 sm:mt-0" aria-hidden="true" />
-                                   {berandaHero.badge}
-                              </span>
-
                               <h1 className="font-display text-display font-extrabold tracking-tight text-on-surface">
                                    {berandaHero.titleStart}{" "}
                                    <span className="text-primary-container">
@@ -54,22 +48,6 @@ export default function BerandaHero() {
                               </div>
                          </div>
                     </div>
-
-                    <ul className="mt-space-md hidden flex-wrap justify-center gap-space-sm px-space-md font-label-md text-label-md font-semibold text-primary md:flex lg:justify-between lg:px-0">
-                         {berandaHero.checks.map((check) => (
-                              <li
-                                   key={check}
-                                   className="flex max-w-full items-center gap-2 rounded-full bg-primary-container/15 px-space-md py-space-xs"
-                              >
-                                   <CircleCheck
-                                        size={16}
-                                        className="shrink-0 text-primary"
-                                        aria-hidden="true"
-                                   />
-                                   {check}
-                              </li>
-                         ))}
-                    </ul>
                </div>
           </section>
      );
