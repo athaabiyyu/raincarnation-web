@@ -25,9 +25,6 @@ export default function SewaMobilFleet({
           <section className="w-full bg-surface-container-low py-space-xl">
                <div className="mx-auto flex max-w-6xl flex-col gap-space-lg px-gutter">
                     <div className="flex flex-col gap-1">
-                         <span className="font-label-sm text-label-sm font-bold uppercase tracking-widest text-primary">
-                              {sewaMobilFleet.eyebrow}
-                         </span>
                          <h2 className="font-headline-lg text-headline-lg font-extrabold tracking-tight text-on-surface">
                               {sewaMobilFleet.title}
                          </h2>

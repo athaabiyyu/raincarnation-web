@@ -22,9 +22,6 @@ export default function SewaMobilBooking({
           <section className="w-full bg-surface-container-low py-space-xl">
                <div className="mx-auto max-w-6xl space-y-space-md px-gutter">
                     <div className="space-y-space-xs">
-                         <span className="block font-label-sm text-label-sm font-bold uppercase tracking-widest text-primary">
-                              {sewaMobilFormIntro.eyebrow}
-                         </span>
                          <h2 className="font-headline-lg text-headline-lg tracking-tight text-on-surface">
                               {sewaMobilFormIntro.title}
                          </h2>

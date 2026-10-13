@@ -14,10 +14,7 @@ export default function SewaMobilPillars() {
      return (
                     <section className="w-full bg-surface py-space-xl">
                <div className="mx-auto flex max-w-6xl flex-col gap-space-lg px-gutter">
-                    <div className="flex flex-col gap-space-xs">
-                         <span className="font-label-sm text-label-sm font-bold uppercase tracking-widest text-primary">
-                              {sewaMobilPillars.eyebrow}
-                         </span>
+                                        <div className="flex flex-col gap-space-xs">
                          <h2 className="font-headline-lg text-headline-lg font-extrabold tracking-tight text-on-surface">
                               {sewaMobilPillars.title}
                          </h2>
