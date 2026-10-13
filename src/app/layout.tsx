@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
+import FloatingWhatsapp from "@/components/ui/FloatingWhatsapp";
 import { siteConfig } from "@/config/site";
+import { getSiteConfig } from "@/lib/wordpress/config";
 import "./globals.css";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -19,15 +21,19 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const config = await getSiteConfig();
+  const whatsapp = config.contact?.whatsapp ?? "";
+
   return (
     <html lang="id" className={jakarta.variable}>
       <body className="font-sans antialiased">
         <Navbar />
         {children}
         <Footer />
+        <FloatingWhatsapp whatsapp={whatsapp} />
       </body>
     </html>
   );
