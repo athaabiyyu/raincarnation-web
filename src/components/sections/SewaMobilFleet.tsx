@@ -22,9 +22,13 @@ export default function SewaMobilFleet({
      const { customCard } = sewaMobilFleet;
 
      return (
-          <section className="w-full bg-surface-container-low py-space-xl">
+          <section className="w-full bg-surface py-space-xl">
                <div className="mx-auto flex max-w-6xl flex-col gap-space-lg px-gutter">
-                    <div className="flex flex-col gap-1">
+                    {/* Header Section dengan Eyebrow Hijau */}
+                    <div className="flex flex-col gap-1.5">
+                         <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
+                              {sewaMobilFleet.eyebrow}
+                         </span>
                          <h2 className="font-headline-lg text-headline-lg font-extrabold tracking-tight text-on-surface">
                               {sewaMobilFleet.title}
                          </h2>
@@ -43,6 +47,7 @@ export default function SewaMobilFleet({
                               />
                          ))}
 
+                         {/* Custom Card untuk Armada Khusus */}
                          <div className="flex flex-col justify-between rounded-3xl bg-linear-to-br from-primary via-primary to-primary-container p-space-lg text-on-primary shadow-xl ring-1 ring-primary-container/30">
                               <div className="flex flex-col gap-space-xs">
                                    <span className="font-label-sm text-label-sm font-bold uppercase tracking-widest opacity-85">

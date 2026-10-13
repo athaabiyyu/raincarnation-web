@@ -1,17 +1,30 @@
+import SewaMobilForm from "@/components/sections/SewaMobilForm";
 import { sewaMobilHero } from "@/constants/sewa-mobil";
+import type { RuteCarter } from "@/types/rute-carter";
 
-export default function SewaMobilHero() {
+type SewaMobilHeroProps = {
+     whatsapp?: string;
+     routes?: RuteCarter[];
+     fleet?: Array<{ id: number; name: string }>;
+};
+
+export default function SewaMobilHero({
+     whatsapp,
+     routes = [],
+     fleet = [],
+}: SewaMobilHeroProps) {
      const content = sewaMobilHero;
 
      return (
           <section className="relative w-full overflow-hidden border-b border-surface-container-high/30 bg-linear-to-b from-surface-container-high/50 via-surface to-surface pb-space-xl pt-space-md">
-               <div className="mx-auto max-w-6xl px-gutter pt-space-lg">
+               <div className="mx-auto flex max-w-6xl flex-col gap-space-lg px-gutter pt-space-md">
+                    {/* Judul & Deskripsi */}
                     <div className="flex max-w-3xl flex-col gap-space-md">
                          <h1 className="font-display text-display font-extrabold tracking-tight text-on-surface">
                               {content.titleStart}{" "}
                               <span className="text-primary underline decoration-primary-fixed decoration-[5px] underline-offset-8">
                                    {content.titleHighlight}
-                              </span>
+                              </span>{" "}
                               {content.titleEnd}
                          </h1>
 
@@ -20,12 +33,14 @@ export default function SewaMobilHero() {
                          </p>
                     </div>
 
-                    <div className="mt-space-md grid grid-cols-2 gap-space-sm sm:grid-cols-3">
+                    {/* Stats Card */}
+                    <div className="grid grid-cols-2 gap-space-sm sm:grid-cols-3">
                          {content.stats.map((stat, index) => (
                               <div
                                    key={stat.label}
-                                   className={`flex flex-col rounded-2xl border border-surface-container-high/60 bg-surface-container-lowest p-space-md shadow-[0_4px_16px_rgba(18,28,44,0.04)] ${index === 2 ? "col-span-2 sm:col-span-1" : ""
-                                        }`}
+                                   className={`flex flex-col rounded-2xl border border-surface-container-high/60 bg-surface-container-lowest p-space-md shadow-[0_4px_16px_rgba(18,28,44,0.04)] ${
+                                        index === 2 ? "col-span-2 sm:col-span-1" : ""
+                                   }`}
                               >
                                    <span className="font-headline-md text-headline-md font-extrabold tracking-tight text-primary">
                                         {stat.value}
@@ -36,6 +51,19 @@ export default function SewaMobilHero() {
                               </div>
                          ))}
                     </div>
+
+                    {/* Form Sewa Mobil Menyatu di Hero */}
+                    {whatsapp && (
+                         <div className="pt-space-xs">
+                              <SewaMobilForm
+                                   routes={routes}
+                                   fleet={fleet}
+                                   whatsapp={whatsapp}
+                                   embedded
+                                   headingLevel="h2"
+                              />
+                         </div>
+                    )}
                </div>
           </section>
      );

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import SewaMobilHero from "@/components/sections/SewaMobilHero";
-import SewaMobilBooking from "@/components/sections/SewaMobilBooking";
 import SewaMobilPackages from "@/components/sections/SewaMobilPackages";
 import SewaMobilFleet from "@/components/sections/SewaMobilFleet";
 import SewaMobilPillars from "@/components/sections/SewaMobilPillars";
+import SewaMobilFaq from "@/components/sections/SewaMobilFaq";
 import { siteConfig } from "@/config/site";
 import { getSiteConfig } from "@/lib/wordpress/config";
 import { getPaketSewaList } from "@/lib/wordpress/paket-sewa";
@@ -35,15 +35,6 @@ export const metadata: Metadata = {
                },
           ],
      },
-};
-
-const jsonLd = {
-     "@context": "https://schema.org",
-     "@type": "Service",
-     name: "Sewa Mobil dengan Sopir atau Lepas Kunci",
-     serviceType: "Sewa mobil dengan sopir atau lepas kunci",
-     areaServed: ["Malang", "Batu", "Surabaya"],
-     url: `${siteConfig.url}/sewa-mobil`,
 };
 
 async function loadPrices(): Promise<PaketSewa[]> {
@@ -82,6 +73,53 @@ export default async function SewaMobilPage() {
      ]);
      const whatsapp = config.contact?.whatsapp ?? "";
 
+     const autoRentalLd = {
+          "@context": "https://schema.org",
+          "@type": "AutoRental",
+          name: "Sewa Mobil Malang dengan Sopir atau Lepas Kunci - Raincarnation",
+          description:
+               "Layanan sewa mobil Malang, Batu, dan Surabaya dengan sopir atau lepas kunci, durasi 12 jam. Layanan carter drop privat tanpa penumpang campuran.",
+          url: `${siteConfig.url}/sewa-mobil`,
+          telephone: whatsapp,
+          priceRange: "Rp 150.000 - Rp 3.500.000",
+          address: {
+               "@type": "PostalAddress",
+               addressLocality: "Malang",
+               addressRegion: "Jawa Timur",
+               addressCountry: "ID",
+          },
+          areaServed: [
+               { "@type": "AdministrativeArea", name: "Kota Malang" },
+               { "@type": "AdministrativeArea", name: "Kabupaten Malang" },
+               { "@type": "AdministrativeArea", name: "Kota Batu" },
+               { "@type": "AdministrativeArea", name: "Kota Surabaya" },
+          ],
+          provider: {
+               "@type": "LocalBusiness",
+               name: siteConfig.name,
+               image: `${siteConfig.url}/images/interior-armada.webp`,
+          },
+     };
+
+     const breadcrumbLd = {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+               {
+                    "@type": "ListItem",
+                    position: 1,
+                    name: "Beranda",
+                    item: siteConfig.url,
+               },
+               {
+                    "@type": "ListItem",
+                    position: 2,
+                    name: "Sewa Mobil",
+                    item: `${siteConfig.url}/sewa-mobil`,
+               },
+          ],
+     };
+
      const fleet = armada.map((item) => ({
           id: item.id,
           name: capitalizeFirst(decodeHtml(item.title)),
@@ -92,18 +130,26 @@ export default async function SewaMobilPage() {
                <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{
-                         __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+                         __html: JSON.stringify(autoRentalLd).replace(/</g, "\\u003c"),
                     }}
                />
-               <SewaMobilHero />
-               <SewaMobilBooking
+               <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                         __html: JSON.stringify(breadcrumbLd).replace(/</g, "\\u003c"),
+                    }}
+               />
+
+               <SewaMobilHero
                     whatsapp={whatsapp}
                     routes={ruteCarter}
                     fleet={fleet}
                />
+
                <SewaMobilPackages prices={prices} whatsapp={whatsapp} />
                <SewaMobilFleet armada={armada} whatsapp={whatsapp} />
                <SewaMobilPillars />
+               <SewaMobilFaq />
           </main>
      );
 }

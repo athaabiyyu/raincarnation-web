@@ -4,10 +4,10 @@ import { berandaHero } from "@/constants/beranda";
 export default function BerandaHero() {
      return (
           <section className="w-full bg-linear-to-b from-surface-container-high/40 via-surface to-surface pt-space-md pb-space-xl md:pt-space-xl">
-               <div className="mx-auto flex max-w-6xl flex-col gap-space-lg px-gutter">
+               <div className="mx-auto flex max-w-6xl flex-col gap-space-lg px-gutter pt-space-md">
                     <div className="grid gap-space-lg lg:grid-cols-2 lg:content-center lg:gap-y-space-md">
-                         {/* Blok A: Title H1 (Ditambahkan mt-space-md untuk memberi jarak dari navbar di mobile) */}
-                         <div className="mt-space-md flex flex-col gap-space-md lg:mt-0 lg:self-end">
+                         {/* Blok A: Title H1 */}
+                         <div className="flex flex-col gap-space-md lg:self-end">
                               <h1 className="font-display text-display font-extrabold tracking-tight text-on-surface">
                                    {berandaHero.titleStart}{" "}
                                    <span className="text-primary-container">
@@ -24,7 +24,7 @@ export default function BerandaHero() {
                               </p>
                          </div>
 
-                         {/* Foto: Sembunyi di mobile (hidden), muncul di desktop (lg:block) */}
+                         {/* Foto: Sembunyi di mobile, muncul di desktop */}
                          <div className="hidden lg:block relative aspect-[4/3] w-full overflow-hidden rounded-3xl shadow-lg lg:col-start-2 lg:row-span-2 lg:row-start-1">
                               <Image
                                    src={berandaHero.image.src}

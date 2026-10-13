@@ -1,3 +1,5 @@
+import type { Armada } from "@/types/armada";
+
 // BELUM DIKONFIRMASI BOS: semua klaim di file ini dipasang sementara dari desain Stitch.
 // Isi kartu paket ada di CMS (CPT paket-sewa) dan juga harus dikonfirmasi bos sebelum rilis.
 // Klaim katalog armada yang perlu dikonfirmasi: "inspeksi berkala pra-keberangkatan, interior
@@ -95,7 +97,6 @@ export const sewaMobilPillars = {
      ],
 };
 
-
 export const sewaMobilForm = {
      eyebrow: "Tarif & Reservasi",
      title: "Cari Sewa Mobil",
@@ -147,3 +148,251 @@ export const sewaMobilFormIntro = {
      description:
           "Pilih paket sewa, armada, dan rute perjalanan, lalu isi tanggal dan jam untuk melihat estimasi tarif dan melanjutkan pemesanan melalui WhatsApp.",
 } as const;
+
+// 15 DATA DUMMY ARMADA UNTUK TESTING LAYOUT UI
+export const dummyArmadaList: Armada[] = [
+     {
+          id: 1,
+          slug: "toyota-alphard-transformer",
+          title: "Toyota Alphard Transformer",
+          featured_image: {
+               url: "/images/interior-armada.webp",
+               alt: "Toyota Alphard Transformer Raincarnation",
+          },
+          acf: {
+               label: "Executive Class",
+               jumlah_penumpang: "5 penumpang",
+               koper: "4-5 koper",
+               harga: "2500000",
+               bbm: "Termasuk BBM",
+               kata_kunci_utama: "Sewa Alphard Malang",
+          },
+     },
+     {
+          id: 2,
+          slug: "all-new-avanza",
+          title: "All New Avanza",
+          featured_image: {
+               url: "/images/interior-armada.webp",
+               alt: "All New Avanza Raincarnation",
+          },
+          acf: {
+               label: "Keluarga / Dinas",
+               jumlah_penumpang: "6 penumpang",
+               koper: "2-3 koper",
+               harga: "450000",
+               bbm: "Termasuk BBM",
+               kata_kunci_utama: "Sewa Avanza Malang",
+          },
+     },
+     {
+          id: 3,
+          slug: "innova-zenix-hybrid",
+          title: "Toyota Innova Zenix Hybrid",
+          featured_image: {
+               url: "/images/interior-armada.webp",
+               alt: "Innova Zenix Hybrid Raincarnation",
+          },
+          acf: {
+               label: "Premium Comfort",
+               jumlah_penumpang: "6 penumpang",
+               koper: "4 koper",
+               harga: "850000",
+               bbm: "Termasuk BBM",
+               kata_kunci_utama: "Sewa Innova Zenix Malang",
+          },
+     },
+     {
+          id: 4,
+          slug: "innova-reborn",
+          title: "Toyota Innova Reborn",
+          featured_image: {
+               url: "/images/interior-armada.webp",
+               alt: "Toyota Innova Reborn Raincarnation",
+          },
+          acf: {
+               label: "Favorit Keluarga",
+               jumlah_penumpang: "6 penumpang",
+               koper: "3-4 koper",
+               harga: "650000",
+               bbm: "Termasuk BBM",
+               kata_kunci_utama: "Sewa Innova Reborn Malang",
+          },
+     },
+     {
+          id: 5,
+          slug: "xpander-cross",
+          title: "Mitsubishi Xpander Cross",
+          featured_image: {
+               url: "/images/interior-armada.webp",
+               alt: "Xpander Cross Raincarnation",
+          },
+          acf: {
+               label: "MPV Crossover",
+               jumlah_penumpang: "6 penumpang",
+               koper: "3 koper",
+               harga: "500000",
+               bbm: "Termasuk BBM",
+          },
+     },
+     {
+          id: 6,
+          slug: "fortuner-gr-sport",
+          title: "Toyota Fortuner GR Sport",
+          featured_image: {
+               url: "/images/interior-armada.webp",
+               alt: "Toyota Fortuner GR Sport Raincarnation",
+          },
+          acf: {
+               label: "SUV Premium",
+               jumlah_penumpang: "5 penumpang",
+               koper: "4 koper",
+               harga: "1400000",
+               bbm: "Termasuk BBM",
+          },
+     },
+     {
+          id: 7,
+          slug: "pajero-sport-dakar",
+          title: "Mitsubishi Pajero Sport Dakar",
+          featured_image: {
+               url: "/images/interior-armada.webp",
+               alt: "Pajero Sport Dakar Raincarnation",
+          },
+          acf: {
+               label: "SUV Tough",
+               jumlah_penumpang: "5 penumpang",
+               koper: "4 koper",
+               harga: "1400000",
+               bbm: "Termasuk BBM",
+          },
+     },
+     {
+          id: 8,
+          slug: "hiace-commuter",
+          title: "Toyota Hiace Commuter",
+          featured_image: {
+               url: "/images/interior-armada.webp",
+               alt: "Toyota Hiace Commuter Raincarnation",
+          },
+          acf: {
+               label: "Rombongan Sedang",
+               jumlah_penumpang: "14 penumpang",
+               koper: "6 koper",
+               harga: "1100000",
+               bbm: "Termasuk BBM",
+          },
+     },
+     {
+          id: 9,
+          slug: "hiace-premio-luxury",
+          title: "Toyota Hiace Premio Luxury",
+          featured_image: {
+               url: "/images/interior-armada.webp",
+               alt: "Hiace Premio Luxury Raincarnation",
+          },
+          acf: {
+               label: "VIP Group Class",
+               jumlah_penumpang: "8 penumpang",
+               koper: "6 koper",
+               harga: "1600000",
+               bbm: "Termasuk BBM",
+          },
+     },
+     {
+          id: 10,
+          slug: "elf-long-coaster",
+          title: "Isuzu ELF Long Coaster",
+          featured_image: {
+               url: "/images/interior-armada.webp",
+               alt: "Isuzu ELF Long Coaster Raincarnation",
+          },
+          acf: {
+               label: "Rombongan Besar",
+               jumlah_penumpang: "19 penumpang",
+               koper: "8 koper",
+               harga: "1300000",
+               bbm: "Termasuk BBM",
+          },
+     },
+     {
+          id: 11,
+          slug: "gran-max-bv",
+          title: "Daihatsu Gran Max BV",
+          featured_image: {
+               url: "/images/interior-armada.webp",
+               alt: "Daihatsu Gran Max Raincarnation",
+          },
+          acf: {
+               label: "Ekonomis",
+               jumlah_penumpang: "7 penumpang",
+               koper: "3 koper",
+               harga: "350000",
+               bbm: "Termasuk BBM",
+          },
+     },
+     {
+          id: 12,
+          slug: "ertiga-hybrid",
+          title: "Suzuki Ertiga Hybrid",
+          featured_image: {
+               url: "/images/interior-armada.webp",
+               alt: "Suzuki Ertiga Hybrid Raincarnation",
+          },
+          acf: {
+               label: "Hemat BBM",
+               jumlah_penumpang: "6 penumpang",
+               koper: "3 koper",
+               harga: "450000",
+               bbm: "Termasuk BBM",
+          },
+     },
+     {
+          id: 13,
+          slug: "crv-turbo-prestige",
+          title: "Honda CR-V Turbo Prestige",
+          featured_image: {
+               url: "/images/interior-armada.webp",
+               alt: "Honda CR-V Turbo Raincarnation",
+          },
+          acf: {
+               label: "Executive SUV",
+               jumlah_penumpang: "5 penumpang",
+               koper: "3 koper",
+               harga: "1200000",
+               bbm: "Termasuk BBM",
+          },
+     },
+     {
+          id: 14,
+          slug: "medium-bus-pariwisata",
+          title: "Medium Bus Pariwisata",
+          featured_image: {
+               url: "/images/interior-armada.webp",
+               alt: "Medium Bus Pariwisata Raincarnation",
+          },
+          acf: {
+               label: "Group Bus Class",
+               jumlah_penumpang: "33 penumpang",
+               koper: "15 koper",
+               harga: "2200000",
+               bbm: "Termasuk BBM",
+          },
+     },
+     {
+          id: 15,
+          slug: "big-bus-jetbus-5",
+          title: "Big Bus Luxury Jetbus 5",
+          featured_image: {
+               url: "/images/interior-armada.webp",
+               alt: "Big Bus Luxury Jetbus 5 Raincarnation",
+          },
+          acf: {
+               label: "Corporate & Tour",
+               jumlah_penumpang: "50 penumpang",
+               koper: "25 koper",
+               harga: "3500000",
+               bbm: "Termasuk BBM",
+          },
+     },
+];

@@ -28,18 +28,13 @@ export default function ArmadaCard({
      const price = formatPrice(item.acf?.harga);
      const imageUrl = item.featured_image?.url;
 
-     // Alt text fallback yang kaya akan keyword kata kunci SEO lokal
-     const imageAltText =
-          item.featured_image?.alt ||
-          `Sewa mobil ${name} Malang Batu Surabaya - Raincarnation`;
-
      return (
           <article className="@container flex h-full flex-col overflow-hidden rounded-lg border border-surface-container-high/80 bg-surface-container-lowest shadow-[0_4px_20px_rgba(18,28,44,0.06)] transition-all duration-300 hover:shadow-2xl">
                {imageUrl ? (
                     <div className="relative aspect-[16/10] overflow-hidden bg-surface-container">
                          <Image
                               src={imageUrl}
-                              alt={imageAltText}
+                              alt={item.featured_image?.alt || name}
                               fill
                               sizes={imageSizes}
                               className="object-cover"
