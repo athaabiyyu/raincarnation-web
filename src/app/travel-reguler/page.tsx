@@ -18,7 +18,7 @@ import { siteConfig } from "@/config/site";
 export const metadata: Metadata = {
      title: "Travel Malang Surabaya per Kursi, Jadwal & Tarif | Raincarnation",
      description:
-          "Travel reguler per kursi dari Malang, Batu, Surabaya, Juanda, dan Pandaan. Cek jadwal dan tarif per rute, lalu pesan lewat WhatsApp.",
+          "Travel reguler per kursi untuk rute antara Malang, Batu, Surabaya, Juanda, dan Pandaan. Cek jadwal dan tarif per rute, lalu pesan lewat WhatsApp.",
      alternates: {
           canonical: "/travel-reguler",
      },
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
           url: "/travel-reguler",
           title: "Travel Malang Surabaya per Kursi, Jadwal & Tarif | Raincarnation",
           description:
-               "Travel reguler per kursi dari Malang, Batu, Surabaya, Juanda, dan Pandaan. Cek jadwal dan tarif per rute, lalu pesan lewat WhatsApp.",
+               "Travel reguler per kursi untuk rute antara Malang, Batu, Surabaya, Juanda, dan Pandaan. Cek jadwal dan tarif per rute, lalu pesan lewat WhatsApp.",
           images: [
                {
                     url: "/images/interior-armada.webp",

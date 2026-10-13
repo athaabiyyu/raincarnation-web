@@ -1,7 +1,7 @@
 export const heroContent = {
      title: "Travel Malang Surabaya per Kursi, Cek Jadwal dan Tarif per Rute",
      description:
-          "Travel reguler per kursi dari Malang, Batu, Surabaya, Juanda, dan Pandaan. Lihat jadwal dan tarif tiap rute, lalu pesan lewat WhatsApp.",
+          "Travel reguler per kursi untuk rute antara Malang, Batu, Surabaya, Juanda, dan Pandaan. Lihat jadwal dan tarif tiap rute, lalu pesan lewat WhatsApp.",
      charterLink: {
           text: "Butuh satu mobil khusus rombongan?",
           label: "Lihat Sewa Mobil Carter",
