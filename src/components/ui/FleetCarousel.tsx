@@ -63,7 +63,6 @@ export default function FleetCarousel({ children }: FleetCarouselProps) {
      const showControls = canPrev || canNext;
      const buttonClass =
           "absolute top-1/2 z-10 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-primary text-on-primary shadow-md transition-colors hover:bg-on-primary-fixed-variant focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-primary md:h-10 md:w-10";
-     "absolute top-1/2 z-10 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-primary/30 bg-surface-container-lowest text-primary shadow-md transition-colors hover:bg-surface-container-low focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary md:h-10 md:w-10";
 
      return (
           <div>
