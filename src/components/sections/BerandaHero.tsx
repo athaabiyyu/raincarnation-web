@@ -1,31 +1,57 @@
 import Image from "next/image";
 import { berandaHero } from "@/constants/beranda";
+import { ShieldCheck, Tag } from "lucide-react"; 
 
 export default function BerandaHero() {
      return (
-          <section className="w-full bg-linear-to-b from-surface-container-high/40 via-surface to-surface pt-space-md pb-space-xl md:pt-space-xl">
+          <section className="w-full bg-linear-to-b from-surface-container-high/40 via-surface to-surface pt-space-md pb-space-md md:pt-space-xl lg:pb-space-xl">
                <div className="mx-auto flex max-w-6xl flex-col gap-space-lg px-gutter pt-space-md">
-                    <div className="grid gap-space-lg lg:grid-cols-2 lg:content-center lg:gap-y-space-md">
-                         {/* Blok A: Title H1 */}
-                         <div className="flex flex-col gap-space-md lg:self-end">
-                              <h1 className="font-display text-display font-extrabold tracking-tight text-on-surface">
-                                   {berandaHero.titleStart}{" "}
-                                   <span className="text-primary-container">
-                                        {berandaHero.titleHighlight}
-                                   </span>{" "}
-                                   {berandaHero.titleEnd}
-                              </h1>
+                    {/* Grid 2 kolom dengan tinggi yang selaras */}
+                    <div className="grid items-stretch gap-space-lg lg:grid-cols-2">
+                         
+                         {/* Wadah Utama Kiri */}
+                         <div className="flex flex-col justify-between lg:self-stretch">
+                              {/* Bagian Atas: Hanya Title H1 (Tanpa mt pada deskripsi agar title bersih di atas) */}
+                              <div>
+                                   <h1 className="font-display text-display font-extrabold tracking-tight text-on-surface">
+                                        {berandaHero.titleStart}{" "}
+                                        <span className="text-primary-container">
+                                             {berandaHero.titleHighlight}
+                                        </span>{" "}
+                                        {berandaHero.titleEnd}
+                                   </h1>
+                              </div>
+
+                              {/* Bagian Bawah: Deskripsi yang mendekat ke kotak keunggulan & Kotak Keunggulan */}
+                              <div className="hidden lg:flex lg:flex-col lg:gap-space-md">
+                                   {/* Deskripsi (ditarik ke bawah mendekati kotak) */}
+                                   <p className="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+                                        {berandaHero.description}
+                                   </p>
+
+                                   {/* Fitur Keunggulan */}
+                                   <div className="flex items-center gap-4">
+                                        {/* Poin 1 */}
+                                        <div className="flex items-center gap-3 rounded-2xl bg-surface-container-low px-4 py-3 shadow-xs border border-outline/10">
+                                             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-container/20 text-primary-container">
+                                                  <ShieldCheck className="h-5 w-5" />
+                                             </div>
+                                             <span className="font-semibold text-sm text-on-surface">Armada Nyaman & Terawat</span>
+                                        </div>
+
+                                        {/* Poin 3 */}
+                                        <div className="flex items-center gap-3 rounded-2xl bg-surface-container-low px-4 py-3 shadow-xs border border-outline/10">
+                                             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-container/20 text-primary-container">
+                                                  <Tag className="h-5 w-5" />
+                                             </div>
+                                             <span className="font-semibold text-sm text-on-surface">Harga Transparan & All-In</span>
+                                        </div>
+                                   </div>
+                              </div>
                          </div>
 
-                         {/* Blok B: Deskripsi */}
-                         <div className="flex flex-col gap-space-md lg:col-start-1 lg:row-start-2 lg:self-start">
-                              <p className="font-body-lg text-body-lg text-on-surface-variant">
-                                   {berandaHero.description}
-                              </p>
-                         </div>
-
-                         {/* Foto: Sembunyi di mobile, muncul di desktop */}
-                         <div className="hidden lg:block relative aspect-[4/3] w-full overflow-hidden rounded-3xl shadow-lg lg:col-start-2 lg:row-span-2 lg:row-start-1">
+                         {/* Foto Kanan */}
+                         <div className="hidden lg:block relative aspect-[4/3] w-full overflow-hidden rounded-3xl shadow-lg">
                               <Image
                                    src={berandaHero.image.src}
                                    alt={berandaHero.image.alt}

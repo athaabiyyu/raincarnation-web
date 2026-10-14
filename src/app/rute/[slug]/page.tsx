@@ -56,8 +56,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
                "Cek jadwal keberangkatan dan tarif, lalu pesan lewat WhatsApp.",
           ].filter(Boolean);
 
-          const title = `Travel ${name} per Kursi, Jadwal & Tarif | Raincarnation`;
-          const description = parts.join(" ");
+          const titleName = from && to ? `${from} ${to}` : name;
+          const title = `Travel ${titleName}: Jadwal & Tarif | Raincarnation`;
+          const description = route.acf?.deskripsi_singkat?.trim() || parts.join(" ");
 
           return {
                title,
@@ -110,6 +111,7 @@ export default async function RoutePage({ params }: PageProps) {
 
      const tarif = formatPrice(route.acf?.tarif);
      const tarifPp = formatPrice(route.acf?.tarif_pp);
+     const deskripsiSingkat = route.acf?.deskripsi_singkat?.trim() ?? "";
      const label = capitalizeFirst(route.acf?.label ?? "");
      const jalur = capitalizeFirst(route.acf?.jalur ?? "");
      const content = (route.content ?? "").trim();
@@ -241,7 +243,8 @@ export default async function RoutePage({ params }: PageProps) {
                                    {titleDisplay}
                               </h1>
                               <p className="mt-4 text-base md:text-lg text-on-surface-variant max-w-3xl leading-relaxed">
-                                   Layanan transportasi reguler premium antar titik perkotaan (Kota {from} ke {to}, Wisata & Penginapan) dengan rute cepat bebas repot.
+                                   {deskripsiSingkat ||
+                                        `Travel reguler per kursi rute ${rawTitle} antar titik perkotaan, dengan jadwal keberangkatan tetap.`}
                               </p>
                          </div>
                     </div>
@@ -392,7 +395,9 @@ export default async function RoutePage({ params }: PageProps) {
                                                   <MapPin size={20} />
                                              </div>
                                              <div>
-                                                  <h2 className="text-xl font-bold text-on-surface">Tentang Rute Ini & Informasi Tambahan</h2>
+                                                  <h2 className="text-xl font-bold text-on-surface">
+                                                       Tentang Rute Travel {from && to ? `${from} ${to}` : rawTitle}
+                                                  </h2>
                                                   <p className="text-sm text-on-surface-variant mt-0.5">Cakupan titik penjemputan dan pengantaran</p>
                                              </div>
                                         </div>

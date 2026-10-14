@@ -24,7 +24,7 @@ export default function SewaMobilHero({
                               {content.titleStart}{" "}
                               <span className="text-primary underline decoration-primary-fixed decoration-[5px] underline-offset-8">
                                    {content.titleHighlight}
-                              </span>{" "}
+                              </span>
                               {content.titleEnd}
                          </h1>
 

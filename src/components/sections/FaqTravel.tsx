@@ -5,8 +5,16 @@ import { ChevronDown, HelpCircle } from "lucide-react";
 
 const faqs = [
      {
-          question: "Apakah travel ini menggunakan sistem door-to-door (dijemput di rumah)?",
-          answer: "Ya, layanan travel reguler kami menggunakan sistem door-to-door. Kami akan menjemput Anda di alamat asal dan mengantar langsung ke alamat tujuan selama masih dalam batas area (zona) dalam kota. Untuk area di luar zona batas, mungkin akan dikenakan sedikit biaya tambahan penjemputan."
+          question: "Apa itu travel reguler dan apa bedanya dengan sewa mobil?",
+          answer: "Travel reguler adalah layanan perjalanan antar kota yang dipesan per kursi dengan jadwal keberangkatan tetap, sehingga Anda berbagi mobil dengan penumpang lain dan membayar sesuai jumlah kursi. Kalau Anda butuh satu mobil penuh untuk rombongan, pilih layanan Sewa Mobil."
+     },
+     {
+          question: "Di mana titik penjemputan travel reguler?",
+          answer: "Penjemputan dilakukan di titik yang sudah ditentukan di setiap kota, bukan di alamat rumah. Titik jemput dan titik antar untuk rute Anda dikonfirmasi oleh admin lewat WhatsApp setelah Anda memesan."
+     },
+     {
+          question: "Berapa tarif travel reguler per kursi?",
+          answer: "Tarif dihitung per kursi dan berbeda untuk tiap rute. Lihat tarif resmi di halaman masing-masing rute pada daftar di atas, atau tanyakan langsung ke admin via WhatsApp."
      },
      {
           question: "Berapa batas maksimal barang bawaan penumpang?",
@@ -26,7 +34,7 @@ const faqs = [
      }
 ];
 
-export default function FaqTravel() {
+export default function FaqTravel({ whatsapp }: { whatsapp?: string }) {
      const [openIndex, setOpenIndex] = useState<number | null>(0);
 
      const toggleFaq = (index: number) => {
@@ -36,14 +44,14 @@ export default function FaqTravel() {
      return (
           <section className="w-full bg-surface py-space-xl">
                <div className="mx-auto max-w-4xl px-gutter">
-                    
+
                     {/* Header: Rata Tengah dengan ukuran font setara BerandaFaq */}
                     <div className="space-y-space-xs text-center pb-space-lg">
                          <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
                               Pusat Bantuan
                          </span>
                          <h2 className="font-display text-headline-lg font-extrabold tracking-tight text-on-surface">
-                              Pertanyaan Seputar Travel
+                              Pertanyaan Seputar Travel Reguler Malang
                          </h2>
                          <p className="mx-auto max-w-2xl font-body-md text-body-sm text-on-surface-variant leading-relaxed md:text-body-md">
                               Temukan jawaban untuk pertanyaan yang paling sering diajukan oleh calon penumpang sebelum melakukan pemesanan tiket.
@@ -72,12 +80,11 @@ export default function FaqTravel() {
                                                   </span>
                                              </div>
                                              <ChevronDown
-                                                  className={`h-4 w-4 shrink-0 text-on-surface-variant transition-transform duration-200 md:h-5 md:w-5 ${
-                                                       isOpen ? "rotate-180 text-primary" : ""
-                                                  }`}
+                                                  className={`h-4 w-4 shrink-0 text-on-surface-variant transition-transform duration-200 md:h-5 md:w-5 ${isOpen ? "rotate-180 text-primary" : ""
+                                                       }`}
                                              />
                                         </button>
-                                        
+
                                         {isOpen && (
                                              <div className="border-t border-surface-container-high/40 px-4 pb-4 pt-3 md:px-space-md md:pb-space-md md:pt-space-xs">
                                                   <p className="text-xs text-on-surface-variant leading-relaxed sm:pl-7 md:text-body-md">
@@ -94,14 +101,16 @@ export default function FaqTravel() {
                     <div className="mt-space-lg rounded-2xl border border-surface-container-high/50 bg-surface-container-lowest p-6 text-center shadow-2xs">
                          <p className="font-body-md text-body-md text-on-surface">
                               Masih punya pertanyaan lain? Jangan ragu untuk{" "}
-                              <a 
-                                   href="https://wa.me/6281234567890" 
-                                   target="_blank" 
-                                   rel="noopener noreferrer" 
-                                   className="font-bold text-primary transition-colors hover:text-primary/80 hover:underline"
-                              >
-                                   menghubungi Admin kami via WhatsApp
-                              </a>.
+                              {whatsapp && (
+                                   <a
+                                        href={`https://wa.me/${whatsapp}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="font-bold text-primary transition-colors hover:text-primary/80 hover:underline"
+                                   >
+                                        menghubungi Admin kami via WhatsApp
+                                   </a>
+                              )}
                          </p>
                     </div>
 

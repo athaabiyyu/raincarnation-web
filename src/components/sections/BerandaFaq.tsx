@@ -41,6 +41,7 @@ export default function BerandaFaq() {
                                              onClick={() => toggleFaq(index)}
                                              className="flex w-full items-center justify-between gap-3 px-4 py-3.5 text-left transition-colors hover:text-primary md:p-space-md"
                                              aria-expanded={isOpen}
+                                             aria-controls={`faq-answer-${index}`}
                                         >
                                              <div className="flex items-center gap-2.5">
                                                   <HelpCircle className="hidden sm:block h-5 w-5 shrink-0 text-primary/80" />
@@ -53,13 +54,16 @@ export default function BerandaFaq() {
                                                        }`}
                                              />
                                         </button>
-                                        {isOpen && (
-                                             <div className="border-t border-surface-container-high/40 px-4 pb-4 pt-3 md:px-space-md md:pb-space-md md:pt-space-xs">
-                                                  <p className="text-xs text-on-surface-variant leading-relaxed sm:pl-7 md:text-body-md">
-                                                       {item.answer}
-                                                  </p>
-                                             </div>
-                                        )}
+                                        <div
+                                             id={`faq-answer-${index}`}
+                                             role="region"
+                                             hidden={!isOpen}
+                                             className="border-t border-surface-container-high/40 px-4 pb-4 pt-3 md:px-space-md md:pb-space-md md:pt-space-xs"
+                                        >
+                                             <p className="text-xs text-on-surface-variant leading-relaxed sm:pl-7 md:text-body-md">
+                                                  {item.answer}
+                                             </p>
+                                        </div>
                                    </div>
                               );
                          })}

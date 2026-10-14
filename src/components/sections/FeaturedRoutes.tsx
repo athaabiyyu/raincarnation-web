@@ -35,13 +35,11 @@ export default function FeaturedRoutes({
      // State untuk membuka/menutup dropdown kustom
      const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-     if (allRoutes.length === 0) return null;
-
-     let baseRoutes = allRoutes;
-     if (onlyFeatured) {
+     const baseRoutes = useMemo(() => {
+          if (!onlyFeatured) return allRoutes;
           const marked = allRoutes.filter((route) => route.acf?.unggulan === true);
-          baseRoutes = (marked.length > 0 ? marked : allRoutes).slice(0, MAX_FEATURED);
-     }
+          return (marked.length > 0 ? marked : allRoutes).slice(0, MAX_FEATURED);
+     }, [allRoutes, onlyFeatured]);
 
      const filteredRoutes = useMemo(() => {
           if (onlyFeatured) return baseRoutes;
@@ -54,6 +52,8 @@ export default function FeaturedRoutes({
                return matchesSearch && matchesFilter;
           });
      }, [baseRoutes, searchQuery, activeFilter, onlyFeatured]);
+
+     if (allRoutes.length === 0) return null;
 
      const displayedRoutes = onlyFeatured
           ? filteredRoutes

@@ -1,22 +1,14 @@
 import type { Armada } from "@/types/armada";
 
-// BELUM DIKONFIRMASI BOS: semua klaim di file ini dipasang sementara dari desain Stitch.
-// Isi kartu paket ada di CMS (CPT paket-sewa) dan juga harus dikonfirmasi bos sebelum rilis.
-// Klaim katalog armada yang perlu dikonfirmasi: "inspeksi berkala pra-keberangkatan, interior
-// higienis wangi, pendingin kabin optimal", "SUV 4x4 proyek, bus medium 30-35 seat",
-// dan teks kartu "Butuh Alphard..." (Alphard sudah ada di CMS).
-// Klaim 4 Pilar yang perlu dikonfirmasi: jadwal jemput 24 jam (subuh sampai larut malam),
-// sopir menunggu di rest area, dan "driver terverifikasi catatan berkendara aman,
-// tidak merokok di kabin" (berisiko).
 export const sewaMobilHero = {
      badge: "Sewa Mobil dengan Sopir atau Lepas Kunci",
      tagline: "Satu Armada Khusus Rombongan Anda",
      highlightChip: "Tanpa Penumpang Campuran",
-     titleStart: "Sewa Mobil Malang dengan",
-     titleHighlight: "Sopir atau Lepas Kunci",
+     titleStart: "Sewa Mobil Malang",
+     titleHighlight: "Lepas Kunci atau dengan Sopir",
      titleEnd: ", Rute Sesuai Rencana Anda.",
      description:
-          "Sewa mobil Malang, Batu, dan Surabaya dengan sopir atau lepas kunci, durasi sewa 12 jam. Tarif menyesuaikan komponen biaya seperti BBM dan parkir. Tanyakan rinciannya lewat WhatsApp.",
+          "Sewa mobil Malang lepas kunci atau dengan sopir untuk perjalanan di Malang, Batu, Surabaya, dan Pasuruan. Pilih paket dan armada sesuai kebutuhan, cek simulasi tarif, lalu pesan lewat WhatsApp.",
      stats: [
           { value: "12 Jam", label: "Durasi Sewa" },
           { value: "1 Mobil", label: "Khusus Rombongan Anda" },

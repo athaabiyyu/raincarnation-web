@@ -15,9 +15,19 @@ const FAQS: FaqItem[] = [
                "Untuk paket Sewa All-In dan Carter Drop, tarif yang tertera sudah mencakup jasa driver profesional dan BBM. Biaya tambahan seperti tol dan parkir disesuaikan dengan rute perjalanan Anda.",
      },
      {
-          question: "Apakah tersedia opsi sewa mobil lepas kunci di Malang & Batu?",
+          question: "Apakah tersedia opsi sewa mobil lepas kunci (tanpa driver) di Malang & Batu?",
           answer:
                "Ya, kami menyediakan layanan sewa mobil lepas kunci untuk unit tertentu dengan proses verifikasi dokumen identitas (KTP, SIM A aktif, dan akun media sosial) yang cepat dan mudah.",
+     },
+     {
+          question: "Berapa harga sewa mobil per hari di Malang?",
+          answer:
+               "Tarif bergantung pada jenis armada, paket yang dipilih (All-In, Carter Drop, atau Lepas Kunci), dan rute perjalanan. Gunakan Simulasi & Cek Tarif di bagian atas halaman ini untuk estimasi, atau tanyakan langsung ke admin via WhatsApp.",
+     },
+     {
+          question: "Area mana saja yang dilayani untuk sewa mobil?",
+          answer:
+               "Kami melayani sewa mobil di Malang, Batu, Surabaya, dan Pasuruan, termasuk penjemputan di Bandara Juanda. Untuk rute luar kota atau perjalanan multi-hari, konsultasikan dulu dengan admin via WhatsApp.",
      },
      {
           question: "Bagaimana sistem penjemputan untuk carter drop luar kota?",
@@ -68,7 +78,7 @@ export default function SewaMobilFaq() {
                               PERTANYAAN UMUM
                          </span>
                          <h2 className="font-display text-headline-lg font-extrabold tracking-tight text-on-surface">
-                              Pertanyaan Sering Diajukan (FAQ)
+                              Pertanyaan Seputar Sewa Mobil Malang Lepas Kunci & Dengan Sopir
                          </h2>
                          <p className="mx-auto max-w-2xl font-body-md text-body-sm text-on-surface-variant leading-relaxed md:text-body-md">
                               Punya pertanyaan seputar sewa mobil, paket lepas kunci, atau carter drop? Cek jawaban lengkapnya di bawah ini.

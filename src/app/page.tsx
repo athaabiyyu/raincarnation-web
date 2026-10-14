@@ -25,7 +25,7 @@ import { getRoutePairs } from "@/utils/route-pairs";
 
 const title = "Sewa Mobil Malang, Batu & Surabaya Murah | Raincarnation";
 const description =
-     "Sewa mobil di Malang, Batu, dan Surabaya (termasuk Bandara Juanda) plus driver atau lepas kunci. Pilihan armada lengkap & terawat. Hubungi kami via WhatsApp!";
+     "Sewa mobil murah dengan sopir atau lepas kunci di Malang, Batu, Surabaya, Pasuruan & Juanda. Ada juga travel reguler. Tanya tarif via WhatsApp.";
 
 export const metadata: Metadata = {
      title,
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
           images: [
                {
                     url: "/images/interior-armada.webp",
-                    alt: "Interior bersih dan nyaman armada sewa mobil Malang Raincarnation",
+                    alt: "Kabin mobil Raincarnation yang bersih dan nyaman untuk sewa mobil di Malang",
                },
           ],
      },
@@ -55,7 +55,6 @@ const autoRentalJsonLd = {
      logo: `${siteConfig.url}/logo.webp`,
      image: `${siteConfig.url}/images/interior-armada.webp`,
      description,
-     priceRange: "$$",
      address: {
           "@type": "PostalAddress",
           addressLocality: "Malang",
@@ -63,37 +62,12 @@ const autoRentalJsonLd = {
           addressCountry: "ID",
      },
      areaServed: [
-          {
-               "@type": "AdministrativeArea",
-               name: "Malang",
-          },
-          {
-               "@type": "AdministrativeArea",
-               name: "Batu",
-          },
-          {
-               "@type": "AdministrativeArea",
-               name: "Surabaya",
-          },
-          {
-               "@type": "Place",
-               name: "Bandara Juanda",
-          },
+          { "@type": "AdministrativeArea", name: "Malang" },
+          { "@type": "AdministrativeArea", name: "Batu" },
+          { "@type": "AdministrativeArea", name: "Surabaya" },
+          { "@type": "AdministrativeArea", name: "Pasuruan" },
+          { "@type": "Place", name: "Bandara Juanda" },
      ],
-     openingHoursSpecification: {
-          "@type": "OpeningHoursSpecification",
-          dayOfWeek: [
-               "Monday",
-               "Tuesday",
-               "Wednesday",
-               "Thursday",
-               "Friday",
-               "Saturday",
-               "Sunday",
-          ],
-          opens: "00:00",
-          closes: "23:59",
-     },
 };
 
 const faqJsonLd = {
@@ -173,14 +147,6 @@ export default async function HomePage() {
 
      return (
           <main className="w-full bg-surface">
-               {/* Preload Gambar LCP Hero agar terdeteksi instan oleh browser */}
-               <link
-                    rel="preload"
-                    href="/images/interior-armada.webp"
-                    as="image"
-                    type="image/webp"
-               />
-
                <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{

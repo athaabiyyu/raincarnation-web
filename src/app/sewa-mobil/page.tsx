@@ -15,19 +15,21 @@ import type { PaketSewa } from "@/types/paket-sewa";
 import type { Armada } from "@/types/armada";
 import type { RuteCarter } from "@/types/rute-carter";
 
+const title = "Sewa Mobil Malang Lepas Kunci & Dengan Sopir | Raincarnation";
+const description =
+     "Sewa mobil murah di Malang, Batu, Surabaya & Pasuruan: lepas kunci (tanpa driver) atau dengan sopir. Cek paket dan tarif, lalu pesan via WhatsApp.";
+
 export const metadata: Metadata = {
-     title: "Sewa Mobil Malang dengan Sopir atau Lepas Kunci | Raincarnation",
-     description:
-          "Sewa mobil Malang, Batu, dan Surabaya dengan sopir atau lepas kunci, durasi sewa 12 jam. Tarif menyesuaikan komponen biaya seperti BBM dan parkir. Tanyakan rinciannya lewat WhatsApp.",
+     title,
+     description,
      alternates: { canonical: "/sewa-mobil" },
      openGraph: {
           type: "website",
           locale: "id_ID",
           siteName: siteConfig.name,
           url: "/sewa-mobil",
-          title: "Sewa Mobil Malang dengan Sopir atau Lepas Kunci | Raincarnation",
-          description:
-               "Sewa mobil Malang, Batu, dan Surabaya dengan sopir atau lepas kunci, durasi sewa 12 jam. Tarif menyesuaikan komponen biaya seperti BBM dan parkir. Tanyakan rinciannya lewat WhatsApp.",
+          title,
+          description,
           images: [
                {
                     url: "/images/interior-armada.webp",
@@ -77,8 +79,7 @@ export default async function SewaMobilPage() {
           "@context": "https://schema.org",
           "@type": "AutoRental",
           name: "Sewa Mobil Malang dengan Sopir atau Lepas Kunci - Raincarnation",
-          description:
-               "Layanan sewa mobil Malang, Batu, dan Surabaya dengan sopir atau lepas kunci, durasi 12 jam. Layanan carter drop privat tanpa penumpang campuran.",
+          description,
           url: `${siteConfig.url}/sewa-mobil`,
           telephone: whatsapp,
           priceRange: "Rp 150.000 - Rp 3.500.000",
@@ -93,6 +94,7 @@ export default async function SewaMobilPage() {
                { "@type": "AdministrativeArea", name: "Kabupaten Malang" },
                { "@type": "AdministrativeArea", name: "Kota Batu" },
                { "@type": "AdministrativeArea", name: "Kota Surabaya" },
+               { "@type": "AdministrativeArea", name: "Pasuruan" },
           ],
           provider: {
                "@type": "LocalBusiness",

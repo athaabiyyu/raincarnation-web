@@ -15,10 +15,13 @@ import { capitalizeFirst } from "@/utils/capitalize-first";
 import { decodeHtml } from "@/utils/decode-html";
 import { getRoutePairs } from "@/utils/route-pairs";
 
+const title = "Travel Reguler Malang: Jadwal & Tarif | Raincarnation";
+const description =
+  "Travel reguler per kursi di Malang, Batu, Surabaya, Juanda & Pandaan. Cek jadwal, tarif, dan titik jemput, lalu pesan via WhatsApp.";
+
 export const metadata: Metadata = {
-  title: "Travel Reguler Malang Surabaya, Batu & Juanda per Kursi | Raincarnation",
-  description:
-    "Layanan travel reguler per kursi untuk rute antar titik perkotaan Malang, Batu, Surabaya, Juanda, dan Pandaan. Cek jadwal, tarif, dan pesan via WhatsApp.",
+  title,
+  description,
   alternates: {
     canonical: "/travel-reguler",
   },
@@ -27,9 +30,8 @@ export const metadata: Metadata = {
     locale: "id_ID",
     siteName: siteConfig.name,
     url: "/travel-reguler",
-    title: "Travel Reguler Malang Surabaya, Batu & Juanda per Kursi | Raincarnation",
-    description:
-      "Layanan travel reguler per kursi untuk rute antar titik perkotaan Malang, Batu, Surabaya, Juanda, dan Pandaan. Cek jadwal, tarif, dan pesan via WhatsApp.",
+    title,
+    description,
     images: [
       {
         url: "/images/interior-armada.webp",
@@ -77,8 +79,7 @@ export default async function TravelRegulerPage() {
     "@context": "https://schema.org",
     "@type": "TransportationService",
     name: "Travel Reguler Antar Perkotaan - Raincarnation",
-    description:
-      "Layanan travel reguler per kursi untuk rute antar titik perkotaan Malang, Batu, Surabaya, Juanda, dan Pandaan.",
+    description,
     url: `${siteConfig.url}/travel-reguler`,
     telephone: whatsapp,
     address: {
@@ -93,7 +94,7 @@ export default async function TravelRegulerPage() {
       { "@type": "AdministrativeArea", name: "Kota Batu" },
       { "@type": "AdministrativeArea", name: "Kota Surabaya" },
       { "@type": "AdministrativeArea", name: "Sidoarjo (Juanda)" },
-      { "@type": "AdministrativeArea", name: "Pandaan" },
+      { "@type": "AdministrativeArea", name: "Pandaan (Pasuruan)" },
     ],
     provider: {
       "@type": "LocalBusiness",
@@ -177,7 +178,7 @@ export default async function TravelRegulerPage() {
 
       <BookingSteps />
 
-      <FaqTravel />
+      <FaqTravel whatsapp={whatsapp} />
 
       {whatsapp && <CtaBanner whatsapp={whatsapp} />}
     </main>
