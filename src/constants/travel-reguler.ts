@@ -1,5 +1,7 @@
 export const heroContent = {
-     title: "Travel Malang Surabaya per Kursi, Cek Jadwal dan Tarif per Rute",
+     titleStart: "Travel Malang Surabaya",
+     titleHighlight: "per Kursi",
+     titleEnd: ", Cek Jadwal dan Tarif per Rute",
      description:
           "Travel reguler per kursi untuk rute antara Malang, Batu, Surabaya, Juanda, dan Pandaan. Lihat jadwal dan tarif tiap rute, lalu pesan lewat WhatsApp.",
      charterLink: {
@@ -37,12 +39,14 @@ export const quickRoutes = [
 
 export const featuredRoutesContent = {
      title: "Rute Travel Reguler dan Jadwal Keberangkatan",
-     description: "Temukan layanan travel reguler per kursi dari Malang, Batu, Surabaya, dan Bandara Juanda menuju kota tujuan yang tersedia. Lihat jadwal dan tarif setiap rute sebelum melakukan pemesanan.",
+     description:
+          "Temukan layanan travel reguler per kursi dari Malang, Batu, Surabaya, dan Bandara Juanda menuju kota tujuan yang tersedia. Lihat jadwal dan tarif setiap rute sebelum melakukan pemesanan.",
      fareLabel: "Tarif / Kursi",
      roundTripLabel: "Tarif Pulang-Pergi",
      scheduleLabel: "Jadwal:",
      fleetLabel: "Armada:",
      orderLabel: "Pesan",
-     helpText: "Butuh rute lain yang belum terdaftar? Tanyakan ketersediaannya ke admin.",
+     helpText:
+          "Butuh rute lain yang belum terdaftar? Tanyakan ketersediaannya ke admin.",
      helpLinkLabel: "Tanyakan Rute Anda ke Admin",
 };

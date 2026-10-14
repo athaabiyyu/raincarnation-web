@@ -24,9 +24,12 @@ export default function Facilities() {
      const { title, description, items, photo, safety } = facilitiesContent;
 
      return (
-          <section className="w-full bg-surface-container-low py-space-lg md:py-space-xl">
+          <section className="w-full bg-surface py-space-lg md:py-space-xl">
                <div className="mx-auto max-w-6xl space-y-space-lg px-gutter">
                     <div className="space-y-space-xs">
+                         <span className="block font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
+                              Fasilitas & Kenyamanan
+                         </span>
                          <h2 className="font-headline-lg text-headline-lg tracking-tight text-on-surface">
                               {title}
                          </h2>
@@ -70,8 +73,9 @@ export default function Facilities() {
                     </div>
 
                     <div
-                         className={`grid grid-cols-1 gap-space-md pt-space-sm ${photo.src ? "lg:grid-cols-3" : ""
-                              }`}
+                         className={`grid grid-cols-1 gap-space-md pt-space-sm ${
+                              photo.src ? "lg:grid-cols-3" : ""
+                         }`}
                     >
                          {photo.src && (
                               <div className="relative h-56 overflow-hidden rounded-xl shadow-sm sm:h-72 lg:col-span-2 lg:h-80">

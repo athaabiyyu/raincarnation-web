@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Clock, MessageSquareText, Route as RouteIcon } from "lucide-react";
+import { Clock, MessageSquareText } from "lucide-react";
 import type { Route } from "@/types/route";
 import type { Armada } from "@/types/armada";
 import { featuredRoutesContent } from "@/constants/travel-reguler";
@@ -12,7 +12,6 @@ import { parseSchedule } from "@/utils/route-pairs";
 export type WideMode = "md" | "lg" | "md-only";
 
 const DETAIL_LABEL = "Lihat Detail";
-const DETAIL_NOTE = "Detail lengkap ada di halaman detail.";
 const SOFT_SCHEDULE_LABEL = "Jadwal Berangkat:";
 
 type RouteCardProps = {
@@ -21,10 +20,9 @@ type RouteCardProps = {
      whatsapp: string;
      className?: string;
      wideMode?: WideMode;
-     soft?: boolean;
 };
 
-export default function RouteCard({ route, whatsapp, soft = false }: RouteCardProps) {
+export default function RouteCard({ route, whatsapp }: RouteCardProps) {
      const content = featuredRoutesContent;
 
      const title = capitalizeFirst(decodeHtml(route.title));
@@ -42,10 +40,7 @@ export default function RouteCard({ route, whatsapp, soft = false }: RouteCardPr
 
      return (
           <article
-               className={`flex h-full flex-col justify-between gap-space-sm rounded-xl p-space-md transition-all duration-300 ${soft
-                    ? "border border-surface-container-high/60 bg-surface-container-lowest shadow-[0_2px_12px_rgba(18,28,44,0.04)] hover:shadow-lg"
-                    : "border border-surface-container-high/80 bg-surface-container-lowest shadow-sm hover:shadow-md"
-                    }`}
+               className="flex h-full flex-col justify-between gap-space-sm rounded-xl p-space-md transition-all duration-300 border border-surface-container-high/60 bg-surface-container-lowest shadow-[0_2px_12px_rgba(18,28,44,0.04)] hover:shadow-lg"
           >
                <div className="flex flex-1 flex-col gap-space-sm">
                     {/* Header: label kiri, jalur kanan */}
@@ -58,9 +53,6 @@ export default function RouteCard({ route, whatsapp, soft = false }: RouteCardPr
                               )}
                               {jalur && (
                                    <span className="ml-auto inline-flex items-center gap-1 text-right font-label-sm text-label-sm font-semibold text-on-surface-variant">
-                                        {!soft && (
-                                             <RouteIcon className="h-3.5 w-3.5" aria-hidden />
-                                        )}
                                         {jalur}
                                    </span>
                               )}
@@ -73,14 +65,14 @@ export default function RouteCard({ route, whatsapp, soft = false }: RouteCardPr
                               {displayTitle}
                          </h3>
 
-                         {soft && description && (
+                         {description && (
                               <p className="pt-space-xs break-words font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
                                    {description}
                               </p>
                          )}
                     </div>
 
-                    {/* Jadwal Berangkat: diberi mb-space-xs agar berjarak dengan tarif */}
+                    {/* Jadwal Berangkat */}
                     {times.length > 0 && (
                          <div className="mt-auto mb-space-xs pt-space-sm space-y-space-xs">
                               <div className="flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant">
@@ -89,7 +81,7 @@ export default function RouteCard({ route, whatsapp, soft = false }: RouteCardPr
                                         aria-hidden
                                    />
                                    <span className="font-bold text-on-surface">
-                                        {soft ? SOFT_SCHEDULE_LABEL : content.scheduleLabel}
+                                        {SOFT_SCHEDULE_LABEL}
                                    </span>
                               </div>
                               <div className="flex flex-wrap gap-space-xs">
@@ -108,32 +100,14 @@ export default function RouteCard({ route, whatsapp, soft = false }: RouteCardPr
 
                {/* Bawah kartu: tarif & tombol */}
                <div className="space-y-space-sm border-t border-surface-container-high/60 pt-space-sm">
-                    {soft ? (
-                         price && (
-                              <div className="flex items-baseline justify-between gap-space-sm">
-                                   <span className="font-label-sm text-label-sm font-medium text-on-surface-variant">
-                                        {content.fareLabel}
-                                   </span>
-                                   <span className="font-headline-sm text-headline-sm font-extrabold tracking-tight text-primary">
-                                        {price}
-                                   </span>
-                              </div>
-                         )
-                    ) : (
-                         <div className="space-y-1">
-                              {price && (
-                                   <div>
-                                        <div className="font-label-sm text-label-sm text-on-surface-variant">
-                                             {content.fareLabel}
-                                        </div>
-                                        <div className="font-headline-sm text-headline-sm font-bold text-primary">
-                                             {price}
-                                        </div>
-                                   </div>
-                              )}
-                              <p className="font-body-sm text-body-sm text-on-surface-variant">
-                                   {DETAIL_NOTE}
-                              </p>
+                    {price && (
+                         <div className="flex items-baseline justify-between gap-space-sm">
+                              <span className="font-label-sm text-label-sm font-medium text-on-surface-variant">
+                                   {content.fareLabel}
+                              </span>
+                              <span className="font-headline-sm text-headline-sm font-extrabold tracking-tight text-primary">
+                                   {price}
+                              </span>
                          </div>
                     )}
 
