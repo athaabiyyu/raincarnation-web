@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import BookingSteps from "@/components/sections/BookingSteps";
 import CtaBanner from "@/components/sections/CtaBanner";
 import Facilities from "@/components/sections/Facilities";
 import FeaturedRoutes from "@/components/sections/FeaturedRoutes";
-import RouteSearchForm from "@/components/sections/RouteSearchForm";
 import TravelHero from "@/components/sections/TravelHero";
-import { heroContent } from "@/constants/travel-reguler";
+import FaqTravel from "@/components/sections/FaqTravel";
+import { siteConfig } from "@/config/site";
 import { getArmadaList } from "@/lib/wordpress/armada";
 import { getSiteConfig } from "@/lib/wordpress/config";
 import { getRoutes } from "@/lib/wordpress/routes";
@@ -15,132 +14,172 @@ import type { Route } from "@/types/route";
 import { capitalizeFirst } from "@/utils/capitalize-first";
 import { decodeHtml } from "@/utils/decode-html";
 import { getRoutePairs } from "@/utils/route-pairs";
-import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
-     title: "Travel Malang Surabaya per Kursi, Jadwal & Tarif | Raincarnation",
-     description:
-          "Travel reguler per kursi untuk rute antara Malang, Batu, Surabaya, Juanda, dan Pandaan. Cek jadwal dan tarif per rute, lalu pesan lewat WhatsApp.",
-     alternates: {
-          canonical: "/travel-reguler",
-     },
-     openGraph: {
-          type: "website",
-          locale: "id_ID",
-          siteName: siteConfig.name,
-          url: "/travel-reguler",
-          title: "Travel Malang Surabaya per Kursi, Jadwal & Tarif | Raincarnation",
-          description:
-               "Travel reguler per kursi untuk rute antara Malang, Batu, Surabaya, Juanda, dan Pandaan. Cek jadwal dan tarif per rute, lalu pesan lewat WhatsApp.",
-          images: [
-               {
-                    url: "/images/interior-armada.webp",
-                    alt: "Interior armada Raincarnation yang bersih dan nyaman",
-               },
-          ],
-     },
-};
-
-const jsonLd = {
-     "@context": "https://schema.org",
-     "@type": "Service",
-     name: "Travel Reguler per Kursi",
-     serviceType: "Travel reguler per kursi",
-     areaServed: ["Malang", "Batu", "Surabaya", "Juanda", "Pandaan"],
-     url: `${siteConfig.url}/travel-reguler`,
+  title: "Travel Reguler Malang Surabaya, Batu & Juanda per Kursi | Raincarnation",
+  description:
+    "Layanan travel reguler per kursi untuk rute antar titik perkotaan Malang, Batu, Surabaya, Juanda, dan Pandaan. Cek jadwal, tarif, dan pesan via WhatsApp.",
+  alternates: {
+    canonical: "/travel-reguler",
+  },
+  openGraph: {
+    type: "website",
+    locale: "id_ID",
+    siteName: siteConfig.name,
+    url: "/travel-reguler",
+    title: "Travel Reguler Malang Surabaya, Batu & Juanda per Kursi | Raincarnation",
+    description:
+      "Layanan travel reguler per kursi untuk rute antar titik perkotaan Malang, Batu, Surabaya, Juanda, dan Pandaan. Cek jadwal, tarif, dan pesan via WhatsApp.",
+    images: [
+      {
+        url: "/images/interior-armada.webp",
+        alt: "Interior armada Raincarnation yang bersih dan nyaman",
+      },
+    ],
+  },
 };
 
 async function loadRoutes(): Promise<Route[]> {
-     try {
-          return await getRoutes();
-     } catch (error) {
-          console.error("[TravelRegulerPage] Gagal mengambil rute dari CMS:", error);
-          return [];
-     }
+  try {
+    return await getRoutes();
+  } catch (error) {
+    console.error(
+      "[TravelRegulerPage] Gagal mengambil rute dari CMS:",
+      error
+    );
+    return [];
+  }
 }
 
 async function loadArmada(): Promise<Armada[]> {
-     try {
-          return await getArmadaList();
-     } catch (error) {
-          console.error("[TravelRegulerPage] Gagal mengambil armada dari CMS:", error);
-          return [];
-     }
+  try {
+    return await getArmadaList();
+  } catch (error) {
+    console.error(
+      "[TravelRegulerPage] Gagal mengambil armada dari CMS:",
+      error
+    );
+    return [];
+  }
 }
 
 export default async function TravelRegulerPage() {
-     const [config, routes, armadaList] = await Promise.all([
-          getSiteConfig(),
-          loadRoutes(),
-          loadArmada(),
-     ]);
-     const whatsapp = config.contact?.whatsapp;
-     const pairs = getRoutePairs(routes);
-     const charterLink = heroContent.charterLink;
+  const [config, routes, armadaList] = await Promise.all([
+    getSiteConfig(),
+    loadRoutes(),
+    loadArmada(),
+  ]);
+  const whatsapp = config.contact?.whatsapp ?? "";
+  const pairs = getRoutePairs(routes);
 
-     const routeListItems = routes
-          .filter((route) => route.slug)
-          .map((route, index) => ({
-               "@type": "ListItem",
-               position: index + 1,
-               name: capitalizeFirst(decodeHtml(route.title)),
-               url: `${siteConfig.url}/rute/${route.slug}`,
-          }));
+  // 1. Structured Data Utama (TransportationService / TravelAgency)
+  const travelServiceLd = {
+    "@context": "https://schema.org",
+    "@type": "TransportationService",
+    name: "Travel Reguler Antar Perkotaan - Raincarnation",
+    description:
+      "Layanan travel reguler per kursi untuk rute antar titik perkotaan Malang, Batu, Surabaya, Juanda, dan Pandaan.",
+    url: `${siteConfig.url}/travel-reguler`,
+    telephone: whatsapp,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Malang",
+      addressRegion: "Jawa Timur",
+      addressCountry: "ID",
+    },
+    areaServed: [
+      { "@type": "AdministrativeArea", name: "Kota Malang" },
+      { "@type": "AdministrativeArea", name: "Kabupaten Malang" },
+      { "@type": "AdministrativeArea", name: "Kota Batu" },
+      { "@type": "AdministrativeArea", name: "Kota Surabaya" },
+      { "@type": "AdministrativeArea", name: "Sidoarjo (Juanda)" },
+      { "@type": "AdministrativeArea", name: "Pandaan" },
+    ],
+    provider: {
+      "@type": "LocalBusiness",
+      name: siteConfig.name,
+      image: `${siteConfig.url}/images/interior-armada.webp`,
+    },
+  };
 
-     const itemListJsonLd = {
-          "@context": "https://schema.org",
-          "@type": "ItemList",
-          name: "Rute Travel Reguler",
-          itemListElement: routeListItems,
-     };
+  // 2. Structured Data BreadcrumbList
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Beranda",
+        item: siteConfig.url,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Travel Reguler",
+        item: `${siteConfig.url}/travel-reguler`,
+      },
+    ],
+  };
 
-     return (
-          <main className="w-full bg-surface">
-               <script
-                    type="application/ld+json"
-                    dangerouslySetInnerHTML={{
-                         __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
-                    }}
-               />
-               {routeListItems.length > 0 && (
-                    <script
-                         type="application/ld+json"
-                         dangerouslySetInnerHTML={{
-                              __html: JSON.stringify(itemListJsonLd).replace(/</g, "\\u003c"),
-                         }}
-                    />
-               )}
-               <TravelHero />
+  // 3. Structured Data ItemList untuk daftar rute
+  const routeListItems = routes
+    .filter((route) => route.slug)
+    .map((route, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: capitalizeFirst(decodeHtml(route.title)),
+      url: `${siteConfig.url}/rute/${route.slug}`,
+    }));
 
-               <section className="w-full bg-surface-container-low py-space-xl">
-                    <div className="mx-auto max-w-6xl space-y-space-md px-gutter">
-                         {whatsapp && pairs.length > 0 && (
-                              <RouteSearchForm pairs={pairs} whatsapp={whatsapp} />
-                         )}
+  const itemListLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Daftar Rute Travel Reguler",
+    itemListElement: routeListItems,
+  };
 
-                         <p className="pt-space-sm text-center font-body-md text-body-md text-on-surface-variant">
-                              {charterLink.text}{" "}
-                              <Link
-                                   href={charterLink.href}
-                                   className="font-bold text-primary underline underline-offset-4 hover:text-primary-container"
-                              >
-                                   {charterLink.label}
-                              </Link>
-                              .
-                         </p>
-                    </div>
-               </section>
+  return (
+    <main className="w-full bg-surface">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(travelServiceLd).replace(/</g, "\\u003c"),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbLd).replace(/</g, "\\u003c"),
+        }}
+      />
+      {routeListItems.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(itemListLd).replace(/</g, "\\u003c"),
+          }}
+        />
+      )}
 
-               {whatsapp && routes.length > 0 && (
-                    <FeaturedRoutes
-                         routes={routes}
-                         armadaList={armadaList}
-                         whatsapp={whatsapp}
-                    />
-               )}
-               <Facilities />
-               <BookingSteps />
-               {whatsapp && <CtaBanner whatsapp={whatsapp} />}
-          </main>
-     );
+      {/* Hero & Form Pencarian Menyatu */}
+      <TravelHero whatsapp={whatsapp} pairs={pairs} />
+
+      {whatsapp && routes.length > 0 && (
+        <FeaturedRoutes
+          routes={routes}
+          armadaList={armadaList}
+          whatsapp={whatsapp}
+        />
+      )}
+
+      <Facilities />
+
+      <BookingSteps />
+
+      <FaqTravel />
+
+      {whatsapp && <CtaBanner whatsapp={whatsapp} />}
+    </main>
+  );
 }
