@@ -11,7 +11,7 @@ export default function BerandaHero() {
                          
                          {/* Wadah Utama Kiri */}
                          <div className="flex flex-col justify-between lg:self-stretch">
-                              {/* Bagian Atas: Hanya Title H1 (Tanpa mt pada deskripsi agar title bersih di atas) */}
+                              {/* Bagian Atas: Title H1 */}
                               <div>
                                    <h1 className="font-display text-display font-extrabold tracking-tight text-on-surface">
                                         {berandaHero.titleStart}{" "}
@@ -22,15 +22,15 @@ export default function BerandaHero() {
                                    </h1>
                               </div>
 
-                              {/* Bagian Bawah: Deskripsi yang mendekat ke kotak keunggulan & Kotak Keunggulan */}
-                              <div className="hidden lg:flex lg:flex-col lg:gap-space-md">
-                                   {/* Deskripsi (ditarik ke bawah mendekati kotak) */}
+                              {/* Bagian Bawah: Deskripsi selalu tampil, sedangkan fitur keunggulan hanya muncul di layar lg */}
+                              <div className="mt-4 flex flex-col gap-space-md lg:mt-0">
+                                   {/* Deskripsi (Kini muncul di mobile maupun desktop) */}
                                    <p className="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
                                         {berandaHero.description}
                                    </p>
 
-                                   {/* Fitur Keunggulan */}
-                                   <div className="flex items-center gap-4">
+                                   {/* Fitur Keunggulan (Hanya tampil di layar besar/lg ke atas) */}
+                                   <div className="hidden lg:flex items-center gap-4">
                                         {/* Poin 1 */}
                                         <div className="flex items-center gap-3 rounded-2xl bg-surface-container-low px-4 py-3 shadow-xs border border-outline/10">
                                              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-container/20 text-primary-container">
@@ -39,7 +39,7 @@ export default function BerandaHero() {
                                              <span className="font-semibold text-sm text-on-surface">Armada Nyaman & Terawat</span>
                                         </div>
 
-                                        {/* Poin 3 */}
+                                        {/* Poin 2 */}
                                         <div className="flex items-center gap-3 rounded-2xl bg-surface-container-low px-4 py-3 shadow-xs border border-outline/10">
                                              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-container/20 text-primary-container">
                                                   <Tag className="h-5 w-5" />
@@ -50,7 +50,7 @@ export default function BerandaHero() {
                               </div>
                          </div>
 
-                         {/* Foto Kanan */}
+                         {/* Foto Kanan (Tetap tersembunyi di mobile, tampil di lg) */}
                          <div className="hidden lg:block relative aspect-[4/3] w-full overflow-hidden rounded-3xl shadow-lg">
                               <Image
                                    src={berandaHero.image.src}

@@ -57,7 +57,7 @@ export default function ArmadaCatalog({
                          {isHome && seeAllHref && (
                               <Link
                                    href={seeAllHref}
-                                   className="hidden shrink-0 items-center gap-2 rounded-full border border-surface-container-high/80 bg-surface-container-lowest px-space-md py-2.5 font-label-md text-label-md font-bold text-primary shadow-sm transition-all hover:border-primary/40 hover:bg-primary/5 lg:inline-flex lg:self-auto"
+                                   className="hidden shrink-0 items-center justify-center gap-2 rounded-lg border border-primary/20 bg-primary/10 px-space-md py-2.5 font-label-md text-label-md font-bold text-primary transition-all hover:border-primary/40 hover:bg-primary/15 lg:inline-flex lg:self-auto"
                               >
                                    Lihat Semua Unit Armada
                                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -95,7 +95,7 @@ export default function ArmadaCatalog({
                          <div className="mt-space-lg lg:hidden">
                               <Link
                                    href={seeAllHref}
-                                   className="flex w-full items-center justify-center gap-2 rounded-xl border border-surface-container-high/80 bg-surface-container-lowest py-3 font-label-md text-label-md font-bold text-primary shadow-sm transition-all hover:border-primary/40 hover:bg-primary/5"
+                                   className="flex w-full items-center justify-center gap-2 rounded-lg border border-primary/20 bg-primary/10 py-2.5 font-label-md text-label-md font-bold text-primary transition-all hover:border-primary/40 hover:bg-primary/15"
                               >
                                    Lihat Semua Unit Armada
                                    <ArrowRight className="h-4 w-4" aria-hidden="true" />

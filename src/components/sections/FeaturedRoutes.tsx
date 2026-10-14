@@ -31,7 +31,7 @@ export default function FeaturedRoutes({
      const [visibleCount, setVisibleCount] = useState<number>(INITIAL_PAGE_SIZE);
      const [searchQuery, setSearchQuery] = useState("");
      const [activeFilter, setActiveFilter] = useState("Semua");
-     
+
      // State untuk membuka/menutup dropdown kustom
      const [isFilterOpen, setIsFilterOpen] = useState(false);
 
@@ -70,9 +70,8 @@ export default function FeaturedRoutes({
 
      return (
           <section
-               className={`w-full py-space-xl ${
-                    onlyFeatured ? "bg-surface" : "bg-surface-container-low"
-               }`}
+               className={`w-full py-space-xl ${onlyFeatured ? "bg-surface" : "bg-surface-container-low"
+                    }`}
           >
                <div className="mx-auto max-w-6xl space-y-space-lg px-gutter">
                     {/* Header Section */}
@@ -92,7 +91,8 @@ export default function FeaturedRoutes({
                          {hasMoreLink && seeAllHref && onlyFeatured ? (
                               <Link
                                    href={seeAllHref}
-                                   className="hidden shrink-0 items-center gap-2 rounded-full bg-surface-container-lowest px-space-md py-2.5 font-label-md text-label-md font-bold text-primary shadow-2xs transition-colors hover:bg-primary/10 lg:inline-flex lg:self-auto"
+                                   /* Menggunakan styling warna tombol Lihat Detail (border primary/20, bg primary/10, teks primary, hover senada) */
+                                   className="hidden shrink-0 items-center justify-center gap-2 rounded-lg border border-primary/20 bg-primary/10 px-space-md py-2.5 font-label-md text-label-md font-bold text-primary transition-all hover:border-primary/40 hover:bg-primary/15 lg:inline-flex lg:self-auto"
                               >
                                    Lihat Semua Rute
                                    <ArrowRight className="h-4 w-4" aria-hidden />
@@ -101,15 +101,15 @@ export default function FeaturedRoutes({
                     </div>
 
                     <div className="space-y-space-md md:space-y-space-lg">
-                         
+
                          {/* Filter & Search Section (Gaya "Pill" Terpadu) */}
                          {!onlyFeatured && (
                               <div className="relative w-full max-w-2xl">
                                    {/* Kapsul Utama */}
                                    <div className="flex w-full items-center rounded-full bg-surface-container-lowest p-1.5 pl-5 shadow-sm border border-surface-container-high/40 focus-within:border-primary/40 focus-within:ring-4 focus-within:ring-primary/10 transition-all duration-300 hover:shadow-md">
-                                        
+
                                         <Search className="h-5 w-5 text-on-surface-variant/70 shrink-0" aria-hidden="true" />
-                                        
+
                                         <input
                                              type="text"
                                              placeholder="Cari rute keberangkatan (misal: Malang)..."
@@ -125,11 +125,10 @@ export default function FeaturedRoutes({
                                              <button
                                                   type="button"
                                                   onClick={() => setIsFilterOpen(!isFilterOpen)}
-                                                  className={`flex h-[44px] w-[44px] md:h-[48px] md:w-[48px] items-center justify-center rounded-full transition-all duration-200 ${
-                                                       activeFilter !== "Semua"
+                                                  className={`flex h-[44px] w-[44px] md:h-[48px] md:w-[48px] items-center justify-center rounded-full transition-all duration-200 ${activeFilter !== "Semua"
                                                             ? "bg-primary text-on-primary shadow-md shadow-primary/20"
                                                             : "bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-primary"
-                                                  }`}
+                                                       }`}
                                                   aria-label="Filter kota"
                                              >
                                                   <ListFilter className="h-5 w-5" />
@@ -141,7 +140,7 @@ export default function FeaturedRoutes({
                                              {/* Custom Dropdown Menu */}
                                              {isFilterOpen && (
                                                   <>
-                                                       <div 
+                                                       <div
                                                             className="fixed inset-0 z-40"
                                                             onClick={() => setIsFilterOpen(false)}
                                                        />
@@ -154,11 +153,10 @@ export default function FeaturedRoutes({
                                                                            setVisibleCount(INITIAL_PAGE_SIZE);
                                                                            setIsFilterOpen(false);
                                                                       }}
-                                                                      className={`flex w-full items-center justify-between px-4 py-3 text-left font-body-sm md:font-body-md transition-colors ${
-                                                                           activeFilter === city
+                                                                      className={`flex w-full items-center justify-between px-4 py-3 text-left font-body-sm md:font-body-md transition-colors ${activeFilter === city
                                                                                 ? "bg-primary/10 font-bold text-primary"
                                                                                 : "text-on-surface hover:bg-surface-container-low"
-                                                                      }`}
+                                                                           }`}
                                                                  >
                                                                       <span>{city === "Semua" ? "Semua Kota" : city}</span>
                                                                       {activeFilter === city && (
@@ -197,7 +195,7 @@ export default function FeaturedRoutes({
                                         <p className="text-on-surface-variant font-body-md text-body-md mt-1">
                                              Coba gunakan kata kunci kota lain.
                                         </p>
-                                        <button 
+                                        <button
                                              onClick={() => {
                                                   setSearchQuery("");
                                                   setActiveFilter("Semua");
@@ -229,7 +227,8 @@ export default function FeaturedRoutes({
                          <div className="lg:hidden">
                               <Link
                                    href={seeAllHref}
-                                   className="flex w-full items-center justify-center gap-2 rounded-xl bg-surface-container-lowest py-3 font-label-md text-label-md font-bold text-primary shadow-2xs transition-colors hover:bg-primary/10"
+                                   /* Menggunakan styling warna tombol Lihat Detail versi mobile */
+                                   className="flex w-full items-center justify-center gap-2 rounded-lg border border-primary/20 bg-primary/10 py-2.5 font-label-md text-label-md font-bold text-primary transition-all hover:border-primary/40 hover:bg-primary/15"
                               >
                                    Lihat Semua Rute
                                    <ArrowRight className="h-4 w-4" aria-hidden />
