@@ -31,7 +31,7 @@ export const facilitiesContent = {
                icon: "luggage",
                title: "Gratis Bagasi Penumpang",
                description:
-                    "Setiap penumpang berhak membawa 1 koper ukuran sedang (maksimal 24 inch) ditambah 1 tas ransel / tas tangan tanpa dikenakan biaya bagasi tambahan.",
+                    "Setiap penumpang berhak membawa 1 koper ukuran sedang ditambah 1 tas ransel / tas tangan tanpa dikenakan biaya bagasi tambahan.",
                highlight: "1 Koper + 1 Ransel Free",
           },
           {

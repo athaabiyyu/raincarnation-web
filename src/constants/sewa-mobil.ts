@@ -141,6 +141,66 @@ export const sewaMobilFormIntro = {
           "Pilih paket sewa, armada, dan rute perjalanan, lalu isi tanggal dan jam untuk melihat estimasi tarif dan melanjutkan pemesanan melalui WhatsApp.",
 } as const;
 
+// BELUM DIKONFIRMASI BOS: Surabaya dianggap luar kota (tol) di All In; nama paket harus sama persis dengan paket_sewa di CMS.
+export type SewaMobilPackageKind = "drop-off" | "all-in" | "lepas-kunci";
+
+export type SewaMobilRouteScope = "dalam-kota" | "luar-kota";
+
+export const sewaMobilPackageConfig = {
+     askAdminText: "Tanyakan harga ke admin",
+     packages: [
+          {
+               kind: "drop-off" as SewaMobilPackageKind,
+               name: "Carter Drop Off 1 Arah",
+          },
+          {
+               kind: "all-in" as SewaMobilPackageKind,
+               name: "Sewa Mobil All In",
+               duration: "1 hari",
+               priceUnit: "/hari",
+               routes: [
+                    { label: "Malang", scope: "dalam-kota" as SewaMobilRouteScope },
+                    { label: "Batu", scope: "dalam-kota" as SewaMobilRouteScope },
+                    { label: "Surabaya", scope: "luar-kota" as SewaMobilRouteScope },
+               ],
+               customRouteLabel: "Custom rute",
+               includes: {
+                    "dalam-kota": ["Unit", "BBM", "Driver", "Parkir"],
+                    "luar-kota": ["Unit", "BBM", "Driver", "Tol", "Parkir"],
+               },
+               excludes: [] as string[],
+          },
+          {
+               kind: "lepas-kunci" as SewaMobilPackageKind,
+               name: "Sewa Mobil Lepas Kunci",
+               duration: "12 jam",
+               priceUnit: "/12 jam",
+               routes: [
+                    {
+                         label: "Dalam kota (Malang, Batu)",
+                         value: "Dalam kota",
+                    },
+               ],
+               customRouteLabel: "Luar kota",
+               includes: ["Unit", "Biaya cuci"],
+               excludes: ["Ongkos pengantaran"],
+          },
+     ],
+     labels: {
+          fleet: "Armada",
+          duration: "Durasi",
+          route: "Rute",
+          passengers: "Jumlah Penumpang",
+          customRoute: "Rute yang diinginkan",
+          includes: "Sudah termasuk",
+          excludes: "Tidak termasuk",
+     },
+     placeholders: {
+          passengers: "Jumlah penumpang",
+          customRoute: "Contoh: Malang - Bromo - Malang",
+     },
+};
+
 // 15 DATA DUMMY ARMADA UNTUK TESTING LAYOUT UI
 export const dummyArmadaList: Armada[] = [
      {

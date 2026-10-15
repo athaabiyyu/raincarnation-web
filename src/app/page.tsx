@@ -9,6 +9,7 @@ import CtaBanner from "@/components/sections/CtaBanner";
 import FeaturedRoutes from "@/components/sections/FeaturedRoutes";
 import RouteSearchForm from "@/components/sections/RouteSearchForm";
 import SewaMobilForm from "@/components/sections/SewaMobilForm";
+import { slimRoutes } from "@/utils/slim-route";
 import BerandaBookingTabs from "@/components/ui/BerandaBookingTabs";
 import { berandaBooking, berandaFaq } from "@/constants/beranda";
 import { siteConfig } from "@/config/site";
@@ -186,8 +187,7 @@ export default async function HomePage() {
 
                {whatsapp && routes.length > 0 && (
                     <FeaturedRoutes
-                         routes={routes}
-                         armadaList={armada}
+                         routes={slimRoutes(routes)}
                          whatsapp={whatsapp}
                          onlyFeatured
                          seeAllHref="/travel-reguler"

@@ -13,7 +13,14 @@ import {
      Users,
 } from "lucide-react";
 import { CarIcon } from "@/components/ui/BookingIcons";
-import { sewaMobilForm } from "@/constants/sewa-mobil";
+import {
+     sewaMobilForm,
+     sewaMobilPackageConfig,
+} from "@/constants/sewa-mobil";
+import type {
+     SewaMobilPackageKind,
+     SewaMobilRouteScope,
+} from "@/constants/sewa-mobil";
 import type { RuteCarter } from "@/types/rute-carter";
 import { capitalizeFirst } from "@/utils/capitalize-first";
 import { formatPrice } from "@/utils/format-price";
@@ -35,7 +42,28 @@ type FormValues = {
      date: string;
      time: string;
      passengers: string;
+     customRoute: string;
 };
+
+type RouteOption = {
+     label: string;
+     value?: string;
+     scope?: SewaMobilRouteScope;
+};
+
+type PackageConfig = {
+     kind: SewaMobilPackageKind;
+     name: string;
+     duration?: string;
+     priceUnit?: string;
+     routes?: RouteOption[];
+     customRouteLabel?: string;
+     includes?: string[] | Record<SewaMobilRouteScope, string[]>;
+     excludes?: string[];
+};
+
+// Nilai khusus untuk pilihan "Custom rute" / "Luar kota" (tidak punya entri CMS).
+const CUSTOM_ROUTE = "__custom";
 
 const selectClass =
      "h-[2.75rem] w-full appearance-none cursor-pointer rounded-lg bg-surface-container-low px-3 pr-8 font-label-md text-label-md text-on-surface transition-colors focus:bg-surface-container-high focus:outline-none";
@@ -64,25 +92,64 @@ function unique(items: string[]): string[] {
      return [...new Set(items.filter(Boolean))];
 }
 
+function getSimpleRoute(
+     route: RuteCarter,
+     kind: SewaMobilPackageKind | undefined,
+): string {
+     const acf = route.acf;
+     const value =
+          kind === "lepas-kunci"
+               ? acf?.rute_lepas_kunci || acf?.rute || acf?.kota_asal
+               : acf?.rute || acf?.kota_asal;
+     return capitalizeFirst(value);
+}
+
+function resolveIncludes(
+     config: PackageConfig | undefined,
+     scope: SewaMobilRouteScope | undefined,
+): string[] {
+     const includes = config?.includes;
+     if (!includes) return [];
+     if (Array.isArray(includes)) return includes;
+     return scope ? includes[scope] : [];
+}
+
 type MessageInput = {
      packageType: string;
      fleetName: string;
+     duration: string;
+     routeText: string;
+     customRouteText: string;
      origin: string;
      destination: string;
+     priceText: string;
      values: FormValues;
 };
 
 function buildMessage(input: MessageInput): string {
-     const { packageType, fleetName, origin, destination, values } = input;
+     const {
+          packageType,
+          fleetName,
+          duration,
+          routeText,
+          customRouteText,
+          origin,
+          destination,
+          priceText,
+          values,
+     } = input;
      const details = [
           packageType && `- Layanan: ${packageType}`,
           fleetName && `- Unit: ${fleetName}`,
+          duration && `- Durasi: ${duration}`,
+          routeText && `- Rute: ${routeText}`,
+          customRouteText && `- Rute yang diinginkan: ${customRouteText}`,
           origin && `- Penjemputan: ${origin}`,
           destination && `- Tujuan: ${destination}`,
           values.date && `- Tanggal: ${formatDate(values.date)}`,
           values.time && `- Jam: ${values.time}`,
-          values.passengers.trim() &&
-          `- Penumpang & koper: ${values.passengers.trim()}`,
+          values.passengers.trim() && `- Penumpang: ${values.passengers.trim()}`,
+          priceText && `- Estimasi tarif: ${priceText}`,
      ].filter(Boolean);
 
      return [
@@ -103,15 +170,18 @@ export default function SewaMobilForm({
      headingLevel,
 }: SewaMobilFormProps) {
      const content = sewaMobilForm;
+     const config = sewaMobilPackageConfig;
 
      const [packageType, setPackageType] = useState("");
      const [fleetId, setFleetId] = useState("");
+     const [routeValue, setRouteValue] = useState("");
      const [origin, setOrigin] = useState("");
      const [destination, setDestination] = useState("");
      const [values, setValues] = useState<FormValues>({
           date: "",
           time: "",
           passengers: "",
+          customRoute: "",
      });
 
      if (!whatsapp || routes.length === 0) return null;
@@ -120,23 +190,56 @@ export default function SewaMobilForm({
           setValues((prev) => ({ ...prev, [field]: value }));
      }
 
-     // Pilihan diambil dari data CMS. Semua pilihan mulai kosong.
-     const packages = unique(routes.map((r) => r.acf?.paket_sewa ?? ""));
+     // Paket: dari konfigurasi, hanya yang punya entri di CMS. Semua pilihan mulai kosong.
+     const packageConfigs: PackageConfig[] = config.packages;
+     const packages = packageConfigs.filter((p) =>
+          routes.some((r) => r.acf?.paket_sewa === p.name),
+     );
+     const selectedConfig = packages.find((p) => p.name === packageType);
+     const selectedPackage = selectedConfig?.name ?? "";
+     const kind = selectedConfig?.kind;
+     const isSimplePackage = kind === "all-in" || kind === "lepas-kunci";
+
+     // Lebar kolom di laptop: All In dan Lepas Kunci = 3 kolom sejajar (4+4+4),
+     // Carter Drop Off = pola lama (3+3+3+3).
+     const thirdSpan = isSimplePackage ? "lg:col-span-4" : "lg:col-span-3";
+
+     // Entri CMS milik paket terpilih (bila belum memilih paket: semua entri).
+     const packageRoutes = selectedPackage
+          ? routes.filter((r) => r.acf?.paket_sewa === selectedPackage)
+          : routes;
+
+     // Armada mengikuti paket terpilih.
      const fleetOptions = fleet.filter((f) =>
-          routes.some((r) => r.acf?.armada?.some((a) => a.ID === f.id)),
+          packageRoutes.some((r) => r.acf?.armada?.some((a) => a.ID === f.id)),
      );
-     const origins = unique(
-          routes.map((r) => capitalizeFirst(r.acf?.kota_asal)),
-     );
-
-     const selectedPackage = packages.includes(packageType) ? packageType : "";
      const selectedFleet = fleetOptions.find((f) => String(f.id) === fleetId);
-     const selectedOrigin = origins.includes(origin) ? origin : "";
 
-     // Tujuan hanya yang punya rute dari kota asal terpilih.
+     // Rute untuk All In dan Lepas Kunci: dari konfigurasi + satu pilihan custom.
+     const routeOptions: RouteOption[] = isSimplePackage
+          ? [
+               ...(selectedConfig?.routes ?? []).map((r) => ({
+                    label: r.label,
+                    value: r.value ?? r.label,
+                    scope: r.scope,
+               })),
+               {
+                    label: selectedConfig?.customRouteLabel ?? "Custom",
+                    value: CUSTOM_ROUTE,
+               },
+          ]
+          : [];
+     const selectedRoute = routeOptions.find((o) => o.value === routeValue);
+     const isCustomRoute = selectedRoute?.value === CUSTOM_ROUTE;
+
+     // Asal dan tujuan hanya untuk Carter Drop Off (pola lama).
+     const origins = unique(
+          packageRoutes.map((r) => capitalizeFirst(r.acf?.kota_asal)),
+     );
+     const selectedOrigin = origins.includes(origin) ? origin : "";
      const destinations = selectedOrigin
           ? unique(
-               routes
+               packageRoutes
                     .filter(
                          (r) => capitalizeFirst(r.acf?.kota_asal) === selectedOrigin,
                     )
@@ -148,36 +251,56 @@ export default function SewaMobilForm({
           : "";
 
      // Harga hanya dihitung bila SEMUA isian sudah terisi.
+     const placeFilled = isSimplePackage
+          ? Boolean(selectedRoute)
+          : Boolean(selectedOrigin) && Boolean(selectedDestination);
      const allFilled =
-          Boolean(selectedPackage) &&
+          Boolean(selectedConfig) &&
           selectedFleet !== undefined &&
-          Boolean(selectedOrigin) &&
-          Boolean(selectedDestination) &&
+          placeFilled &&
           Boolean(values.date) &&
           Boolean(values.time) &&
-          Boolean(values.passengers.trim());
+          Boolean(values.passengers.trim()) &&
+          (!isCustomRoute || Boolean(values.customRoute.trim()));
 
      // Satu entri CMS = satu kombinasi paket + armada + rute.
-     const match = allFilled
-          ? routes.find(
-               (r) =>
-                    r.acf?.paket_sewa === selectedPackage &&
-                    r.acf?.armada?.some((a) => a.ID === selectedFleet?.id) &&
-                    capitalizeFirst(r.acf?.kota_asal) === selectedOrigin &&
-                    capitalizeFirst(r.acf?.kota_tujuan) === selectedDestination,
-          )
-          : undefined;
+     const match =
+          allFilled && !isCustomRoute
+               ? routes.find(
+                    (r) =>
+                         r.acf?.paket_sewa === selectedPackage &&
+                         r.acf?.armada?.some((a) => a.ID === selectedFleet?.id) &&
+                         (isSimplePackage
+                              ? getSimpleRoute(r, kind) ===
+                              capitalizeFirst(selectedRoute?.value)
+                              : capitalizeFirst(r.acf?.kota_asal) === selectedOrigin &&
+                              capitalizeFirst(r.acf?.kota_tujuan) ===
+                              selectedDestination),
+               )
+               : undefined;
      const price = Number(match?.acf?.harga);
      const priceText =
           Number.isFinite(price) && price > 0 ? formatPrice(String(price)) : null;
+
+     // Custom rute atau kombinasi tanpa harga: arahkan ke admin.
+     const askAdmin = allFilled && !priceText;
+     const priceUnit = selectedConfig?.priceUnit ?? "/rute";
+     const includes = priceText
+          ? resolveIncludes(selectedConfig, selectedRoute?.scope)
+          : [];
+     const excludes = priceText ? (selectedConfig?.excludes ?? []) : [];
 
      function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
           event.preventDefault();
           const message = buildMessage({
                packageType: selectedPackage,
                fleetName: selectedFleet?.name ?? "",
+               duration: selectedConfig?.duration ?? "",
+               routeText: selectedRoute?.label ?? "",
+               customRouteText: isCustomRoute ? values.customRoute.trim() : "",
                origin: selectedOrigin,
                destination: selectedDestination,
+               priceText: priceText ? `${priceText} ${priceUnit}` : "",
                values,
           });
           window.open(
@@ -186,7 +309,6 @@ export default function SewaMobilForm({
                "noopener,noreferrer",
           );
      }
-
 
      const Heading = headingLevel ?? (embedded ? "h3" : "h2");
 
@@ -214,7 +336,7 @@ export default function SewaMobilForm({
                     className="grid grid-cols-2 items-end gap-x-space-sm gap-y-space-md lg:grid-cols-12 lg:gap-x-space-md"
                >
                     {/* Paket */}
-                    <div className="col-span-2 min-w-0 space-y-1.5 lg:col-span-3">
+                    <div className={`col-span-2 min-w-0 space-y-1.5 ${thirdSpan}`}>
                          <label htmlFor="sm-package" className={labelClass}>
                               <Briefcase size={14} className="text-primary" aria-hidden />
                               {content.labels.packageType}
@@ -229,8 +351,8 @@ export default function SewaMobilForm({
                               >
                                    <option value="">Pilih</option>
                                    {packages.map((option) => (
-                                        <option key={option} value={option}>
-                                             {option}
+                                        <option key={option.name} value={option.name}>
+                                             {option.name}
                                         </option>
                                    ))}
                               </select>
@@ -239,7 +361,7 @@ export default function SewaMobilForm({
                     </div>
 
                     {/* Armada */}
-                    <div className="col-span-2 min-w-0 space-y-1.5 lg:col-span-3">
+                    <div className={`col-span-2 min-w-0 space-y-1.5 ${thirdSpan}`}>
                          <label htmlFor="sm-fleet" className={labelClass}>
                               <Car size={14} className="text-primary" aria-hidden />
                               {content.labels.fleet}
@@ -263,58 +385,136 @@ export default function SewaMobilForm({
                          </div>
                     </div>
 
-                    {/* Asal */}
-                    <div className="col-span-1 min-w-0 space-y-1.5 lg:col-span-3">
-                         <label htmlFor="sm-origin" className={labelClass}>
-                              <LocateFixed size={14} className="text-primary" aria-hidden />
-                              {content.labels.origin}
-                         </label>
-                         <div className="relative">
-                              <select
-                                   id="sm-origin"
-                                   required
-                                   value={selectedOrigin}
-                                   onChange={(e) => setOrigin(e.target.value)}
-                                   className={selectClass}
-                              >
-                                   <option value="">Pilih</option>
-                                   {origins.map((option) => (
-                                        <option key={option} value={option}>
-                                             {option}
-                                        </option>
-                                   ))}
-                              </select>
-                              <ChevronDown size={16} className={chevronClass} aria-hidden />
-                         </div>
-                    </div>
+                    {isSimplePackage ? (
+                         <>
+                              {/* Rute */}
+                              <div className="col-span-2 min-w-0 space-y-1.5 lg:col-span-4">
+                                   <label htmlFor="sm-route" className={labelClass}>
+                                        <MapPin
+                                             size={14}
+                                             className="text-secondary"
+                                             aria-hidden
+                                        />
+                                        {config.labels.route}
+                                   </label>
+                                   <div className="relative">
+                                        <select
+                                             id="sm-route"
+                                             required
+                                             value={selectedRoute?.value ?? ""}
+                                             onChange={(e) => setRouteValue(e.target.value)}
+                                             className={selectClass}
+                                        >
+                                             <option value="">Pilih</option>
+                                             {routeOptions.map((option) => (
+                                                  <option key={option.value} value={option.value}>
+                                                       {option.label}
+                                                  </option>
+                                             ))}
+                                        </select>
+                                        <ChevronDown
+                                             size={16}
+                                             className={chevronClass}
+                                             aria-hidden
+                                        />
+                                   </div>
+                              </div>
 
-                    {/* Tujuan */}
-                    <div className="col-span-1 min-w-0 space-y-1.5 lg:col-span-3">
-                         <label htmlFor="sm-destination" className={labelClass}>
-                              <MapPin size={14} className="text-secondary" aria-hidden />
-                              {content.labels.destination}
-                         </label>
-                         <div className="relative">
-                              <select
-                                   id="sm-destination"
-                                   required
-                                   value={selectedDestination}
-                                   onChange={(e) => setDestination(e.target.value)}
-                                   className={selectClass}
-                              >
-                                   <option value="">Pilih</option>
-                                   {destinations.map((option) => (
-                                        <option key={option} value={option}>
-                                             {option}
-                                        </option>
-                                   ))}
-                              </select>
-                              <ChevronDown size={16} className={chevronClass} aria-hidden />
-                         </div>
-                    </div>
+                              {/* Rute kustom (Custom rute / Luar kota): satu baris penuh */}
+                              {isCustomRoute && (
+                                   <div className="col-span-2 min-w-0 space-y-1.5 lg:col-span-12">
+                                        <label htmlFor="sm-custom-route" className={labelClass}>
+                                             <MapPin
+                                                  size={14}
+                                                  className="text-secondary"
+                                                  aria-hidden
+                                             />
+                                             {config.labels.customRoute}
+                                        </label>
+                                        <input
+                                             id="sm-custom-route"
+                                             type="text"
+                                             required
+                                             value={values.customRoute}
+                                             onChange={(e) => update("customRoute", e.target.value)}
+                                             placeholder={config.placeholders.customRoute}
+                                             className={inputClass}
+                                        />
+                                   </div>
+                              )}
+                         </>
+                    ) : (
+                         <>
+                              {/* Asal */}
+                              <div className="col-span-1 min-w-0 space-y-1.5 lg:col-span-3">
+                                   <label htmlFor="sm-origin" className={labelClass}>
+                                        <LocateFixed
+                                             size={14}
+                                             className="text-primary"
+                                             aria-hidden
+                                        />
+                                        {content.labels.origin}
+                                   </label>
+                                   <div className="relative">
+                                        <select
+                                             id="sm-origin"
+                                             required
+                                             value={selectedOrigin}
+                                             onChange={(e) => setOrigin(e.target.value)}
+                                             className={selectClass}
+                                        >
+                                             <option value="">Pilih</option>
+                                             {origins.map((option) => (
+                                                  <option key={option} value={option}>
+                                                       {option}
+                                                  </option>
+                                             ))}
+                                        </select>
+                                        <ChevronDown
+                                             size={16}
+                                             className={chevronClass}
+                                             aria-hidden
+                                        />
+                                   </div>
+                              </div>
+
+                              {/* Tujuan */}
+                              <div className="col-span-1 min-w-0 space-y-1.5 lg:col-span-3">
+                                   <label htmlFor="sm-destination" className={labelClass}>
+                                        <MapPin
+                                             size={14}
+                                             className="text-secondary"
+                                             aria-hidden
+                                        />
+                                        {content.labels.destination}
+                                   </label>
+                                   <div className="relative">
+                                        <select
+                                             id="sm-destination"
+                                             required
+                                             value={selectedDestination}
+                                             onChange={(e) => setDestination(e.target.value)}
+                                             className={selectClass}
+                                        >
+                                             <option value="">Pilih</option>
+                                             {destinations.map((option) => (
+                                                  <option key={option} value={option}>
+                                                       {option}
+                                                  </option>
+                                             ))}
+                                        </select>
+                                        <ChevronDown
+                                             size={16}
+                                             className={chevronClass}
+                                             aria-hidden
+                                        />
+                                   </div>
+                              </div>
+                         </>
+                    )}
 
                     {/* Tanggal */}
-                    <div className="col-span-1 min-w-0 space-y-1.5 lg:col-span-3">
+                    <div className={`col-span-1 min-w-0 space-y-1.5 ${thirdSpan}`}>
                          <label htmlFor="sm-date" className={labelClass}>
                               <CalendarDays size={14} className="text-primary" aria-hidden />
                               {content.labels.date}
@@ -330,7 +530,7 @@ export default function SewaMobilForm({
                     </div>
 
                     {/* Jam */}
-                    <div className="col-span-1 min-w-0 space-y-1.5 lg:col-span-3">
+                    <div className={`col-span-1 min-w-0 space-y-1.5 ${thirdSpan}`}>
                          <label htmlFor="sm-time" className={labelClass}>
                               <Clock size={14} className="text-primary" aria-hidden />
                               {content.labels.time}
@@ -346,21 +546,63 @@ export default function SewaMobilForm({
                     </div>
 
                     {/* Penumpang */}
-                    <div className="col-span-2 min-w-0 space-y-1.5 lg:col-span-6">
+                    <div
+                         className={`col-span-2 min-w-0 space-y-1.5 ${
+                              isSimplePackage ? "lg:col-span-4" : "lg:col-span-6"
+                         }`}
+                    >
                          <label htmlFor="sm-passengers" className={labelClass}>
                               <Users size={14} className="text-primary" aria-hidden />
-                              {content.labels.passengers}
+                              {isSimplePackage
+                                   ? config.labels.passengers
+                                   : content.labels.passengers}
                          </label>
-                         <input
-                              id="sm-passengers"
-                              type="text"
-                              required
-                              value={values.passengers}
-                              onChange={(e) => update("passengers", e.target.value)}
-                              placeholder={content.placeholders.passengers}
-                              className={inputClass}
-                         />
+                         {isSimplePackage ? (
+                              <input
+                                   id="sm-passengers"
+                                   type="number"
+                                   inputMode="numeric"
+                                   min={1}
+                                   required
+                                   value={values.passengers}
+                                   onChange={(e) => update("passengers", e.target.value)}
+                                   placeholder={config.placeholders.passengers}
+                                   className={inputClass}
+                              />
+                         ) : (
+                              <input
+                                   id="sm-passengers"
+                                   type="text"
+                                   required
+                                   value={values.passengers}
+                                   onChange={(e) => update("passengers", e.target.value)}
+                                   placeholder={content.placeholders.passengers}
+                                   className={inputClass}
+                              />
+                         )}
                     </div>
+
+                    {/* Rincian termasuk (hanya bila harga tampil) */}
+                    {priceText && (includes.length > 0 || excludes.length > 0) && (
+                         <div className="col-span-2 space-y-1.5 lg:col-span-12">
+                              {includes.length > 0 && (
+                                   <p className="font-label-sm text-label-sm text-on-surface-variant">
+                                        <span className="font-bold text-on-surface">
+                                             {config.labels.includes}:
+                                        </span>{" "}
+                                        {includes.join(", ")}
+                                   </p>
+                              )}
+                              {excludes.length > 0 && (
+                                   <p className="font-label-sm text-label-sm text-on-surface-variant">
+                                        <span className="font-bold text-on-surface">
+                                             {config.labels.excludes}:
+                                        </span>{" "}
+                                        {excludes.join(", ")}
+                                   </p>
+                              )}
+                         </div>
+                    )}
 
                     {/* Harga (kiri) + Tombol (kanan) */}
                     <div className="col-span-2 flex flex-col gap-space-md pt-space-xs sm:flex-row sm:items-center sm:justify-between sm:border-t sm:border-surface-container sm:pt-space-md lg:col-span-12">
@@ -374,9 +616,15 @@ export default function SewaMobilForm({
                                              {priceText}
                                         </span>
                                         <span className="font-label-sm text-label-sm text-on-surface-variant">
-                                             /hari
+                                             {priceUnit}
                                         </span>
                                    </span>
+                              </div>
+                         )}
+
+                         {askAdmin && (
+                              <div className="flex items-center justify-center rounded-lg bg-primary-container/10 px-space-md py-2 font-label-md text-label-md text-primary sm:bg-transparent sm:px-0 sm:py-0">
+                                   {config.askAdminText}
                               </div>
                          )}
 

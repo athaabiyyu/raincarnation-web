@@ -107,16 +107,16 @@ export default function RouteSearchForm({
           );
 
           const lines = [
-               "Halo Raincarnation, saya ingin pesan Travel Reguler (Door to Door):",
-               `- Asal (jemput): ${origin}`,
-               `- Tujuan (antar): ${selectedDestination}`,
+               "Halo Raincarnation, saya ingin pesan Travel Reguler:",
+               `- Kota asal: ${origin}`,
+               `- Kota tujuan: ${selectedDestination}`,
                `- Tanggal: ${dateText}`,
           ];
           if (selectedTime) lines.push(`- Jam: ${selectedTime}`);
           lines.push(
                `- Jumlah: ${passengers}`,
                "",
-               "Mohon info ketersediaan kursi dan detail penjemputan. Terima kasih!",
+               "Mohon info ketersediaan kursi dan titik jemputnya. Terima kasih!",
           );
 
           window.open(

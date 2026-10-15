@@ -20,7 +20,7 @@ export const footerContent = {
      whatsappMessage: "Halo Admin Raincarnation, saya butuh bantuan booking travel",
 
      reservationTitle: "Kemudahan Reservasi & Konfirmasi WhatsApp:",
-     reservationChips: ["Pilihan Kursi Bebas", "Transfer Antar Jemput", "Konfirmasi Cepat"],
+     reservationChips: ["Pilihan Kursi Bebas", "Titik Jemput via Admin", "Konfirmasi Cepat"],
 
      companyName: "PT Raincarnation Indonesia",
      copyrightSuffix: "Hak Cipta Dilindungi Undang-Undang.",

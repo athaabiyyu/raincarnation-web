@@ -63,12 +63,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           return {
                title,
                description,
-               alternates: { canonical: `/rute/${slug}` },
+               alternates: { canonical: `/travel-reguler/${slug}` },
                openGraph: {
                     type: "website",
                     locale: "id_ID",
                     siteName: siteConfig.name,
-                    url: `/rute/${slug}`,
+                    url: `/travel-reguler/${slug}`,
                     title,
                     description,
                     images: [
@@ -143,7 +143,7 @@ export default async function RoutePage({ params }: PageProps) {
           name: `Travel ${rawTitle} - Raincarnation`,
           serviceType: "Travel reguler per kursi",
           description: `Layanan travel reguler per kursi rute ${rawTitle} antar titik perkotaan.`,
-          url: `${siteConfig.url}/rute/${slug}`,
+          url: `${siteConfig.url}/travel-reguler/${slug}`,
           telephone: whatsapp,
           address: {
                "@type": "PostalAddress",
@@ -189,7 +189,7 @@ export default async function RoutePage({ params }: PageProps) {
                     "@type": "ListItem",
                     position: 3,
                     name: rawTitle,
-                    item: `${siteConfig.url}/rute/${slug}`,
+                    item: `${siteConfig.url}/travel-reguler/${slug}`,
                },
           ],
      };
@@ -410,7 +410,7 @@ export default async function RoutePage({ params }: PageProps) {
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8 pt-6 border-t border-surface-container-high/40">
                                              <div className="rounded-xl border border-surface-container-high/50 p-4 bg-surface-container-lowest/50">
                                                   <h4 className="font-bold text-xs text-primary uppercase tracking-wider mb-2">Ketentuan Bagasi</h4>
-                                                  <p className="text-xs text-on-surface-variant leading-relaxed">Setiap penumpang diperkenankan membawa 1 koper ukuran maksimal 24 inch dan 1 tas jinjing. Harap infokan admin jika membawa bagasi berlebih.</p>
+                                                  <p className="text-xs text-on-surface-variant leading-relaxed">Setiap penumpang diperkenankan membawa 1 koper ukuran sedang dan 1 tas jinjing. Harap infokan admin jika membawa bagasi berlebih.</p>
                                              </div>
                                              <div className="rounded-xl border border-surface-container-high/50 p-4 bg-surface-container-lowest/50">
                                                   <h4 className="font-bold text-xs text-primary uppercase tracking-wider mb-2">Kebijakan Pembatalan</h4>

@@ -22,10 +22,10 @@ export const bookingStepsContent = {
           },
           {
                icon: "location",
-               title: "Share Lokasi Jemput",
+               title: "Tentukan Titik Jemput",
                description:
-                    "Kirimkan alamat lengkap penjemputan atau share live-location WhatsApp rumah / hotel Anda beserta alamat tujuan yang jelas.",
-               highlight: "Akurat sampai gang rumah",
+                    "Sampaikan kota asal dan tujuan Anda lewat WhatsApp. Titik jemput dan titik antar dikonfirmasi oleh admin.",
+               highlight: "Titik dikonfirmasi admin",
           },
           {
                icon: "chat",
@@ -38,7 +38,7 @@ export const bookingStepsContent = {
                icon: "pickup",
                title: "Driver Menjemput Anda",
                description:
-                    "Driver menghubungi Anda 30 menit sebelum jadwal penjemputan dan meluncur langsung menjemput Anda di depan pintu rumah.",
+                    "Driver menghubungi Anda sebelum jadwal penjemputan, lalu menjemput Anda di titik yang sudah disepakati.",
                highlight: "Tepat Waktu & Nyaman",
           },
      ] satisfies BookingStep[],

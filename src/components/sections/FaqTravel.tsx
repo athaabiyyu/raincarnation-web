@@ -18,7 +18,7 @@ const faqs = [
      },
      {
           question: "Berapa batas maksimal barang bawaan penumpang?",
-          answer: "Setiap penumpang mendapatkan jatah gratis membawa 1 koper/tas ukuran sedang (maksimal 15kg) dan 1 tas kabin/ransel kecil yang bisa dipangku. Jika membawa barang melebihi kapasitas (seperti kardus besar atau hewan peliharaan), harap konfirmasi ke admin terlebih dahulu karena mungkin ada biaya bagasi tambahan."
+          answer: "Setiap penumpang mendapatkan jatah gratis membawa 1 koper/tas ukuran sedang dan 1 tas kabin/ransel kecil yang bisa dipangku. Jika membawa barang melebihi kapasitas (seperti kardus besar atau hewan peliharaan), harap konfirmasi ke admin terlebih dahulu karena mungkin ada biaya bagasi tambahan."
      },
      {
           question: "Apakah anak kecil atau balita dikenakan biaya tiket penuh?",
@@ -72,6 +72,7 @@ export default function FaqTravel({ whatsapp }: { whatsapp?: string }) {
                                              onClick={() => toggleFaq(index)}
                                              className="flex w-full items-center justify-between gap-3 px-4 py-3.5 text-left transition-colors hover:text-primary md:p-space-md"
                                              aria-expanded={isOpen}
+                                             aria-controls={`faq-travel-answer-${index}`}
                                         >
                                              <div className="flex items-center gap-2.5">
                                                   <HelpCircle className="hidden sm:block h-5 w-5 shrink-0 text-primary/80" />
@@ -85,13 +86,17 @@ export default function FaqTravel({ whatsapp }: { whatsapp?: string }) {
                                              />
                                         </button>
 
-                                        {isOpen && (
-                                             <div className="border-t border-surface-container-high/40 px-4 pb-4 pt-3 md:px-space-md md:pb-space-md md:pt-space-xs">
-                                                  <p className="text-xs text-on-surface-variant leading-relaxed sm:pl-7 md:text-body-md">
-                                                       {item.answer}
-                                                  </p>
-                                             </div>
-                                        )}
+                                        {/* Jawaban selalu dirender agar terbaca mesin pencari; yang tertutup memakai atribut hidden */}
+                                        <div
+                                             id={`faq-travel-answer-${index}`}
+                                             role="region"
+                                             hidden={!isOpen}
+                                             className="border-t border-surface-container-high/40 px-4 pb-4 pt-3 md:px-space-md md:pb-space-md md:pt-space-xs"
+                                        >
+                                             <p className="text-xs text-on-surface-variant leading-relaxed sm:pl-7 md:text-body-md">
+                                                  {item.answer}
+                                             </p>
+                                        </div>
                                    </div>
                               );
                          })}

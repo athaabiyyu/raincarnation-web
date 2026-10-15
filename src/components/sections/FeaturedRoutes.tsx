@@ -4,7 +4,6 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { ArrowRight, ChevronDown, Search, ListFilter, Check } from "lucide-react";
 import type { Route } from "@/types/route";
-import type { Armada } from "@/types/armada";
 import { featuredRoutesContent } from "@/constants/travel-reguler";
 import RouteCard from "@/components/sections/RouteCard";
 
@@ -15,7 +14,6 @@ const FILTER_CITIES = ["Semua", "Surabaya", "Malang", "Batu", "Juanda", "Pandaan
 
 type FeaturedRoutesProps = {
      routes: Route[];
-     armadaList: Armada[];
      whatsapp: string;
      onlyFeatured?: boolean;
      seeAllHref?: string;
@@ -23,7 +21,6 @@ type FeaturedRoutesProps = {
 
 export default function FeaturedRoutes({
      routes: allRoutes,
-     armadaList,
      whatsapp,
      onlyFeatured = false,
      seeAllHref,
@@ -55,9 +52,7 @@ export default function FeaturedRoutes({
 
      if (allRoutes.length === 0) return null;
 
-     const displayedRoutes = onlyFeatured
-          ? filteredRoutes
-          : filteredRoutes.slice(0, visibleCount);
+     const displayedRoutes = filteredRoutes;
 
      const hasMoreInPage = !onlyFeatured && visibleCount < filteredRoutes.length;
      const hasMoreLink = Boolean(seeAllHref) && baseRoutes.length < allRoutes.length;
@@ -126,8 +121,8 @@ export default function FeaturedRoutes({
                                                   type="button"
                                                   onClick={() => setIsFilterOpen(!isFilterOpen)}
                                                   className={`flex h-[44px] w-[44px] md:h-[48px] md:w-[48px] items-center justify-center rounded-full transition-all duration-200 ${activeFilter !== "Semua"
-                                                            ? "bg-primary text-on-primary shadow-md shadow-primary/20"
-                                                            : "bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-primary"
+                                                       ? "bg-primary text-on-primary shadow-md shadow-primary/20"
+                                                       : "bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-primary"
                                                        }`}
                                                   aria-label="Filter kota"
                                              >
@@ -154,8 +149,8 @@ export default function FeaturedRoutes({
                                                                            setIsFilterOpen(false);
                                                                       }}
                                                                       className={`flex w-full items-center justify-between px-4 py-3 text-left font-body-sm md:font-body-md transition-colors ${activeFilter === city
-                                                                                ? "bg-primary/10 font-bold text-primary"
-                                                                                : "text-on-surface hover:bg-surface-container-low"
+                                                                           ? "bg-primary/10 font-bold text-primary"
+                                                                           : "text-on-surface hover:bg-surface-container-low"
                                                                            }`}
                                                                  >
                                                                       <span>{city === "Semua" ? "Semua Kota" : city}</span>
@@ -175,11 +170,13 @@ export default function FeaturedRoutes({
                          {/* Grid Cards Section */}
                          <div className="grid grid-cols-1 gap-space-md md:grid-cols-2 lg:grid-cols-3">
                               {displayedRoutes.length > 0 ? (
-                                   displayedRoutes.map((route) => (
-                                        <div key={route.id} className="flex [&>*]:w-full">
+                                   displayedRoutes.map((route, index) => (
+                                        <div
+                                             key={route.id}
+                                             className={`${!onlyFeatured && index >= visibleCount ? "hidden" : "flex"} [&>*]:w-full`}
+                                        >
                                              <RouteCard
                                                   route={route}
-                                                  armadaList={armadaList}
                                                   whatsapp={whatsapp}
                                              />
                                         </div>

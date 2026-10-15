@@ -22,7 +22,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
      }));
 
      const routeEntries: MetadataRoute.Sitemap = routes.map((route) => ({
-          url: `${siteConfig.url}/rute/${route.slug}`,
+          url: `${siteConfig.url}/travel-reguler/${route.slug}`,
      }));
 
      return [...staticEntries, ...routeEntries];

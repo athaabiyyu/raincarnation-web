@@ -3,13 +3,12 @@ import BookingSteps from "@/components/sections/BookingSteps";
 import CtaBanner from "@/components/sections/CtaBanner";
 import Facilities from "@/components/sections/Facilities";
 import FeaturedRoutes from "@/components/sections/FeaturedRoutes";
+import { slimRoutes } from "@/utils/slim-route";
 import TravelHero from "@/components/sections/TravelHero";
 import FaqTravel from "@/components/sections/FaqTravel";
 import { siteConfig } from "@/config/site";
-import { getArmadaList } from "@/lib/wordpress/armada";
 import { getSiteConfig } from "@/lib/wordpress/config";
 import { getRoutes } from "@/lib/wordpress/routes";
-import type { Armada } from "@/types/armada";
 import type { Route } from "@/types/route";
 import { capitalizeFirst } from "@/utils/capitalize-first";
 import { decodeHtml } from "@/utils/decode-html";
@@ -53,23 +52,10 @@ async function loadRoutes(): Promise<Route[]> {
   }
 }
 
-async function loadArmada(): Promise<Armada[]> {
-  try {
-    return await getArmadaList();
-  } catch (error) {
-    console.error(
-      "[TravelRegulerPage] Gagal mengambil armada dari CMS:",
-      error
-    );
-    return [];
-  }
-}
-
 export default async function TravelRegulerPage() {
-  const [config, routes, armadaList] = await Promise.all([
+  const [config, routes] = await Promise.all([
     getSiteConfig(),
     loadRoutes(),
-    loadArmada(),
   ]);
   const whatsapp = config.contact?.whatsapp ?? "";
   const pairs = getRoutePairs(routes);
@@ -130,7 +116,7 @@ export default async function TravelRegulerPage() {
       "@type": "ListItem",
       position: index + 1,
       name: capitalizeFirst(decodeHtml(route.title)),
-      url: `${siteConfig.url}/rute/${route.slug}`,
+      url: `${siteConfig.url}/travel-reguler/${route.slug}`,
     }));
 
   const itemListLd = {
@@ -168,8 +154,7 @@ export default async function TravelRegulerPage() {
 
       {whatsapp && routes.length > 0 && (
         <FeaturedRoutes
-          routes={routes}
-          armadaList={armadaList}
+          routes={slimRoutes(routes)}
           whatsapp={whatsapp}
         />
       )}

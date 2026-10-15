@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { MessageSquareText } from "lucide-react";
 import type { Route } from "@/types/route";
-import type { Armada } from "@/types/armada";
 import { featuredRoutesContent } from "@/constants/travel-reguler";
 import { decodeHtml } from "@/utils/decode-html";
 import { formatPrice } from "@/utils/format-price";
@@ -15,8 +14,7 @@ const DETAIL_LABEL = "Lihat Detail";
 const SOFT_SCHEDULE_LABEL = "Jadwal Berangkat:";
 
 type RouteCardProps = {
-     route: Route;
-     armadaList: Armada[];
+          route: Route;
      whatsapp: string;
      className?: string;
      wideMode?: WideMode;
@@ -113,7 +111,7 @@ export default function RouteCard({ route, whatsapp }: RouteCardProps) {
                     <div className="grid grid-cols-2 gap-2 sm:gap-space-sm">
                          {route.slug ? (
                               <Link
-                                   href={`/rute/${route.slug}`}
+                                   href={`/travel-reguler/${route.slug}`}
                                    aria-label={`Lihat detail travel ${origin} ke ${destination}`}
                                    className="flex items-center justify-center whitespace-nowrap rounded-lg border border-primary/20 bg-primary/10 px-2 py-1.5 sm:px-space-sm sm:py-2 font-label-md text-xs sm:text-label-md font-bold text-primary transition-all hover:border-primary/40 hover:bg-primary/15"
                               >
