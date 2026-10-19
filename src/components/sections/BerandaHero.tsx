@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { berandaHero } from "@/constants/beranda";
-import { ShieldCheck, Tag } from "lucide-react"; 
 
 export default function BerandaHero() {
      return (
@@ -28,25 +27,6 @@ export default function BerandaHero() {
                                    <p className="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
                                         {berandaHero.description}
                                    </p>
-
-                                   {/* Fitur Keunggulan (Hanya tampil di layar besar/lg ke atas) */}
-                                   <div className="hidden lg:flex items-center gap-4">
-                                        {/* Poin 1 */}
-                                        <div className="flex items-center gap-3 rounded-2xl bg-surface-container-low px-4 py-3 shadow-xs border border-outline/10">
-                                             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-container/20 text-primary-container">
-                                                  <ShieldCheck className="h-5 w-5" />
-                                             </div>
-                                             <span className="font-semibold text-sm text-on-surface">Armada Nyaman & Terawat</span>
-                                        </div>
-
-                                        {/* Poin 2 */}
-                                        <div className="flex items-center gap-3 rounded-2xl bg-surface-container-low px-4 py-3 shadow-xs border border-outline/10">
-                                             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-container/20 text-primary-container">
-                                                  <Tag className="h-5 w-5" />
-                                             </div>
-                                             <span className="font-semibold text-sm text-on-surface">Harga Transparan & All-In</span>
-                                        </div>
-                                   </div>
                               </div>
                          </div>
 
@@ -56,7 +36,6 @@ export default function BerandaHero() {
                                    src={berandaHero.image.src}
                                    alt={berandaHero.image.alt}
                                    fill
-                                   priority
                                    sizes="(min-width: 1024px) 560px, 100vw"
                                    className="object-cover"
                               />

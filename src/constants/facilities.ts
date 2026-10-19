@@ -9,9 +9,9 @@ export type FacilityItem = {
 
 export const facilitiesContent = {
      eyebrow: "Kenyamanan Perjalanan",
-     title: "Fasilitas Standar Layanan Kursi Reguler",
+     title: "Fasilitas Standar Layanan Travel Per Kursi",
      description:
-          "Walau berstatus travel reguler per kursi, standar kenyamanan tetap kami utamakan layaknya mobil pribadi berfasilitas eksekutif.",
+          "Walau berstatus travel per kursi, standar kenyamanan tetap kami utamakan layaknya mobil pribadi berfasilitas eksekutif.",
      items: [
           {
                icon: "seat",

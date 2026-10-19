@@ -5,15 +5,15 @@ import { ChevronDown, HelpCircle } from "lucide-react";
 
 const faqs = [
      {
-          question: "Apa itu travel reguler dan apa bedanya dengan sewa mobil?",
-          answer: "Travel reguler adalah layanan perjalanan antar kota yang dipesan per kursi dengan jadwal keberangkatan tetap, sehingga Anda berbagi mobil dengan penumpang lain dan membayar sesuai jumlah kursi. Kalau Anda butuh satu mobil penuh untuk rombongan, pilih layanan Sewa Mobil."
+          question: "Apa itu travel per kursi dan apa bedanya dengan sewa mobil?",
+          answer: "Travel perkursi atau biasa disebut travel reguler adalah layanan perjalanan antar kota yang dipesan per kursi dengan jadwal keberangkatan tetap, sehingga Anda berbagi mobil dengan penumpang lain dan membayar sesuai jumlah kursi. Kalau Anda butuh satu mobil penuh untuk rombongan, pilih layanan Sewa Mobil."
      },
      {
-          question: "Di mana titik penjemputan travel reguler?",
-          answer: "Penjemputan dilakukan di titik yang sudah ditentukan di setiap kota, bukan di alamat rumah. Titik jemput dan titik antar untuk rute Anda dikonfirmasi oleh admin lewat WhatsApp setelah Anda memesan."
+          question: "Di mana titik penjemputan travel Anda?",
+          answer: "Travel kami door to door: Anda dijemput dan diantar sampai alamat, kecuali titik di Pandaan dan Juanda yang berupa titik tetap. Misalnya dari Malang ke Juanda, Anda dijemput di alamat Anda lalu diantar ke Bandara Juanda; dari Juanda, Anda dijemput di titik Juanda. Detail titik jemput dan antar dikonfirmasi admin lewat WhatsApp setelah Anda memesan."
      },
      {
-          question: "Berapa tarif travel reguler per kursi?",
+          question: "Berapa tarif travel per kursi?",
           answer: "Tarif dihitung per kursi dan berbeda untuk tiap rute. Lihat tarif resmi di halaman masing-masing rute pada daftar di atas, atau tanyakan langsung ke admin via WhatsApp."
      },
      {
@@ -34,6 +34,19 @@ const faqs = [
      }
 ];
 
+const faqJsonLd = {
+     "@context": "https://schema.org",
+     "@type": "FAQPage",
+     mainEntity: faqs.map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: {
+               "@type": "Answer",
+               text: item.answer,
+          },
+     })),
+};
+
 export default function FaqTravel({ whatsapp }: { whatsapp?: string }) {
      const [openIndex, setOpenIndex] = useState<number | null>(0);
 
@@ -43,6 +56,12 @@ export default function FaqTravel({ whatsapp }: { whatsapp?: string }) {
 
      return (
           <section className="w-full bg-surface py-space-xl">
+               <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                         __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c"),
+                    }}
+               />
                <div className="mx-auto max-w-4xl px-gutter">
 
                     {/* Header: Rata Tengah dengan ukuran font setara BerandaFaq */}
@@ -51,7 +70,7 @@ export default function FaqTravel({ whatsapp }: { whatsapp?: string }) {
                               Pusat Bantuan
                          </span>
                          <h2 className="font-display text-headline-lg font-extrabold tracking-tight text-on-surface">
-                              Pertanyaan Seputar Travel Reguler Malang
+                              Pertanyaan Seputar Travel Malang
                          </h2>
                          <p className="mx-auto max-w-2xl font-body-md text-body-sm text-on-surface-variant leading-relaxed md:text-body-md">
                               Temukan jawaban untuk pertanyaan yang paling sering diajukan oleh calon penumpang sebelum melakukan pemesanan tiket.

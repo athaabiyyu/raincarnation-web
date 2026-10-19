@@ -3,7 +3,7 @@ import { siteConfig } from "@/config/site";
 import { getRoutes } from "@/lib/wordpress/routes";
 import type { Route } from "@/types/route";
 
-const STATIC_PATHS = ["/", "/travel-reguler", "/sewa-mobil", "/armada"];
+const STATIC_PATHS = ["/", "/travel", "/sewa-mobil", "/armada"];
 
 async function loadRoutes(): Promise<Route[]> {
      try {
@@ -22,7 +22,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
      }));
 
      const routeEntries: MetadataRoute.Sitemap = routes.map((route) => ({
-          url: `${siteConfig.url}/travel-reguler/${route.slug}`,
+          url: `${siteConfig.url}/travel/${route.slug}`,
      }));
 
      return [...staticEntries, ...routeEntries];

@@ -74,24 +74,21 @@ export default async function SewaMobilPage() {
           loadRuteCarter(),
      ]);
      const whatsapp = config.contact?.whatsapp ?? "";
+     const telephone = whatsapp
+          ? whatsapp.startsWith("+")
+               ? whatsapp
+               : `+${whatsapp}`
+          : undefined;
 
-     const autoRentalLd = {
+     const serviceLd = {
           "@context": "https://schema.org",
-          "@type": "AutoRental",
+          "@type": "TransportationService",
           name: "Sewa Mobil Malang dengan Sopir atau Lepas Kunci - Raincarnation",
+          serviceType: "Sewa mobil dengan sopir dan lepas kunci",
           description,
           url: `${siteConfig.url}/sewa-mobil`,
-          telephone: whatsapp,
-          priceRange: "Rp 150.000 - Rp 3.500.000",
-          address: {
-               "@type": "PostalAddress",
-               addressLocality: "Malang",
-               addressRegion: "Jawa Timur",
-               addressCountry: "ID",
-          },
           areaServed: [
                { "@type": "AdministrativeArea", name: "Kota Malang" },
-               { "@type": "AdministrativeArea", name: "Kabupaten Malang" },
                { "@type": "AdministrativeArea", name: "Kota Batu" },
                { "@type": "AdministrativeArea", name: "Kota Surabaya" },
                { "@type": "AdministrativeArea", name: "Pasuruan" },
@@ -100,6 +97,13 @@ export default async function SewaMobilPage() {
                "@type": "LocalBusiness",
                name: siteConfig.name,
                image: `${siteConfig.url}/images/interior-armada.webp`,
+               telephone,
+               address: {
+                    "@type": "PostalAddress",
+                    addressLocality: "Batu",
+                    addressRegion: "Jawa Timur",
+                    addressCountry: "ID",
+               },
           },
      };
 
@@ -125,6 +129,8 @@ export default async function SewaMobilPage() {
      const fleet = armada.map((item) => ({
           id: item.id,
           name: capitalizeFirst(decodeHtml(item.title)),
+          harga: item.acf?.harga,
+          hargaAllIn: item.acf?.harga_all_in,
      }));
 
      return (
@@ -132,7 +138,7 @@ export default async function SewaMobilPage() {
                <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{
-                         __html: JSON.stringify(autoRentalLd).replace(/</g, "\\u003c"),
+                         __html: JSON.stringify(serviceLd).replace(/</g, "\\u003c"),
                     }}
                />
                <script

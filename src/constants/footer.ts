@@ -5,7 +5,7 @@ export const footerContent = {
 
      servicesTitle: "Layanan & Navigasi",
      serviceLinks: [
-          { label: "Travel Reguler", href: "/travel-reguler" },
+          { label: "Travel Reguler", href: "/travel" },
           { label: "Carter Drop Satu Arah (One Way)", href: "/sewa-mobil" },
           { label: "Pilihan Armada & Spesifikasi", href: "/armada" },
           { label: "Profil Perusahaan & Driver", href: "/tentang-kami" },

@@ -1,11 +1,14 @@
-import SewaMobilForm from "@/components/sections/SewaMobilForm";
+import Link from "next/link";
+import SewaMobilForm, {
+     type FleetOption,
+} from "@/components/sections/SewaMobilForm";
 import { sewaMobilHero } from "@/constants/sewa-mobil";
 import type { RuteCarter } from "@/types/rute-carter";
 
 type SewaMobilHeroProps = {
      whatsapp?: string;
      routes?: RuteCarter[];
-     fleet?: Array<{ id: number; name: string }>;
+     fleet?: FleetOption[];
 };
 
 export default function SewaMobilHero({
@@ -31,6 +34,16 @@ export default function SewaMobilHero({
                          <p className="max-w-2xl font-body-lg text-body-lg text-on-surface-variant">
                               {content.description}
                          </p>
+
+                         <p className="font-body-md text-body-md text-on-surface-variant">
+                              {content.regularLink.text}{" "}
+                              <Link
+                                   href={content.regularLink.href}
+                                   className="font-bold text-primary underline underline-offset-4 transition-colors hover:text-primary-container"
+                              >
+                                   {content.regularLink.label}
+                              </Link>
+                         </p>
                     </div>
 
                     {/* Stats Card */}
@@ -38,9 +51,8 @@ export default function SewaMobilHero({
                          {content.stats.map((stat, index) => (
                               <div
                                    key={stat.label}
-                                   className={`flex flex-col rounded-2xl border border-surface-container-high/60 bg-surface-container-lowest p-space-md shadow-[0_4px_16px_rgba(18,28,44,0.04)] ${
-                                        index === 2 ? "col-span-2 sm:col-span-1" : ""
-                                   }`}
+                                   className={`flex flex-col rounded-2xl border border-surface-container-high/60 bg-surface-container-lowest p-space-md shadow-[0_4px_16px_rgba(18,28,44,0.04)] ${index === 2 ? "col-span-2 sm:col-span-1" : ""
+                                        }`}
                               >
                                    <span className="font-headline-md text-headline-md font-extrabold tracking-tight text-primary">
                                         {stat.value}

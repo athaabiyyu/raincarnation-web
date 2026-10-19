@@ -1,0 +1,122 @@
+﻿D:\Portofolio\raincarnation\raincarnation-web\src\app\travel-reguler\[slug]\page.tsx:67: alternates: { canonical: `/travel-reguler/${slug}` },
+D:\Portofolio\raincarnation\raincarnation-web\src\app\travel-reguler\[slug]\page.tsx:72: url: `/travel-reguler/${slug}`,
+D:\Portofolio\raincarnation\raincarnation-web\src\app\travel-reguler\[slug]\page.tsx:127: ? buildWhatsAppUrl(whatsapp, `Halo Admin, saya mau booking travel reguler ${rawTitle}`)
+D:\Portofolio\raincarnation\raincarnation-web\src\app\travel-reguler\[slug]\page.tsx:163: serviceType: "Travel reguler per kursi",
+D:\Portofolio\raincarnation\raincarnation-web\src\app\travel-reguler\[slug]\page.tsx:164: description: `Layanan travel reguler per kursi rute ${rawTitle}, door to door kecuali titik di Pandaan dan Juanda.`,
+D:\Portofolio\raincarnation\raincarnation-web\src\app\travel-reguler\[slug]\page.tsx:165: url: `${siteConfig.url}/travel-reguler/${slug}`,
+D:\Portofolio\raincarnation\raincarnation-web\src\app\travel-reguler\[slug]\page.tsx:204: name: "Travel Reguler",
+D:\Portofolio\raincarnation\raincarnation-web\src\app\travel-reguler\[slug]\page.tsx:205: item: `${siteConfig.url}/travel-reguler`,
+D:\Portofolio\raincarnation\raincarnation-web\src\app\travel-reguler\[slug]\page.tsx:211: item: `${siteConfig.url}/travel-reguler/${slug}`,
+D:\Portofolio\raincarnation\raincarnation-web\src\app\travel-reguler\[slug]\page.tsx:235: <Link href="/travel-reguler" className="hover:text-primary transition-colors">Travel Reguler</Link>
+D:\Portofolio\raincarnation\raincarnation-web\src\app\travel-reguler\[slug]\page.tsx:266: `Travel reguler per kursi rute ${rawTitle} door to door, dengan jadwal keberangkatan tetap.`}
+D:\Portofolio\raincarnation\raincarnation-web\src\app\travel-reguler\[slug]\page.tsx:352: <span className="text-[11px] text-on-surface-variant">Reguler</span>
+D:\Portofolio\raincarnation\raincarnation-web\src\app\travel-reguler\[slug]\page.tsx:459: href={`/travel-reguler/${item.slug}`}
+D:\Portofolio\raincarnation\raincarnation-web\src\app\travel-reguler\[slug]\page.tsx:480: <Link href="/travel-reguler" className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:underline">
+D:\Portofolio\raincarnation\raincarnation-web\src\app\travel-reguler\[slug]\page.tsx:482: Kembali ke Semua Rute Travel Reguler
+D:\Portofolio\raincarnation\raincarnation-web\src\app\travel-reguler\[slug]\page.tsx:498: <span className="text-xs font-bold tracking-wider text-on-surface-variant uppercase">Tarif Resmi Reguler</span>
+D:\Portofolio\raincarnation\raincarnation-web\src\app\travel-reguler\page.tsx:25: canonical: "/travel-reguler",
+D:\Portofolio\raincarnation\raincarnation-web\src\app\travel-reguler\page.tsx:31: url: "/travel-reguler",
+D:\Portofolio\raincarnation\raincarnation-web\src\app\travel-reguler\page.tsx:48: "[TravelRegulerPage] Gagal mengambil rute dari CMS:",
+D:\Portofolio\raincarnation\raincarnation-web\src\app\travel-reguler\page.tsx:55: export default async function TravelRegulerPage() {
+D:\Portofolio\raincarnation\raincarnation-web\src\app\travel-reguler\page.tsx:69: url: `${siteConfig.url}/travel-reguler`,
+D:\Portofolio\raincarnation\raincarnation-web\src\app\travel-reguler\page.tsx:105: name: "Travel Reguler",
+D:\Portofolio\raincarnation\raincarnation-web\src\app\travel-reguler\page.tsx:106: item: `${siteConfig.url}/travel-reguler`,
+D:\Portofolio\raincarnation\raincarnation-web\src\app\travel-reguler\page.tsx:118: url: `${siteConfig.url}/travel-reguler/${route.slug}`,
+D:\Portofolio\raincarnation\raincarnation-web\src\app\travel-reguler\page.tsx:124: name: "Daftar Rute Travel Reguler",
+D:\Portofolio\raincarnation\raincarnation-web\src\app\page.tsx:169: const hasReguler = Boolean(whatsapp) && pairs.length > 0;
+D:\Portofolio\raincarnation\raincarnation-web\src\app\page.tsx:172: const regulerForm = (
+D:\Portofolio\raincarnation\raincarnation-web\src\app\page.tsx:212: {(hasReguler || hasCarter) && (
+D:\Portofolio\raincarnation\raincarnation-web\src\app\page.tsx:215: {hasReguler && hasCarter ? (
+D:\Portofolio\raincarnation\raincarnation-web\src\app\page.tsx:217: regulerLabel={berandaBooking.regulerTab}
+D:\Portofolio\raincarnation\raincarnation-web\src\app\page.tsx:219: regulerPanel={regulerForm}
+D:\Portofolio\raincarnation\raincarnation-web\src\app\page.tsx:222: ) : hasReguler ? (
+D:\Portofolio\raincarnation\raincarnation-web\src\app\page.tsx:223: regulerForm
+D:\Portofolio\raincarnation\raincarnation-web\src\app\page.tsx:239: seeAllHref="/travel-reguler"
+D:\Portofolio\raincarnation\raincarnation-web\src\app\sitemap.ts:6: const STATIC_PATHS = ["/", "/travel-reguler", "/sewa-mobil", "/armada"];
+D:\Portofolio\raincarnation\raincarnation-web\src\app\sitemap.ts:25: url: `${siteConfig.url}/travel-reguler/${route.slug}`,
+D:\Portofolio\raincarnation\raincarnation-web\src\components\sections\BerandaServices.tsx:30: // Ikon kursi penumpang (Travel Reguler).
+D:\Portofolio\raincarnation\raincarnation-web\src\components\sections\FaqTravel.tsx:8: question: "Apa itu travel reguler dan apa bedanya dengan sewa mobil?",
+D:\Portofolio\raincarnation\raincarnation-web\src\components\sections\FaqTravel.tsx:9: answer: "Travel reguler adalah layanan perjalanan antar kota yang dipesan per kursi dengan jadwal keberangkatan tetap, sehingga Anda berbagi mobil dengan penumpang lain dan membayar sesuai jumlah kursi. Kalau Anda butuh satu mobil penuh untuk rombongan, pilih layanan Sewa Mobil."
+D:\Portofolio\raincarnation\raincarnation-web\src\components\sections\FaqTravel.tsx:12: question: "Di mana titik penjemputan travel reguler?",
+D:\Portofolio\raincarnation\raincarnation-web\src\components\sections\FaqTravel.tsx:16: question: "Berapa tarif travel reguler per kursi?",
+D:\Portofolio\raincarnation\raincarnation-web\src\components\sections\FaqTravel.tsx:73: Pertanyaan Seputar Travel Reguler Malang
+D:\Portofolio\raincarnation\raincarnation-web\src\components\sections\FeaturedRoutes.tsx:7: import { featuredRoutesContent } from "@/constants/travel-reguler";
+D:\Portofolio\raincarnation\raincarnation-web\src\components\sections\RouteCard.tsx:4: import { featuredRoutesContent } from "@/constants/travel-reguler";
+D:\Portofolio\raincarnation\raincarnation-web\src\components\sections\RouteCard.tsx:41: `Halo Admin, saya mau booking travel reguler ${title}`,
+D:\Portofolio\raincarnation\raincarnation-web\src\components\sections\RouteCard.tsx:114: href={`/travel-reguler/${route.slug}`}
+D:\Portofolio\raincarnation\raincarnation-web\src\components\sections\RouteSearchForm.tsx:15: import { searchFormContent } from "@/constants/travel-reguler";
+D:\Portofolio\raincarnation\raincarnation-web\src\components\sections\RouteSearchForm.tsx:110: "Halo Raincarnation, saya ingin pesan Travel Reguler:",
+D:\Portofolio\raincarnation\raincarnation-web\src\components\sections\TravelHero.tsx:3: import { heroContent } from "@/constants/travel-reguler";
+D:\Portofolio\raincarnation\raincarnation-web\src\components\ui\BerandaBookingTabs.tsx:8: regulerLabel: string;
+D:\Portofolio\raincarnation\raincarnation-web\src\components\ui\BerandaBookingTabs.tsx:10: regulerPanel: ReactNode;
+D:\Portofolio\raincarnation\raincarnation-web\src\components\ui\BerandaBookingTabs.tsx:14: type TabKey = "reguler" | "carter";
+D:\Portofolio\raincarnation\raincarnation-web\src\components\ui\BerandaBookingTabs.tsx:34: regulerLabel,
+D:\Portofolio\raincarnation\raincarnation-web\src\components\ui\BerandaBookingTabs.tsx:36: regulerPanel,
+D:\Portofolio\raincarnation\raincarnation-web\src\components\ui\BerandaBookingTabs.tsx:69: id="tab-reguler"
+D:\Portofolio\raincarnation\raincarnation-web\src\components\ui\BerandaBookingTabs.tsx:70: aria-selected={active === "reguler"}
+D:\Portofolio\raincarnation\raincarnation-web\src\components\ui\BerandaBookingTabs.tsx:71: aria-controls="panel-reguler"
+D:\Portofolio\raincarnation\raincarnation-web\src\components\ui\BerandaBookingTabs.tsx:72: onClick={() => setActive("reguler")}
+D:\Portofolio\raincarnation\raincarnation-web\src\components\ui\BerandaBookingTabs.tsx:73: className={tabClass("reguler")}
+D:\Portofolio\raincarnation\raincarnation-web\src\components\ui\BerandaBookingTabs.tsx:76: <span>{renderLabel(regulerLabel)}</span>
+D:\Portofolio\raincarnation\raincarnation-web\src\components\ui\BerandaBookingTabs.tsx:90: id="panel-reguler"
+D:\Portofolio\raincarnation\raincarnation-web\src\components\ui\BerandaBookingTabs.tsx:91: aria-labelledby="tab-reguler"
+D:\Portofolio\raincarnation\raincarnation-web\src\components\ui\BerandaBookingTabs.tsx:92: hidden={active !== "reguler"}
+D:\Portofolio\raincarnation\raincarnation-web\src\components\ui\BerandaBookingTabs.tsx:94: {regulerPanel}
+D:\Portofolio\raincarnation\raincarnation-web\src\components\ui\BookingIcons.tsx:25: // Ikon kursi penumpang (Travel Reguler).
+D:\Portofolio\raincarnation\raincarnation-web\src\components\ui\FloatingWhatsapp.tsx:21: "Saya ingin menanyakan informasi sewa mobil & travel reguler. Terima kasih!",
+D:\Portofolio\raincarnation\raincarnation-web\src\config\navigation.ts:3: { label: "Travel Reguler", href: "/travel-reguler" },
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\beranda.ts:24: "Jasa sewa mobil dengan driver atau lepas kunci yang tersedia 24 jam di Malang, Batu, dan Surabaya, serta bisa custom rute apabila ingin rute yang lain. Tersedia juga travel door to door per kursi (travel reguler) untuk rute Malang, Batu, Surabaya, Pandaan, dan Bandara Juanda, mulai Rp100.000 dan sudah termasuk tol dan parkir.",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\beranda.ts:32: description: "Sewa Mobil & Travel Reguler",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\beranda.ts:52: regulerTab: "Travel Reguler (Per Kursi)",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\beranda.ts:71: title: "Layanan Sewa Mobil Malang dan Travel Reguler",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\beranda.ts:73: "Sewa mobil Malang (sering disebut rental mobil Malang) dengan sopir atau lepas kunci untuk perjalanan di Malang, Batu, Surabaya, dan Pasuruan. Butuh satu atau beberapa kursi saja untuk rute tertentu? Pilih saja layanan travel reguler kami.",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\beranda.ts:92: tag: "TRAVEL REGULER",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\beranda.ts:93: title: "Travel Reguler per Kursi",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\beranda.ts:102: button: "Lihat Jadwal & Rute Travel Reguler",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\beranda.ts:103: href: "/travel-reguler",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\beranda.ts:122: "Kami menyediakan layanan sewa mobil dan travel reguler dengan informasi layanan yang jelas untuk membantu Anda mempersiapkan perjalanan.",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\beranda.ts:161: "Temukan jawaban cepat mengenai layanan sewa mobil, paket driver, lepas kunci, dan travel reguler di Raincarnation.",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\blog.ts:13: "Panduan memilih travel reguler, sewa mobil, dan armada untuk perjalanan di Malang, Batu, Surabaya, Juanda, dan Pandaan.",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\blog.ts:21: "Tips memilih travel reguler, sewa mobil, dan armada yang sesuai dengan rencana perjalanan Anda.",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\blog.ts:34: "Panduan Naik Travel Reguler Malang – Surabaya: Memilih Jadwal dan Titik Jemput",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\blog.ts:37: tags: ["#TravelMalang", "#MalangSurabaya", "#TravelReguler"],
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\blog.ts:45: "Halo Admin Raincarnation, saya ingin tanya travel reguler Malang - Surabaya.",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\blog.ts:62: "Gambaran singkat memesan travel reguler Batu – Surabaya lewat WhatsApp, dari memilih jadwal sampai konfirmasi.",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\blog.ts:96: "Tanyakan jadwal dan sisa kursi travel reguler, atau ketersediaan armada sewa mobil, langsung ke admin.",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\blog.ts:101: title: "Tarif Travel Reguler",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\blog.ts:104: linkHref: "/travel-reguler",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\blog.ts:110: question: "Apakah travel reguler dijemput ke alamat?",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\blog.ts:112: "Travel reguler kami door to door, kecuali Pandaan. Titik jemput disepakati lewat admin WhatsApp.",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\cta-banner.ts:5: "Butuh sewa mobil di Malang, Batu, atau Surabaya? Atau ingin memesan kursi travel reguler untuk rute yang tersedia? Hubungi admin Raincarnation untuk menanyakan tarif, jadwal, dan ketersediaan layanan.",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\cta-banner.ts:8: "Halo Admin Raincarnation, saya ingin memesan tiket travel reguler sekarang",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\facilities.ts:12: title: "Fasilitas Standar Layanan Kursi Reguler",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\facilities.ts:14: "Walau berstatus travel reguler per kursi, standar kenyamanan tetap kami utamakan layaknya mobil pribadi berfasilitas eksekutif.",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\footer.ts:4: "Raincarnation menyediakan layanan sewa mobil dengan sopir atau lepas kunci di Malang, Batu, dan Surabaya, serta travel reguler per kursi untuk rute tertentu. Hubungi admin kami melalui WhatsApp untuk informasi tarif, jadwal keberangkatan, dan ketersediaan layanan.",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\footer.ts:8: { label: "Travel Reguler", href: "/travel-reguler" },
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\pusat-bantuan.ts:3: // Fakta terkonfirmasi: travel reguler door to door kecuali Pandaan; sewa mobil bisa diantar (ongkos belum termasuk);
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\pusat-bantuan.ts:11: "Jawaban seputar pemesanan, titik jemput, bagasi, dan perubahan jadwal travel reguler serta sewa mobil di Malang, Batu, dan Surabaya.",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\pusat-bantuan.ts:27: title: "Travel Reguler",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\pusat-bantuan.ts:30: button: "Chat WhatsApp Travel Reguler",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\pusat-bantuan.ts:31: message: "Halo Admin Raincarnation, saya ingin tanya travel reguler.",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\pusat-bantuan.ts:45: "Lihat daftar rute, jadwal keberangkatan, dan tarif travel reguler.",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\pusat-bantuan.ts:47: href: "/travel-reguler",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\pusat-bantuan.ts:81: question: "Apakah travel reguler dijemput ke alamat?",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\pusat-bantuan.ts:83: "Travel reguler kami door to door, kecuali Pandaan. Titik jemput disepakati lewat admin WhatsApp.",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\pusat-bantuan.ts:128: "Pesan tiket travel reguler",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\pusat-bantuan.ts:144: { name: "Malang", detail: "Travel reguler door to door dan sewa mobil." },
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\pusat-bantuan.ts:145: { name: "Batu", detail: "Travel reguler door to door dan sewa mobil." },
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\pusat-bantuan.ts:146: { name: "Surabaya", detail: "Travel reguler door to door dan sewa mobil." },
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\pusat-bantuan.ts:147: { name: "Juanda", detail: "Travel reguler, titik jemput dikonfirmasi admin." },
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\pusat-bantuan.ts:148: { name: "Pandaan", detail: "Travel reguler, tidak door to door; titik dikonfirmasi admin." },
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\sewa-mobil.ts:28: label: "Lihat Travel Reguler per kursi",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\sewa-mobil.ts:29: href: "/travel-reguler",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\tentang-kami.ts:4: // Fakta terkonfirmasi: travel reguler door to door kecuali Pandaan (Juanda belum dijawab);
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\tentang-kami.ts:26: "Kenali Raincarnation: layanan travel reguler per kursi dan sewa mobil di Malang, Batu, dan Surabaya. Pesan lewat WhatsApp.",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\tentang-kami.ts:36: "Layanan travel reguler per kursi dan sewa mobil di Malang, Batu, dan Surabaya. Travel reguler door to door (kecuali Pandaan), sewa mobil bisa diantar ke tempat Anda, dan semua pesanan diurus lewat WhatsApp.",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\tentang-kami.ts:106: "Travel reguler door to door (kecuali Pandaan)",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\tentang-kami.ts:141: "Travel reguler kami menjemput dan mengantar ke alamat Anda (kecuali Pandaan), tanpa perlu ke terminal atau stasiun. Titik jemput disepakati lewat admin.",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\tentang-kami.ts:167: subtitle: "Travel Reguler & Sewa Mobil",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\travel-reguler.ts:6: "Travel reguler per kursi dengan jadwal keberangkatan tetap untuk rute Malang, Batu, Surabaya, Juanda, dan Pandaan. Dijemput dan diantar sampai alamat, kecuali titik di Pandaan dan Juanda. Tarif mulai Rp100.000, sudah termasuk tol dan parkir. Pesan lewat WhatsApp.",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\travel-reguler.ts:15: title: "Cari & Amankan Kursi Travel Reguler",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\travel-reguler.ts:35: title: "Rute Travel Reguler dan Jadwal Keberangkatan",
+D:\Portofolio\raincarnation\raincarnation-web\src\constants\travel-reguler.ts:37: "Temukan layanan travel reguler per kursi dari Malang, Batu, Surabaya, Pandaan, dan Bandara Juanda menuju kota tujuan yang tersedia. Lihat jadwal dan tarif setiap rute sebelum melakukan pemesanan.",

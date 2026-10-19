@@ -1,4 +1,3 @@
-// BELUM DIKONFIRMASI BOS: klaim paket sewa (All In, Carter Drop Off 1 Arah, Lepas Kunci) dan durasi sewa 12 jam di file ini dipasang sementara.
 export type BerandaTrustIcon = "car" | "route" | "message-circle";
 export type BerandaServiceIcon = "armchair" | "car";
 export type BerandaWhyIcon =
@@ -10,7 +9,7 @@ export type BerandaWhyIcon =
 export const berandaHero = {
      titleStart: "Sewa Mobil",
      titleHighlight: "Malang, Batu & Surabaya",
-     titleEnd: "Plus Driver & Lepas Kunci",
+     titleEnd: "dan Travel Door to Door",
      image: {
           src: "/images/interior-armada.webp",
           alt: "Kabin mobil Raincarnation yang bersih dan nyaman untuk sewa mobil di Malang",
@@ -22,18 +21,7 @@ export const berandaHero = {
                "Pilih layanan mobil dengan sopir atau lepas kunci untuk perjalanan di Malang, Batu, dan Surabaya.",
      },
      description:
-          "Sewa mobil dengan sopir atau lepas kunci di Malang, Batu, Surabaya, dan Pasuruan. Raincarnation juga melayani travel reguler per kursi untuk rute tertentu. Hubungi admin kami melalui WhatsApp untuk informasi dan pemesanan.",
-     travelButton: {
-          label: "Lihat Travel Reguler",
-          href: "/travel-reguler",
-     },
-     charterButton: {
-          label: "Lihat Sewa Mobil",
-          href: "/sewa-mobil",
-     },
-     whatsappButton: "Chat WhatsApp Admin",
-     whatsappMessage:
-          "Halo Admin Raincarnation, saya ingin bertanya tentang layanan travel reguler atau sewa mobil.",
+          "Jasa sewa mobil dengan driver atau lepas kunci yang tersedia 24 jam di Malang, Batu, dan Surabaya, serta bisa custom rute apabila ingin rute yang lain. Tersedia juga travel door to door per kursi (travel reguler) untuk rute Malang, Batu, Surabaya, Pandaan, dan Bandara Juanda, mulai Rp100.000 dan sudah termasuk tol dan parkir.",
 };
 
 export const berandaTrust = {
@@ -46,12 +34,12 @@ export const berandaTrust = {
           {
                icon: "route",
                title: "Pilihan Rute",
-               description: "Layanan di Malang, Batu, Surabaya dan Pasuruan",
+               description: "Malang, Batu, Surabaya, dan custom rute",
           },
           {
                icon: "message-circle",
                title: "Pesan via WhatsApp",
-               description: "Hubungi admin untuk informasi dan Pemesanan",
+               description: "Hubungi admin untuk informasi dan pemesanan",
           },
      ] satisfies {
           icon: BerandaTrustIcon;
@@ -82,8 +70,23 @@ export const berandaBooking = {
 export const berandaServices = {
      title: "Layanan Sewa Mobil Malang dan Travel Reguler",
      description:
-          "Sewa mobil Malang (sering disebut rental mobil Malang) dengan sopir atau lepas kunci untuk perjalanan di Malang, Batu, Surabaya, dan Pasuruan. Butuh kursi saja untuk rute tertentu? Pilih travel reguler per kursi.",
+          "Sewa mobil Malang (sering disebut rental mobil Malang) dengan sopir atau lepas kunci untuk perjalanan di Malang, Batu, Surabaya, dan Pasuruan. Butuh satu atau beberapa kursi saja untuk rute tertentu? Pilih saja layanan travel reguler kami.",
      items: [
+          {
+               icon: "car",
+               tag: "SEWA MOBIL",
+               title: "Sewa Mobil Malang, Batu & Surabaya",
+               description:
+                    "Pilih sewa mobil dengan sopir atau lepas kunci sesuai ketersediaan layanan dan kebutuhan perjalanan Anda.",
+               points: [
+                    "Tiga paket: All In (per hari), Lepas Kunci (per 12 jam), Carter Drop Off (per rute)",
+                    "Lepas Kunci: syarat KTP dan SIM A berlaku",
+                    "Informasi armada dan pemesanan melalui WhatsApp",
+               ],
+               button: "Pilihan Unit & Sewa Mobil Malang",
+               href: "/sewa-mobil",
+               featured: true,
+          },
           {
                icon: "armchair",
                tag: "TRAVEL REGULER",
@@ -92,27 +95,13 @@ export const berandaServices = {
                     "Pilihan perjalanan antarkota bagi Anda yang ingin memesan kursi tanpa menyewa satu mobil penuh.",
                points: [
                     "Pembayaran berdasarkan jumlah kursi",
+                    "Antar jemput door to door (kecuali titik di Pandaan dan Juanda)",
+                    "Tarif sudah termasuk tol dan parkir",
                     "Tersedia rute tertentu sesuai jadwal",
-                    "Cek rute dan informasi keberangkatan",
                ],
                button: "Lihat Jadwal & Rute Travel Reguler",
-               href: "/travel-reguler",
+               href: "/travel",
                featured: false,
-          },
-          {
-               icon: "car",
-               tag: "SEWA MOBIL",
-               title: "Sewa Mobil Malang, Batu & Surabaya",
-               description:
-                    "Pilih sewa mobil dengan sopir atau lepas kunci sesuai ketersediaan layanan dan kebutuhan perjalanan Anda.",
-               points: [
-                    "Tiga paket: All In, Carter Drop Off 1 Arah, dan Lepas Kunci",
-                    "Durasi sewa 12 jam",
-                    "Informasi armada dan pemesanan melalui WhatsApp",
-               ],
-               button: "Pilihan Unit & Sewa Mobil Malang",
-               href: "/sewa-mobil",
-               featured: true,
           },
      ] satisfies {
           icon: BerandaServiceIcon;
@@ -172,14 +161,19 @@ export const berandaFaq = {
           "Temukan jawaban cepat mengenai layanan sewa mobil, paket driver, lepas kunci, dan travel reguler di Raincarnation.",
      items: [
           {
-               question: "Apakah Raincarnation menyediakan layanan sewa mobil Malang plus driver?",
+               question: "Apakah Raincarnation menyediakan layanan sewa mobil Malang dengan driver?",
                answer:
-                    "Ya, kami menyediakan paket sewa mobil plus driver untuk area Malang, Batu, Surabaya, dan Pasuruan. Hubungi admin lewat WhatsApp untuk menanyakan ketersediaan dan rincian layanan.",
+                    "Ya, kami menyediakan paket sewa mobil dengan driver untuk area Malang, Batu, Surabaya, dan bisa custom rute sesuai keinginan Anda. Hubungi admin lewat WhatsApp untuk menanyakan ketersediaan dan rincian layanan.",
           },
           {
                question: "Apakah tersedia sewa mobil lepas kunci (tanpa driver) di Malang?",
                answer:
                     "Tersedia untuk unit dan kriteria tertentu. Anda dapat menghubungi admin reservasi kami via WhatsApp untuk mengetahui syarat dan ketentuan sewa mobil lepas kunci.",
+          },
+          {
+               question: "Apa bedanya sewa mobil All In, Lepas Kunci, dan Carter Drop Off?",
+               answer:
+                    "All In adalah sewa mobil dengan sopir, tarif per hari. Lepas Kunci adalah sewa mobil tanpa sopir, tarif per 12 jam, dan penyewa membawa KTP serta SIM A yang masih berlaku. Carter Drop Off 1 Arah adalah satu mobil untuk satu rute dari kota asal ke kota tujuan, tarif per rute. Tanyakan rincian lengkapnya ke admin lewat WhatsApp.",
           },
           {
                question: "Berapa harga sewa mobil per hari di Malang?",
@@ -195,6 +189,11 @@ export const berandaFaq = {
                question: "Apakah melayani penjemputan dari Bandara Juanda?",
                answer:
                     "Ya, kami melayani layanan dari dan menuju Bandara Juanda. Titik jemput dikonfirmasi oleh admin lewat WhatsApp sesuai kota dan kebutuhan perjalanan Anda.",
+          },
+          {
+               question: "Apakah travel bisa dijemput sampai rumah?",
+               answer:
+                    "Bisa. Travel kami door to door, jadi Anda dijemput di alamat Anda, kecuali titik di Pandaan dan Juanda. Contohnya dari Malang ke Juanda, Anda dijemput di alamat Anda. Dari Juanda, Anda dijemput di Juanda. Titik pastinya dikonfirmasi admin lewat WhatsApp.",
           },
           {
                question: "Bagaimana cara melakukan pemesanan sewa mobil di Raincarnation?",

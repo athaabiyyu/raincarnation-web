@@ -26,7 +26,14 @@ import { capitalizeFirst } from "@/utils/capitalize-first";
 import { formatPrice } from "@/utils/format-price";
 import { buildWhatsAppUrl } from "@/utils/whatsapp";
 
-type FleetOption = { id: number; name: string };
+export type FleetOption = {
+     id: number;
+     name: string;
+     /** harga Lepas Kunci per 12 jam (dari CMS armada, string angka) */
+     harga?: string;
+     /** harga All In per hari (dari CMS armada, string angka) */
+     hargaAllIn?: string;
+};
 
 type SewaMobilFormProps = {
      routes: RuteCarter[];
@@ -92,16 +99,10 @@ function unique(items: string[]): string[] {
      return [...new Set(items.filter(Boolean))];
 }
 
-function getSimpleRoute(
-     route: RuteCarter,
-     kind: SewaMobilPackageKind | undefined,
-): string {
-     const acf = route.acf;
-     const value =
-          kind === "lepas-kunci"
-               ? acf?.rute_lepas_kunci || acf?.rute || acf?.kota_asal
-               : acf?.rute || acf?.kota_asal;
-     return capitalizeFirst(value);
+// Harga dari CMS berupa string angka; 0 = tidak ada harga.
+function toPrice(value: string | number | undefined): number {
+     const number = Number(value);
+     return Number.isFinite(number) && number > 0 ? number : 0;
 }
 
 function resolveIncludes(
@@ -184,17 +185,26 @@ export default function SewaMobilForm({
           customRoute: "",
      });
 
-     if (!whatsapp || routes.length === 0) return null;
+     if (!whatsapp) return null;
 
      function update(field: keyof FormValues, value: string) {
           setValues((prev) => ({ ...prev, [field]: value }));
      }
 
-     // Paket: dari konfigurasi, hanya yang punya entri di CMS. Semua pilihan mulai kosong.
+     // Paket: All In dan Lepas Kunci muncul bila ada armada berharga;
+     // Carter Drop Off muncul bila ada entri rute-carter miliknya.
      const packageConfigs: PackageConfig[] = config.packages;
-     const packages = packageConfigs.filter((p) =>
-          routes.some((r) => r.acf?.paket_sewa === p.name),
-     );
+     const packages = packageConfigs.filter((p) => {
+          if (p.kind === "all-in") {
+               return fleet.some((f) => toPrice(f.hargaAllIn) > 0);
+          }
+          if (p.kind === "lepas-kunci") {
+               return fleet.some((f) => toPrice(f.harga) > 0);
+          }
+          return routes.some((r) => r.acf?.paket_sewa === p.name);
+     });
+     if (packages.length === 0) return null;
+
      const selectedConfig = packages.find((p) => p.name === packageType);
      const selectedPackage = selectedConfig?.name ?? "";
      const kind = selectedConfig?.kind;
@@ -204,15 +214,28 @@ export default function SewaMobilForm({
      // Carter Drop Off = pola lama (3+3+3+3).
      const thirdSpan = isSimplePackage ? "lg:col-span-4" : "lg:col-span-3";
 
-     // Entri CMS milik paket terpilih (bila belum memilih paket: semua entri).
+     // Entri CMS milik paket terpilih (hanya dipakai Carter Drop Off).
      const packageRoutes = selectedPackage
           ? routes.filter((r) => r.acf?.paket_sewa === selectedPackage)
           : routes;
 
-     // Armada mengikuti paket terpilih.
-     const fleetOptions = fleet.filter((f) =>
-          packageRoutes.some((r) => r.acf?.armada?.some((a) => a.ID === f.id)),
-     );
+     // Armada mengikuti paket terpilih: All In dan Lepas Kunci dari harga armada,
+     // Carter Drop Off dari entri rute-carter.
+     const fleetOptions = fleet.filter((f) => {
+          if (kind === "all-in") return toPrice(f.hargaAllIn) > 0;
+          if (kind === "lepas-kunci") return toPrice(f.harga) > 0;
+          if (kind === "drop-off") {
+               return packageRoutes.some((r) =>
+                    r.acf?.armada?.some((a) => a.ID === f.id),
+               );
+          }
+          // Belum memilih paket: unit yang bisa dipakai paket mana pun.
+          return (
+               toPrice(f.harga) > 0 ||
+               toPrice(f.hargaAllIn) > 0 ||
+               routes.some((r) => r.acf?.armada?.some((a) => a.ID === f.id))
+          );
+     });
      const selectedFleet = fleetOptions.find((f) => String(f.id) === fleetId);
 
      // Rute untuk All In dan Lepas Kunci: dari konfigurasi + satu pilihan custom.
@@ -263,24 +286,29 @@ export default function SewaMobilForm({
           Boolean(values.passengers.trim()) &&
           (!isCustomRoute || Boolean(values.customRoute.trim()));
 
-     // Satu entri CMS = satu kombinasi paket + armada + rute.
+     // Carter Drop Off: satu entri CMS = satu kombinasi armada + asal + tujuan.
      const match =
-          allFilled && !isCustomRoute
+          allFilled && kind === "drop-off"
                ? routes.find(
                     (r) =>
                          r.acf?.paket_sewa === selectedPackage &&
                          r.acf?.armada?.some((a) => a.ID === selectedFleet?.id) &&
-                         (isSimplePackage
-                              ? getSimpleRoute(r, kind) ===
-                              capitalizeFirst(selectedRoute?.value)
-                              : capitalizeFirst(r.acf?.kota_asal) === selectedOrigin &&
-                              capitalizeFirst(r.acf?.kota_tujuan) ===
-                              selectedDestination),
+                         capitalizeFirst(r.acf?.kota_asal) === selectedOrigin &&
+                         capitalizeFirst(r.acf?.kota_tujuan) === selectedDestination,
                )
                : undefined;
-     const price = Number(match?.acf?.harga);
-     const priceText =
-          Number.isFinite(price) && price > 0 ? formatPrice(String(price)) : null;
+
+     // Sumber harga: Carter dari rute-carter; All In dan Lepas Kunci dari armada.
+     // Custom rute / Luar kota tidak punya harga (tanya admin).
+     function resolvePrice(): number {
+          if (kind === "drop-off") return toPrice(match?.acf?.harga);
+          if (isCustomRoute) return 0;
+          if (kind === "all-in") return toPrice(selectedFleet?.hargaAllIn);
+          if (kind === "lepas-kunci") return toPrice(selectedFleet?.harga);
+          return 0;
+     }
+     const price = allFilled ? resolvePrice() : 0;
+     const priceText = price > 0 ? formatPrice(String(price)) : null;
 
      // Custom rute atau kombinasi tanpa harga: arahkan ke admin.
      const askAdmin = allFilled && !priceText;

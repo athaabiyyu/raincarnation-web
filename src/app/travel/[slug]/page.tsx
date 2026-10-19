@@ -24,6 +24,7 @@ import { getArmadaList } from "@/lib/wordpress/armada";
 import { matchArmada } from "@/utils/match-armada";
 import { getSiteConfig } from "@/lib/wordpress/config";
 import { buildWhatsAppUrl } from "@/utils/whatsapp";
+import { formatPhoneDisplay } from "@/utils/format-phone";
 import { siteConfig } from "@/config/site";
 
 type PageProps = {
@@ -48,12 +49,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           const from = capitalizeFirst(route.acf?.kota_asal ?? "");
           const to = capitalizeFirst(route.acf?.kota_tujuan ?? "");
           const name = from && to ? `${from} ke ${to}` : capitalizeFirst(decodeHtml(route.title));
-          const jalur = capitalizeFirst(route.acf?.jalur ?? "");
+          const tarifMeta = formatPrice(route.acf?.tarif);
 
           const parts = [
-               `Travel reguler per kursi rute ${name}.`,
-               jalur ? `Lewat jalur ${jalur}.` : "",
-               "Cek jadwal keberangkatan dan tarif, lalu pesan lewat WhatsApp.",
+               `Travel per kursi rute ${name}, door to door.`,
+               tarifMeta ? `Tarif ${tarifMeta} per kursi, sudah termasuk tol dan parkir.` : "",
+               "Cek jadwal, pesan via WA.",
           ].filter(Boolean);
 
           const titleName = from && to ? `${from} ${to}` : name;
@@ -63,12 +64,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           return {
                title,
                description,
-               alternates: { canonical: `/travel-reguler/${slug}` },
+               alternates: { canonical: `/travel/${slug}` },
                openGraph: {
                     type: "website",
                     locale: "id_ID",
                     siteName: siteConfig.name,
-                    url: `/travel-reguler/${slug}`,
+                    url: `/travel/${slug}`,
                     title,
                     description,
                     images: [
@@ -123,7 +124,7 @@ export default async function RoutePage({ params }: PageProps) {
      const cmsConfig = await getSiteConfig();
      const whatsapp = cmsConfig.contact?.whatsapp ?? "";
      const whatsappUrl = whatsapp
-          ? buildWhatsAppUrl(whatsapp, `Halo Admin, saya mau booking travel reguler ${rawTitle}`)
+          ? buildWhatsAppUrl(whatsapp, `Halo Admin, saya mau booking travel ${rawTitle}`)
           : null;
 
      let armadaNames: string[] = [];
@@ -136,18 +137,36 @@ export default async function RoutePage({ params }: PageProps) {
           console.error("getArmadaList gagal di halaman rute:", error);
      }
 
+     // Rute terkait: rute lain dengan kota asal atau tujuan yang sama (maks. 4)
+     let relatedRoutes: Awaited<ReturnType<typeof getRoutes>> = [];
+     try {
+          const allRoutes = await getRoutes();
+          const sameCity = (a?: string, b?: string) =>
+               !!a && !!b && a.trim().toLowerCase() === b.trim().toLowerCase();
+          relatedRoutes = allRoutes
+               .filter(
+                    (item) =>
+                         item.slug !== slug &&
+                         (sameCity(item.acf?.kota_asal, route.acf?.kota_asal) ||
+                              sameCity(item.acf?.kota_tujuan, route.acf?.kota_tujuan)),
+               )
+               .slice(0, 4);
+     } catch (error) {
+          console.error("getRoutes gagal di halaman rute (rute terkait):", error);
+     }
+
      // Structured Data utama menggunakan TransportationService selaras dengan halaman sewa mobil
      const travelServiceLd = {
           "@context": "https://schema.org",
           "@type": "TransportationService",
           name: `Travel ${rawTitle} - Raincarnation`,
-          serviceType: "Travel reguler per kursi",
-          description: `Layanan travel reguler per kursi rute ${rawTitle} antar titik perkotaan.`,
-          url: `${siteConfig.url}/travel-reguler/${slug}`,
-          telephone: whatsapp,
+          serviceType: "Travel per kursi",
+          description: `Layanan travel per kursi rute ${rawTitle}, door to door kecuali titik di Pandaan dan Juanda.`, 
+          url: `${siteConfig.url}/travel/${slug}`,
+          telephone: whatsapp ? `+${whatsapp}` : undefined,
           address: {
                "@type": "PostalAddress",
-               addressLocality: from || "Malang",
+               addressLocality: "Batu",
                addressRegion: "Jawa Timur",
                addressCountry: "ID",
           },
@@ -182,14 +201,14 @@ export default async function RoutePage({ params }: PageProps) {
                {
                     "@type": "ListItem",
                     position: 2,
-                    name: "Travel Reguler",
-                    item: `${siteConfig.url}/travel-reguler`,
+                    name: "Travel",
+                    item: `${siteConfig.url}/travel`,
                },
                {
                     "@type": "ListItem",
                     position: 3,
                     name: rawTitle,
-                    item: `${siteConfig.url}/travel-reguler/${slug}`,
+                    item: `${siteConfig.url}/travel/${slug}`,
                },
           ],
      };
@@ -213,7 +232,7 @@ export default async function RoutePage({ params }: PageProps) {
                          <nav aria-label="Breadcrumb" className="hidden lg:flex mb-4 flex-wrap items-center gap-2 text-sm text-on-surface-variant">
                               <Link href="/" className="hover:text-primary transition-colors">Beranda</Link>
                               <ChevronRight size={14} />
-                              <Link href="/travel-reguler" className="hover:text-primary transition-colors">Travel Reguler</Link>
+                              <Link href="/travel" className="hover:text-primary transition-colors">Travel</Link>
                               <ChevronRight size={14} />
                               <span className="font-semibold text-on-surface">{rawTitle}</span>
                          </nav>
@@ -222,7 +241,7 @@ export default async function RoutePage({ params }: PageProps) {
                          <div className="hidden lg:flex mb-3 flex-wrap items-center gap-2">
                               <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
                                    <MapPin size={12} />
-                                   Antar Titik Perkotaan
+                                   Door to Door
                               </span>
                               {jalur && (
                                    <span className="inline-flex items-center gap-1.5 rounded-full bg-surface-container-low border border-surface-container-high px-3 py-1 text-xs font-semibold text-on-surface-variant">
@@ -244,7 +263,7 @@ export default async function RoutePage({ params }: PageProps) {
                               </h1>
                               <p className="mt-4 text-base md:text-lg text-on-surface-variant max-w-3xl leading-relaxed">
                                    {deskripsiSingkat ||
-                                        `Travel reguler per kursi rute ${rawTitle} antar titik perkotaan, dengan jadwal keberangkatan tetap.`}
+                                        `Travel per kursi rute ${rawTitle} door to door, dengan jadwal keberangkatan tetap.`}
                               </p>
                          </div>
                     </div>
@@ -330,7 +349,7 @@ export default async function RoutePage({ params }: PageProps) {
                                                             </li>
                                                        </ul>
                                                        <div className="pt-3 border-t border-surface-container-high/50 flex justify-between items-center">
-                                                            <span className="text-[11px] text-on-surface-variant">Reguler</span>
+                                                            <span className="text-[11px] text-on-surface-variant">Per kursi</span>
                                                             <span className="text-xs font-bold text-on-surface">{tarif}/org</span>
                                                        </div>
                                                   </div>
@@ -351,8 +370,8 @@ export default async function RoutePage({ params }: PageProps) {
                                                   <MapPin size={20} />
                                              </div>
                                              <div>
-                                                  <h4 className="font-bold text-sm text-on-surface">Antar Titik Perkotaan</h4>
-                                                  <p className="text-xs text-on-surface-variant mt-1">Layanan penjemputan praktis antar titik perkotaan.</p>
+                                                  <h3 className="font-bold text-sm text-on-surface">Door to Door</h3>
+                                                  <p className="text-xs text-on-surface-variant mt-1">Dijemput dan diantar sampai alamat, kecuali titik di Pandaan dan Juanda.</p>
                                              </div>
                                         </div>
                                         {jalur && (
@@ -361,7 +380,7 @@ export default async function RoutePage({ params }: PageProps) {
                                                        <RouteIcon size={20} />
                                                   </div>
                                                   <div>
-                                                       <h4 className="font-bold text-sm text-on-surface">Lewat Jalur Cepat</h4>
+                                                       <h3 className="font-bold text-sm text-on-surface">Lewat Jalur Cepat</h3>
                                                        <p className="text-xs text-on-surface-variant mt-1">Menggunakan jalur {jalur} agar waktu tempuh lebih singkat.</p>
                                                   </div>
                                              </div>
@@ -371,7 +390,7 @@ export default async function RoutePage({ params }: PageProps) {
                                                   <UserCheck size={20} />
                                              </div>
                                              <div>
-                                                  <h4 className="font-bold text-sm text-on-surface">Driver Ramah & Berpengalaman</h4>
+                                                  <h3 className="font-bold text-sm text-on-surface">Driver Ramah & Berpengalaman</h3>
                                                   <p className="text-xs text-on-surface-variant mt-1">Driver profesional, berseragam, dan hapal rute perjalanan.</p>
                                              </div>
                                         </div>
@@ -380,7 +399,7 @@ export default async function RoutePage({ params }: PageProps) {
                                                   <Luggage size={20} />
                                              </div>
                                              <div>
-                                                  <h4 className="font-bold text-sm text-on-surface">Bagasi Gratis</h4>
+                                                  <h3 className="font-bold text-sm text-on-surface">Bagasi Gratis</h3>
                                                   <p className="text-xs text-on-surface-variant mt-1">Gratis membawa 1 koper standar + 1 tas jinjing/ransel.</p>
                                              </div>
                                         </div>
@@ -398,7 +417,7 @@ export default async function RoutePage({ params }: PageProps) {
                                                   <h2 className="text-xl font-bold text-on-surface">
                                                        Tentang Rute Travel {from && to ? `${from} ${to}` : rawTitle}
                                                   </h2>
-                                                  <p className="text-sm text-on-surface-variant mt-0.5">Cakupan titik penjemputan dan pengantaran</p>
+                                                  <p className="text-sm text-on-surface-variant mt-0.5">Cakupan area penjemputan dan pengantaran</p>
                                              </div>
                                         </div>
 
@@ -409,22 +428,58 @@ export default async function RoutePage({ params }: PageProps) {
 
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8 pt-6 border-t border-surface-container-high/40">
                                              <div className="rounded-xl border border-surface-container-high/50 p-4 bg-surface-container-lowest/50">
-                                                  <h4 className="font-bold text-xs text-primary uppercase tracking-wider mb-2">Ketentuan Bagasi</h4>
+                                                  <h3 className="font-bold text-xs text-primary uppercase tracking-wider mb-2">Ketentuan Bagasi</h3>
                                                   <p className="text-xs text-on-surface-variant leading-relaxed">Setiap penumpang diperkenankan membawa 1 koper ukuran sedang dan 1 tas jinjing. Harap infokan admin jika membawa bagasi berlebih.</p>
                                              </div>
                                              <div className="rounded-xl border border-surface-container-high/50 p-4 bg-surface-container-lowest/50">
-                                                  <h4 className="font-bold text-xs text-primary uppercase tracking-wider mb-2">Kebijakan Pembatalan</h4>
+                                                  <h3 className="font-bold text-xs text-primary uppercase tracking-wider mb-2">Kebijakan Pembatalan</h3>
                                                   <p className="text-xs text-on-surface-variant leading-relaxed">Perubahan jadwal atau pembatalan dapat dilakukan tanpa biaya maksimal 12 jam sebelum waktu penjemputan melalui customer support.</p>
                                              </div>
                                         </div>
                                    </div>
                               )}
 
+                                                            {/* 5. Rute Terkait + tautan ke Sewa Mobil */}
+                              {relatedRoutes.length > 0 && (
+                                   <div className="rounded-2xl border border-surface-container-high/60 bg-white p-6 md:p-8 shadow-sm">
+                                        <h2 className="text-xl font-bold text-on-surface">Rute Travel Lainnya</h2>
+                                        <p className="text-sm text-on-surface-variant mt-1">Rute lain dengan kota asal atau tujuan yang sama</p>
+                                        <ul className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                                             {relatedRoutes.map((item) => {
+                                                  const itemFrom = capitalizeFirst(item.acf?.kota_asal ?? "");
+                                                  const itemTo = capitalizeFirst(item.acf?.kota_tujuan ?? "");
+                                                  const itemName =
+                                                       itemFrom && itemTo
+                                                            ? `${itemFrom} ke ${itemTo}`
+                                                            : capitalizeFirst(decodeHtml(item.title));
+                                                  const itemTarif = formatPrice(item.acf?.tarif);
+                                                  return (
+                                                       <li key={item.slug}>
+                                                            <Link
+                                                                 href={`/travel/${item.slug}`}
+                                                                 className="flex items-center justify-between gap-3 rounded-xl border border-surface-container-high/50 bg-[#F8F9FA] p-4 text-sm font-semibold text-on-surface transition-colors hover:border-primary/50 hover:text-primary"
+                                                            >
+                                                                 <span>Travel {itemName}</span>
+                                                                 {itemTarif && <span className="shrink-0 text-xs font-bold text-primary">{itemTarif}</span>}
+                                                            </Link>
+                                                       </li>
+                                                  );
+                                             })}
+                                        </ul>
+                                        <p className="mt-6 border-t border-surface-container-high/40 pt-5 text-sm text-on-surface-variant">
+                                             Butuh satu mobil penuh untuk rombongan?{" "}
+                                             <Link href="/sewa-mobil" className="font-bold text-primary hover:underline">
+                                                  Lihat layanan Sewa Mobil
+                                             </Link>
+                                        </p>
+                                   </div>
+                              )}
+
                               {/* Back Link */}
                               <div className="pt-2 pb-6">
-                                   <Link href="/travel-reguler" className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:underline">
+                                   <Link href="/travel" className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:underline">
                                         <ChevronRight className="h-4 w-4 rotate-180" />
-                                        Kembali ke Semua Rute Travel Reguler
+                                        Kembali ke Semua Rute Travel
                                    </Link>
                               </div>
                          </div>
@@ -440,8 +495,8 @@ export default async function RoutePage({ params }: PageProps) {
 
                                         <div className="p-6 md:p-7">
                                              <div className="flex items-center justify-between mb-2">
-                                                  <span className="text-xs font-bold tracking-wider text-on-surface-variant uppercase">Tarif Resmi Reguler</span>
-                                                  <span className="rounded bg-[#F0FDF4] px-2 py-1 text-[10px] font-bold text-primary border border-primary/20">All-In (BBM & Tol)</span>
+                                                  <span className="text-xs font-bold tracking-wider text-on-surface-variant uppercase">Tarif Resmi</span>
+                                                  <span className="rounded bg-[#F0FDF4] px-2 py-1 text-[10px] font-bold text-primary border border-primary/20">Termasuk Tol & Parkir</span>
                                              </div>
 
                                              <div className="mb-6 flex items-baseline gap-1">
@@ -457,7 +512,7 @@ export default async function RoutePage({ params }: PageProps) {
                                                   </div>
                                                   <div className="flex justify-between">
                                                        <span className="text-on-surface-variant">Layanan:</span>
-                                                       <span className="font-semibold text-on-surface">Antar Titik Perkotaan</span>
+                                                       <span className="font-semibold text-on-surface">Door to Door</span>
                                                   </div>
                                                   {tarifPp && (
                                                        <div className="flex justify-between border-t border-surface-container-high/40 pt-2 mt-2">
@@ -523,7 +578,7 @@ export default async function RoutePage({ params }: PageProps) {
                                         </div>
                                         <div className="flex items-center justify-between border-t border-white/15 pt-4 mt-2">
                                              <span className="text-xs text-emerald-200">Hotline Pemesanan:</span>
-                                             <span className="text-sm font-bold text-[#34D399]">{whatsapp || "Hubungi Admin"}</span>
+                                             <span className="text-sm font-bold text-[#34D399]">{whatsapp ? formatPhoneDisplay(whatsapp) : "Hubungi Admin"}</span>
                                         </div>
                                    </div>
 

@@ -1,4 +1,5 @@
-import { MessageCircle } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, MessageCircle } from "lucide-react";
 import ArmadaCard from "@/components/sections/ArmadaCard";
 import FleetCarousel from "@/components/ui/FleetCarousel";
 import { sewaMobilFleet } from "@/constants/sewa-mobil";
@@ -25,16 +26,25 @@ export default function SewaMobilFleet({
           <section className="w-full bg-surface py-space-xl">
                <div className="mx-auto flex max-w-6xl flex-col gap-space-lg px-gutter">
                     {/* Header Section dengan Eyebrow Hijau */}
-                    <div className="flex flex-col gap-1.5">
-                         <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
-                              {sewaMobilFleet.eyebrow}
-                         </span>
-                         <h2 className="font-headline-lg text-headline-lg font-extrabold tracking-tight text-on-surface">
-                              {sewaMobilFleet.title}
-                         </h2>
-                         <p className="max-w-2xl font-body-md text-body-md leading-relaxed text-on-surface-variant">
-                              {sewaMobilFleet.description}
-                         </p>
+                    <div className="flex flex-col gap-space-md md:flex-row md:items-end md:justify-between">
+                         <div className="flex flex-col gap-1.5">
+                              <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
+                                   {sewaMobilFleet.eyebrow}
+                              </span>
+                              <h2 className="font-headline-lg text-headline-lg font-extrabold tracking-tight text-on-surface">
+                                   {sewaMobilFleet.title}
+                              </h2>
+                              <p className="max-w-2xl font-body-md text-body-md leading-relaxed text-on-surface-variant">
+                                   {sewaMobilFleet.description}
+                              </p>
+                         </div>
+                         <Link
+                              href={sewaMobilFleet.seeAll.href}
+                              className="inline-flex shrink-0 items-center justify-center gap-2 self-start rounded-lg border border-primary/20 bg-surface-container px-space-md py-2 font-label-md text-label-md font-bold text-primary transition-colors hover:bg-surface-container-high md:self-auto"
+                         >
+                              {sewaMobilFleet.seeAll.label}
+                              <ArrowRight size={16} aria-hidden="true" />
+                         </Link>
                     </div>
 
                     <FleetCarousel>
@@ -44,6 +54,7 @@ export default function SewaMobilFleet({
                                    item={item}
                                    whatsapp={whatsapp}
                                    imageSizes={IMAGE_SIZES}
+                                   showAllInPrice
                               />
                          ))}
 

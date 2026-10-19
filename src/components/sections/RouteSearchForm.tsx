@@ -107,7 +107,7 @@ export default function RouteSearchForm({
           );
 
           const lines = [
-               "Halo Raincarnation, saya ingin pesan Travel Reguler:",
+               "Halo Raincarnation, saya ingin pesan Travel:",
                `- Kota asal: ${origin}`,
                `- Kota tujuan: ${selectedDestination}`,
                `- Tanggal: ${dateText}`,

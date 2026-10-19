@@ -38,7 +38,7 @@ export default function RouteCard({ route, whatsapp }: RouteCardProps) {
 
      const orderUrl = buildWhatsAppUrl(
           whatsapp,
-          `Halo Admin, saya mau booking travel reguler ${title}`,
+          `Halo Admin, saya mau booking travel ${title}`,
      );
 
      return (
@@ -111,7 +111,7 @@ export default function RouteCard({ route, whatsapp }: RouteCardProps) {
                     <div className="grid grid-cols-2 gap-2 sm:gap-space-sm">
                          {route.slug ? (
                               <Link
-                                   href={`/travel-reguler/${route.slug}`}
+                                   href={`/travel/${route.slug}`}
                                    aria-label={`Lihat detail travel ${origin} ke ${destination}`}
                                    className="flex items-center justify-center whitespace-nowrap rounded-lg border border-primary/20 bg-primary/10 px-2 py-1.5 sm:px-space-sm sm:py-2 font-label-md text-xs sm:text-label-md font-bold text-primary transition-all hover:border-primary/40 hover:bg-primary/15"
                               >

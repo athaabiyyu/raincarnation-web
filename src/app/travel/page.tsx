@@ -14,21 +14,21 @@ import { capitalizeFirst } from "@/utils/capitalize-first";
 import { decodeHtml } from "@/utils/decode-html";
 import { getRoutePairs } from "@/utils/route-pairs";
 
-const title = "Travel Reguler Malang: Jadwal & Tarif | Raincarnation";
+const title = "Travel Malang Door to Door: Jadwal & Tarif | Raincarnation";
 const description =
-  "Travel reguler per kursi di Malang, Batu, Surabaya, Juanda & Pandaan. Cek jadwal, tarif, dan titik jemput, lalu pesan via WhatsApp.";
+  "Travel per kursi Malang, Batu, Surabaya, Juanda & Pandaan, door to door 24 jam. Tarif mulai Rp100.000, sudah termasuk tol dan parkir. Pesan via WA.";
 
 export const metadata: Metadata = {
   title,
   description,
   alternates: {
-    canonical: "/travel-reguler",
+    canonical: "/travel",
   },
   openGraph: {
     type: "website",
     locale: "id_ID",
     siteName: siteConfig.name,
-    url: "/travel-reguler",
+    url: "/travel",
     title,
     description,
     images: [
@@ -64,23 +64,22 @@ export default async function TravelRegulerPage() {
   const travelServiceLd = {
     "@context": "https://schema.org",
     "@type": "TransportationService",
-    name: "Travel Reguler Antar Perkotaan - Raincarnation",
+    name: "Travel Malang Door to Door - Raincarnation",
     description,
-    url: `${siteConfig.url}/travel-reguler`,
-    telephone: whatsapp,
+    url: `${siteConfig.url}/travel`,
+    telephone: whatsapp ? `+${whatsapp}` : undefined,
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Malang",
+      addressLocality: "Batu",
       addressRegion: "Jawa Timur",
       addressCountry: "ID",
     },
     areaServed: [
       { "@type": "AdministrativeArea", name: "Kota Malang" },
-      { "@type": "AdministrativeArea", name: "Kabupaten Malang" },
       { "@type": "AdministrativeArea", name: "Kota Batu" },
       { "@type": "AdministrativeArea", name: "Kota Surabaya" },
-      { "@type": "AdministrativeArea", name: "Sidoarjo (Juanda)" },
-      { "@type": "AdministrativeArea", name: "Pandaan (Pasuruan)" },
+      { "@type": "AdministrativeArea", name: "Pandaan, Pasuruan" },
+      { "@type": "Place", name: "Bandara Juanda, Sidoarjo" },
     ],
     provider: {
       "@type": "LocalBusiness",
@@ -103,8 +102,8 @@ export default async function TravelRegulerPage() {
       {
         "@type": "ListItem",
         position: 2,
-        name: "Travel Reguler",
-        item: `${siteConfig.url}/travel-reguler`,
+        name: "Travel",
+        item: `${siteConfig.url}/travel`,
       },
     ],
   };
@@ -116,13 +115,13 @@ export default async function TravelRegulerPage() {
       "@type": "ListItem",
       position: index + 1,
       name: capitalizeFirst(decodeHtml(route.title)),
-      url: `${siteConfig.url}/travel-reguler/${route.slug}`,
+      url: `${siteConfig.url}/travel/${route.slug}`,
     }));
 
   const itemListLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "Daftar Rute Travel Reguler",
+    name: "Daftar Rute Travel",
     itemListElement: routeListItems,
   };
 

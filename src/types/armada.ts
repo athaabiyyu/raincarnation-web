@@ -1,5 +1,6 @@
 export type ArmadaAcf = {
      harga?: string;
+     harga_all_in?: string;
      jumlah_penumpang?: string;
      bbm?: string;
      kata_kunci_utama?: string;

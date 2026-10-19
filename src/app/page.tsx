@@ -10,6 +10,7 @@ import FeaturedRoutes from "@/components/sections/FeaturedRoutes";
 import RouteSearchForm from "@/components/sections/RouteSearchForm";
 import SewaMobilForm from "@/components/sections/SewaMobilForm";
 import { slimRoutes } from "@/utils/slim-route";
+import { slimRuteCarter } from "@/utils/slim-rute-carter";
 import BerandaBookingTabs from "@/components/ui/BerandaBookingTabs";
 import { berandaBooking, berandaFaq } from "@/constants/beranda";
 import { siteConfig } from "@/config/site";
@@ -19,14 +20,15 @@ import { getRuteCarterList } from "@/lib/wordpress/rute-carter";
 import { getRoutes } from "@/lib/wordpress/routes";
 import type { Armada } from "@/types/armada";
 import type { Route } from "@/types/route";
+import type { SiteConfig } from "@/types/site-config";
 import type { RuteCarter } from "@/types/rute-carter";
 import { capitalizeFirst } from "@/utils/capitalize-first";
 import { decodeHtml } from "@/utils/decode-html";
 import { getRoutePairs } from "@/utils/route-pairs";
 
-const title = "Sewa Mobil Malang, Batu & Surabaya Murah | Raincarnation";
+const title = "Sewa Mobil Malang & Travel Door to Door | Raincarnation";
 const description =
-     "Sewa mobil murah dengan sopir atau lepas kunci di Malang, Batu, Surabaya, Pasuruan & Juanda. Ada juga travel reguler. Tanya tarif via WhatsApp.";
+     "Sewa mobil dengan sopir atau lepas kunci 24 jam di Malang, Batu dan Surabaya. Tersedia juga travel door to door mulai Rp100.000. Pesan via WhatsApp.";
 
 export const metadata: Metadata = {
      title,
@@ -48,27 +50,64 @@ export const metadata: Metadata = {
      },
 };
 
-const autoRentalJsonLd = {
+function buildAutoRentalJsonLd(config: SiteConfig) {
+     const { contact, address, social } = config;
+     const latitude = Number(address?.latitude);
+     const longitude = Number(address?.longitude);
+     const hasGeo =
+          Boolean(address?.latitude) &&
+          Boolean(address?.longitude) &&
+          Number.isFinite(latitude) &&
+          Number.isFinite(longitude);
+     const sameAs = [
+          social?.instagram,
+          social?.tiktok,
+          social?.facebook,
+          social?.youtube,
+     ].filter(Boolean);
+
+     return {
+          "@context": "https://schema.org",
+          "@type": "AutoRental",
+          name: siteConfig.name,
+          url: siteConfig.url,
+          logo: `${siteConfig.url}/logo.webp`,
+          image: `${siteConfig.url}/images/interior-armada.webp`,
+          description,
+          ...(contact?.whatsapp ? { telephone: `+${contact.whatsapp}` } : {}),
+          address: {
+               "@type": "PostalAddress",
+               ...(address?.full ? { streetAddress: address.full } : {}),
+               addressLocality: address?.city || "Batu",
+               addressRegion: address?.province || "Jawa Timur",
+               ...(address?.postal_code ? { postalCode: address.postal_code } : {}),
+               addressCountry: "ID",
+          },
+          ...(hasGeo
+               ? {
+                    geo: {
+                         "@type": "GeoCoordinates",
+                         latitude,
+                         longitude,
+                    },
+               }
+               : {}),
+          ...(sameAs.length > 0 ? { sameAs } : {}),
+          areaServed: [
+               { "@type": "AdministrativeArea", name: "Malang" },
+               { "@type": "AdministrativeArea", name: "Batu" },
+               { "@type": "AdministrativeArea", name: "Surabaya" },
+               { "@type": "AdministrativeArea", name: "Pasuruan" },
+               { "@type": "Place", name: "Bandara Juanda" },
+          ],
+     };
+}
+
+const webSiteJsonLd = {
      "@context": "https://schema.org",
-     "@type": "AutoRental",
+     "@type": "WebSite",
      name: siteConfig.name,
      url: siteConfig.url,
-     logo: `${siteConfig.url}/logo.webp`,
-     image: `${siteConfig.url}/images/interior-armada.webp`,
-     description,
-     address: {
-          "@type": "PostalAddress",
-          addressLocality: "Malang",
-          addressRegion: "Jawa Timur",
-          addressCountry: "ID",
-     },
-     areaServed: [
-          { "@type": "AdministrativeArea", name: "Malang" },
-          { "@type": "AdministrativeArea", name: "Batu" },
-          { "@type": "AdministrativeArea", name: "Surabaya" },
-          { "@type": "AdministrativeArea", name: "Pasuruan" },
-          { "@type": "Place", name: "Bandara Juanda" },
-     ],
 };
 
 const faqJsonLd = {
@@ -119,15 +158,21 @@ export default async function HomePage() {
           loadRuteCarter(),
      ]);
      const whatsapp = config.contact?.whatsapp ?? "";
+     const autoRentalJsonLd = buildAutoRentalJsonLd(config);
      const pairs = getRoutePairs(routes);
 
      const fleet = armada.map((item) => ({
           id: item.id,
           name: capitalizeFirst(decodeHtml(item.title)),
+          harga: item.acf?.harga,
+          hargaAllIn: item.acf?.harga_all_in,
      }));
 
      const hasReguler = Boolean(whatsapp) && pairs.length > 0;
-     const hasCarter = Boolean(whatsapp) && ruteCarter.length > 0;
+     const hasCarter =
+          Boolean(whatsapp) &&
+          (ruteCarter.length > 0 ||
+               fleet.some((item) => item.harga || item.hargaAllIn));
 
      const regulerForm = (
           <RouteSearchForm
@@ -138,7 +183,7 @@ export default async function HomePage() {
      );
      const carterForm = (
           <SewaMobilForm
-               routes={ruteCarter}
+               routes={slimRuteCarter(ruteCarter)}
                fleet={fleet}
                whatsapp={whatsapp}
                embedded
@@ -152,6 +197,12 @@ export default async function HomePage() {
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{
                          __html: JSON.stringify(autoRentalJsonLd).replace(/</g, "\\u003c"),
+                    }}
+               />
+               <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                         __html: JSON.stringify(webSiteJsonLd).replace(/</g, "\\u003c"),
                     }}
                />
                <script
@@ -190,7 +241,7 @@ export default async function HomePage() {
                          routes={slimRoutes(routes)}
                          whatsapp={whatsapp}
                          onlyFeatured
-                         seeAllHref="/travel-reguler"
+                         seeAllHref="/travel"
                     />
                )}
 

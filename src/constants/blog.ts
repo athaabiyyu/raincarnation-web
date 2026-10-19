@@ -101,7 +101,7 @@ export const blogSidebar = {
           title: "Tarif Travel Reguler",
           subtitle: "per kursi",
           linkLabel: "Lihat Semua Jadwal & Rute",
-          linkHref: "/travel-reguler",
+          linkHref: "/travel",
      },
      faq: {
           title: "FAQ Cepat",

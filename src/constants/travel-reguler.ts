@@ -1,9 +1,9 @@
 export const heroContent = {
-     titleStart: "Travel Reguler Malang",
+     titleStart: "Jasa Travel Malang Murah",
      titleHighlight: "per Kursi",
-     titleEnd: "Antar Titik Perkotaan",
+     titleEnd: "Door to Door",
      description:
-          "Travel reguler per kursi dengan jadwal keberangkatan tetap untuk rute Malang, Batu, Surabaya, Juanda, dan Pandaan. Anda dijemput di titik yang sudah ditentukan di tiap kota. Cek jadwal dan tarif, lalu pesan lewat WhatsApp.",
+          "Travel reguler per kursi dengan jadwal keberangkatan tetap untuk rute Malang, Batu, Surabaya, Juanda, dan Pandaan. Dijemput dan diantar sampai alamat, kecuali titik di Pandaan dan Juanda. Tarif mulai Rp100.000, sudah termasuk tol dan parkir. Pesan lewat WhatsApp.",
      charterLink: {
           text: "Butuh satu mobil khusus rombongan?",
           label: "Lihat Sewa Mobil Carter",
@@ -12,7 +12,7 @@ export const heroContent = {
 };
 
 export const searchFormContent = {
-     title: "Cari & Amankan Kursi Travel Reguler",
+     title: "Cari & Amankan Kursi Travel",
      subtitle: "Pilih rute antarkota dan langsung hubungkan ke operator WhatsApp",
      responseBadge: "Respon Cepat < 2 Menit",
      originLabel: "Kota Asal (Jemput)",
@@ -31,16 +31,10 @@ export const searchFormContent = {
      ],
 };
 
-export const quickRoutes = [
-     { from: "Malang", to: "Surabaya" },
-     { from: "Surabaya", to: "Malang" },
-     { from: "Pasuruan", to: "Malang" },
-];
-
 export const featuredRoutesContent = {
-     title: "Rute Travel Reguler dan Jadwal Keberangkatan",
+     title: "Rute Travel dan Jadwal Keberangkatan",
      description:
-          "Temukan layanan travel reguler per kursi dari Malang, Batu, Surabaya, dan Bandara Juanda menuju kota tujuan yang tersedia. Lihat jadwal dan tarif setiap rute sebelum melakukan pemesanan.",
+          "Temukan layanan travel per kursi atau biasa disebut travel reguler dari Malang, Batu, Surabaya, Pandaan, dan Bandara Juanda menuju kota tujuan yang tersedia. Lihat jadwal dan tarif setiap rute sebelum melakukan pemesanan.",
      fareLabel: "Tarif / Kursi",
      roundTripLabel: "Tarif Pulang-Pergi",
      scheduleLabel: "Jadwal:",

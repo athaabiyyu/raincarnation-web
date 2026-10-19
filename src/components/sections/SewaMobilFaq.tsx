@@ -10,34 +10,34 @@ type FaqItem = {
 
 const FAQS: FaqItem[] = [
      {
-          question: "Apakah tarif sewa mobil sudah termasuk BBM dan jasa driver?",
+          question: "Apa saja yang sudah termasuk dalam tarif sewa mobil?",
           answer:
-               "Untuk paket Sewa All-In dan Carter Drop, tarif yang tertera sudah mencakup jasa driver profesional dan BBM. Biaya tambahan seperti tol dan parkir disesuaikan dengan rute perjalanan Anda.",
+               "Sewa Mobil All In rute dalam kota (Malang, Batu) sudah termasuk unit, BBM, driver, dan parkir. Untuk rute luar kota, tol juga termasuk. Lepas Kunci sudah termasuk unit dan biaya cuci, belum termasuk ongkos pengantaran. Rincian Carter Drop Off dikonfirmasi admin.",
      },
      {
-          question: "Apakah tersedia opsi sewa mobil lepas kunci (tanpa driver) di Malang & Batu?",
+          question: "Apa syarat sewa mobil lepas kunci di Malang dan Batu?",
           answer:
-               "Ya, kami menyediakan layanan sewa mobil lepas kunci untuk unit tertentu dengan proses verifikasi dokumen identitas (KTP, SIM A aktif, dan akun media sosial) yang cepat dan mudah.",
+               "Penyewa membawa KTP dan SIM A yang masih berlaku. Durasi sewa 12 jam, rute dalam kota untuk Malang dan Batu. Rute luar kota tarifnya ditanyakan ke admin.",
      },
      {
-          question: "Berapa harga sewa mobil per hari di Malang?",
+          question: "Berapa harga sewa mobil Malang tanpa sopir dan dengan sopir?",
           answer:
-               "Tarif bergantung pada jenis armada, paket yang dipilih (All-In, Carter Drop, atau Lepas Kunci), dan rute perjalanan. Gunakan Simulasi & Cek Tarif di bagian atas halaman ini untuk estimasi, atau tanyakan langsung ke admin via WhatsApp.",
+               "Tarif bergantung pada unit dan paket: Carter Drop Off per rute, All In per hari, Lepas Kunci per 12 jam. Harga tiap unit tampil di bagian Pilihan Armada di halaman ini. Untuk rute lain atau pertanyaan tarif, tanyakan ke admin lewat WhatsApp.",
      },
      {
           question: "Area mana saja yang dilayani untuk sewa mobil?",
           answer:
-               "Kami melayani sewa mobil di Malang, Batu, Surabaya, dan Pasuruan, termasuk penjemputan di Bandara Juanda. Untuk rute luar kota atau perjalanan multi-hari, konsultasikan dulu dengan admin via WhatsApp.",
+               "Rute standar kami Malang, Batu, dan Surabaya. Tujuan lain termasuk Pasuruan bisa lewat custom rute, tarifnya ditanyakan ke admin. Untuk Lepas Kunci, rute dalam kota berlaku di Malang dan Batu.",
      },
      {
-          question: "Bagaimana sistem penjemputan untuk carter drop luar kota?",
+          question: "Bagaimana sistem sewa mobil Surabaya Malang dengan Carter Drop Off?",
           answer:
-               "Layanan carter drop bersifat privat door-to-door. Driver kami akan menjemput rombongan Anda langsung di alamat asal (rumah, hotel, stasiun, atau Bandara Juanda/ABD Saleh) sesuai jam keberangkatan yang disepakati.",
+               "Carter Drop Off 1 Arah adalah sewa mobil dengan sopir untuk antar satu arah dari titik jemput ke tujuan di Malang, Batu, atau Surabaya, dengan harga per rute. Titik jemput dan jam berangkat diatur bersama admin.",
      },
      {
-          question: "Berapa lama durasi standar sewa mobil harian?",
+          question: "Berapa lama durasi sewa mobil: 12 jam atau sehari?",
           answer:
-               "Durasi standar sewa mobil harian adalah 12 jam per hari atau per tanggal perjalanan. Jika membutuhkan durasi full day atau luar kota multi-hari, Anda dapat berkonsultasi langsung dengan admin via WhatsApp.",
+               "Lepas Kunci per 12 jam. Sewa Mobil All In per hari (1 hari). Carter Drop Off dihitung per rute, tanpa durasi. Butuh durasi lain? Konsultasikan dengan admin lewat WhatsApp.",
      },
 ];
 

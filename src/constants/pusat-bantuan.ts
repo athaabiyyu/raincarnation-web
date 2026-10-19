@@ -44,7 +44,7 @@ export const pusatBantuanChannels = {
                description:
                     "Lihat daftar rute, jadwal keberangkatan, dan tarif travel reguler.",
                button: "Lihat Jadwal & Tarif",
-               href: "/travel-reguler",
+               href: "/travel",
           },
      ],
 };

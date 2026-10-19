@@ -8,11 +8,11 @@ export const sewaMobilHero = {
      titleHighlight: "Lepas Kunci atau dengan Sopir",
      titleEnd: ", Rute Sesuai Rencana Anda.",
      description:
-          "Sewa mobil Malang lepas kunci atau dengan sopir untuk perjalanan di Malang, Batu, Surabaya, dan Pasuruan. Pilih paket dan armada sesuai kebutuhan, cek simulasi tarif, lalu pesan lewat WhatsApp.",
+          "Jasa Sewa mobil di Malang, Batu, dan Surabaya, tersedia lepas kunci atau dengan sopir. Pilih Carter Drop Off per rute, All In per hari, atau Lepas Kunci per 12 jam, lalu pesan lewat WhatsApp. Rute lain bisa lewat custom rute, tarifnya ditanyakan ke admin.",
      stats: [
-          { value: "12 Jam", label: "Durasi Sewa" },
-          { value: "1 Mobil", label: "Khusus Rombongan Anda" },
-          { value: "2 Opsi", label: "Dengan Sopir atau Lepas Kunci" },
+          { value: "3 Paket", label: "Carter Drop Off, All In, Lepas Kunci" },
+          { value: "24 Jam", label: "Layanan, Pesan via WhatsApp" },
+          { value: "Rute Fleksibel", label: "Malang, Batu, Surabaya, atau rute lain" },
      ],
      primaryCta: {
           label: "Simulasi & Cek Tarif",
@@ -25,8 +25,8 @@ export const sewaMobilHero = {
      },
      regularLink: {
           text: "Tidak butuh satu mobil penuh?",
-          label: "Lihat Travel Reguler per kursi",
-          href: "/travel-reguler",
+          label: "Lihat Travel per kursi",
+          href: "/travel",
      },
 };
 
@@ -34,23 +34,27 @@ export const sewaMobilPackages = {
      eyebrow: "Kategori Fleksibel",
      title: "Pilihan Paket Sewa & Drop Penuh",
      description:
-          "Pilih paket sewa mobil dengan sopir atau lepas kunci, durasi sewa 12 jam, untuk perjalanan di Malang, Batu, dan Surabaya.",
+          "Tersedia beberapa paket layanan seperti Carter Drop Off per rute, Sewa Mobil All In per hari, atau Lepas Kunci per 12 jam. Cocok untuk perjalanan di Malang, Batu, Surabaya, dan rute lain lewat custom rute.",
 };
 
 export const sewaMobilFleet = {
      eyebrow: "Katalog Armada",
-     title: "Pilihan Armada untuk Sewa Mobil",
+     title: "Pilihan Armada Sewa Mobil Malang",
      description:
-          "Pilih unit yang sesuai jumlah penumpang dan kebutuhan perjalanan Anda, lalu tanyakan ketersediaan dan tarifnya lewat WhatsApp.",
+          "Pilih unit sesuai jumlah penumpang dan bagasi, untuk sewa lepas kunci maupun dengan sopir. Tanyakan ketersediaan dan tarifnya lewat WhatsApp.",
      selectLabel: "Pilih Unit",
+     seeAll: {
+          label: "Lihat Semua Unit Armada",
+          href: "/armada",
+     },
      customCard: {
-          eyebrow: "Armada Spesifik Lainnya",
-          title: "Butuh Alphard, Fortuner, atau Medium Bus?",
+          eyebrow: "Unit Lainnya",
+          title: "Butuh Unit yang Belum Tampil?",
           description:
-               "Kami siap menyediakan kendaraan VIP premium, SUV 4x4 proyek, hingga bus medium 30-35 seat untuk rombongan skala besar. Hubungi admin untuk ketersediaan garasi terdekat.",
-          buttonLabel: "Tanyakan Unit Khusus",
+               "Armada kami lebih banyak dari yang tampil di katalog. Sebutkan jumlah penumpang dan kebutuhan perjalanan Anda, admin akan cek unit yang tersedia.",
+          buttonLabel: "Tanyakan Unit Lain",
           message:
-               "Halo Admin Raincarnation, saya butuh ketersediaan armada khusus (Alphard/Bus/Fortuner).",
+               "Halo Admin Raincarnation, saya butuh ketersediaan unit lain di luar katalog.",
      },
 };
 
@@ -58,21 +62,21 @@ export type SewaMobilPillarIcon = "clock" | "route" | "lock" | "smile";
 
 export const sewaMobilPillars = {
      eyebrow: "Keunggulan Layanan",
-     title: "Keuntungan Sewa Satu Mobil Penuh",
+     title: "Keuntungan Sewa Mobil di Raincarnation",
      description:
-          "Satu mobil khusus untuk rombongan Anda, dengan jadwal dan rute yang bisa disesuaikan dengan rencana perjalanan.",
+          "Satu mobil khusus untuk Anda, dengan sopir atau lepas kunci, dan rute yang bisa disesuaikan dengan rencana perjalanan.",
      items: [
           {
                icon: "clock" as SewaMobilPillarIcon,
                title: "Jadwal Fleksibel",
                description:
-                    "Tidak ada jam keberangkatan kaku. Anda yang menentukan waktu penjemputan, sesuai kesepakatan dengan admin.",
+                    "Waktu penjemputan atau pengambilan unit diatur sesuai kebutuhan Anda, lalu dikonfirmasi bersama admin.",
           },
           {
                icon: "route" as SewaMobilPillarIcon,
                title: "Rute Sesuai Rencana",
                description:
-                    "Ingin istirahat di rest area favorit, mampir kulineran khas daerah, atau beli oleh-oleh di perjalanan? Rute bisa disesuaikan.",
+                    "Rute standar Malang, Batu, dan Surabaya. Butuh tujuan lain? Pakai custom rute, tarifnya ditanyakan ke admin. Mampir ke kota lain dikenakan biaya tambahan.",
           },
           {
                icon: "lock" as SewaMobilPillarIcon,
@@ -82,9 +86,9 @@ export const sewaMobilPillars = {
           },
           {
                icon: "smile" as SewaMobilPillarIcon,
-               title: "Sopir Berpengalaman",
+               title: "Dengan Sopir atau Lepas Kunci",
                description:
-                    "Sopir mengutamakan keselamatan dan kenyamanan penumpang selama perjalanan.",
+                    "Butuh sopir? Pilih Carter Drop Off atau All In. Ingin menyetir sendiri? Pilih Lepas Kunci dengan KTP dan SIM A yang masih berlaku.",
           },
      ],
 };
