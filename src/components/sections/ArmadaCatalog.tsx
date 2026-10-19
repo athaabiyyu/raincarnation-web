@@ -37,13 +37,15 @@ export default function ArmadaCatalog({
      return (
           <section
                id={armadaCatalog.id}
-               className={`w-full scroll-mt-32 ${isHome ? "bg-surface-container-low py-space-xl" : "pt-space-xl"}`}
+               className={`w-full scroll-mt-32 ${isHome ? "bg-surface-container-low py-space-xl" : "pt-space-xl"
+                    }`}
           >
                <div className="mx-auto max-w-6xl px-gutter">
-                    <div className="flex flex-col gap-space-md pb-space-lg md:flex-row md:items-end md:justify-between">
+                    {/* Section Header */}
+                    <div className="flex flex-col gap-space-md pb-space-lg">
                          <div className="space-y-space-xs">
-                              <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
-                                   KENDARAAN NYAMAN & TERAWAT
+                              <span className="block font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
+                                   KENDARAAN NYAMAN &amp; TERAWAT
                               </span>
                               <h2 className="font-headline-lg text-headline-lg tracking-tight text-on-surface">
                                    {heading}
@@ -52,19 +54,9 @@ export default function ArmadaCatalog({
                                    {armadaCatalog.description}
                               </p>
                          </div>
-
-                         {/* Tampil di desktop/laptop saja (1024px ke atas) */}
-                         {isHome && seeAllHref && (
-                              <Link
-                                   href={seeAllHref}
-                                   className="hidden shrink-0 items-center justify-center gap-2 rounded-lg border border-primary/20 bg-primary/10 px-space-md py-2.5 font-label-md text-label-md font-bold text-primary transition-all hover:border-primary/40 hover:bg-primary/15 lg:inline-flex lg:self-auto"
-                              >
-                                   Lihat Semua Unit Armada
-                                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                              </Link>
-                         )}
                     </div>
 
+                    {/* Grid Kartu Armada */}
                     {isHome ? (
                          <div className="grid grid-cols-1 gap-space-md md:grid-cols-2 lg:grid-cols-3">
                               {items.map((item) => (
@@ -90,12 +82,12 @@ export default function ArmadaCatalog({
                          </ArmadaGridMore>
                     )}
 
-                    {/* Tampil di bawah ukuran laptop penuh (layar di bawah 1024px) */}
+                    {/* Tombol Lihat Semua Unit Armada (rounded-lg) */}
                     {isHome && seeAllHref && (
-                         <div className="mt-space-lg lg:hidden">
+                         <div className="mt-space-lg grid grid-cols-1 gap-space-md md:grid-cols-2 lg:grid-cols-3">
                               <Link
                                    href={seeAllHref}
-                                   className="flex w-full items-center justify-center gap-2 rounded-lg border border-primary/20 bg-primary/10 py-2.5 font-label-md text-label-md font-bold text-primary transition-all hover:border-primary/40 hover:bg-primary/15"
+                                   className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary py-2.5 font-label-md text-label-md font-bold text-on-primary shadow-sm transition-all hover:bg-on-primary-fixed-variant active:scale-95 md:col-span-2 md:py-3.5 lg:col-span-1 lg:col-start-2"
                               >
                                    Lihat Semua Unit Armada
                                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
