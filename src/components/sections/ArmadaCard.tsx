@@ -25,7 +25,8 @@ export default function ArmadaCard({
      const luggage = capitalizeFirst(decodeHtml(item.acf?.koper ?? ""));
      const price = formatPrice(item.acf?.harga);
      const priceAllIn = formatPrice(item.acf?.harga_all_in);
-     const imageUrl = item.featured_image?.url;
+     const rawImageUrl = item.featured_image?.url;
+     const imageUrl = rawImageUrl ? rawImageUrl.replace(/^http:\/\//i, "https://") : undefined;
 
      // Teks label tombol dinamis menggunakan nama armada dari CMS
      const selectLabel = `Pilih Unit ${name}`;

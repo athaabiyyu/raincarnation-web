@@ -6,7 +6,10 @@ const nextConfig: NextConfig = {
       {
         protocol: "http",
         hostname: "yukdiorder.web.id",
-        pathname: "/wp/raincarnation/wp-content/uploads/**",
+      },
+      {
+        protocol: "https",
+        hostname: "yukdiorder.web.id",
       },
     ],
   },
