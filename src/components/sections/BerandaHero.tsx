@@ -3,35 +3,28 @@ import { berandaHero } from "@/constants/beranda";
 
 export default function BerandaHero() {
      return (
-          <section className="w-full bg-linear-to-b from-surface-container-high/40 via-surface to-surface pt-space-md pb-space-md md:pt-space-xl lg:pb-space-xl">
+          <section className="w-full bg-linear-to-b from-surface-container-high/40 via-surface to-surface pb-space-md pt-space-md md:pt-space-xl lg:pb-space-xl">
                <div className="mx-auto flex max-w-6xl flex-col gap-space-lg px-gutter pt-space-md">
-                    {/* Grid 2 kolom dengan tinggi yang selaras */}
-                    <div className="grid items-stretch gap-space-lg lg:grid-cols-2">
-                         
-                         {/* Wadah Utama Kiri */}
-                         <div className="flex flex-col justify-between lg:self-stretch">
-                              {/* Bagian Atas: Title H1 */}
-                              <div>
-                                   <h1 className="font-display text-display font-extrabold tracking-tight text-on-surface">
-                                        {berandaHero.titleStart}{" "}
-                                        <span className="text-primary-container">
-                                             {berandaHero.titleHighlight}
-                                        </span>{" "}
-                                        {berandaHero.titleEnd}
-                                   </h1>
-                              </div>
+                    {/* Grid 2 kolom dengan perataan vertikal center */}
+                    <div className="grid items-center gap-space-lg lg:grid-cols-2">
 
-                              {/* Bagian Bawah: Deskripsi selalu tampil, sedangkan fitur keunggulan hanya muncul di layar lg */}
-                              <div className="mt-4 flex flex-col gap-space-md lg:mt-0">
-                                   {/* Deskripsi (Kini muncul di mobile maupun desktop) */}
-                                   <p className="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
-                                        {berandaHero.description}
-                                   </p>
-                              </div>
+                         {/* Wadah Teks Kiri */}
+                         <div className="flex flex-col gap-space-md lg:max-w-xl">
+                              <h1 className="font-display text-display font-extrabold tracking-tight text-on-surface">
+                                   {berandaHero.titleStart}{" "}
+                                   <span className="text-primary-container">
+                                        {berandaHero.titleHighlight}
+                                   </span>{" "}
+                                   {berandaHero.titleEnd}
+                              </h1>
+
+                              <p className="font-body-lg text-body-lg leading-relaxed text-on-surface-variant">
+                                   {berandaHero.description}
+                              </p>
                          </div>
 
-                         {/* Foto Kanan (Tetap tersembunyi di mobile, tampil di lg) */}
-                         <div className="hidden lg:block relative aspect-[4/3] w-full overflow-hidden rounded-3xl shadow-lg">
+                         {/* Foto Kanan: Aspect ratio sedang & mengisi penuh lebar kolomnya */}
+                         <div className="relative hidden aspect-[16/11] w-full overflow-hidden rounded-3xl shadow-md lg:block">
                               <Image
                                    src={berandaHero.image.src}
                                    alt={berandaHero.image.alt}
@@ -52,6 +45,7 @@ export default function BerandaHero() {
                                    </p>
                               </div>
                          </div>
+
                     </div>
                </div>
           </section>

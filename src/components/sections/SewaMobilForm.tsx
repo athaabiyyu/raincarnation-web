@@ -377,7 +377,7 @@ export default function SewaMobilForm({
                                    onChange={(e) => setPackageType(e.target.value)}
                                    className={selectClass}
                               >
-                                   <option value="">Pilih</option>
+                                   <option value="">Pilih Jenis Layanan</option>
                                    {packages.map((option) => (
                                         <option key={option.name} value={option.name}>
                                              {option.name}
@@ -402,7 +402,7 @@ export default function SewaMobilForm({
                                    onChange={(e) => setFleetId(e.target.value)}
                                    className={selectClass}
                               >
-                                   <option value="">Pilih</option>
+                                   <option value="">Pilih Armada</option>
                                    {fleetOptions.map((option) => (
                                         <option key={option.id} value={String(option.id)}>
                                              {option.name}
@@ -433,7 +433,7 @@ export default function SewaMobilForm({
                                              onChange={(e) => setRouteValue(e.target.value)}
                                              className={selectClass}
                                         >
-                                             <option value="">Pilih</option>
+                                             <option value="">Pilih Rute</option>
                                              {routeOptions.map((option) => (
                                                   <option key={option.value} value={option.value}>
                                                        {option.label}
@@ -491,7 +491,7 @@ export default function SewaMobilForm({
                                              onChange={(e) => setOrigin(e.target.value)}
                                              className={selectClass}
                                         >
-                                             <option value="">Pilih</option>
+                                             <option value="">Pilih Kota Asal</option>
                                              {origins.map((option) => (
                                                   <option key={option} value={option}>
                                                        {option}
@@ -524,7 +524,7 @@ export default function SewaMobilForm({
                                              onChange={(e) => setDestination(e.target.value)}
                                              className={selectClass}
                                         >
-                                             <option value="">Pilih</option>
+                                             <option value="">Pilih Tujuan</option>
                                              {destinations.map((option) => (
                                                   <option key={option} value={option}>
                                                        {option}

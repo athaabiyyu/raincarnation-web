@@ -1,56 +1,45 @@
-import { CalendarCheck, Car } from "lucide-react";
+import Image from "next/image";
 import { armadaHero } from "@/constants/armada";
-import { buildWhatsAppUrl } from "@/utils/whatsapp";
+import { berandaHero } from "@/constants/beranda";
 
-type ArmadaHeroProps = {
-     whatsapp: string;
-};
-
-export default function ArmadaHero({ whatsapp }: ArmadaHeroProps) {
-     const whatsappUrl = whatsapp
-          ? buildWhatsAppUrl(whatsapp, armadaHero.primaryMessage)
-          : null;
-
+export default function ArmadaHero() {
      return (
-          <section className="relative w-full overflow-hidden border-b border-surface-container bg-surface-container-low py-space-xl">
-               <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-primary-container/10 blur-3xl"
-               />
-               <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute -left-20 bottom-0 h-80 w-80 rounded-full bg-secondary-fixed/30 blur-2xl"
-               />
+          <section className="relative w-full overflow-hidden border-b border-surface-container-high/30 bg-linear-to-b from-surface-container-high/50 via-surface to-surface pb-space-xl pt-space-md">
+               <div className="mx-auto flex max-w-6xl flex-col gap-space-lg px-gutter pt-space-md">
+                    {/* Grid 2 Kolom dengan Perataan Vertikal Center */}
+                    <div className="grid items-center gap-space-lg lg:grid-cols-2">
+                         {/* Sisi Kiri: Judul & Deskripsi */}
+                         <div className="flex flex-col gap-space-md lg:max-w-xl">
+                              <h1 className="font-display text-display font-extrabold tracking-tight text-on-surface">
+                                   {armadaHero.title}
+                              </h1>
 
-               <div className="relative z-10 mx-auto max-w-6xl px-gutter">
-                    <div className="flex max-w-3xl flex-col gap-space-md">
-                         <h1 className="font-display text-display font-extrabold tracking-tight text-on-surface">
-                              {armadaHero.title}
-                         </h1>
+                              <p className="font-body-lg text-body-lg leading-relaxed text-on-surface-variant">
+                                   {armadaHero.description}
+                              </p>
+                         </div>
 
-                         <p className="font-body-lg text-body-lg text-on-surface-variant">
-                              {armadaHero.description}
-                         </p>
-
-                         <div className="flex flex-wrap items-center gap-space-md pt-space-xs">
-                              {whatsappUrl && (
-                                   <a
-                                        href={whatsappUrl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-2 rounded-xl bg-whatsapp px-space-lg py-space-sm font-label-md text-label-md text-on-whatsapp shadow-[0_4px_16px_rgba(37,211,102,0.35)] transition-all hover:bg-whatsapp-hover active:scale-95"
-                                   >
-                                        <CalendarCheck size={18} aria-hidden="true" />
-                                        {armadaHero.primaryButton}
-                                   </a>
-                              )}
-                              <a
-                                   href="#katalog-armada"
-                                   className="inline-flex items-center gap-2 rounded-xl border border-surface-container bg-surface-container-lowest px-space-md py-space-sm font-label-md text-label-md text-primary shadow-sm transition-all hover:bg-surface-container"
-                              >
-                                   <Car size={18} aria-hidden="true" />
-                                   {armadaHero.secondaryButton}
-                              </a>
+                         {/* Sisi Kanan: Foto Kartu Hero */}
+                         <div className="relative hidden aspect-[16/11] w-full overflow-hidden rounded-3xl shadow-md lg:block">
+                              <Image
+                                   src={berandaHero.image.src}
+                                   alt={berandaHero.image.alt}
+                                   fill
+                                   sizes="(min-width: 1024px) 560px, 100vw"
+                                   className="object-cover"
+                              />
+                              <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/10 to-transparent" />
+                              <div className="absolute inset-x-0 bottom-0 flex flex-col gap-1 p-space-md pb-space-lg md:pb-space-md">
+                                   <p className="font-label-sm text-label-sm font-bold uppercase tracking-wide text-teal-300">
+                                        {berandaHero.imageCard.tag}
+                                   </p>
+                                   <p className="font-headline-sm text-headline-sm font-bold text-white">
+                                        {berandaHero.imageCard.title}
+                                   </p>
+                                   <p className="hidden font-body-sm text-body-sm text-white/85 md:block">
+                                        {berandaHero.imageCard.description}
+                                   </p>
+                              </div>
                          </div>
                     </div>
                </div>

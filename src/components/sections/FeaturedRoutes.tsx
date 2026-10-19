@@ -212,26 +212,13 @@ export default function FeaturedRoutes({
                               <button
                                    type="button"
                                    onClick={handleLoadMore}
-                                   className="inline-flex items-center gap-2 rounded-full bg-surface-container-lowest px-6 py-3 font-label-md text-label-md font-bold text-primary border border-surface-container-high/30 shadow-sm transition-all duration-200 hover:bg-primary hover:text-on-primary hover:border-primary hover:shadow-md"
+                                   className="inline-flex items-center gap-2 rounded-lg border border-primary/20 bg-primary/10 px-6 py-2.5 font-label-md text-label-md font-bold text-primary transition-all duration-200 hover:border-primary/40 hover:bg-primary/15 active:scale-[0.98]"
                               >
                                    Tampilkan Rute Lainnya ({filteredRoutes.length - visibleCount})
-                                   <ChevronDown className="h-5 w-5" />
+                                   <ChevronDown className="h-5 w-5 text-primary" />
                               </button>
                          </div>
                     )}
-
-                    {hasMoreLink && seeAllHref && onlyFeatured ? (
-                         <div className="lg:hidden">
-                              <Link
-                                   href={seeAllHref}
-                                   /* Menggunakan styling warna tombol Lihat Detail versi mobile */
-                                   className="flex w-full items-center justify-center gap-2 rounded-lg border border-primary/20 bg-primary/10 py-2.5 font-label-md text-label-md font-bold text-primary transition-all hover:border-primary/40 hover:bg-primary/15"
-                              >
-                                   Lihat Semua Rute
-                                   <ArrowRight className="h-4 w-4" aria-hidden />
-                              </Link>
-                         </div>
-                    ) : null}
                </div>
           </section>
      );

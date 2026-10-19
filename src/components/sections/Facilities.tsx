@@ -12,7 +12,6 @@ import {
 } from "lucide-react";
 import { facilitiesContent, type FacilityIcon } from "@/constants/facilities";
 
-// Menghubungkan nama ikon di constants dengan komponen ikon lucide.
 const icons: Record<FacilityIcon, LucideIcon> = {
      seat: Armchair,
      fan: Fan,
@@ -28,7 +27,7 @@ export default function Facilities() {
                <div className="mx-auto max-w-6xl space-y-space-lg px-gutter">
                     <div className="space-y-space-xs">
                          <span className="block font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
-                              Fasilitas & Kenyamanan
+                              Fasilitas &amp; Kenyamanan
                          </span>
                          <h2 className="font-headline-lg text-headline-lg tracking-tight text-on-surface">
                               {title}
@@ -38,33 +37,40 @@ export default function Facilities() {
                          </p>
                     </div>
 
-                    <div className="grid grid-cols-1 gap-space-md sm:grid-cols-2 xl:grid-cols-4">
+                    {/* Layout 2 Kolom di Tablet & Desktop agar Tidak Sesak */}
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:gap-6">
                          {items.map((item) => {
                               const Icon = icons[item.icon];
                               return (
                                    <div
                                         key={item.title}
-                                        className="flex flex-col justify-between space-y-space-sm rounded-xl bg-surface-container-lowest p-space-md shadow-sm md:p-space-lg"
+                                        className="flex flex-col justify-between rounded-2xl border border-surface-container-high/50 bg-surface-container-lowest p-5 shadow-xs transition-all duration-300 hover:shadow-md md:p-6"
                                    >
-                                        <div className="space-y-space-sm">
-                                             <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-surface-container text-primary">
-                                                  <Icon size={24} aria-hidden="true" />
+                                        <div className="space-y-3">
+                                             {/* Header: Ikon & Judul Bersandingan */}
+                                             <div className="flex items-center gap-3.5">
+                                                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                                                       <Icon size={24} aria-hidden="true" />
+                                                  </div>
+                                                  <h3 className="font-headline-sm text-base font-bold text-on-surface md:text-lg">
+                                                       {item.title}
+                                                  </h3>
                                              </div>
-                                             <h3 className="font-headline-sm text-headline-sm font-bold text-on-surface">
-                                                  {item.title}
-                                             </h3>
-                                             <p className="font-body-sm text-body-sm text-on-surface-variant">
+
+                                             {/* Deskripsi Teks */}
+                                             <p className="font-body-sm text-sm leading-relaxed text-on-surface-variant">
                                                   {item.description}
                                              </p>
                                         </div>
+
                                         {item.highlight && (
-                                             <div className="flex items-center gap-1 pt-space-xs font-label-sm text-label-sm font-bold text-primary">
+                                             <div className="mt-4 flex items-center gap-2 border-t border-surface-container-high/40 pt-3 text-xs font-bold text-primary">
                                                   <CircleCheck
                                                        size={16}
                                                        className="shrink-0"
                                                        aria-hidden="true"
                                                   />
-                                                  {item.highlight}
+                                                  <span>{item.highlight}</span>
                                              </div>
                                         )}
                                    </div>
@@ -73,9 +79,8 @@ export default function Facilities() {
                     </div>
 
                     <div
-                         className={`grid grid-cols-1 gap-space-md pt-space-sm ${
-                              photo.src ? "lg:grid-cols-3" : ""
-                         }`}
+                         className={`grid grid-cols-1 gap-space-md pt-space-sm ${photo.src ? "lg:grid-cols-3" : ""
+                              }`}
                     >
                          {photo.src && (
                               <div className="relative h-56 overflow-hidden rounded-xl shadow-sm sm:h-72 lg:col-span-2 lg:h-80">

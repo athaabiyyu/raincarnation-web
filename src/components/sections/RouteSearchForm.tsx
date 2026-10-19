@@ -162,7 +162,7 @@ export default function RouteSearchForm({
                                    onChange={(e) => setOrigin(e.target.value)}
                                    className={selectClass}
                               >
-                                   <option value="">Pilih</option>
+                                   <option value="">Pilih Kota Asal</option>
                                    {origins.map((city) => (
                                         <option key={city} value={city}>
                                              {city}
@@ -187,7 +187,7 @@ export default function RouteSearchForm({
                                    onChange={(e) => setDestination(e.target.value)}
                                    className={selectClass}
                               >
-                                   <option value="">Pilih</option>
+                                   <option value="">Pilih Tujuan</option>
                                    {destinations.map((city) => (
                                         <option key={city} value={city}>
                                              {city}
@@ -229,7 +229,7 @@ export default function RouteSearchForm({
                                    onChange={(e) => setTime(e.target.value)}
                                    className={selectClass}
                               >
-                                   <option value="">Pilih</option>
+                                   <option value="">Pilih Jam Keberangkatan</option>
                                    {times.map((t) => (
                                         <option key={t} value={t}>
                                              {t}

@@ -1,5 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
 import RouteSearchForm from "@/components/sections/RouteSearchForm";
+import { berandaHero } from "@/constants/beranda";
 import { heroContent } from "@/constants/travel-reguler";
 import type { RoutePair } from "@/utils/route-pairs";
 
@@ -14,28 +16,55 @@ export default function TravelHero({ whatsapp, pairs = [] }: TravelHeroProps) {
   return (
     <section className="relative w-full overflow-hidden border-b border-surface-container-high/30 bg-linear-to-b from-surface-container-high/50 via-surface to-surface pb-space-xl pt-space-md">
       <div className="mx-auto flex max-w-6xl flex-col gap-space-lg px-gutter pt-space-md">
-        {/* Judul & Deskripsi Hero */}
-        <div className="flex max-w-3xl flex-col gap-space-md">
-          <h1 className="font-display text-display font-extrabold tracking-tight text-on-surface">
-            {content.titleStart}{" "}
-            <span className="text-primary underline decoration-primary-fixed decoration-[5px] underline-offset-8">
-              {content.titleHighlight}
-            </span>{" "}
-            {content.titleEnd}
-          </h1>
+        {/* Grid 2 Kolom */}
+        <div className="grid items-center gap-space-lg lg:grid-cols-2">
+          {/* Sisi Kiri: Judul & Deskripsi */}
+          <div className="flex flex-col gap-space-md lg:max-w-xl">
+            <h1 className="font-display text-display font-extrabold tracking-tight text-on-surface">
+              {content.titleStart}{" "}
+              <span className="text-primary underline decoration-primary-fixed decoration-[5px] underline-offset-8">
+                {content.titleHighlight}
+              </span>{" "}
+              {content.titleEnd}
+            </h1>
 
-          <p className="max-w-2xl font-body-lg text-body-lg text-on-surface-variant">
-            {content.description}
-          </p>
+            <p className="font-body-lg text-body-lg leading-relaxed text-on-surface-variant">
+              {content.description}
+            </p>
+          </div>
+
+          {/* Sisi Kanan: Foto Pas Proporsi */}
+          <div className="relative hidden aspect-[16/11] w-full overflow-hidden rounded-3xl shadow-md lg:block">
+            <Image
+              src={berandaHero.image.src}
+              alt={berandaHero.image.alt}
+              fill
+              sizes="(min-width: 1024px) 560px, 100vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/10 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 flex flex-col gap-1 p-space-md pb-space-lg md:pb-space-md">
+              <p className="font-label-sm text-label-sm font-bold uppercase tracking-wide text-teal-300">
+                {berandaHero.imageCard.tag}
+              </p>
+              <p className="font-headline-sm text-headline-sm font-bold text-white">
+                {berandaHero.imageCard.title}
+              </p>
+              <p className="hidden font-body-sm text-body-sm text-white/85 md:block">
+                {berandaHero.imageCard.description}
+              </p>
+            </div>
+          </div>
         </div>
 
-        {/* Form Cari Jadwal Travel Menyatu di Hero */}
+        {/* Form Cari Jadwal Travel + Teks Charter Rombongan */}
         {whatsapp && pairs.length > 0 && (
           <div className="flex flex-col gap-space-md pt-space-xs">
             <RouteSearchForm pairs={pairs} whatsapp={whatsapp} />
 
             <p className="text-center font-body-md text-body-md text-on-surface-variant">
               {content.charterLink.text}{" "}
+              <br className="sm:hidden" />
               <Link
                 href={content.charterLink.href}
                 className="font-bold text-primary underline underline-offset-4 hover:text-primary-container"

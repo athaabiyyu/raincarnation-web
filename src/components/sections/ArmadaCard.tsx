@@ -98,7 +98,7 @@ export default function ArmadaCard({
                                              </span>
                                         </div>
                                         <div className="mt-2 text-base font-extrabold text-on-surface">
-                                             {price || "Rp -"}
+                                             {price || "Rp. -"}
                                         </div>
                                    </div>
                                    <span className="mt-1 text-[10px] text-on-surface-variant">per 12 jam</span>
@@ -119,7 +119,7 @@ export default function ArmadaCard({
                                              </span>
                                         </div>
                                         <div className="mt-2 text-base font-extrabold text-emerald-700">
-                                             {priceAllIn || "Rp -"}
+                                             {priceAllIn || "Rp. -"}
                                         </div>
                                    </div>
                                    <span className="mt-1 text-[10px] text-emerald-700/80">per hari (fullday)</span>

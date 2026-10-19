@@ -234,7 +234,13 @@ export default async function HomePage() {
                )}
 
                <BerandaTrust />
-               <BerandaServices />
+               <ArmadaCatalog
+                    armada={armada}
+                    whatsapp={whatsapp}
+                    variant="home"
+                    seeAllHref="/armada"
+               />
+               
 
                {whatsapp && routes.length > 0 && (
                     <FeaturedRoutes
@@ -245,12 +251,7 @@ export default async function HomePage() {
                     />
                )}
 
-               <ArmadaCatalog
-                    armada={armada}
-                    whatsapp={whatsapp}
-                    variant="home"
-                    seeAllHref="/armada"
-               />
+               <BerandaServices />
 
                <BerandaWhy whatsapp={whatsapp} />
                <BerandaFaq />
