@@ -103,9 +103,8 @@ const labelClass =
 const chevronClass =
      "pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant";
 
-const TIME_SLOTS = Array.from({ length: 48 }, (_, i) =>
-     `${String(Math.floor(i / 2)).padStart(2, "0")}:${i % 2 === 0 ? "00" : "30"}`,
-);
+const HOURS = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, "0"));
+const MINUTES = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, "0"));
 
 function formatDate(value: string): string {
      if (!value) return "";
@@ -648,22 +647,50 @@ export default function SewaMobilForm({
                               <Clock size={14} className="text-primary" aria-hidden />
                               {content.labels.time}
                          </label>
-                         <div className="relative">
-                              <select
-                                   id="sm-time"
-                                   required
-                                   value={values.time}
-                                   onChange={(e) => update("time", e.target.value)}
-                                   className={selectClass}
-                              >
-                                   <option value="">Pilih Jam</option>
-                                   {TIME_SLOTS.map((slot) => (
-                                        <option key={slot} value={slot}>
-                                             {slot}
-                                        </option>
-                                   ))}
-                              </select>
-                              <ChevronDown size={16} className={chevronClass} aria-hidden />
+                         <div className="grid grid-cols-2 gap-space-xs">
+                              <div className="relative">
+                                   <select
+                                        id="sm-time"
+                                        required
+                                        aria-label="Jam"
+                                        value={values.time.slice(0, 2)}
+                                        onChange={(e) =>
+                                             update(
+                                                  "time",
+                                                  e.target.value
+                                                       ? `${e.target.value}:${values.time.slice(3, 5) || "00"}`
+                                                       : "",
+                                             )
+                                        }
+                                        className={selectClass}
+                                   >
+                                        <option value="">Jam</option>
+                                        {HOURS.map((h) => (
+                                             <option key={h} value={h}>
+                                                  {h}
+                                             </option>
+                                        ))}
+                                   </select>
+                                   <ChevronDown size={16} className={chevronClass} aria-hidden />
+                              </div>
+                              <div className="relative">
+                                   <select
+                                        aria-label="Menit"
+                                        disabled={!values.time}
+                                        value={values.time.slice(3, 5)}
+                                        onChange={(e) =>
+                                             update("time", `${values.time.slice(0, 2)}:${e.target.value}`)
+                                        }
+                                        className={selectClass}
+                                   >
+                                        {MINUTES.map((m) => (
+                                             <option key={m} value={m}>
+                                                  {m}
+                                             </option>
+                                        ))}
+                                   </select>
+                                   <ChevronDown size={16} className={chevronClass} aria-hidden />
+                              </div>
                          </div>
                     </div>
 
