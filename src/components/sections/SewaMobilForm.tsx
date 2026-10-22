@@ -683,6 +683,7 @@ export default function SewaMobilForm({
                                         }
                                         className={selectClass}
                                    >
+                                        <option value="">Menit</option>
                                         {MINUTES.map((m) => (
                                              <option key={m} value={m}>
                                                   {m}
