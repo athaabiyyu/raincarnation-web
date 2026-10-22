@@ -103,6 +103,10 @@ const labelClass =
 const chevronClass =
      "pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant";
 
+const TIME_SLOTS = Array.from({ length: 48 }, (_, i) =>
+     `${String(Math.floor(i / 2)).padStart(2, "0")}:${i % 2 === 0 ? "00" : "30"}`,
+);
+
 function formatDate(value: string): string {
      if (!value) return "";
      const date = new Date(`${value}T00:00:00`);
@@ -644,14 +648,23 @@ export default function SewaMobilForm({
                               <Clock size={14} className="text-primary" aria-hidden />
                               {content.labels.time}
                          </label>
-                         <input
-                              id="sm-time"
-                              type="time"
-                              required
-                              value={values.time}
-                              onChange={(e) => update("time", e.target.value)}
-                              className={inputClass}
-                         />
+                         <div className="relative">
+                              <select
+                                   id="sm-time"
+                                   required
+                                   value={values.time}
+                                   onChange={(e) => update("time", e.target.value)}
+                                   className={selectClass}
+                              >
+                                   <option value="">Pilih Jam</option>
+                                   {TIME_SLOTS.map((slot) => (
+                                        <option key={slot} value={slot}>
+                                             {slot}
+                                        </option>
+                                   ))}
+                              </select>
+                              <ChevronDown size={16} className={chevronClass} aria-hidden />
+                         </div>
                     </div>
 
                     {/* Penumpang */}
