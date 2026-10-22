@@ -54,7 +54,6 @@ export default function SewaMobilFleet({
                                    item={item}
                                    whatsapp={whatsapp}
                                    imageSizes={IMAGE_SIZES}
-                                   showAllInPrice
                               />
                          ))}
 

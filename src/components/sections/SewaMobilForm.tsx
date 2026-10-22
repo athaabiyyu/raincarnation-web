@@ -10,6 +10,7 @@ import {
      LocateFixed,
      MapPin,
      MessageSquareText,
+     Timer,
      Users,
 } from "lucide-react";
 import { CarIcon } from "@/components/ui/BookingIcons";
@@ -17,10 +18,7 @@ import {
      sewaMobilForm,
      sewaMobilPackageConfig,
 } from "@/constants/sewa-mobil";
-import type {
-     SewaMobilPackageKind,
-     SewaMobilRouteScope,
-} from "@/constants/sewa-mobil";
+import type { SewaMobilPackageKind } from "@/constants/sewa-mobil";
 import type { RuteCarter } from "@/types/rute-carter";
 import { capitalizeFirst } from "@/utils/capitalize-first";
 import { formatPrice } from "@/utils/format-price";
@@ -31,8 +29,16 @@ export type FleetOption = {
      name: string;
      /** harga Lepas Kunci per 12 jam (dari CMS armada, string angka) */
      harga?: string;
-     /** harga All In per hari (dari CMS armada, string angka) */
+     /** harga All In per hari */
      hargaAllIn?: string;
+     /** harga Non All In per hari */
+     hargaNonAllIn?: string;
+     /** harga Lepas Kunci per bulan */
+     hargaLepasKunciBulanan?: string;
+     /** harga Lepas Kunci per tahun */
+     hargaLepasKunciTahunan?: string;
+     /** tambahan driver Lepas Kunci per hari */
+     tambahanDriver?: string;
 };
 
 type SewaMobilFormProps = {
@@ -55,7 +61,12 @@ type FormValues = {
 type RouteOption = {
      label: string;
      value?: string;
-     scope?: SewaMobilRouteScope;
+};
+
+type DurationOption = {
+     value: string;
+     label: string;
+     priceUnit: string;
 };
 
 type PackageConfig = {
@@ -63,20 +74,28 @@ type PackageConfig = {
      name: string;
      duration?: string;
      priceUnit?: string;
+     durations?: DurationOption[];
      routes?: RouteOption[];
      customRouteLabel?: string;
-     includes?: string[] | Record<SewaMobilRouteScope, string[]>;
+     includes?: string[];
      excludes?: string[];
 };
 
 // Nilai khusus untuk pilihan "Custom rute" / "Luar kota" (tidak punya entri CMS).
 const CUSTOM_ROUTE = "__custom";
 
+// Layanan sewa yang harganya berasal dari data armada.
+const RENTAL_KINDS: SewaMobilPackageKind[] = [
+     "all-in",
+     "non-all-in",
+     "lepas-kunci",
+];
+
 const selectClass =
-     "h-[2.75rem] w-full appearance-none cursor-pointer rounded-lg bg-surface-container-low px-3 pr-8 font-label-md text-label-md text-on-surface transition-colors focus:bg-surface-container-high focus:outline-none";
+     "h-[2.75rem] w-full appearance-none cursor-pointer rounded-lg bg-surface-container-low px-3 pr-8 font-label-md text-base md:text-label-md text-on-surface transition-colors focus:bg-surface-container-high focus:outline-none disabled:cursor-not-allowed disabled:opacity-60";
 
 const inputClass =
-     "h-[2.75rem] w-full min-w-0 appearance-none rounded-lg bg-surface-container-low px-3 text-left font-label-md text-label-md text-on-surface transition-colors placeholder:text-on-surface-variant focus:bg-surface-container-high focus:outline-none [&::-webkit-date-and-time-value]:text-left";
+     "h-[2.75rem] w-full min-w-0 appearance-none rounded-lg bg-surface-container-low px-3 text-left font-label-md text-base md:text-label-md text-on-surface transition-colors placeholder:text-on-surface-variant focus:bg-surface-container-high focus:outline-none [&::-webkit-date-and-time-value]:text-left";
 
 const labelClass =
      "flex items-center gap-1 font-label-sm text-label-sm text-on-surface-variant";
@@ -105,14 +124,25 @@ function toPrice(value: string | number | undefined): number {
      return Number.isFinite(number) && number > 0 ? number : 0;
 }
 
-function resolveIncludes(
-     config: PackageConfig | undefined,
-     scope: SewaMobilRouteScope | undefined,
-): string[] {
-     const includes = config?.includes;
-     if (!includes) return [];
-     if (Array.isArray(includes)) return includes;
-     return scope ? includes[scope] : [];
+// Harga satu unit untuk satu layanan (Carter tidak lewat sini).
+function fleetPrice(
+     unit: FleetOption | undefined,
+     kind: SewaMobilPackageKind | undefined,
+     durationValue: string,
+): number {
+     if (!unit) return 0;
+     if (kind === "all-in") return toPrice(unit.hargaAllIn);
+     if (kind === "non-all-in") return toPrice(unit.hargaNonAllIn);
+     if (kind === "lepas-kunci") {
+          if (durationValue === "bulanan") {
+               return toPrice(unit.hargaLepasKunciBulanan);
+          }
+          if (durationValue === "tahunan") {
+               return toPrice(unit.hargaLepasKunciTahunan);
+          }
+          return toPrice(unit.harga);
+     }
+     return 0;
 }
 
 type MessageInput = {
@@ -124,6 +154,7 @@ type MessageInput = {
      origin: string;
      destination: string;
      priceText: string;
+     driverText: string;
      values: FormValues;
 };
 
@@ -137,6 +168,7 @@ function buildMessage(input: MessageInput): string {
           origin,
           destination,
           priceText,
+          driverText,
           values,
      } = input;
      const details = [
@@ -150,6 +182,7 @@ function buildMessage(input: MessageInput): string {
           values.date && `- Tanggal: ${formatDate(values.date)}`,
           values.time && `- Jam: ${values.time}`,
           values.passengers.trim() && `- Penumpang: ${values.passengers.trim()}`,
+          driverText && `- Tambahan driver: ${driverText}`,
           priceText && `- Estimasi tarif: ${priceText}`,
      ].filter(Boolean);
 
@@ -175,9 +208,11 @@ export default function SewaMobilForm({
 
      const [packageType, setPackageType] = useState("");
      const [fleetId, setFleetId] = useState("");
+     const [durationValue, setDurationValue] = useState("");
      const [routeValue, setRouteValue] = useState("");
      const [origin, setOrigin] = useState("");
      const [destination, setDestination] = useState("");
+     const [withDriver, setWithDriver] = useState(false);
      const [values, setValues] = useState<FormValues>({
           date: "",
           time: "",
@@ -191,15 +226,12 @@ export default function SewaMobilForm({
           setValues((prev) => ({ ...prev, [field]: value }));
      }
 
-     // Paket: All In dan Lepas Kunci muncul bila ada armada berharga;
+     // Layanan sewa muncul bila ada armada berharga untuk layanan itu;
      // Carter Drop Off muncul bila ada entri rute-carter miliknya.
      const packageConfigs: PackageConfig[] = config.packages;
      const packages = packageConfigs.filter((p) => {
-          if (p.kind === "all-in") {
-               return fleet.some((f) => toPrice(f.hargaAllIn) > 0);
-          }
-          if (p.kind === "lepas-kunci") {
-               return fleet.some((f) => toPrice(f.harga) > 0);
+          if (RENTAL_KINDS.includes(p.kind)) {
+               return fleet.some((f) => fleetPrice(f, p.kind, "12-jam") > 0);
           }
           return routes.some((r) => r.acf?.paket_sewa === p.name);
      });
@@ -208,9 +240,10 @@ export default function SewaMobilForm({
      const selectedConfig = packages.find((p) => p.name === packageType);
      const selectedPackage = selectedConfig?.name ?? "";
      const kind = selectedConfig?.kind;
-     const isSimplePackage = kind === "all-in" || kind === "lepas-kunci";
+     const isSimplePackage = kind !== undefined && RENTAL_KINDS.includes(kind);
+     const isLepasKunci = kind === "lepas-kunci";
 
-     // Lebar kolom di laptop: All In dan Lepas Kunci = 3 kolom sejajar (4+4+4),
+     // Lebar kolom di laptop: layanan sewa = 3 kolom sejajar (4+4+4),
      // Carter Drop Off = pola lama (3+3+3+3).
      const thirdSpan = isSimplePackage ? "lg:col-span-4" : "lg:col-span-3";
 
@@ -219,32 +252,50 @@ export default function SewaMobilForm({
           ? routes.filter((r) => r.acf?.paket_sewa === selectedPackage)
           : routes;
 
-     // Armada mengikuti paket terpilih: All In dan Lepas Kunci dari harga armada,
-     // Carter Drop Off dari entri rute-carter.
+     // Armada mengikuti layanan terpilih: layanan sewa dari harga armada
+     // (kosong = unit tidak muncul), Carter Drop Off dari entri rute-carter.
      const fleetOptions = fleet.filter((f) => {
-          if (kind === "all-in") return toPrice(f.hargaAllIn) > 0;
-          if (kind === "lepas-kunci") return toPrice(f.harga) > 0;
+          if (isSimplePackage) return fleetPrice(f, kind, "12-jam") > 0;
           if (kind === "drop-off") {
                return packageRoutes.some((r) =>
                     r.acf?.armada?.some((a) => a.ID === f.id),
                );
           }
-          // Belum memilih paket: unit yang bisa dipakai paket mana pun.
+          // Belum memilih layanan: unit yang bisa dipakai layanan mana pun.
           return (
-               toPrice(f.harga) > 0 ||
-               toPrice(f.hargaAllIn) > 0 ||
+               RENTAL_KINDS.some((k) => fleetPrice(f, k, "12-jam") > 0) ||
                routes.some((r) => r.acf?.armada?.some((a) => a.ID === f.id))
           );
      });
      const selectedFleet = fleetOptions.find((f) => String(f.id) === fleetId);
 
-     // Rute untuk All In dan Lepas Kunci: dari konfigurasi + satu pilihan custom.
+     // Durasi (hanya Lepas Kunci): hanya durasi yang harganya terisi di unit itu.
+     const durationOptions: DurationOption[] =
+          isLepasKunci && selectedFleet
+               ? (selectedConfig?.durations ?? []).filter(
+                    (d) => fleetPrice(selectedFleet, kind, d.value) > 0,
+               )
+               : [];
+     const selectedDuration = durationOptions.find(
+          (d) => d.value === durationValue,
+     );
+
+     // Tambahan driver (hanya Lepas Kunci, bila unit punya nilainya).
+     const driverAmount = isLepasKunci
+          ? toPrice(selectedFleet?.tambahanDriver)
+          : 0;
+     const driverAvailable = driverAmount > 0;
+     const useDriver = driverAvailable && withDriver;
+     const driverText = useDriver
+          ? `${formatPrice(String(driverAmount)) ?? ""}/hari`
+          : "";
+
+     // Rute layanan sewa: dari konfigurasi + satu pilihan custom.
      const routeOptions: RouteOption[] = isSimplePackage
           ? [
                ...(selectedConfig?.routes ?? []).map((r) => ({
                     label: r.label,
                     value: r.value ?? r.label,
-                    scope: r.scope,
                })),
                {
                     label: selectedConfig?.customRouteLabel ?? "Custom",
@@ -280,6 +331,7 @@ export default function SewaMobilForm({
      const allFilled =
           Boolean(selectedConfig) &&
           selectedFleet !== undefined &&
+          (!isLepasKunci || selectedDuration !== undefined) &&
           placeFilled &&
           Boolean(values.date) &&
           Boolean(values.time) &&
@@ -298,24 +350,20 @@ export default function SewaMobilForm({
                )
                : undefined;
 
-     // Sumber harga: Carter dari rute-carter; All In dan Lepas Kunci dari armada.
+     // Sumber harga: Carter dari rute-carter; layanan sewa dari armada.
      // Custom rute / Luar kota tidak punya harga (tanya admin).
      function resolvePrice(): number {
           if (kind === "drop-off") return toPrice(match?.acf?.harga);
           if (isCustomRoute) return 0;
-          if (kind === "all-in") return toPrice(selectedFleet?.hargaAllIn);
-          if (kind === "lepas-kunci") return toPrice(selectedFleet?.harga);
-          return 0;
+          return fleetPrice(selectedFleet, kind, selectedDuration?.value ?? "12-jam");
      }
      const price = allFilled ? resolvePrice() : 0;
      const priceText = price > 0 ? formatPrice(String(price)) : null;
 
      // Custom rute atau kombinasi tanpa harga: arahkan ke admin.
      const askAdmin = allFilled && !priceText;
-     const priceUnit = selectedConfig?.priceUnit ?? "/rute";
-     const includes = priceText
-          ? resolveIncludes(selectedConfig, selectedRoute?.scope)
-          : [];
+     const priceUnit = selectedDuration?.priceUnit ?? selectedConfig?.priceUnit ?? "/rute";
+     const includes = priceText ? (selectedConfig?.includes ?? []) : [];
      const excludes = priceText ? (selectedConfig?.excludes ?? []) : [];
 
      function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -323,12 +371,13 @@ export default function SewaMobilForm({
           const message = buildMessage({
                packageType: selectedPackage,
                fleetName: selectedFleet?.name ?? "",
-               duration: selectedConfig?.duration ?? "",
+               duration: selectedDuration?.label ?? selectedConfig?.duration ?? "",
                routeText: selectedRoute?.label ?? "",
                customRouteText: isCustomRoute ? values.customRoute.trim() : "",
                origin: selectedOrigin,
                destination: selectedDestination,
-               priceText: priceText ? `${priceText} ${priceUnit}` : "",
+               priceText: priceText ? `${priceText}${priceUnit}` : "",
+               driverText,
                values,
           });
           window.open(
@@ -363,7 +412,7 @@ export default function SewaMobilForm({
                     onSubmit={handleSubmit}
                     className="grid grid-cols-2 items-end gap-x-space-sm gap-y-space-md lg:grid-cols-12 lg:gap-x-space-md"
                >
-                    {/* Paket */}
+                    {/* Layanan */}
                     <div className={`col-span-2 min-w-0 space-y-1.5 ${thirdSpan}`}>
                          <label htmlFor="sm-package" className={labelClass}>
                               <Briefcase size={14} className="text-primary" aria-hidden />
@@ -412,6 +461,38 @@ export default function SewaMobilForm({
                               <ChevronDown size={16} className={chevronClass} aria-hidden />
                          </div>
                     </div>
+
+                    {/* Durasi (hanya Lepas Kunci) */}
+                    {isLepasKunci && (
+                         <div className="col-span-2 min-w-0 space-y-1.5 lg:col-span-4">
+                              <label htmlFor="sm-duration" className={labelClass}>
+                                   <Timer size={14} className="text-primary" aria-hidden />
+                                   {config.labels.duration}
+                              </label>
+                              <div className="relative">
+                                   <select
+                                        id="sm-duration"
+                                        required
+                                        disabled={!selectedFleet}
+                                        value={selectedDuration?.value ?? ""}
+                                        onChange={(e) => setDurationValue(e.target.value)}
+                                        className={selectClass}
+                                   >
+                                        <option value="">Pilih Durasi</option>
+                                        {durationOptions.map((option) => (
+                                             <option key={option.value} value={option.value}>
+                                                  {option.label}
+                                             </option>
+                                        ))}
+                                   </select>
+                                   <ChevronDown
+                                        size={16}
+                                        className={chevronClass}
+                                        aria-hidden
+                                   />
+                              </div>
+                         </div>
+                    )}
 
                     {isSimplePackage ? (
                          <>
@@ -575,9 +656,8 @@ export default function SewaMobilForm({
 
                     {/* Penumpang */}
                     <div
-                         className={`col-span-2 min-w-0 space-y-1.5 ${
-                              isSimplePackage ? "lg:col-span-4" : "lg:col-span-6"
-                         }`}
+                         className={`col-span-2 min-w-0 space-y-1.5 ${isSimplePackage ? "lg:col-span-4" : "lg:col-span-6"
+                              }`}
                     >
                          <label htmlFor="sm-passengers" className={labelClass}>
                               <Users size={14} className="text-primary" aria-hidden />
@@ -610,27 +690,56 @@ export default function SewaMobilForm({
                          )}
                     </div>
 
-                    {/* Rincian termasuk (hanya bila harga tampil) */}
-                    {priceText && (includes.length > 0 || excludes.length > 0) && (
-                         <div className="col-span-2 space-y-1.5 lg:col-span-12">
-                              {includes.length > 0 && (
-                                   <p className="font-label-sm text-label-sm text-on-surface-variant">
-                                        <span className="font-bold text-on-surface">
-                                             {config.labels.includes}:
-                                        </span>{" "}
-                                        {includes.join(", ")}
-                                   </p>
-                              )}
-                              {excludes.length > 0 && (
-                                   <p className="font-label-sm text-label-sm text-on-surface-variant">
-                                        <span className="font-bold text-on-surface">
-                                             {config.labels.excludes}:
-                                        </span>{" "}
-                                        {excludes.join(", ")}
-                                   </p>
-                              )}
+                    {/* Dengan sopir (hanya Lepas Kunci, bila unit punya tambahan driver) */}
+                    {driverAvailable && (
+                         <div className="col-span-2 min-w-0 lg:col-span-8">
+                              <label
+                                   htmlFor="sm-driver"
+                                   className="flex cursor-pointer items-center gap-2 font-label-md text-label-md text-on-surface"
+                              >
+                                   <input
+                                        id="sm-driver"
+                                        type="checkbox"
+                                        checked={withDriver}
+                                        onChange={(e) => setWithDriver(e.target.checked)}
+                                        className="h-4 w-4 accent-primary"
+                                   />
+                                   {config.labels.withDriver} (+{" "}
+                                   {formatPrice(String(driverAmount)) ?? ""}/hari)
+                              </label>
                          </div>
                     )}
+
+                    {/* Rincian termasuk (hanya bila harga tampil) */}
+                    {priceText &&
+                         (includes.length > 0 || excludes.length > 0 || useDriver) && (
+                              <div className="col-span-2 space-y-1.5 lg:col-span-12">
+                                   {includes.length > 0 && (
+                                        <p className="font-label-sm text-label-sm text-on-surface-variant">
+                                             <span className="font-bold text-on-surface">
+                                                  {config.labels.includes}:
+                                             </span>{" "}
+                                             {includes.join(", ")}
+                                        </p>
+                                   )}
+                                   {excludes.length > 0 && (
+                                        <p className="font-label-sm text-label-sm text-on-surface-variant">
+                                             <span className="font-bold text-on-surface">
+                                                  {config.labels.excludes}:
+                                             </span>{" "}
+                                             {excludes.join(", ")}
+                                        </p>
+                                   )}
+                                   {useDriver && (
+                                        <p className="font-label-sm text-label-sm text-on-surface-variant">
+                                             <span className="font-bold text-on-surface">
+                                                  {config.labels.driverAddOn}:
+                                             </span>{" "}
+                                             {driverText}
+                                        </p>
+                                   )}
+                              </div>
+                         )}
 
                     {/* Harga (kiri) + Tombol (kanan) */}
                     <div className="col-span-2 flex flex-col gap-space-md pt-space-xs sm:flex-row sm:items-center sm:justify-between sm:border-t sm:border-surface-container sm:pt-space-md lg:col-span-12">

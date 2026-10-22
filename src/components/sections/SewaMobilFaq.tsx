@@ -8,41 +8,126 @@ type FaqItem = {
      answer: string;
 };
 
-const FAQS: FaqItem[] = [
-     {
-          question: "Apa saja yang sudah termasuk dalam tarif sewa mobil?",
-          answer:
-               "Sewa Mobil All In rute dalam kota (Malang, Batu) sudah termasuk unit, BBM, driver, dan parkir. Untuk rute luar kota, tol juga termasuk. Lepas Kunci sudah termasuk unit dan biaya cuci, belum termasuk ongkos pengantaran. Rincian Carter Drop Off dikonfirmasi admin.",
-     },
-     {
-          question: "Apa syarat sewa mobil lepas kunci di Malang dan Batu?",
-          answer:
-               "Penyewa membawa KTP dan SIM A yang masih berlaku. Durasi sewa 12 jam, rute dalam kota untuk Malang dan Batu. Rute luar kota tarifnya ditanyakan ke admin.",
-     },
-     {
-          question: "Berapa harga sewa mobil Malang tanpa sopir dan dengan sopir?",
-          answer:
-               "Tarif bergantung pada unit dan paket: Carter Drop Off per rute, All In per hari, Lepas Kunci per 12 jam. Harga tiap unit tampil di bagian Pilihan Armada di halaman ini. Untuk rute lain atau pertanyaan tarif, tanyakan ke admin lewat WhatsApp.",
-     },
-     {
-          question: "Area mana saja yang dilayani untuk sewa mobil?",
-          answer:
-               "Rute standar kami Malang, Batu, dan Surabaya. Tujuan lain termasuk Pasuruan bisa lewat custom rute, tarifnya ditanyakan ke admin. Untuk Lepas Kunci, rute dalam kota berlaku di Malang dan Batu.",
-     },
-     {
-          question: "Bagaimana sistem sewa mobil Surabaya Malang dengan Carter Drop Off?",
-          answer:
-               "Carter Drop Off 1 Arah adalah sewa mobil dengan sopir untuk antar satu arah dari titik jemput ke tujuan di Malang, Batu, atau Surabaya, dengan harga per rute. Titik jemput dan jam berangkat diatur bersama admin.",
-     },
-     {
-          question: "Berapa lama durasi sewa mobil: 12 jam atau sehari?",
-          answer:
-               "Lepas Kunci per 12 jam. Sewa Mobil All In per hari (1 hari). Carter Drop Off dihitung per rute, tanpa durasi. Butuh durasi lain? Konsultasikan dengan admin lewat WhatsApp.",
-     },
-];
+export type FaqStartingPrices = {
+     lepasKunci?: string;
+     lepasKunciBulanan?: string;
+     allIn?: string;
+     nonAllIn?: string;
+};
 
-export default function SewaMobilFaq() {
+type SewaMobilFaqProps = {
+     startingPrices?: FaqStartingPrices;
+};
+
+function buildPriceAnswer(prices?: FaqStartingPrices): string {
+     const withDriver: string[] = [];
+     if (prices?.allIn) {
+          withDriver.push(`All In mulai ${prices.allIn} per hari`);
+     }
+     if (prices?.nonAllIn) {
+          withDriver.push(`Non All In mulai ${prices.nonAllIn} per hari`);
+     }
+
+     const sentences: string[] = ["Tarif bergantung pada unit dan layanan."];
+
+     if (withDriver.length > 0) {
+          sentences.push(
+               `Dengan sopir: ${withDriver.join(", ")}. Carter Drop Off dihitung per rute.`,
+          );
+     } else {
+          sentences.push(
+               "Dengan sopir: Carter Drop Off per rute, serta All In atau Non All In per hari.",
+          );
+     }
+
+     if (prices?.lepasKunci) {
+          sentences.push(
+               `Tanpa sopir: Lepas Kunci mulai ${prices.lepasKunci} per 12 jam, juga tersedia bulanan dan tahunan.`,
+          );
+     } else {
+          sentences.push(
+               "Tanpa sopir: Lepas Kunci per 12 jam, bulanan, atau tahunan.",
+          );
+     }
+
+     sentences.push(
+          "Harga tiap unit tampil di bagian Pilihan Armada, dan tarif tiap layanan bisa dicek lewat form simulasi di bagian atas halaman. Untuk rute lain atau pertanyaan tarif, tanyakan ke admin lewat WhatsApp.",
+     );
+
+     return sentences.join(" ");
+}
+
+function buildLepasKunciDayAnswer(prices?: FaqStartingPrices): string {
+     const priceText = prices?.lepasKunci
+          ? `Lepas Kunci dihitung per 12 jam, mulai ${prices.lepasKunci}.`
+          : "Lepas Kunci dihitung per 12 jam.";
+
+     return `${priceText} Tersedia juga paket bulanan dan tahunan. Butuh durasi lain, termasuk 24 jam? Tanyakan ke admin lewat WhatsApp.`;
+}
+
+function buildLepasKunciMonthAnswer(prices?: FaqStartingPrices): string {
+     const priceText = prices?.lepasKunciBulanan
+          ? `Sewa mobil lepas kunci bulanan mulai ${prices.lepasKunciBulanan} per bulan, tergantung unit.`
+          : "Sewa mobil lepas kunci tersedia dalam paket bulanan, tergantung unit.";
+
+     return `${priceText} Paket tahunan juga tersedia. Cek tarif tiap unit lewat form simulasi: pilih Lepas Kunci, lalu durasi Bulanan atau Tahunan. Butuh durasi lain? Tanyakan ke admin lewat WhatsApp.`;
+}
+
+function buildFaqs(prices?: FaqStartingPrices): FaqItem[] {
+     return [
+          {
+               question: "Apa saja yang sudah termasuk dalam tarif sewa mobil?",
+               answer:
+                    "Rincian berbeda tiap layanan. Sewa Mobil All In sudah termasuk unit, BBM, driver, makan driver, tol, dan parkir. Sewa Mobil Non All In sudah termasuk unit, BBM, dan driver. Carter Drop Off 1 Arah sudah termasuk unit, BBM, dan driver. Lepas Kunci sudah termasuk unit dan biaya cuci, belum termasuk ongkos pengantaran.",
+          },
+          {
+               question: "Apa bedanya sewa mobil All In dan Non All In?",
+               answer:
+                    "Keduanya sewa mobil dengan sopir per hari dan sudah termasuk unit, BBM, dan driver. Bedanya, All In juga sudah termasuk makan driver, tol, dan parkir, sedangkan Non All In hanya unit, BBM, dan driver. Pilih sesuai kebutuhan perjalanan Anda, atau tanyakan ke admin lewat WhatsApp.",
+          },
+          {
+               question: "Apa syarat sewa mobil lepas kunci di Malang dan Batu?",
+               answer:
+                    "Penyewa membawa KTP dan SIM A yang masih berlaku. Durasi sewa tersedia 12 jam, bulanan, atau tahunan, dengan rute dalam kota (Malang, Batu). Rute luar kota tarifnya ditanyakan ke admin.",
+          },
+          {
+               question: "Bagaimana sistem sewa mobil lepas kunci?",
+               answer:
+                    "Pilih unit dan durasi (12 jam, bulanan, atau tahunan) lewat form simulasi atau kartu armada, siapkan KTP dan SIM A yang masih berlaku, lalu konfirmasi lewat WhatsApp. Harga sudah termasuk unit dan biaya cuci, belum termasuk ongkos pengantaran. Rute dalam kota (Malang, Batu), sedangkan rute luar kota tarifnya ditanyakan ke admin.",
+          },
+          {
+               question: "Sewa mobil lepas kunci 1 hari berapa?",
+               answer: buildLepasKunciDayAnswer(prices),
+          },
+          {
+               question: "Sewa mobil 1 bulan berapa?",
+               answer: buildLepasKunciMonthAnswer(prices),
+          },
+          {
+               question: "Berapa harga sewa mobil Malang tanpa sopir dan dengan sopir?",
+               answer: buildPriceAnswer(prices),
+          },
+          {
+               question: "Area mana saja yang dilayani untuk sewa mobil?",
+               answer:
+                    "Carter Drop Off, All In, dan Non All In melayani rute standar Malang, Batu, dan Surabaya. Khusus All In dan Non All In, tujuan lain termasuk Pasuruan bisa lewat custom rute, tarifnya ditanyakan ke admin. Lepas Kunci melayani rute dalam kota (Malang, Batu), sedangkan rute luar kota tarifnya ditanyakan ke admin.",
+          },
+          {
+               question: "Bagaimana sistem sewa mobil Surabaya Malang dengan Carter Drop Off?",
+               answer:
+                    "Carter Drop Off 1 Arah adalah sewa mobil dengan sopir untuk antar satu arah dari titik jemput ke tujuan di Malang, Batu, atau Surabaya, dengan harga per rute. Titik jemput dan jam berangkat diatur bersama admin.",
+          },
+          {
+               question: "Berapa lama durasi sewa mobil: 12 jam atau sehari?",
+               answer:
+                    "Lepas Kunci tersedia per 12 jam, bulanan, atau tahunan. Sewa Mobil All In dan Non All In per hari (1 hari). Carter Drop Off dihitung per rute, tanpa durasi. Butuh durasi lain? Konsultasikan dengan admin lewat WhatsApp.",
+          },
+     ];
+}
+
+export default function SewaMobilFaq({ startingPrices }: SewaMobilFaqProps) {
      const [openIndex, setOpenIndex] = useState<number | null>(0);
+     const faqs = buildFaqs(startingPrices);
 
      const toggleFaq = (index: number) => {
           setOpenIndex(openIndex === index ? null : index);
@@ -51,7 +136,7 @@ export default function SewaMobilFaq() {
      const faqSchema = {
           "@context": "https://schema.org",
           "@type": "FAQPage",
-          mainEntity: FAQS.map((faq) => ({
+          mainEntity: faqs.map((faq) => ({
                "@type": "Question",
                name: faq.question,
                acceptedAnswer: {
@@ -87,7 +172,7 @@ export default function SewaMobilFaq() {
 
                     {/* Daftar Kartu FAQ Accordion */}
                     <div className="space-y-3 md:space-y-space-sm">
-                         {FAQS.map((item, index) => {
+                         {faqs.map((item, index) => {
                               const isOpen = openIndex === index;
                               return (
                                    <div

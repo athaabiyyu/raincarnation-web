@@ -11,9 +11,9 @@ import { decodeHtml } from "@/utils/decode-html";
 import { capitalizeFirst } from "@/utils/capitalize-first";
 import type { Armada } from "@/types/armada";
 
-const title = "Daftar Armada Travel & Sewa Mobil | Raincarnation";
+const title = "Armada Sewa Mobil Malang: Pilih Unit & Harga | Raincarnation";
 const description =
-     "Lihat daftar armada Raincarnation untuk travel dan sewa mobil, lengkap dengan kapasitas kursi dan bagasi. Tanyakan tarif dan ketersediaan lewat WhatsApp.";
+     "Lihat pilihan armada sewa mobil Raincarnation di Malang, Batu, dan Surabaya, lengkap dengan harga per layanan. Pilih unit, lalu pesan via WhatsApp.";
 
 export const metadata: Metadata = {
      title,
@@ -61,7 +61,27 @@ export default async function ArmadaPage() {
                "@type": "ListItem",
                position: index + 1,
                name: capitalizeFirst(decodeHtml(item.title)),
+               url: `${siteConfig.url}/sewa-mobil/${item.slug}`,
           })),
+     };
+
+     const breadcrumbJsonLd = {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+               {
+                    "@type": "ListItem",
+                    position: 1,
+                    name: "Beranda",
+                    item: siteConfig.url,
+               },
+               {
+                    "@type": "ListItem",
+                    position: 2,
+                    name: "Armada",
+                    item: `${siteConfig.url}/armada`,
+               },
+          ],
      };
 
      return (
@@ -74,6 +94,12 @@ export default async function ArmadaPage() {
                          }}
                     />
                )}
+               <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                         __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, "\\u003c"),
+                    }}
+               />
                <ArmadaHero whatsapp={whatsapp} />
                <ArmadaCatalog armada={armada} whatsapp={whatsapp} />
                <ArmadaMaintenance />

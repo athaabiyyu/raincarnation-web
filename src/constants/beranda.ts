@@ -1,4 +1,3 @@
-export type BerandaTrustIcon = "car" | "route" | "message-circle";
 export type BerandaServiceIcon = "armchair" | "car";
 export type BerandaWhyIcon =
      | "badge-check"
@@ -18,59 +17,21 @@ export const berandaHero = {
           tag: "PILIHAN SEWA FLEKSIBEL",
           title: "Sewa Mobil Sesuai Kebutuhan",
           description:
-               "Pilih layanan mobil dengan sopir atau lepas kunci untuk perjalanan di Malang, Batu, dan Surabaya.",
+               "Dengan sopir atau lepas kunci. Titik sewa di Malang, Batu, dan Surabaya, rute bebas sesuai rencana Anda.",
      },
      description:
-          "Jasa sewa mobil dengan driver atau lepas kunci yang tersedia 24 jam di Malang, Batu, dan Surabaya, serta bisa custom rute apabila ingin rute yang lain. Tersedia juga travel door to door per kursi (travel reguler) untuk rute Malang, Batu, Surabaya, Pandaan, dan Bandara Juanda, mulai Rp100.000 dan sudah termasuk tol dan parkir.",
-};
-
-export const berandaTrust = {
-     items: [
-          {
-               icon: "car",
-               title: "Pilihan Layanan",
-               description: "Sewa Mobil & Travel Reguler",
-          },
-          {
-               icon: "route",
-               title: "Pilihan Rute",
-               description: "Malang, Batu, Surabaya, dan custom rute",
-          },
-          {
-               icon: "message-circle",
-               title: "Pesan via WhatsApp",
-               description: "Hubungi admin untuk informasi dan pemesanan",
-          },
-     ] satisfies {
-          icon: BerandaTrustIcon;
-          title: string;
-          description: string;
-     }[],
+          "Sewa mobil dengan sopir atau lepas kunci, tersedia 24 jam. Titik sewa di Malang, Batu, dan Surabaya, rute bebas lewat custom rute. Butuh kursi saja? Pilih travel door to door per kursi (travel reguler) mulai Rp100.000, sudah termasuk tol dan parkir.",
 };
 
 export const berandaBooking = {
-     regulerTab: "Travel Reguler (Per Kursi)",
+     regulerTab: "Travel (Per Kursi)",
      carterTab: "Sewa Mobil (Satu Mobil Penuh)",
-
-     carter: {
-          title: "Sewa Satu Mobil Penuh",
-          description:
-               "Cocok untuk keluarga, rombongan, atau perjalanan pribadi yang membutuhkan satu mobil khusus. Pilih layanan sewa mobil dengan sopir atau lepas kunci sesuai kebutuhan. Cek simulasi tarif atau hubungi admin Raincarnation melalui WhatsApp.",
-          simulateButton: {
-               label: "Simulasi & Cek Tarif",
-               href: "/sewa-mobil#simulasi-carter",
-          },
-
-          whatsappButton: "Tanya Admin via WhatsApp",
-          whatsappMessage:
-               "Halo Admin Raincarnation, saya ingin bertanya tentang layanan sewa mobil.",
-     },
 };
 
 export const berandaServices = {
-     title: "Layanan Sewa Mobil Malang dan Travel Reguler",
+     title: "Sewa Mobil & Travel per Kursi",
      description:
-          "Sewa mobil Malang (sering disebut rental mobil Malang) dengan sopir atau lepas kunci untuk perjalanan di Malang, Batu, Surabaya, dan Pasuruan. Butuh satu atau beberapa kursi saja untuk rute tertentu? Pilih saja layanan travel reguler kami.",
+          "Sewa mobil Malang (rental mobil) dengan sopir atau lepas kunci. Titik sewa di Malang, Batu, dan Surabaya, dengan rute bebas ke mana saja lewat custom rute. Butuh satu atau beberapa kursi saja? Pilih Travel per kursi untuk rute tetap antara Malang, Batu, Surabaya, Pandaan, dan Bandara Juanda.",
      items: [
           {
                icon: "car",
@@ -79,7 +40,8 @@ export const berandaServices = {
                description:
                     "Pilih sewa mobil dengan sopir atau lepas kunci sesuai ketersediaan layanan dan kebutuhan perjalanan Anda.",
                points: [
-                    "Tiga paket: All In (per hari), Lepas Kunci (per 12 jam), Carter Drop Off (per rute)",
+                    "Empat paket: All In dan Non All In (per hari), Lepas Kunci (per 12 jam, bulanan, atau tahunan), Carter Drop Off (per rute)",
+                    "All In sudah termasuk BBM, driver, makan driver, tol, dan parkir. Non All In termasuk BBM dan driver",
                     "Lepas Kunci: syarat KTP dan SIM A berlaku",
                     "Informasi armada dan pemesanan melalui WhatsApp",
                ],

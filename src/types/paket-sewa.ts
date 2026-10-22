@@ -1,10 +1,8 @@
 export type PaketSewaAcf = {
-     harga?: string;
      satuan?: string;
      label?: string;
      deskripsi?: string;
      point?: string;
-     text_harga?: string;
 };
 
 export type PaketSewa = {

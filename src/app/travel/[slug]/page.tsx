@@ -161,7 +161,7 @@ export default async function RoutePage({ params }: PageProps) {
           "@type": "TransportationService",
           name: `Travel ${rawTitle} - Raincarnation`,
           serviceType: "Travel per kursi",
-          description: `Layanan travel per kursi rute ${rawTitle}, door to door kecuali titik di Pandaan dan Juanda.`, 
+          description: `Layanan travel per kursi rute ${rawTitle}, door to door kecuali titik di Pandaan dan Juanda.`,
           url: `${siteConfig.url}/travel/${slug}`,
           telephone: whatsapp ? `+${whatsapp}` : undefined,
           address: {
@@ -173,6 +173,7 @@ export default async function RoutePage({ params }: PageProps) {
           areaServed: [from, to].filter(Boolean),
           provider: {
                "@type": "LocalBusiness",
+               "@id": `${siteConfig.url}/#business`,
                name: siteConfig.name,
                image: `${siteConfig.url}/images/interior-armada.webp`,
           },
@@ -439,7 +440,7 @@ export default async function RoutePage({ params }: PageProps) {
                                    </div>
                               )}
 
-                                                            {/* 5. Rute Terkait + tautan ke Sewa Mobil */}
+                              {/* 5. Rute Terkait + tautan ke Sewa Mobil */}
                               {relatedRoutes.length > 0 && (
                                    <div className="rounded-2xl border border-surface-container-high/60 bg-white p-6 md:p-8 shadow-sm">
                                         <h2 className="text-xl font-bold text-on-surface">Rute Travel Lainnya</h2>

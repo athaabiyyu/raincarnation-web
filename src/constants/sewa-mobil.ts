@@ -8,9 +8,9 @@ export const sewaMobilHero = {
      titleHighlight: "Lepas Kunci atau dengan Sopir",
      titleEnd: ", Rute Sesuai Rencana Anda.",
      description:
-          "Jasa Sewa mobil di Malang, Batu, dan Surabaya, tersedia lepas kunci atau dengan sopir. Pilih Carter Drop Off per rute, All In per hari, atau Lepas Kunci per 12 jam, lalu pesan lewat WhatsApp. Rute lain bisa lewat custom rute, tarifnya ditanyakan ke admin.",
+          "Melayani sewa mobil di Malang, Batu, dan Surabaya dengan sopir atau lepas kunci. Tersedia pilihan paket harian, carter drop off, hingga sewa lepas kunci ( harian, bulanan, tahunan ) dengan proses cepat via WhatsApp.",
      stats: [
-          { value: "3 Paket", label: "Carter Drop Off, All In, Lepas Kunci" },
+          { value: "4 Paket", label: "Carter Drop Off, All In, Non All In, Lepas Kunci" },
           { value: "24 Jam", label: "Layanan, Pesan via WhatsApp" },
           { value: "Rute Fleksibel", label: "Malang, Batu, Surabaya, atau rute lain" },
      ],
@@ -32,9 +32,9 @@ export const sewaMobilHero = {
 
 export const sewaMobilPackages = {
      eyebrow: "Kategori Fleksibel",
-     title: "Pilihan Paket Sewa & Drop Penuh",
+     title: "Pilihan Paket Sewa Mobil Malang",
      description:
-          "Tersedia beberapa paket layanan seperti Carter Drop Off per rute, Sewa Mobil All In per hari, atau Lepas Kunci per 12 jam. Cocok untuk perjalanan di Malang, Batu, Surabaya, dan rute lain lewat custom rute.",
+          "Pilih skema sewa yang paling pas untuk kebutuhanmu, mulai dari perjalanan harian, carter sekali jalan, hingga sewa lepas kunci jangka pendek maupun jangka panjang. Titik sewa kami ada di Malang, Batu, dan Surabaya, dengan rute yang bisa disesuaikan."
 };
 
 export const sewaMobilFleet = {
@@ -76,7 +76,7 @@ export const sewaMobilPillars = {
                icon: "route" as SewaMobilPillarIcon,
                title: "Rute Sesuai Rencana",
                description:
-                    "Rute standar Malang, Batu, dan Surabaya. Butuh tujuan lain? Pakai custom rute, tarifnya ditanyakan ke admin. Mampir ke kota lain dikenakan biaya tambahan.",
+                    "Carter Drop Off, All In, dan Non All In melayani Malang, Batu, dan Surabaya. Lepas Kunci melayani dalam kota (Malang, Batu), sedangkan luar kota tarifnya ditanyakan ke admin. Butuh tujuan lain? All In dan Non All In bisa lewat custom rute. Mampir ke kota lain dikenakan biaya tambahan.",
           },
           {
                icon: "lock" as SewaMobilPillarIcon,
@@ -88,7 +88,7 @@ export const sewaMobilPillars = {
                icon: "smile" as SewaMobilPillarIcon,
                title: "Dengan Sopir atau Lepas Kunci",
                description:
-                    "Butuh sopir? Pilih Carter Drop Off atau All In. Ingin menyetir sendiri? Pilih Lepas Kunci dengan KTP dan SIM A yang masih berlaku.",
+                    "Butuh sopir? Pilih Carter Drop Off, All In, atau Non All In. Ingin menyetir sendiri? Pilih Lepas Kunci dengan KTP dan SIM A yang masih berlaku.",
           },
      ],
 };
@@ -98,18 +98,6 @@ export const sewaMobilForm = {
      title: "Cari Sewa Mobil",
      description:
           "Isi form sederhana di samping. Rincian pesanan akan dirapikan otomatis sehingga langsung terbaca jelas oleh Admin WhatsApp Raincarnation untuk konfirmasi.",
-     trustItems: [
-          {
-               title: "Harga All-In Transparan",
-               description:
-                    "Termasuk BBM dan jasa driver. Biaya tol dan parkir dapat disesuaikan sesuai kebutuhan rute Anda.",
-          },
-          {
-               title: "Garansi Unit Pengganti",
-               description:
-                    "Bila unit mengalami kendala teknis, armada cadangan sekelas langsung diberangkatkan.",
-          },
-     ],
      emergency: {
           question: "Butuh Penanganan Cepat Hari Ini?",
           linkLabel: "Telepon / WhatsApp Admin 24 Jam",
@@ -145,10 +133,20 @@ export const sewaMobilFormIntro = {
           "Pilih paket sewa, armada, dan rute perjalanan, lalu isi tanggal dan jam untuk melihat estimasi tarif dan melanjutkan pemesanan melalui WhatsApp.",
 } as const;
 
-// BELUM DIKONFIRMASI BOS: Surabaya dianggap luar kota (tol) di All In; nama paket harus sama persis dengan paket_sewa di CMS.
-export type SewaMobilPackageKind = "drop-off" | "all-in" | "lepas-kunci";
+// BELUM DIKONFIRMASI BOS: rincian "termasuk" mengikuti informasi bos sesi 18; nama paket Carter harus sama persis dengan paket_sewa di CMS (rute-carter).
+export type SewaMobilPackageKind =
+     | "drop-off"
+     | "all-in"
+     | "non-all-in"
+     | "lepas-kunci";
 
 export type SewaMobilRouteScope = "dalam-kota" | "luar-kota";
+
+const sewaMobilCityRoutes = [
+     { label: "Malang" },
+     { label: "Batu" },
+     { label: "Surabaya" },
+];
 
 export const sewaMobilPackageConfig = {
      askAdminText: "Tanyakan harga ke admin",
@@ -156,29 +154,43 @@ export const sewaMobilPackageConfig = {
           {
                kind: "drop-off" as SewaMobilPackageKind,
                name: "Carter Drop Off 1 Arah",
+               includes: ["Unit", "BBM", "Driver"],
           },
           {
                kind: "all-in" as SewaMobilPackageKind,
                name: "Sewa Mobil All In",
                duration: "1 hari",
                priceUnit: "/hari",
-               routes: [
-                    { label: "Malang", scope: "dalam-kota" as SewaMobilRouteScope },
-                    { label: "Batu", scope: "dalam-kota" as SewaMobilRouteScope },
-                    { label: "Surabaya", scope: "luar-kota" as SewaMobilRouteScope },
-               ],
+               routes: sewaMobilCityRoutes,
                customRouteLabel: "Custom rute",
-               includes: {
-                    "dalam-kota": ["Unit", "BBM", "Driver", "Parkir"],
-                    "luar-kota": ["Unit", "BBM", "Driver", "Tol", "Parkir"],
-               },
+               includes: [
+                    "Unit",
+                    "BBM",
+                    "Driver",
+                    "Makan driver",
+                    "Tol",
+                    "Parkir",
+               ],
+               excludes: [] as string[],
+          },
+          {
+               kind: "non-all-in" as SewaMobilPackageKind,
+               name: "Sewa Mobil Non All In",
+               duration: "1 hari",
+               priceUnit: "/hari",
+               routes: sewaMobilCityRoutes,
+               customRouteLabel: "Custom rute",
+               includes: ["Unit", "BBM", "Driver"],
                excludes: [] as string[],
           },
           {
                kind: "lepas-kunci" as SewaMobilPackageKind,
                name: "Sewa Mobil Lepas Kunci",
-               duration: "12 jam",
-               priceUnit: "/12 jam",
+               durations: [
+                    { value: "12-jam", label: "12 jam", priceUnit: "/12 jam" },
+                    { value: "bulanan", label: "Bulanan", priceUnit: "/bulan" },
+                    { value: "tahunan", label: "Tahunan", priceUnit: "/tahun" },
+               ],
                routes: [
                     {
                          label: "Dalam kota (Malang, Batu)",
@@ -198,6 +210,8 @@ export const sewaMobilPackageConfig = {
           customRoute: "Rute yang diinginkan",
           includes: "Sudah termasuk",
           excludes: "Tidak termasuk",
+          withDriver: "Dengan sopir",
+          driverAddOn: "Tambahan driver",
      },
      placeholders: {
           passengers: "Jumlah penumpang",
@@ -220,7 +234,6 @@ export const dummyArmadaList: Armada[] = [
                jumlah_penumpang: "5 penumpang",
                koper: "4-5 koper",
                harga: "2500000",
-               bbm: "Termasuk BBM",
                kata_kunci_utama: "Sewa Alphard Malang",
           },
      },
@@ -237,7 +250,6 @@ export const dummyArmadaList: Armada[] = [
                jumlah_penumpang: "6 penumpang",
                koper: "2-3 koper",
                harga: "450000",
-               bbm: "Termasuk BBM",
                kata_kunci_utama: "Sewa Avanza Malang",
           },
      },
@@ -254,7 +266,6 @@ export const dummyArmadaList: Armada[] = [
                jumlah_penumpang: "6 penumpang",
                koper: "4 koper",
                harga: "850000",
-               bbm: "Termasuk BBM",
                kata_kunci_utama: "Sewa Innova Zenix Malang",
           },
      },
@@ -271,7 +282,6 @@ export const dummyArmadaList: Armada[] = [
                jumlah_penumpang: "6 penumpang",
                koper: "3-4 koper",
                harga: "650000",
-               bbm: "Termasuk BBM",
                kata_kunci_utama: "Sewa Innova Reborn Malang",
           },
      },
@@ -288,7 +298,6 @@ export const dummyArmadaList: Armada[] = [
                jumlah_penumpang: "6 penumpang",
                koper: "3 koper",
                harga: "500000",
-               bbm: "Termasuk BBM",
           },
      },
      {
@@ -304,7 +313,6 @@ export const dummyArmadaList: Armada[] = [
                jumlah_penumpang: "5 penumpang",
                koper: "4 koper",
                harga: "1400000",
-               bbm: "Termasuk BBM",
           },
      },
      {
@@ -320,7 +328,6 @@ export const dummyArmadaList: Armada[] = [
                jumlah_penumpang: "5 penumpang",
                koper: "4 koper",
                harga: "1400000",
-               bbm: "Termasuk BBM",
           },
      },
      {
@@ -336,7 +343,6 @@ export const dummyArmadaList: Armada[] = [
                jumlah_penumpang: "14 penumpang",
                koper: "6 koper",
                harga: "1100000",
-               bbm: "Termasuk BBM",
           },
      },
      {
@@ -352,7 +358,6 @@ export const dummyArmadaList: Armada[] = [
                jumlah_penumpang: "8 penumpang",
                koper: "6 koper",
                harga: "1600000",
-               bbm: "Termasuk BBM",
           },
      },
      {
@@ -368,7 +373,6 @@ export const dummyArmadaList: Armada[] = [
                jumlah_penumpang: "19 penumpang",
                koper: "8 koper",
                harga: "1300000",
-               bbm: "Termasuk BBM",
           },
      },
      {
@@ -384,7 +388,6 @@ export const dummyArmadaList: Armada[] = [
                jumlah_penumpang: "7 penumpang",
                koper: "3 koper",
                harga: "350000",
-               bbm: "Termasuk BBM",
           },
      },
      {
@@ -400,7 +403,6 @@ export const dummyArmadaList: Armada[] = [
                jumlah_penumpang: "6 penumpang",
                koper: "3 koper",
                harga: "450000",
-               bbm: "Termasuk BBM",
           },
      },
      {
@@ -416,7 +418,6 @@ export const dummyArmadaList: Armada[] = [
                jumlah_penumpang: "5 penumpang",
                koper: "3 koper",
                harga: "1200000",
-               bbm: "Termasuk BBM",
           },
      },
      {
@@ -432,7 +433,6 @@ export const dummyArmadaList: Armada[] = [
                jumlah_penumpang: "33 penumpang",
                koper: "15 koper",
                harga: "2200000",
-               bbm: "Termasuk BBM",
           },
      },
      {
@@ -448,7 +448,6 @@ export const dummyArmadaList: Armada[] = [
                jumlah_penumpang: "50 penumpang",
                koper: "25 koper",
                harga: "3500000",
-               bbm: "Termasuk BBM",
           },
      },
 ];

@@ -4,15 +4,15 @@ import Link from "next/link";
 import { ArrowRight, BookOpen, CarFront, MessageSquareText } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import {
-     blogArticles,
      blogCta,
-     blogFeatured,
      blogHero,
      blogMeta,
      blogSidebar,
 } from "@/constants/blog";
 import { getSiteConfig } from "@/lib/wordpress/config";
+import { getPosts } from "@/lib/wordpress/posts";
 import { getRoutes } from "@/lib/wordpress/routes";
+import type { Post } from "@/types/post";
 import type { Route } from "@/types/route";
 import { capitalizeFirst } from "@/utils/capitalize-first";
 import { decodeHtml } from "@/utils/decode-html";
@@ -45,25 +45,57 @@ async function loadRoutes(): Promise<Route[]> {
      }
 }
 
-const eyebrowClass =
-     "font-label-md text-label-md font-bold uppercase tracking-widest text-primary";
+async function loadPosts(): Promise<Post[]> {
+     try {
+          return await getPosts();
+     } catch (error) {
+          console.error("[BlogPage] Gagal mengambil artikel dari CMS:", error);
+          return [];
+     }
+}
 
-const waButtonClass =
-     "inline-flex items-center justify-center gap-space-sm rounded-lg bg-whatsapp px-space-md py-space-md font-label-lg text-label-lg text-on-whatsapp shadow-[0_4px_16px_rgba(37,211,102,0.35)] transition-all duration-150 hover:bg-whatsapp-hover";
+const FALLBACK_IMAGE = "/images/interior-armada.webp";
+
+function postImage(post: Post): string {
+     const raw = post.featured_image?.url;
+     return raw ? raw.replace(/^http:\/\//i, "https://") : FALLBACK_IMAGE;
+}
+
+function postCategory(post: Post): string {
+     return decodeHtml(post.categories?.[0]?.name ?? "");
+}
 
 export default async function BlogPage() {
-     const [config, routes] = await Promise.all([getSiteConfig(), loadRoutes()]);
+     const [config, routes, posts] = await Promise.all([
+          getSiteConfig(),
+          loadRoutes(),
+          loadPosts(),
+     ]);
      const whatsapp = config.contact?.whatsapp ?? "";
      const sidebar = blogSidebar;
-     const featured = blogFeatured;
+     const featured = posts[0];
+     const others = posts.slice(1);
 
      // Tarif asli dari CMS: empat rute pertama yang punya tarif.
      const tariffRoutes = routes
           .filter((route) => route.slug && Number(route.acf?.tarif) > 0)
           .slice(0, 4);
 
+     const breadcrumbJsonLd = {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+               { "@type": "ListItem", position: 1, name: "Beranda", item: siteConfig.url },
+               { "@type": "ListItem", position: 2, name: "Blog", item: `${siteConfig.url}/blog` },
+          ],
+     };
+
      return (
           <main className="w-full bg-surface">
+               <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+               />
                {/* Hero */}
                <section className="w-full py-space-xl">
                     <div className="mx-auto max-w-6xl space-y-space-md px-gutter">
@@ -94,104 +126,112 @@ export default async function BlogPage() {
                     </div>
                </section>
 
-               {/* Artikel unggulan */}
-               <section className="w-full pb-space-xl">
-                    <div className="mx-auto max-w-6xl px-gutter">
-                         <div className="grid overflow-hidden rounded-2xl bg-surface-container-lowest shadow-md lg:grid-cols-12">
-                              <div className="relative min-h-[260px] lg:col-span-7 lg:min-h-[400px]">
-                                   <Image
-                                        src={featured.image.src}
-                                        alt={featured.image.alt}
-                                        fill
-                                        priority
-                                        sizes="(min-width: 1024px) 55vw, 100vw"
-                                        className="object-cover"
-                                   />
-                                   <div className="absolute left-4 top-4 flex items-center gap-2">
-                                        <span className="rounded-full bg-primary-container px-3 py-1 font-label-sm text-label-sm font-bold text-on-primary shadow-md">
-                                             {featured.badge}
-                                        </span>
-                                        <span className="rounded-full bg-surface-container-lowest/90 px-3 py-1 font-label-sm text-label-sm font-bold text-secondary">
-                                             {featured.category}
-                                        </span>
+               {/* Artikel unggulan (artikel terbaru dari CMS) */}
+               {featured && (
+                    <section className="w-full pb-space-xl">
+                         <div className="mx-auto max-w-6xl px-gutter">
+                              <div className="grid overflow-hidden rounded-2xl bg-surface-container-lowest shadow-md lg:grid-cols-12">
+                                   <div className="relative min-h-[260px] lg:col-span-7 lg:min-h-[400px]">
+                                        <Image
+                                             src={postImage(featured)}
+                                             alt={
+                                                  featured.featured_image?.alt ||
+                                                  decodeHtml(featured.title)
+                                             }
+                                             fill
+                                             priority
+                                             sizes="(min-width: 1024px) 55vw, 100vw"
+                                             className="object-cover"
+                                        />
+                                        {postCategory(featured) && (
+                                             <div className="absolute left-4 top-4">
+                                                  <span className="rounded-full bg-surface-container-lowest/90 px-3 py-1 font-label-sm text-label-sm font-bold text-secondary">
+                                                       {postCategory(featured)}
+                                                  </span>
+                                             </div>
+                                        )}
                                    </div>
-                              </div>
-                              <div className="flex flex-col justify-between gap-space-md p-space-lg lg:col-span-5 lg:p-space-xl">
-                                   <div className="space-y-space-sm">
-                                        <h2 className="font-headline-md text-headline-md font-bold leading-tight text-on-surface">
-                                             {featured.title}
-                                        </h2>
-                                        <p className="font-body-sm text-body-sm leading-relaxed text-on-surface-variant">
-                                             {featured.excerpt}
-                                        </p>
-                                        <ul className="flex flex-wrap gap-2 pt-2">
-                                             {featured.tags.map((tag) => (
-                                                  <li
-                                                       key={tag}
-                                                       className="rounded-md bg-surface-container px-2.5 py-1 font-label-sm text-label-sm text-secondary"
-                                                  >
-                                                       {tag}
-                                                  </li>
-                                             ))}
-                                        </ul>
-                                   </div>
-                                   {whatsapp && (
-                                        <a
-                                             href={buildWhatsAppUrl(whatsapp, featured.whatsappMessage)}
-                                             target="_blank"
-                                             rel="noopener noreferrer"
+                                   <div className="flex flex-col justify-between gap-space-md p-space-lg lg:col-span-5 lg:p-space-xl">
+                                        <div className="space-y-space-sm">
+                                             <h2 className="font-headline-md text-headline-md font-bold leading-tight text-on-surface">
+                                                  {decodeHtml(featured.title)}
+                                             </h2>
+                                             {featured.excerpt && (
+                                                  <p className="font-body-sm text-body-sm leading-relaxed text-on-surface-variant">
+                                                       {decodeHtml(featured.excerpt)}
+                                                  </p>
+                                             )}
+                                        </div>
+                                        <Link
+                                             href={`/blog/${featured.slug}`}
                                              className="inline-flex w-fit items-center gap-1.5 rounded-lg bg-primary px-4 py-2.5 font-label-md text-label-md text-on-primary shadow-sm transition-all hover:bg-on-primary-fixed-variant"
                                         >
-                                             {featured.buttonLabel}
+                                             Baca Artikel
                                              <ArrowRight size={18} aria-hidden="true" />
-                                        </a>
-                                   )}
+                                        </Link>
+                                   </div>
                               </div>
                          </div>
-                    </div>
-               </section>
+                    </section>
+               )}
 
                {/* Daftar artikel + sidebar */}
                <section className="w-full pb-space-xl">
                     <div className="mx-auto grid max-w-6xl gap-space-lg px-gutter lg:grid-cols-12">
                          <div className="space-y-space-lg lg:col-span-8">
-                              <div className="flex items-center justify-between gap-space-md">
-                                   <h2 className="font-headline-sm text-headline-sm font-bold text-on-surface">
-                                        {blogArticles.title}
-                                   </h2>
-                                   <span className="font-label-sm text-label-sm text-outline">
-                                        {blogArticles.previewNote}
-                                   </span>
-                              </div>
-                              <div className="grid grid-cols-1 gap-space-md md:grid-cols-2">
-                                   {blogArticles.items.map((item) => (
-                                        <article
-                                             key={item.title}
-                                             className="flex flex-col overflow-hidden rounded-xl bg-surface-container-lowest shadow-sm"
-                                        >
-                                             <div className="relative h-44 w-full">
-                                                  <Image
-                                                       src="/images/interior-armada.webp"
-                                                       alt=""
-                                                       fill
-                                                       sizes="(min-width: 768px) 30vw, 100vw"
-                                                       className="object-cover"
-                                                  />
-                                                  <span className="absolute left-3 top-3 rounded bg-surface-container-lowest/90 px-2.5 py-1 font-label-sm text-label-sm font-bold text-primary">
-                                                       {item.category}
-                                                  </span>
-                                             </div>
-                                             <div className="flex flex-1 flex-col gap-2 p-space-md">
-                                                  <h3 className="line-clamp-3 font-headline-sm text-headline-sm font-bold text-on-surface">
-                                                       {item.title}
-                                                  </h3>
-                                                  <p className="line-clamp-3 font-body-sm text-body-sm text-on-surface-variant">
-                                                       {item.excerpt}
-                                                  </p>
-                                             </div>
-                                        </article>
-                                   ))}
-                              </div>
+                              {posts.length === 0 && (
+                                   <p className="rounded-xl bg-surface-container-lowest p-space-lg font-body-md text-body-md text-on-surface-variant shadow-sm">
+                                        Artikel segera hadir.
+                                   </p>
+                              )}
+                              {others.length > 0 && (
+                                   <>
+                                        <h2 className="font-headline-sm text-headline-sm font-bold text-on-surface">
+                                             Artikel Terbaru
+                                        </h2>
+                                        <div className="grid grid-cols-1 gap-space-md md:grid-cols-2">
+                                             {others.map((post) => (
+                                                  <article
+                                                       key={post.id}
+                                                       className="overflow-hidden rounded-xl bg-surface-container-lowest shadow-sm"
+                                                  >
+                                                       <Link
+                                                            href={`/blog/${post.slug}`}
+                                                            className="flex h-full flex-col"
+                                                       >
+                                                            <div className="relative h-44 w-full">
+                                                                 <Image
+                                                                      src={postImage(post)}
+                                                                      alt={
+                                                                           post.featured_image?.alt ||
+                                                                           decodeHtml(post.title)
+                                                                      }
+                                                                      fill
+                                                                      sizes="(min-width: 768px) 30vw, 100vw"
+                                                                      className="object-cover"
+                                                                 />
+                                                                 {postCategory(post) && (
+                                                                      <span className="absolute left-3 top-3 rounded bg-surface-container-lowest/90 px-2.5 py-1 font-label-sm text-label-sm font-bold text-primary">
+                                                                           {postCategory(post)}
+                                                                      </span>
+                                                                 )}
+                                                            </div>
+                                                            <div className="flex flex-1 flex-col gap-2 p-space-md">
+                                                                 <h3 className="line-clamp-3 font-headline-sm text-headline-sm font-bold text-on-surface">
+                                                                      {decodeHtml(post.title)}
+                                                                 </h3>
+                                                                 {post.excerpt && (
+                                                                      <p className="line-clamp-3 font-body-sm text-body-sm text-on-surface-variant">
+                                                                           {decodeHtml(post.excerpt)}
+                                                                      </p>
+                                                                 )}
+                                                            </div>
+                                                       </Link>
+                                                  </article>
+                                             ))}
+                                        </div>
+                                   </>
+                              )}
                          </div>
 
                          <aside className="space-y-space-lg lg:col-span-4">
@@ -236,7 +276,7 @@ export default async function BlogPage() {
                                              {tariffRoutes.map((route) => (
                                                   <li key={route.id}>
                                                        <Link
-                                                            href={`/rute/${route.slug}`}
+                                                            href={`/travel/${route.slug}`}
                                                             className="flex items-center justify-between gap-space-sm rounded-xl bg-surface-container-low p-2.5 transition-colors hover:bg-surface-container"
                                                        >
                                                             <span className="font-label-md text-label-md font-bold text-on-surface">

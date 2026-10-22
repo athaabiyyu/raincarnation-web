@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import BerandaHero from "@/components/sections/BerandaHero";
-import BerandaTrust from "@/components/sections/BerandaTrust";
 import BerandaServices from "@/components/sections/BerandaServices";
 import BerandaWhy from "@/components/sections/BerandaWhy";
 import BerandaFaq from "@/components/sections/BerandaFaq";
@@ -69,6 +68,7 @@ function buildAutoRentalJsonLd(config: SiteConfig) {
      return {
           "@context": "https://schema.org",
           "@type": "AutoRental",
+          "@id": `${siteConfig.url}/#business`,
           name: siteConfig.name,
           url: siteConfig.url,
           logo: `${siteConfig.url}/logo.webp`,
@@ -166,13 +166,19 @@ export default async function HomePage() {
           name: capitalizeFirst(decodeHtml(item.title)),
           harga: item.acf?.harga,
           hargaAllIn: item.acf?.harga_all_in,
+          hargaNonAllIn: item.acf?.harga_non_all_in,
+          hargaLepasKunciBulanan: item.acf?.harga_lepas_kunci_bulanan,
+          hargaLepasKunciTahunan: item.acf?.harga_lepas_kunci_tahunan,
+          tambahanDriver: item.acf?.tambahan_driver,
      }));
 
      const hasReguler = Boolean(whatsapp) && pairs.length > 0;
      const hasCarter =
           Boolean(whatsapp) &&
           (ruteCarter.length > 0 ||
-               fleet.some((item) => item.harga || item.hargaAllIn));
+               fleet.some(
+                    (item) => item.harga || item.hargaAllIn || item.hargaNonAllIn,
+               ));
 
      const regulerForm = (
           <RouteSearchForm
@@ -232,15 +238,13 @@ export default async function HomePage() {
                          </div>
                     </section>
                )}
-
-               <BerandaTrust />
                <ArmadaCatalog
                     armada={armada}
                     whatsapp={whatsapp}
                     variant="home"
                     seeAllHref="/armada"
                />
-               
+
 
                {whatsapp && routes.length > 0 && (
                     <FeaturedRoutes

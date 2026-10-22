@@ -83,6 +83,7 @@ export default async function TravelRegulerPage() {
     ],
     provider: {
       "@type": "LocalBusiness",
+      "@id": `${siteConfig.url}/#business`,
       name: siteConfig.name,
       image: `${siteConfig.url}/images/interior-armada.webp`,
     },
