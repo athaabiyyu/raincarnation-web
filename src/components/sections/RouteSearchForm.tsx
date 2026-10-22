@@ -35,7 +35,7 @@ function todayLocal(): string {
 const subscribe = () => () => { };
 
 const selectClass =
-     "h-[2.75rem] w-full appearance-none cursor-pointer rounded-lg bg-surface-container-low px-3 pr-8 font-label-md text-base md:text-label-md text-on-surface transition-colors focus:bg-surface-container-high focus:outline-none";
+     "[color-scheme:light] h-[2.75rem] w-full appearance-none cursor-pointer rounded-lg bg-surface-container-low px-3 pr-8 font-label-md text-base md:text-label-md text-on-surface transition-colors focus:bg-surface-container-high focus:outline-none";
 
 const labelClass =
      "flex items-center gap-1 font-label-sm text-label-sm text-on-surface-variant";
@@ -211,7 +211,7 @@ export default function RouteSearchForm({
                               min={today}
                               value={date}
                               onChange={(e) => setPickedDate(e.target.value)}
-                              className="h-[2.75rem] w-full min-w-0 appearance-none rounded-lg bg-surface-container-low px-3 text-left font-label-md text-base md:text-label-md text-on-surface transition-colors focus:bg-surface-container-high focus:outline-none [&::-webkit-date-and-time-value]:text-left"
+                              className="[color-scheme:light] h-[2.75rem] w-full min-w-0 appearance-none rounded-lg bg-surface-container-low px-3 text-left font-label-md text-base md:text-label-md text-on-surface transition-colors focus:bg-surface-container-high focus:outline-none [&::-webkit-date-and-time-value]:text-left"
                          />
                     </div>
 

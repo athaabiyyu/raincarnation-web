@@ -92,7 +92,7 @@ const RENTAL_KINDS: SewaMobilPackageKind[] = [
 ];
 
 const selectClass =
-     "h-[2.75rem] w-full appearance-none cursor-pointer rounded-lg bg-surface-container-low px-3 pr-8 font-label-md text-base md:text-label-md text-on-surface transition-colors focus:bg-surface-container-high focus:outline-none disabled:cursor-not-allowed disabled:opacity-60";
+     "[color-scheme:light] h-[2.75rem] w-full appearance-none cursor-pointer rounded-lg bg-surface-container-low px-3 pr-8 font-label-md text-base md:text-label-md text-on-surface transition-colors focus:bg-surface-container-high focus:outline-none disabled:cursor-not-allowed disabled:opacity-60";
 
 const inputClass =
      "h-[2.75rem] w-full min-w-0 appearance-none rounded-lg bg-surface-container-low px-3 text-left font-label-md text-base md:text-label-md text-on-surface transition-colors placeholder:text-on-surface-variant focus:bg-surface-container-high focus:outline-none [&::-webkit-date-and-time-value]:text-left";
