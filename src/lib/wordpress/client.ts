@@ -6,7 +6,8 @@ type ApiResponse<T> = {
   meta?: unknown;
 };
 
-const REVALIDATE_SECONDS = process.env.NODE_ENV === "development" ? 0 : 3600;
+// SEMENTARA: 60 detik selama fase mengisi data CMS. Naikkan lagi (mis. 3600) saat peluncuran.
+const REVALIDATE_SECONDS = process.env.NODE_ENV === "development" ? 0 : 60;
 
 export async function wpFetch<T>(path: string): Promise<T> {
   if (!API_URL) {
