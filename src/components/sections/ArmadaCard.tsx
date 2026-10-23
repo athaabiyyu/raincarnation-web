@@ -104,7 +104,7 @@ export default function ArmadaCard({
                                    {/* Label Header Paket */}
                                    <div className="flex items-center justify-between text-[11px] font-bold tracking-wider">
                                         <span className="uppercase text-on-surface-variant">PILIHAN PAKET TARIF</span>
-                                        <span className="text-emerald-600">Transparan &amp; Hemat</span>
+                                        <span className="text-primary">Transparan &amp; Hemat</span>
                                    </div>
 
                                    {/* Grid Opsi Harga */}
@@ -129,8 +129,8 @@ export default function ArmadaCard({
 
                                         {/* Opsi 2: All In */}
                                         {showAllIn && (
-                                             <div className="relative flex flex-col justify-between rounded-2xl border-2 border-emerald-500/80 bg-emerald-50/20 p-3 shadow-sm">
-                                                  <span className="absolute -top-2.5 right-2 rounded-full bg-emerald-600 px-2 py-0.5 text-[9px] font-bold text-white shadow-xs">
+                                             <div className="relative flex flex-col justify-between rounded-2xl border-2 border-primary bg-primary/5 p-3 shadow-sm">
+                                                  <span className="absolute -top-2.5 right-2 rounded-full bg-primary px-2 py-0.5 text-[9px] font-bold text-on-primary shadow-xs">
                                                        PRAKTIS
                                                   </span>
                                                   <div>
@@ -144,7 +144,7 @@ export default function ArmadaCard({
                                                             {priceAllIn}
                                                        </div>
                                                   </div>
-                                                  <span className="mt-1 text-[10px] text-emerald-700/80">per hari (fullday)</span>
+                                                  <span className="mt-1 text-[10px] text-primary">per hari (fullday)</span>
                                              </div>
                                         )}
                                    </div>
