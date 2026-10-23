@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Bus, Headset, MessageSquareText } from "lucide-react";
-import { footerContent } from "@/constants/footer";
+import { Bus, Headset, MapPin, MessageSquareText } from "lucide-react";
+import { footerContent, footerLocations } from "@/constants/footer";
 import { getSiteConfig } from "@/lib/wordpress/config";
 import { formatPhoneDisplay } from "@/utils/format-phone";
 import { buildWhatsAppUrl } from "@/utils/whatsapp";
@@ -31,6 +31,24 @@ export default async function Footer() {
                               <p className="max-w-md font-body-sm text-body-sm text-on-surface-variant">
                                    {c.description}
                               </p>
+                              <div className="max-w-md">
+                                   <h2 className={headingClass}>
+                                        <MapPin
+                                             size={16}
+                                             className="shrink-0 text-primary"
+                                             aria-hidden="true"
+                                        />
+                                        {footerLocations.title}
+                                   </h2>
+                                   <ul className="space-y-space-sm font-body-sm text-body-sm text-on-surface-variant">
+                                        {footerLocations.items.map((loc) => (
+                                             <li key={loc.name}>
+                                                  <p className="font-bold text-on-surface">{loc.name}</p>
+                                                  <p>{loc.address}</p>
+                                             </li>
+                                        ))}
+                                   </ul>
+                              </div>
                          </div>
 
                          {/* Layanan & navigasi */}

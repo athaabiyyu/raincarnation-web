@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import BerandaHero from "@/components/sections/BerandaHero";
 import BerandaServices from "@/components/sections/BerandaServices";
+import BerandaSteps from "@/components/sections/BerandaSteps";
 import BerandaWhy from "@/components/sections/BerandaWhy";
 import BerandaFaq from "@/components/sections/BerandaFaq";
 import ArmadaCatalog from "@/components/sections/ArmadaCatalog";
@@ -239,6 +240,7 @@ export default async function HomePage() {
                     </section>
                )}
 
+               <BerandaServices />
 
                <ArmadaCatalog
                     armada={armada}
@@ -257,7 +259,7 @@ export default async function HomePage() {
                     />
                )}
 
-               <BerandaServices />
+               <BerandaSteps />
 
                <BerandaWhy whatsapp={whatsapp} />
                <BerandaFaq />

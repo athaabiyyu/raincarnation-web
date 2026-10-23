@@ -48,7 +48,7 @@ export default function ArmadaCatalog({
      return (
           <section
                id={armadaCatalog.id}
-               className={`w-full scroll-mt-32 ${isHome ? "bg-surface-container-low py-space-xl" : "pt-space-xl"
+               className={`w-full scroll-mt-32 ${isHome ? "bg-surface py-space-xl" : "pt-space-xl"
                     }`}
           >
                <div className="mx-auto max-w-6xl px-gutter">

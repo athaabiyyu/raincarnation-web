@@ -26,13 +26,13 @@ export default function BerandaWhy({ whatsapp }: BerandaWhyProps) {
           : null;
 
      return (
-          <section className="w-full bg-surface py-space-xl">
+          <section className="w-full bg-surface-container-low py-space-xl">
                <div className="mx-auto max-w-6xl px-gutter">
                     <div className="rounded-xl bg-surface-container-lowest p-space-lg shadow-md lg:p-space-xl">
                          <div className="grid grid-cols-1 gap-space-lg lg:grid-cols-12 lg:gap-y-space-md">
                               <div className="space-y-space-xs lg:col-span-5 lg:col-start-1 lg:row-start-1 lg:self-end">
                                    <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
-                                        STANDAR KUALITAS TERTINGGI
+                                        LAYANAN YANG TRANSPARAN
                                    </span>
                                    <h2 className="font-headline-lg text-headline-lg tracking-tight text-on-surface">
                                         {berandaWhy.title}

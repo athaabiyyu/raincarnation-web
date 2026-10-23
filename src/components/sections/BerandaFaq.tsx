@@ -12,7 +12,7 @@ export default function BerandaFaq() {
      };
 
      return (
-          <section className="w-full bg-surface-container-low py-space-xl">
+          <section className="w-full bg-surface py-space-xl">
                <div className="mx-auto max-w-4xl px-gutter">
                     {/* Header: Rata Tengah (text-center) dengan ukuran font judul setara section lain */}
                     <div className="space-y-space-xs text-center pb-space-lg">
@@ -34,7 +34,7 @@ export default function BerandaFaq() {
                               return (
                                    <div
                                         key={index}
-                                        className="overflow-hidden rounded-xl border border-surface-container-high/60 bg-surface-container-lowest shadow-2xs transition-all duration-200 md:rounded-2xl"
+                                        className="overflow-hidden rounded-xl border border-surface-container-high/60 bg-surface-container-low shadow-2xs transition-all duration-200 md:rounded-2xl"
                                    >
                                         <button
                                              type="button"

@@ -25,3 +25,19 @@ export const footerContent = {
      companyName: "PT Raincarnation Indonesia",
      copyrightSuffix: "Hak Cipta Dilindungi Undang-Undang.",
 };
+
+export const footerLocations = {
+     title: "Lokasi Garasi",
+     items: [
+          {
+               name: "Garasi Batu",
+               address:
+                    "Jl. Torongrejo, Torongrejo, Kec. Junrejo, Kota Batu, Jawa Timur 65325",
+          },
+          {
+               name: "Garasi Surabaya",
+               address:
+                    "Jl. Baruk Barat VIII No.A-103, Kedung Baruk, Kec. Rungkut, Kota Surabaya, Jawa Timur 60298",
+          },
+     ] satisfies { name: string; address: string; mapsUrl?: string }[],
+};

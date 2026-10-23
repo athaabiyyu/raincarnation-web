@@ -1,4 +1,5 @@
 export type BerandaServiceIcon = "armchair" | "car";
+export type BerandaStepIcon = "layers" | "send" | "badge-check";
 export type BerandaWhyIcon =
      | "badge-check"
      | "smile"
@@ -51,18 +52,18 @@ export const berandaServices = {
           },
           {
                icon: "armchair",
-               tag: "TRAVEL REGULER",
-               title: "Travel Reguler per Kursi",
+               tag: "TRAVEL",
+               title: "Travel per Kursi",
                description:
-                    "Pilihan perjalanan antarkota bagi Anda yang ingin memesan kursi tanpa menyewa satu mobil penuh.",
+                    "Pilihan perjalanan antarkota per kursi untuk rute tetap, tanpa menyewa satu mobil penuh.",
                points: [
-                    "Pembayaran berdasarkan jumlah kursi",
-                    "Antar jemput door to door (kecuali titik di Pandaan dan Juanda)",
-                    "Tarif sudah termasuk tol dan parkir",
-                    "Tersedia rute tertentu sesuai jadwal",
+                    "Biaya dihitung per kursi",
+                    "Dijemput di alamat Anda (kecuali titik di Pandaan dan Juanda)",
+                    "Tol dan parkir sudah termasuk",
+                    "Tersedia untuk rute pilihan sesuai jadwal",
                ],
-               button: "Lihat Jadwal & Rute Travel Reguler",
-               href: "/travel",
+               button: "Lihat Jadwal & Rute Travel",
+               href: "#rute-travel",
                featured: false,
           },
      ] satisfies {
@@ -77,37 +78,68 @@ export const berandaServices = {
      }[],
 };
 
+export const berandaSteps = {
+     eyebrow: "CARA PESAN",
+     title: "3 Langkah Pesan via WhatsApp",
+     description:
+          "Pemesanan dilakukan lewat WhatsApp bersama admin Raincarnation.",
+     steps: [
+          {
+               icon: "layers",
+               title: "Pilih Layanan",
+               description:
+                    "Tentukan sewa mobil atau travel per kursi sesuai kebutuhan perjalanan Anda.",
+          },
+          {
+               icon: "send",
+               title: "Kirim Kebutuhan Anda",
+               description:
+                    "Sebutkan tanggal, rute, serta armada atau jumlah kursi yang dibutuhkan lewat WhatsApp.",
+          },
+          {
+               icon: "badge-check",
+               title: "Admin Konfirmasi",
+               description:
+                    "Admin mengonfirmasi ketersediaan dan total biaya.",
+          },
+     ] satisfies {
+          icon: BerandaStepIcon;
+          title: string;
+          description: string;
+     }[],
+};
+
 export const berandaWhy = {
      eyebrow: "Standar Kualitas Raincarnation",
      title: "Mengapa Memilih Raincarnation?",
      description:
-          "Kami menyediakan layanan sewa mobil dan travel reguler dengan informasi layanan yang jelas untuk membantu Anda mempersiapkan perjalanan.",
+          "Rincian layanan kami tulis jelas sejak awal, jadi Anda tahu apa yang termasuk sebelum memesan sewa mobil atau travel per kursi.",
      button: "Hubungi Admin Reservasi",
      message: "Halo Admin Raincarnation, saya ingin tanya reservasi.",
      items: [
           {
                icon: "badge-check",
-               title: "Driver Profesional",
+               title: "Rincian Tarif Jelas",
                description:
-                    "Driver yang mengutamakan keselamatan, kenyamanan, dan etika dalam melayani penumpang.",
+                    "All In sudah termasuk BBM, driver, makan driver, tol, dan parkir. Tarif travel per kursi juga sudah termasuk tol dan parkir.",
           },
           {
                icon: "smile",
-               title: "Kabin Bersih dan Nyaman",
+               title: "Layanan 24 Jam",
                description:
-                    "Kabin kendaraan dijaga kebersihannya untuk mendukung kenyamanan selama perjalanan.",
+                    "Admin siap dihubungi lewat WhatsApp kapan saja untuk menanyakan tarif, jadwal, dan ketersediaan.",
           },
           {
                icon: "shield-check",
-               title: "Perawatan Kendaraan Berkala",
+               title: "Unit Dicek Sebelum Berangkat",
                description:
-                    "Kendaraan dirawat secara berkala sesuai kebutuhan perawatan dan kondisi unit.",
+                    "Setiap unit kami cek terlebih dahulu sebelum digunakan, supaya perjalanan Anda lebih tenang.",
           },
           {
                icon: "message-square-text",
-               title: "Reservasi via WhatsApp",
+               title: "Pilihan Layanan Lengkap",
                description:
-                    "Tanyakan tarif, ketersediaan armada, dan detail perjalanan langsung kepada admin.",
+                    "Sewa mobil dengan sopir atau lepas kunci, carter satu arah, dan travel per kursi dalam satu tempat.",
           },
      ] satisfies {
           icon: BerandaWhyIcon;
@@ -120,7 +152,7 @@ export const berandaFaq = {
      eyebrow: "PERTANYAAN UMUM",
      title: "Pertanyaan Sering Diajukan Seputar Sewa Mobil Malang",
      description:
-          "Temukan jawaban cepat mengenai layanan sewa mobil, paket driver, lepas kunci, dan travel reguler di Raincarnation.",
+          "Temukan jawaban cepat mengenai layanan sewa mobil, paket driver, lepas kunci, dan travel per kursi di Raincarnation.",
      items: [
           {
                question: "Apakah Raincarnation menyediakan layanan sewa mobil Malang dengan driver?",
@@ -133,9 +165,14 @@ export const berandaFaq = {
                     "Tersedia untuk unit dan kriteria tertentu. Anda dapat menghubungi admin reservasi kami via WhatsApp untuk mengetahui syarat dan ketentuan sewa mobil lepas kunci.",
           },
           {
-               question: "Apa bedanya sewa mobil All In, Lepas Kunci, dan Carter Drop Off?",
+               question: "Apa bedanya sewa mobil All In, Non All In, Lepas Kunci, dan Carter Drop Off?",
                answer:
-                    "All In adalah sewa mobil dengan sopir, tarif per hari. Lepas Kunci adalah sewa mobil tanpa sopir, tarif per 12 jam, dan penyewa membawa KTP serta SIM A yang masih berlaku. Carter Drop Off 1 Arah adalah satu mobil untuk satu rute dari kota asal ke kota tujuan, tarif per rute. Tanyakan rincian lengkapnya ke admin lewat WhatsApp.",
+                    "All In adalah sewa mobil dengan sopir, tarif per hari, sudah termasuk BBM, driver, makan driver, tol, dan parkir. Non All In juga dengan sopir dan tarif per hari, tetapi hanya termasuk BBM dan driver. Lepas Kunci adalah sewa mobil tanpa sopir, dan penyewa membawa KTP serta SIM A yang masih berlaku. Carter Drop Off 1 Arah adalah satu mobil untuk satu rute dari kota asal ke kota tujuan, tarif per rute. Tanyakan rincian lengkapnya ke admin lewat WhatsApp.",
+          },
+          {
+               question: "Berapa lama durasi sewa mobil yang tersedia?",
+               answer:
+                    "All In dan Non All In dihitung per hari. Lepas Kunci tersedia per 12 jam, bulanan, atau tahunan. Carter Drop Off dihitung per rute tanpa durasi. Butuh durasi lain, termasuk 24 jam? Tanyakan ke admin lewat WhatsApp.",
           },
           {
                question: "Berapa harga sewa mobil per hari di Malang?",

@@ -63,7 +63,8 @@ export default function FeaturedRoutes({
 
      return (
           <section
-               className={`w-full py-space-xl ${onlyFeatured ? "bg-surface" : "bg-surface-container-low"
+               id={onlyFeatured ? "rute-travel" : undefined}
+               className={`w-full scroll-mt-24 py-space-xl ${onlyFeatured ? "bg-surface-container-low" : "bg-surface"
                     }`}
           >
                <div className="mx-auto max-w-6xl space-y-space-lg px-gutter">
