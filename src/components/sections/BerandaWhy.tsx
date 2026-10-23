@@ -71,7 +71,7 @@ export default function BerandaWhy({ whatsapp }: BerandaWhyProps) {
                                         href={whatsappUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-whatsapp px-space-md py-space-sm font-label-md text-label-md text-on-whatsapp shadow-[0_4px_16px_rgba(37,211,102,0.35)] transition-all hover:bg-whatsapp-hover active:scale-95 lg:col-span-5 lg:col-start-1 lg:row-start-2 lg:w-auto lg:justify-self-start lg:self-start"
+                                        className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-space-md py-space-sm font-label-md text-label-md text-on-primary shadow-sm transition-all hover:bg-primary/90 active:scale-95 lg:col-span-5 lg:col-start-1 lg:row-start-2 lg:w-auto lg:justify-self-start lg:self-start"
                                    >
                                         <MessageSquareText size={18} aria-hidden="true" />
                                         {berandaWhy.button}

@@ -125,7 +125,7 @@ export default function RouteCard({ route, whatsapp }: RouteCardProps) {
                               target="_blank"
                               rel="noopener noreferrer"
                               aria-label={`Pesan travel ${origin} ke ${destination} via WhatsApp`}
-                              className="flex items-center justify-center gap-1 sm:gap-space-xs whitespace-nowrap rounded-lg bg-whatsapp px-2 py-1.5 sm:px-space-sm sm:py-2 font-label-md text-xs sm:text-label-md font-bold text-on-whatsapp shadow-[0_4px_16px_rgba(37,211,102,0.3)] transition-all hover:bg-whatsapp-hover"
+                              className="flex items-center justify-center gap-1 sm:gap-space-xs whitespace-nowrap rounded-lg bg-primary px-2 py-1.5 sm:px-space-sm sm:py-2 font-label-md text-xs sm:text-label-md font-bold text-on-primary shadow-sm transition-all hover:bg-primary/90 active:scale-95"
                          >
                               <MessageSquareText className="h-3.5 w-3.5 sm:h-4 sm:w-4" aria-hidden />
                               {content.orderLabel}

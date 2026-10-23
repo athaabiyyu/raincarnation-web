@@ -238,6 +238,8 @@ export default async function HomePage() {
                          </div>
                     </section>
                )}
+
+
                <ArmadaCatalog
                     armada={armada}
                     whatsapp={whatsapp}

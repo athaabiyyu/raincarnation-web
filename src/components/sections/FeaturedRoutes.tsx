@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { ArrowRight, ChevronDown, Search, ListFilter, Check } from "lucide-react";
+import { ArrowRight, ChevronDown, Search, ListFilter, Check, Route as RouteIcon } from "lucide-react";
 import type { Route } from "@/types/route";
 import { featuredRoutesContent } from "@/constants/travel-reguler";
 import RouteCard from "@/components/sections/RouteCard";
@@ -105,8 +105,8 @@ export default function FeaturedRoutes({
                                                   type="button"
                                                   onClick={() => setIsFilterOpen(!isFilterOpen)}
                                                   className={`flex h-[44px] w-[44px] items-center justify-center rounded-full transition-all duration-200 md:h-[48px] md:w-[48px] ${activeFilter !== "Semua"
-                                                            ? "bg-primary text-on-primary shadow-md shadow-primary/20"
-                                                            : "bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-primary"
+                                                       ? "bg-primary text-on-primary shadow-md shadow-primary/20"
+                                                       : "bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-primary"
                                                        }`}
                                                   aria-label="Filter kota"
                                              >
@@ -132,8 +132,8 @@ export default function FeaturedRoutes({
                                                                            setIsFilterOpen(false);
                                                                       }}
                                                                       className={`flex w-full items-center justify-between px-4 py-3 text-left font-body-sm transition-colors md:font-body-md ${activeFilter === city
-                                                                                ? "bg-primary/10 font-bold text-primary"
-                                                                                : "text-on-surface hover:bg-surface-container-low"
+                                                                           ? "bg-primary/10 font-bold text-primary"
+                                                                           : "text-on-surface hover:bg-surface-container-low"
                                                                            }`}
                                                                  >
                                                                       <span>{city === "Semua" ? "Semua Kota" : city}</span>
@@ -200,16 +200,34 @@ export default function FeaturedRoutes({
                          </div>
                     )}
 
-                    {/* Tombol Lihat Semua Rute (rounded-lg) */}
+                    {/* Banner Lihat Semua Rute (gaya sama dengan banner di katalog armada) */}
                     {hasMoreLink && seeAllHref && onlyFeatured && (
-                         <div className="grid grid-cols-1 gap-space-md pt-space-xs md:grid-cols-2 md:pt-space-sm lg:grid-cols-3">
-                              <Link
-                                   href={seeAllHref}
-                                   className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary py-2.5 font-label-md text-label-md font-bold text-on-primary shadow-sm transition-all hover:bg-on-primary-fixed-variant active:scale-95 md:col-span-2 md:py-3.5 lg:col-span-1 lg:col-start-2"
-                              >
-                                   Lihat Semua Rute
-                                   <ArrowRight className="h-4 w-4" aria-hidden />
-                              </Link>
+                         <div className="flex flex-col items-center justify-between gap-space-md rounded-2xl bg-surface-container-lowest p-space-md shadow-sm lg:flex-row lg:p-space-lg">
+                              {/* Kiri: Ikon + Teks */}
+                              <div className="flex w-full items-center gap-space-md lg:w-auto">
+                                   <div className="flex shrink-0 items-center justify-center rounded-2xl bg-primary-container/10 p-3.5 text-primary">
+                                        <RouteIcon className="h-6 w-6" aria-hidden="true" />
+                                   </div>
+                                   <div className="space-y-0.5">
+                                        <h3 className="font-label-lg text-label-lg font-bold text-on-surface">
+                                             Mencari Rute Lain?
+                                        </h3>
+                                        <p className="font-body-sm text-body-sm text-on-surface-variant">
+                                             Lihat semua rute travel kami dengan menekan tombol disamping.
+                                        </p>
+                                   </div>
+                              </div>
+
+                              {/* Kanan: Tombol Aksi */}
+                              <div className="flex w-full shrink-0 flex-col gap-space-xs sm:flex-row lg:w-auto">
+                                   <Link
+                                        href={seeAllHref}
+                                        className="flex items-center justify-center gap-2 rounded-xl bg-primary px-space-md py-2.5 text-center font-label-md text-label-md font-bold text-on-primary shadow-sm transition-all hover:bg-primary/90 active:scale-95"
+                                   >
+                                        Lihat Semua Rute
+                                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                                   </Link>
+                              </div>
                          </div>
                     )}
                </div>
