@@ -39,16 +39,16 @@ export default function BerandaBookingTabs({
      const [active, setActive] = useState<TabKey>("carter");
 
      const tabClass = (key: TabKey) =>
-          `flex flex-1 items-center justify-center gap-space-xs whitespace-nowrap rounded-xl px-space-sm py-2.5 text-center font-label-sm text-label-sm transition-all sm:px-space-md sm:py-3 sm:font-label-md sm:text-label-md ${active === key
+          `flex flex-1 items-center justify-center gap-space-xs whitespace-nowrap rounded-full px-space-sm py-2.5 text-center font-label-sm text-label-sm transition-all sm:rounded-xl sm:px-space-md sm:py-3 sm:font-label-md sm:text-label-md ${active === key
                ? "bg-primary font-bold text-on-primary shadow-md"
                : "text-on-surface-variant hover:text-on-surface"
           }`;
 
      return (
-          <div className="relative z-20 overflow-hidden rounded-2xl bg-surface-container-lowest p-4 shadow-xl sm:p-6">
+          <div className="relative z-20 overflow-hidden rounded-3xl bg-surface-container-lowest p-4 shadow-xl sm:rounded-2xl sm:p-6">
                <span
                     aria-hidden
-                    className="absolute inset-x-0 top-0 h-1.5 bg-primary sm:hidden"
+                    className="absolute left-1/2 top-3 h-1.5 w-12 -translate-x-1/2 rounded-full bg-surface-container-high sm:hidden"
                />
                <div className="mb-space-lg text-center sm:hidden mt-space-md">
                     <p className="text-xl font-bold text-on-surface min-[400px]:text-2xl">
@@ -61,7 +61,7 @@ export default function BerandaBookingTabs({
                <div
                     role="tablist"
                     aria-label="Pilih jenis layanan"
-                    className="mb-space-lg flex w-full items-center gap-space-xs rounded-2xl bg-surface-container p-1.5"
+                    className="mb-space-lg flex w-full items-center gap-space-xs rounded-full bg-surface-container p-0 sm:rounded-full"
                >
                     <button
                          type="button"
