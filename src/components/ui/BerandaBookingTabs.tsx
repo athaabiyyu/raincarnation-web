@@ -39,17 +39,29 @@ export default function BerandaBookingTabs({
      const [active, setActive] = useState<TabKey>("carter");
 
      const tabClass = (key: TabKey) =>
-          `flex flex-1 items-center justify-center gap-space-xs rounded-lg px-space-md py-space-sm text-center font-label-md text-label-md transition-all ${active === key
-               ? "bg-surface-container-lowest font-bold text-primary shadow-sm"
+          `flex flex-1 items-center justify-center gap-space-xs whitespace-nowrap rounded-xl px-space-sm py-2.5 text-center font-label-sm text-label-sm transition-all sm:px-space-md sm:py-3 sm:font-label-md sm:text-label-md ${active === key
+               ? "bg-primary font-bold text-on-primary shadow-md"
                : "text-on-surface-variant hover:text-on-surface"
           }`;
 
      return (
-          <div>
+          <div className="relative z-20 overflow-hidden rounded-2xl bg-surface-container-lowest p-4 shadow-xl sm:p-6">
+               <span
+                    aria-hidden
+                    className="absolute inset-x-0 top-0 h-1.5 bg-primary sm:hidden"
+               />
+               <div className="mb-space-lg text-center sm:hidden mt-space-md">
+                    <p className="text-xl font-bold text-on-surface min-[400px]:text-2xl">
+                         Pilih Layanan Anda
+                    </p>
+                    <p className="mt-1 font-label-sm text-label-sm text-on-surface-variant">
+                         Satu mobil penuh atau per kursi
+                    </p>
+               </div>
                <div
                     role="tablist"
                     aria-label="Pilih jenis layanan"
-                    className="mb-space-md flex w-full items-center gap-space-xs rounded-lg bg-surface-container p-1"
+                    className="mb-space-lg flex w-full items-center gap-space-xs rounded-2xl bg-surface-container p-1.5"
                >
                     <button
                          type="button"
@@ -60,7 +72,7 @@ export default function BerandaBookingTabs({
                          onClick={() => setActive("carter")}
                          className={tabClass("carter")}
                     >
-                         <CarIcon />
+                         <CarIcon className="h-4 w-4 shrink-0 sm:h-5 sm:w-5" />
                          <span>{renderLabel(carterLabel)}</span>
                     </button>
                     <button
@@ -72,7 +84,7 @@ export default function BerandaBookingTabs({
                          onClick={() => setActive("reguler")}
                          className={tabClass("reguler")}
                     >
-                         <SeatIcon />
+                         <SeatIcon className="h-4 w-4 shrink-0 sm:h-5 sm:w-5" />
                          <span>{renderLabel(regulerLabel)}</span>
                     </button>
                </div>

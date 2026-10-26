@@ -21,7 +21,12 @@ export const berandaHero = {
                "Dengan sopir atau lepas kunci. Titik sewa di Malang, Batu, dan Surabaya, rute bebas sesuai rencana Anda.",
      },
      description:
-          "Sewa mobil dengan sopir atau lepas kunci, tersedia 24 jam. Titik sewa di Malang, Batu, dan Surabaya, rute bebas lewat custom rute. Butuh kursi saja? Pilih travel door to door per kursi (travel reguler) mulai Rp100.000, sudah termasuk tol dan parkir.",
+          "Sewa mobil dengan sopir atau lepas kunci di Malang, Batu, dan Surabaya, rute bebas lewat custom rute. Butuh kursi saja? Pilih travel door to door per kursi (travel reguler).",
+     unitLabel: "Armada siap pakai",
+     stats: [
+          { value: "24 Jam", label: "Layanan admin" },
+          { value: "600+", label: "Destinasi telah dilayani" },
+     ],
 };
 
 export const berandaBooking = {
@@ -32,19 +37,18 @@ export const berandaBooking = {
 export const berandaServices = {
      title: "Sewa Mobil & Travel per Kursi",
      description:
-          "Sewa mobil Malang (rental mobil) dengan sopir atau lepas kunci. Titik sewa di Malang, Batu, dan Surabaya, dengan rute bebas ke mana saja lewat custom rute. Butuh satu atau beberapa kursi saja? Pilih Travel per kursi untuk rute tetap antara Malang, Batu, Surabaya, Pandaan, dan Bandara Juanda.",
+          "Rental mobil Malang dengan sopir atau lepas kunci, atau travel per kursi untuk rute tetap. Pilih sesuai kebutuhan perjalanan Anda.",
      items: [
           {
                icon: "car",
                tag: "SEWA MOBIL",
                title: "Sewa Mobil Malang, Batu & Surabaya",
                description:
-                    "Pilih sewa mobil dengan sopir atau lepas kunci sesuai ketersediaan layanan dan kebutuhan perjalanan Anda.",
+                    "Dengan sopir atau lepas kunci sesuai kebutuhan Anda.",
                points: [
-                    "Empat paket: All In dan Non All In (per hari), Lepas Kunci (per 12 jam, bulanan, atau tahunan), Carter Drop Off (per rute)",
-                    "All In sudah termasuk BBM, driver, makan driver, tol, dan parkir. Non All In termasuk BBM dan driver",
-                    "Lepas Kunci: syarat KTP dan SIM A berlaku",
-                    "Informasi armada dan pemesanan melalui WhatsApp",
+                    "All In (BBM, driver, tol, parkir) atau Non All In",
+                    "Lepas Kunci 12 jam, bulanan, atau tahunan",
+                    "Syarat lepas kunci: KTP dan SIM A",
                ],
                button: "Pilihan Unit & Sewa Mobil Malang",
                href: "/sewa-mobil",
@@ -55,12 +59,11 @@ export const berandaServices = {
                tag: "TRAVEL",
                title: "Travel per Kursi",
                description:
-                    "Pilihan perjalanan antarkota per kursi untuk rute tetap, tanpa menyewa satu mobil penuh.",
+                    "Perjalanan antarkota per kursi untuk rute tetap.",
                points: [
-                    "Biaya dihitung per kursi",
-                    "Dijemput di alamat Anda (kecuali titik di Pandaan dan Juanda)",
-                    "Tol dan parkir sudah termasuk",
-                    "Tersedia untuk rute pilihan sesuai jadwal",
+                    "Tarif per kursi, tol dan parkir sudah termasuk",
+                    "Dijemput di alamat Anda (kecuali Pandaan dan Juanda)",
+                    "Rute tetap: Malang, Batu, Surabaya, Pandaan, Juanda",
                ],
                button: "Lihat Jadwal & Rute Travel",
                href: "#rute-travel",
@@ -113,7 +116,7 @@ export const berandaWhy = {
      eyebrow: "Standar Kualitas Raincarnation",
      title: "Mengapa Memilih Raincarnation?",
      description:
-          "Rincian layanan kami tulis jelas sejak awal, jadi Anda tahu apa yang termasuk sebelum memesan sewa mobil atau travel per kursi.",
+          "Rincian layanan ditulis jelas sejak awal, jadi Anda tahu apa yang termasuk sebelum memesan.",
      button: "Hubungi Admin Reservasi",
      message: "Halo Admin Raincarnation, saya ingin tanya reservasi.",
      items: [
@@ -121,25 +124,25 @@ export const berandaWhy = {
                icon: "badge-check",
                title: "Rincian Tarif Jelas",
                description:
-                    "All In sudah termasuk BBM, driver, makan driver, tol, dan parkir. Tarif travel per kursi juga sudah termasuk tol dan parkir.",
+                    "Rincian yang termasuk ditulis jelas. Tarif travel sudah termasuk tol dan parkir.",
           },
           {
                icon: "smile",
                title: "Layanan 24 Jam",
                description:
-                    "Admin siap dihubungi lewat WhatsApp kapan saja untuk menanyakan tarif, jadwal, dan ketersediaan.",
+                    "Admin bisa dihubungi lewat WhatsApp kapan saja.",
           },
           {
                icon: "shield-check",
                title: "Unit Dicek Sebelum Berangkat",
                description:
-                    "Setiap unit kami cek terlebih dahulu sebelum digunakan, supaya perjalanan Anda lebih tenang.",
+                    "Setiap unit dicek dulu sebelum digunakan.",
           },
           {
                icon: "message-square-text",
                title: "Pilihan Layanan Lengkap",
                description:
-                    "Sewa mobil dengan sopir atau lepas kunci, carter satu arah, dan travel per kursi dalam satu tempat.",
+                    "Sewa mobil dengan sopir, lepas kunci, carter satu arah, dan travel per kursi.",
           },
      ] satisfies {
           icon: BerandaWhyIcon;

@@ -349,10 +349,6 @@ export default async function RoutePage({ params }: PageProps) {
                                                                  <CheckCircle2 size={14} className="text-primary shrink-0 mt-0.5" /> Reclining Seat
                                                             </li>
                                                        </ul>
-                                                       <div className="pt-3 border-t border-surface-container-high/50 flex justify-between items-center">
-                                                            <span className="text-[11px] text-on-surface-variant">Per kursi</span>
-                                                            <span className="text-xs font-bold text-on-surface">{tarif}/org</span>
-                                                       </div>
                                                   </div>
                                              ))}
                                         </div>

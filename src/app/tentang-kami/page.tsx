@@ -89,8 +89,49 @@ export default async function TentangKamiPage() {
      const story = tentangKamiStory;
      const company = tentangKamiCompany;
 
+     const aboutJsonLd = {
+          "@context": "https://schema.org",
+          "@type": "AboutPage",
+          name: tentangKamiMeta.title,
+          description: tentangKamiMeta.description,
+          url: `${siteConfig.url}/tentang-kami`,
+          inLanguage: "id-ID",
+          about: { "@id": `${siteConfig.url}/#business` },
+     };
+
+     const breadcrumbJsonLd = {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+               {
+                    "@type": "ListItem",
+                    position: 1,
+                    name: "Beranda",
+                    item: `${siteConfig.url}/`,
+               },
+               {
+                    "@type": "ListItem",
+                    position: 2,
+                    name: "Tentang Kami",
+                    item: `${siteConfig.url}/tentang-kami`,
+               },
+          ],
+     };
+
      return (
           <main className="w-full bg-surface">
+               <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                         __html: JSON.stringify(aboutJsonLd).replace(/</g, "\\u003c"),
+                    }}
+               />
+               <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                         __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, "\\u003c"),
+                    }}
+               />
                {/* Hero */}
                <section className="w-full bg-surface-container-low py-space-xl">
                     <div className="mx-auto grid max-w-6xl items-center gap-space-xl px-gutter lg:grid-cols-12">
@@ -247,7 +288,7 @@ export default async function TentangKamiPage() {
                                    <div className="relative aspect-[3/4] overflow-hidden rounded-2xl shadow-md">
                                         <Image
                                              src={story.image.src}
-                                             alt={story.image.alt}
+                                             alt=""
                                              fill
                                              sizes="(min-width: 1024px) 20vw, 45vw"
                                              className="object-cover object-right"

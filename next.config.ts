@@ -17,6 +17,8 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ["lucide-react"],
   },
   compress: true,
+  // Hanya untuk mode dev: izinkan HP di jaringan lokal memakai hot reload
+  allowedDevOrigins: ["192.168.18.11"],
 };
 
 export default nextConfig;

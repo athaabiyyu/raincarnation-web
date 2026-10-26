@@ -51,7 +51,7 @@ export default function BerandaServices() {
           <section className="w-full bg-surface-container-low py-space-xl">
                <div className="mx-auto max-w-6xl px-gutter">
                     <div className="mb-space-lg space-y-space-xs md:mb-space-xl">
-                         <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
+                         <span className="block font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
                               PILIHAN SERVIS UTAMA
                          </span>
                          <h2 className="font-headline-lg text-headline-lg tracking-tight text-on-surface">

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, MessageCircle } from "lucide-react";
+import { ArrowRight, Bus, MessageCircle } from "lucide-react";
 import ArmadaCard from "@/components/sections/ArmadaCard";
 import FleetCarousel from "@/components/ui/FleetCarousel";
 import { sewaMobilFleet } from "@/constants/sewa-mobil";
@@ -38,13 +38,6 @@ export default function SewaMobilFleet({
                                    {sewaMobilFleet.description}
                               </p>
                          </div>
-                         <Link
-                              href={sewaMobilFleet.seeAll.href}
-                              className="inline-flex shrink-0 items-center justify-center gap-2 self-start rounded-lg border border-primary/20 bg-surface-container px-space-md py-2 font-label-md text-label-md font-bold text-primary transition-colors hover:bg-surface-container-high md:self-auto"
-                         >
-                              {sewaMobilFleet.seeAll.label}
-                              <ArrowRight size={16} aria-hidden="true" />
-                         </Link>
                     </div>
 
                     <FleetCarousel>
@@ -83,6 +76,35 @@ export default function SewaMobilFleet({
                               )}
                          </div>
                     </FleetCarousel>
+
+                    {/* Banner Unit Lain */}
+                    <div className="flex flex-col items-center justify-between gap-space-md rounded-2xl bg-surface-container-lowest p-space-md shadow-sm lg:flex-row lg:p-space-lg">
+                         <div className="flex w-full items-center gap-space-md lg:w-auto">
+                              <div className="flex shrink-0 items-center justify-center rounded-2xl bg-primary-container/10 p-3 text-primary sm:p-3.5">
+                                   <Bus className="h-6 w-6" aria-hidden="true" />
+                              </div>
+                              <div className="space-y-0.5">
+                                   <p className="font-label-lg text-label-lg font-bold text-on-surface">
+                                        Mencari Pilihan Unit Lain?
+                                   </p>
+                                   <p className="font-body-sm text-body-sm text-on-surface-variant">
+                                        <span className="sm:hidden">Lihat semua unit armada kami.</span>
+                                        <span className="hidden sm:inline">
+                                             Lihat semua unit armada kami dengan menekan tombol disamping.
+                                        </span>
+                                   </p>
+                              </div>
+                         </div>
+                         <div className="flex w-full shrink-0 flex-col gap-space-xs sm:flex-row lg:w-auto">
+                              <Link
+                                   href={sewaMobilFleet.seeAll.href}
+                                   className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-space-md py-2.5 text-center font-label-md text-label-md font-bold text-on-primary shadow-sm transition-all hover:bg-primary/90 active:scale-95 lg:w-auto"
+                              >
+                                   Lihat Semua Unit
+                                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                              </Link>
+                         </div>
+                    </div>
                </div>
           </section>
      );

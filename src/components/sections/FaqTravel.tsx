@@ -6,7 +6,7 @@ import { ChevronDown, HelpCircle } from "lucide-react";
 const faqs = [
      {
           question: "Apa itu travel per kursi dan apa bedanya dengan sewa mobil?",
-          answer: "Travel perkursi atau biasa disebut travel reguler adalah layanan perjalanan antar kota yang dipesan per kursi dengan jadwal keberangkatan tetap, sehingga Anda berbagi mobil dengan penumpang lain dan membayar sesuai jumlah kursi. Kalau Anda butuh satu mobil penuh untuk rombongan, pilih layanan Sewa Mobil."
+          answer: "Travel per kursi atau biasa disebut travel reguler adalah layanan perjalanan antar kota yang dipesan per kursi dengan jadwal keberangkatan tetap, sehingga Anda berbagi mobil dengan penumpang lain dan membayar sesuai jumlah kursi. Kalau Anda butuh satu mobil penuh untuk rombongan, pilih layanan Sewa Mobil."
      },
      {
           question: "Di mana titik penjemputan travel Anda?",

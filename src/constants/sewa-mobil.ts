@@ -8,7 +8,7 @@ export const sewaMobilHero = {
      titleHighlight: "Lepas Kunci atau dengan Sopir",
      titleEnd: ", Rute Sesuai Rencana Anda.",
      description:
-          "Melayani sewa mobil di Malang, Batu, dan Surabaya dengan sopir atau lepas kunci. Tersedia pilihan paket harian, carter drop off, hingga sewa lepas kunci ( harian, bulanan, tahunan ) dengan proses cepat via WhatsApp.",
+          "Melayani sewa mobil dengan sopir di Malang, Batu, dan Surabaya: paket harian atau carter drop off 1 arah. Lepas kunci tersedia di Malang dan Batu per 12 jam, bulanan, atau tahunan. Pesan lewat WhatsApp.",
      stats: [
           { value: "4 Paket", label: "Carter Drop Off, All In, Non All In, Lepas Kunci" },
           { value: "24 Jam", label: "Layanan, Pesan via WhatsApp" },
@@ -51,7 +51,7 @@ export const sewaMobilFleet = {
           eyebrow: "Unit Lainnya",
           title: "Butuh Unit yang Belum Tampil?",
           description:
-               "Armada kami lebih banyak dari yang tampil di katalog. Sebutkan jumlah penumpang dan kebutuhan perjalanan Anda, admin akan cek unit yang tersedia.",
+               "Tidak menemukan unit yang Anda cari? Sebutkan jumlah penumpang dan kebutuhan perjalanan Anda, admin akan cek unit yang tersedia.",
           buttonLabel: "Tanyakan Unit Lain",
           message:
                "Halo Admin Raincarnation, saya butuh ketersediaan unit lain di luar katalog.",
@@ -106,7 +106,7 @@ export const sewaMobilForm = {
      labels: {
           packageType: "Jenis layanan",
           fleet: "Pilihan Armada",
-          origin: "Kota Asal / Titik Jemput",
+          origin: "Kota Asal",
           destination: "Kota Tujuan",
           date: "Tanggal Berangkat",
           time: "Jam Berangkat",

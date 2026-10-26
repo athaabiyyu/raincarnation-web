@@ -1,9 +1,20 @@
 import Image from "next/image";
 import { berandaHero } from "@/constants/beranda";
 
-export default function BerandaHero() {
+type BerandaHeroProps = {
+     unitCount?: number;
+};
+
+export default function BerandaHero({ unitCount = 0 }: BerandaHeroProps) {
+     const stats = [
+          ...(unitCount > 0
+               ? [{ value: `${unitCount} Unit`, label: berandaHero.unitLabel }]
+               : []),
+          ...berandaHero.stats,
+     ];
+
      return (
-          <section className="w-full bg-linear-to-b from-surface-container-high/40 via-surface to-surface pb-space-md pt-space-md md:pt-space-xl lg:pb-space-xl">
+          <section className="w-full bg-linear-to-b from-surface-container-high/40 via-surface to-surface pb-space-lg pt-space-md md:pt-space-xl lg:pb-space-xl">
                <div className="mx-auto flex max-w-6xl flex-col gap-space-lg px-gutter pt-space-md">
                     {/* Grid 2 kolom dengan perataan vertikal center */}
                     <div className="grid items-center gap-space-lg lg:grid-cols-2">
@@ -21,6 +32,23 @@ export default function BerandaHero() {
                               <p className="font-body-lg text-body-lg leading-relaxed text-on-surface-variant">
                                    {berandaHero.description}
                               </p>
+
+                              {/* Kartu angka: fakta terkonfirmasi, bukan data contoh desain */}
+                              <ul className="grid w-full grid-cols-3 gap-2 sm:gap-space-sm lg:w-fit">
+                                   {stats.map((stat) => (
+                                        <li
+                                             key={stat.label}
+                                             className="flex flex-col items-center gap-1 text-center rounded-xl bg-surface-container-lowest px-2 py-space-sm shadow-sm sm:px-space-md md:items-start md:gap-0 md:text-left"
+                                        >
+                                             <span className="text-lg font-bold leading-tight text-primary sm:text-xl md:text-2xl">
+                                                  {stat.value}
+                                             </span>
+                                             <span className="text-[11px] leading-tight text-on-surface-variant sm:text-label-sm">
+                                                  {stat.label}
+                                             </span>
+                                        </li>
+                                   ))}
+                              </ul>
                          </div>
 
                          {/* Foto Kanan: Aspect ratio sedang & mengisi penuh lebar kolomnya */}

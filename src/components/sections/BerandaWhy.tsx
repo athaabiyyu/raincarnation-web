@@ -28,8 +28,8 @@ export default function BerandaWhy({ whatsapp }: BerandaWhyProps) {
      return (
           <section className="w-full bg-surface-container-low py-space-xl">
                <div className="mx-auto max-w-6xl px-gutter">
-                    <div className="rounded-xl bg-surface-container-lowest p-space-lg shadow-md lg:p-space-xl">
-                         <div className="grid grid-cols-1 gap-space-lg lg:grid-cols-12 lg:gap-y-space-md">
+                    <div className="rounded-xl bg-surface-container-lowest p-space-md shadow-md sm:p-space-lg lg:p-space-xl">
+                         <div className="grid grid-cols-1 gap-space-md lg:grid-cols-12 lg:gap-x-space-lg lg:gap-y-space-md">
                               <div className="space-y-space-xs lg:col-span-5 lg:col-start-1 lg:row-start-1 lg:self-end">
                                    <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
                                         LAYANAN YANG TRANSPARAN
@@ -42,7 +42,7 @@ export default function BerandaWhy({ whatsapp }: BerandaWhyProps) {
                                    </p>
                               </div>
 
-                              <ul className="grid grid-cols-1 gap-space-md sm:grid-cols-2 lg:col-span-7 lg:col-start-6 lg:row-span-2 lg:row-start-1 lg:self-center">
+                              <ul className="grid grid-cols-1 gap-space-sm sm:grid-cols-2 sm:gap-space-md lg:col-span-7 lg:col-start-6 lg:row-span-2 lg:row-start-1 lg:self-center">
                                    {berandaWhy.items.map((item) => {
                                         const Icon = whyIcons[item.icon];
                                         return (

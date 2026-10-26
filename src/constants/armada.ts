@@ -1,5 +1,3 @@
-import type { Armada } from "@/types/armada";
-
 export type ArmadaStatIcon = "badge-check" | "fan" | "smile" | "armchair";
 
 export type ArmadaAmenityIcon =
@@ -27,7 +25,7 @@ export const armadaCatalog = {
      title: "Pilihan Armada untuk Sewa Mobil di Malang",
      pageTitle: "Daftar Armada Raincarnation",
      description:
-          "Temukan pilihan kendaraan Raincarnation untuk perjalanan pribadi, keluarga, maupun kebutuhan dinas. Pilih armada yang sesuai dengan jumlah penumpang dan kebutuhan perjalanan Anda, lalu hubungi admin untuk informasi tarif dan ketersediaan unit.",
+          "Pilihan mobil untuk perjalanan pribadi, keluarga, maupun dinas. Pilih sesuai jumlah penumpang, lalu hubungi admin untuk tarif dan ketersediaan unit.",
      priceLabel: "Mulai",
      buttonLabel: "Reservasi Unit",
 };

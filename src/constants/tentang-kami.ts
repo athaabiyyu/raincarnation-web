@@ -1,7 +1,7 @@
 // BELUM DIKONFIRMASI BOS: seluruh teks halaman ini disalin dari desain Stitch lalu disesuaikan.
 // Angka (120K+, 45+, 99,8%, rating 4,9, respon < 2 menit, 32 titik), izin Kemenhub, Jasa Raharja,
 // GPS, SIM, "24 jam", dan nama PT belum punya dasar. Edit atau hapus sebelum deploy.
-// Fakta terkonfirmasi: travel reguler door to door kecuali Pandaan (Juanda belum dijawab);
+// Fakta terkonfirmasi: travel reguler door to door kecuali Pandaan dan Juanda;
 // sewa mobil bisa diantar, ongkos pengantaran belum termasuk.
 
 export type TentangKamiIcon =
@@ -24,7 +24,7 @@ export const tentangKamiMeta = {
      title: "Tentang Raincarnation | Sewa Mobil & Travel Malang",
      description:
           "Kenali Raincarnation: layanan travel reguler per kursi dan sewa mobil di Malang, Batu, dan Surabaya. Pesan lewat WhatsApp.",
-     ogAlt: "Interior armada Raincarnation yang bersih dan nyaman",
+     ogAlt: "Interior armada Raincarnation",
 };
 
 export const tentangKamiHero = {
@@ -33,7 +33,7 @@ export const tentangKamiHero = {
      titleHighlight: "Kenyamanan",
      titleEnd: ", Keamanan, & Integritas.",
      description:
-          "Layanan travel reguler per kursi dan sewa mobil di Malang, Batu, dan Surabaya. Travel reguler door to door (kecuali Pandaan), sewa mobil bisa diantar ke tempat Anda, dan semua pesanan diurus lewat WhatsApp.",
+          "Layanan travel reguler per kursi dan sewa mobil di Malang, Batu, dan Surabaya. Travel reguler door to door (kecuali Pandaan dan Juanda), sewa mobil bisa diantar ke tempat Anda, dan semua pesanan diurus lewat WhatsApp.",
      whatsappLabel: "Hubungi Admin WhatsApp",
      whatsappMessage:
           "Halo Admin Raincarnation, saya ingin tanya layanan travel dan sewa mobil.",
@@ -45,7 +45,7 @@ export const tentangKamiHero = {
      ],
      image: {
           src: "/images/interior-armada.webp",
-          alt: "Interior armada Raincarnation yang bersih dan nyaman",
+          alt: "Interior armada Raincarnation",
           tag: "Standar Eksekutif",
           rating: "4.9 / 5.0",
           title: "Santai Sepanjang Jalan",
@@ -103,14 +103,14 @@ export const tentangKamiStory = {
           { title: "Lewat Jalur Tol", description: "Waktu tempuh efisien dengan prioritas jalan bebas hambatan bila rute memungkinkan." },
      ],
      bullets: [
-          "Travel reguler door to door (kecuali Pandaan)",
+          "Travel reguler door to door (kecuali Pandaan dan Juanda)",
           "Sewa mobil bisa diantar, ongkos pengantaran belum termasuk",
           "Tarif jelas per rute, rincian dikonfirmasi admin",
           "Bagasi untuk tiap penumpang, aturan dikonfirmasi admin",
      ],
      image: {
           src: "/images/interior-armada.webp",
-          alt: "Kabin armada Raincarnation yang bersih",
+          alt: "Kabin armada Raincarnation",
      },
 };
 
@@ -138,7 +138,7 @@ export const tentangKamiValues = {
                icon: "home" as TentangKamiIcon,
                title: "Kenyamanan Personal Door to Door",
                description:
-                    "Travel reguler kami menjemput dan mengantar ke alamat Anda (kecuali Pandaan), tanpa perlu ke terminal atau stasiun. Titik jemput disepakati lewat admin.",
+                    "Travel reguler kami menjemput dan mengantar ke alamat Anda (kecuali Pandaan dan Juanda), tanpa perlu ke terminal atau stasiun. Titik jemput disepakati lewat admin.",
                footer: "Jemput dan Antar ke Alamat",
           },
           {

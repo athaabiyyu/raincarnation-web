@@ -1,9 +1,9 @@
 export const heroContent = {
-     titleStart: "Jasa Travel Malang Murah",
+          titleStart: "Travel Malang Murah",
      titleHighlight: "per Kursi",
      titleEnd: "Door to Door",
      description:
-          "Travel reguler per kursi dengan jadwal keberangkatan tetap untuk rute Malang, Batu, Surabaya, Juanda, dan Pandaan. Dijemput dan diantar sampai alamat, kecuali titik di Pandaan dan Juanda. Tarif mulai Rp100.000, sudah termasuk tol dan parkir. Pesan lewat WhatsApp.",
+          "Travel reguler per kursi dengan jadwal tetap untuk rute Malang, Batu, Surabaya, Pandaan, dan Bandara Juanda. Dijemput dan diantar sampai alamat, kecuali titik di Pandaan dan Juanda. Tarif sudah termasuk tol dan parkir.",
      charterLink: {
           text: "Butuh satu mobil khusus rombongan?",
           label: "Lihat Sewa Mobil Carter",
@@ -34,7 +34,7 @@ export const searchFormContent = {
 export const featuredRoutesContent = {
      title: "Rute Travel dan Jadwal Keberangkatan",
      description:
-          "Temukan layanan travel per kursi atau biasa disebut travel reguler dari Malang, Batu, Surabaya, Pandaan, dan Bandara Juanda menuju kota tujuan yang tersedia. Lihat jadwal dan tarif setiap rute sebelum melakukan pemesanan.",
+          "Travel per kursi (biasa disebut travel reguler) antara Malang, Batu, Surabaya, Pandaan, dan Bandara Juanda. Lihat jadwal dan tarif setiap rute sebelum memesan.",
      fareLabel: "Tarif / Kursi",
      roundTripLabel: "Tarif Pulang-Pergi",
      scheduleLabel: "Jadwal:",

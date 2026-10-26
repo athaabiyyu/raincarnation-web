@@ -45,10 +45,9 @@ type SewaMobilFormProps = {
      routes: RuteCarter[];
      fleet: FleetOption[];
      whatsapp: string;
-     /** true = hanya kartu form (tanpa section pembungkus), dipakai di tab Beranda */
      embedded?: boolean;
-     /** tingkat judul form; bila kosong: embedded = h3, selain itu h2 */
      headingLevel?: "h2" | "h3";
+     bare?: boolean;
 };
 
 type FormValues = {
@@ -92,19 +91,16 @@ const RENTAL_KINDS: SewaMobilPackageKind[] = [
 ];
 
 const selectClass =
-     "[color-scheme:light] h-[2.75rem] w-full appearance-none cursor-pointer rounded-lg bg-surface-container-low px-3 pr-8 font-label-md text-base md:text-label-md text-on-surface transition-colors focus:bg-surface-container-high focus:outline-none disabled:cursor-not-allowed disabled:opacity-60";
+     "[color-scheme:light] h-12 w-full appearance-none cursor-pointer rounded-xl border border-surface-container-high/60 bg-surface-container-low px-4 pr-9 font-label-md text-base md:text-label-md text-on-surface invalid:text-on-surface-variant [&>option]:text-on-surface invalid:text-on-surface-variant [&>option]:text-on-surface transition-colors focus:bg-surface-container-high focus:outline-none disabled:cursor-not-allowed disabled:opacity-60";
 
 const inputClass =
-     "h-[2.75rem] w-full min-w-0 appearance-none rounded-lg bg-surface-container-low px-3 text-left font-label-md text-base md:text-label-md text-on-surface transition-colors placeholder:text-on-surface-variant focus:bg-surface-container-high focus:outline-none [&::-webkit-date-and-time-value]:text-left";
+     "h-12 w-full min-w-0 appearance-none rounded-xl border border-surface-container-high/60 bg-surface-container-low px-4 text-left font-label-md text-base md:text-label-md text-on-surface transition-colors placeholder:text-on-surface-variant focus:bg-surface-container-high focus:outline-none [&::-webkit-date-and-time-value]:text-left";
 
 const labelClass =
-     "flex items-center gap-1 font-label-sm text-label-sm text-on-surface-variant";
+     "mb-0.5 flex items-center gap-1 font-label-md text-label-md text-on-surface";
 
 const chevronClass =
      "pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant";
-
-const HOURS = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, "0"));
-const MINUTES = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, "0"));
 
 function formatDate(value: string): string {
      if (!value) return "";
@@ -205,6 +201,7 @@ export default function SewaMobilForm({
      whatsapp,
      embedded = false,
      headingLevel,
+     bare = false,
 }: SewaMobilFormProps) {
      const content = sewaMobilForm;
      const config = sewaMobilPackageConfig;
@@ -393,27 +390,43 @@ export default function SewaMobilForm({
      const Heading = headingLevel ?? (embedded ? "h3" : "h2");
 
      const card = (
-          <div className="rounded-xl bg-surface-container-lowest p-space-md shadow-xl lg:p-space-lg">
+          <div
+               className={
+                    bare
+                         ? ""
+                         : "rounded-2xl bg-surface-container-lowest p-5 shadow-xl lg:p-space-lg"
+               }
+          >
                {/* Header form */}
-               <div className="mb-space-md flex items-center justify-between gap-space-sm">
+               <div
+                    className={`flex items-center justify-between gap-space-sm ${bare
+                         ? "sm:mb-space-md lg:mb-space-lg"
+                         : "mb-space-lg border-b border-surface-container pb-space-md sm:mb-space-md sm:border-b-0 sm:pb-0"
+                         }`}
+               >
                     <div className="flex min-w-0 items-center gap-space-sm">
-                         <span className="shrink-0 rounded-lg bg-primary-container/10 p-2 text-primary">
+                         <span
+     className={`shrink-0 rounded-lg bg-primary-container/10 p-2 text-primary ${bare ? "hidden sm:block" : ""
+          }`}
+>
                               <CarIcon className="h-[22px] w-[22px]" />
                          </span>
-                         <Heading className="whitespace-nowrap font-label-lg text-label-lg text-on-surface">
+                         <Heading
+     className={`whitespace-nowrap font-label-lg text-label-lg text-on-surface ${bare ? "sr-only sm:not-sr-only" : ""
+          }`}
+>
                               {content.title}
                          </Heading>
                     </div>
 
-                    <div className="inline-flex shrink-0 items-center whitespace-nowrap rounded-lg bg-surface-container-low px-3 py-1.5 font-label-sm text-label-sm text-primary">
-                         <span className="sm:hidden">Tarif & Reservasi</span>
-                         <span className="hidden sm:inline">{content.eyebrow}</span>
+                    <div className="hidden shrink-0 items-center whitespace-nowrap rounded-lg bg-surface-container-low px-3 py-1.5 font-label-sm text-label-sm text-primary sm:inline-flex">
+                         <span>{content.eyebrow}</span>
                     </div>
                </div>
 
                <form
                     onSubmit={handleSubmit}
-                    className="grid grid-cols-2 items-end gap-x-space-sm gap-y-space-md lg:grid-cols-12 lg:gap-x-space-md"
+                    className="grid grid-cols-2 items-end gap-x-space-md gap-y-6 lg:grid-cols-12 lg:gap-x-space-md"
                >
                     {/* Layanan */}
                     <div className={`col-span-2 min-w-0 space-y-1.5 ${thirdSpan}`}>
@@ -575,7 +588,7 @@ export default function SewaMobilForm({
                                              onChange={(e) => setOrigin(e.target.value)}
                                              className={selectClass}
                                         >
-                                             <option value="">Pilih Kota Asal</option>
+                                             <option value="">Pilih Asal</option>
                                              {origins.map((option) => (
                                                   <option key={option} value={option}>
                                                        {option}
@@ -647,52 +660,14 @@ export default function SewaMobilForm({
                               <Clock size={14} className="text-primary" aria-hidden />
                               {content.labels.time}
                          </label>
-                         <div className="grid grid-cols-2 gap-space-xs">
-                              <div className="relative">
-                                   <select
-                                        id="sm-time"
-                                        required
-                                        aria-label="Jam"
-                                        value={values.time.slice(0, 2)}
-                                        onChange={(e) =>
-                                             update(
-                                                  "time",
-                                                  e.target.value
-                                                       ? `${e.target.value}:${values.time.slice(3, 5) || "00"}`
-                                                       : "",
-                                             )
-                                        }
-                                        className={selectClass}
-                                   >
-                                        <option value="">Jam</option>
-                                        {HOURS.map((h) => (
-                                             <option key={h} value={h}>
-                                                  {h}
-                                             </option>
-                                        ))}
-                                   </select>
-                                   <ChevronDown size={16} className={chevronClass} aria-hidden />
-                              </div>
-                              <div className="relative">
-                                   <select
-                                        aria-label="Menit"
-                                        disabled={!values.time}
-                                        value={values.time.slice(3, 5)}
-                                        onChange={(e) =>
-                                             update("time", `${values.time.slice(0, 2)}:${e.target.value}`)
-                                        }
-                                        className={selectClass}
-                                   >
-                                        <option value="">Menit</option>
-                                        {MINUTES.map((m) => (
-                                             <option key={m} value={m}>
-                                                  {m}
-                                             </option>
-                                        ))}
-                                   </select>
-                                   <ChevronDown size={16} className={chevronClass} aria-hidden />
-                              </div>
-                         </div>
+                         <input
+                              id="sm-time"
+                              type="time"
+                              required
+                              value={values.time}
+                              onChange={(e) => update("time", e.target.value)}
+                              className={inputClass}
+                         />
                     </div>
 
                     {/* Penumpang */}
@@ -808,7 +783,7 @@ export default function SewaMobilForm({
 
                          <button
                               type="submit"
-                              className="inline-flex w-full items-center justify-center gap-space-sm rounded-lg bg-primary px-space-md py-2.5 text-center font-label-md text-label-md text-on-primary shadow-md transition-all duration-150 hover:bg-primary/90 sm:ml-auto sm:w-auto sm:gap-space-md sm:px-space-lg sm:py-3 sm:font-label-lg sm:text-label-lg"
+                              className="inline-flex w-full items-center justify-center gap-space-sm rounded-xl bg-primary px-space-md py-3.5 text-center font-label-md text-label-md text-on-primary shadow-md transition-all duration-150 hover:bg-primary/90 sm:ml-auto sm:w-auto sm:gap-space-md sm:px-space-lg sm:py-3 sm:font-label-lg sm:text-label-lg"
                          >
                               <MessageSquareText className="h-4 w-4 shrink-0 sm:h-5 sm:w-5" aria-hidden />
                               {content.submitLabel}

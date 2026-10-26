@@ -19,7 +19,7 @@ import type { RuteCarter } from "@/types/rute-carter";
 
 const title = "Sewa Mobil Malang Lepas Kunci & Dengan Sopir | Raincarnation";
 const description =
-     "Rental mobil murah di Malang, Batu, dan Surabaya, rute bebas. Pilih dengan sopir atau lepas kunci 12 jam/bulanan. Cek tarif, pesan via WhatsApp.";
+     "Sewa mobil dengan sopir di Malang, Batu, dan Surabaya, rute bebas. Lepas kunci di Malang dan Batu per 12 jam, bulanan, atau tahunan. Pesan via WhatsApp.";
 
 export const metadata: Metadata = {
      title,
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
           images: [
                {
                     url: "/images/interior-armada.webp",
-                    alt: "Interior armada Raincarnation yang bersih dan nyaman",
+                    alt: "Interior armada Raincarnation",
                },
           ],
      },

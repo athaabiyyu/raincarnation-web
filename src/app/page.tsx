@@ -28,8 +28,8 @@ import { getRoutePairs } from "@/utils/route-pairs";
 
 const title = "Sewa Mobil Malang & Travel Door to Door | Raincarnation";
 const description =
-     "Sewa mobil dengan sopir atau lepas kunci 24 jam di Malang, Batu dan Surabaya. Tersedia juga travel door to door mulai Rp100.000. Pesan via WhatsApp.";
-
+     "Sewa mobil dengan sopir atau lepas kunci di Malang, Batu, dan Surabaya. Travel door to door per kursi. Admin 24 jam, pesan via WhatsApp.";
+     
 export const metadata: Metadata = {
      title,
      description,
@@ -186,6 +186,7 @@ export default async function HomePage() {
                pairs={pairs}
                whatsapp={whatsapp}
                headingLevel="h2"
+               bare
           />
      );
      const carterForm = (
@@ -194,6 +195,7 @@ export default async function HomePage() {
                fleet={fleet}
                whatsapp={whatsapp}
                embedded
+               bare
                headingLevel="h2"
           />
      );
@@ -219,7 +221,7 @@ export default async function HomePage() {
                     }}
                />
 
-               <BerandaHero />
+               <BerandaHero unitCount={armada.length} />
 
                {(hasReguler || hasCarter) && (
                     <section className="w-full pb-space-xl">

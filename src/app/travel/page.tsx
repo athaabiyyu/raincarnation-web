@@ -16,8 +16,8 @@ import { getRoutePairs } from "@/utils/route-pairs";
 
 const title = "Travel Malang Door to Door: Jadwal & Tarif | Raincarnation";
 const description =
-  "Travel per kursi Malang, Batu, Surabaya, Juanda & Pandaan, door to door 24 jam. Tarif mulai Rp100.000, sudah termasuk tol dan parkir. Pesan via WA.";
-
+  "Travel per kursi Malang, Batu, Surabaya, Pandaan, dan Bandara Juanda, door to door. Tarif sudah termasuk tol dan parkir. Admin 24 jam via WhatsApp.";
+  
 export const metadata: Metadata = {
   title,
   description,

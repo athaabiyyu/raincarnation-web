@@ -1,7 +1,6 @@
 import Link from "next/link";
-import { MessageSquareText } from "lucide-react";
+import { ChevronRight, Clock, MessageSquareText } from "lucide-react";
 import type { Route } from "@/types/route";
-import { featuredRoutesContent } from "@/constants/travel-reguler";
 import { decodeHtml } from "@/utils/decode-html";
 import { formatPrice } from "@/utils/format-price";
 import { buildWhatsAppUrl } from "@/utils/whatsapp";
@@ -14,17 +13,16 @@ const DETAIL_LABEL = "Lihat Detail";
 const SOFT_SCHEDULE_LABEL = "Jadwal Berangkat:";
 
 type RouteCardProps = {
-          route: Route;
+     route: Route;
      whatsapp: string;
      className?: string;
      wideMode?: WideMode;
 };
 
 export default function RouteCard({ route, whatsapp }: RouteCardProps) {
-     const content = featuredRoutesContent;
 
      const title = capitalizeFirst(decodeHtml(route.title));
-     
+
      // Memecah teks rute berdasarkan pemisah panah agar bisa diberi jarak dengan aman
      const separator = title.includes(" – ") ? " – " : title.includes(" - ") ? " - " : title.includes("→") ? "→" : "->";
      const parts = title.split(separator);
@@ -32,9 +30,14 @@ export default function RouteCard({ route, whatsapp }: RouteCardProps) {
      const destination = parts[1]?.trim() || "";
 
      const times = parseSchedule(route.acf?.jadwal);
-     
+
      const rawPrice = formatPrice(route.acf?.tarif);
      const price = rawPrice ? rawPrice.replace(/^Rp\s*/, "Rp. ") : "";
+
+     const orderText =
+          origin && destination
+               ? `Pesan Travel ${origin}-${destination}`
+               : `Pesan Travel ${title}`;
 
      const orderUrl = buildWhatsAppUrl(
           whatsapp,
@@ -43,9 +46,9 @@ export default function RouteCard({ route, whatsapp }: RouteCardProps) {
 
      return (
           <article
-               className="flex h-full flex-col justify-between gap-3 sm:gap-space-sm rounded-xl p-4 sm:p-space-md transition-all duration-300 border border-surface-container-high/60 bg-surface-container-lowest shadow-[0_2px_12px_rgba(18,28,44,0.04)] hover:shadow-lg"
+               className="flex h-full flex-col justify-between gap-4 sm:gap-space-md rounded-xl p-5 sm:p-space-md transition-all duration-300 border border-surface-container-high/60 bg-surface-container-lowest shadow-[0_2px_12px_rgba(18,28,44,0.04)] hover:shadow-lg"
           >
-               <div className="flex flex-1 flex-col gap-2 sm:gap-space-sm">
+               <div className="flex flex-1 flex-col gap-4 sm:gap-space-md">
                     {/* Judul dengan pemisahan elemen agar spasi panah terdistribusi sempurna */}
                     <div className="mt-1 sm:mt-space-xs">
                          <h3 className="flex flex-wrap items-center justify-center text-center font-headline-md text-lg sm:text-xl font-bold tracking-tight text-on-surface">
@@ -63,24 +66,18 @@ export default function RouteCard({ route, whatsapp }: RouteCardProps) {
 
                     {/* Jadwal Berangkat */}
                     {times.length > 0 && (
-                         <div className="mt-auto pt-2 sm:pt-space-sm space-y-1.5 sm:space-y-space-xs">
-                              <div className="flex items-center font-body-sm text-xs sm:text-body-sm text-on-surface-variant">
-                                   <span className="font-bold text-on-surface">
-                                        {SOFT_SCHEDULE_LABEL}
-                                   </span>
-                              </div>
+                         <div className="space-y-3">
+                              <p className="flex items-center gap-1.5 font-label-sm text-xs font-bold text-on-surface sm:text-label-sm">
+                                   <Clock size={14} className="shrink-0 text-primary" aria-hidden />
+                                   {SOFT_SCHEDULE_LABEL}
+                              </p>
 
-                              {/* Kotak Jam */}
-                              <div 
-                                   className="grid gap-1.5 sm:gap-space-xs"
-                                   style={{
-                                        gridTemplateColumns: `repeat(${Math.min(times.length, 4)}, minmax(0, 1fr))`
-                                   }}
-                              >
+                                                            {/* Kotak jam: satu baris, bisa digeser bila banyak */}
+                              <div className="-mx-1 flex gap-1.5 overflow-x-auto px-1 pb-1 [scrollbar-width:none] sm:gap-2 [&::-webkit-scrollbar]:hidden">
                                    {times.map((time) => (
                                         <span
                                              key={time}
-                                             className="flex items-center justify-center rounded-lg border border-surface-container-high bg-surface-container-low px-1.5 py-1 sm:px-2 sm:py-1.5 font-label-sm text-xs sm:text-label-sm font-bold text-on-surface text-center w-full shadow-2xs transition-colors hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
+                                             className="flex w-[72px] shrink-0 items-center justify-center rounded-lg border border-surface-container-high bg-surface-container-low py-1.5 text-center font-label-sm text-xs font-bold text-on-surface sm:text-label-sm"
                                         >
                                              {time}
                                         </span>
@@ -91,7 +88,7 @@ export default function RouteCard({ route, whatsapp }: RouteCardProps) {
                </div>
 
                {/* Bawah kartu: tarif & tombol */}
-               <div className="space-y-4 sm:space-y-5 border-t border-surface-container-high/60 pt-3.5 sm:pt-4 mt-2 sm:mt-space-sm">
+               <div className="space-y-4 sm:space-y-5 border-t border-surface-container-high/60 pt-4 sm:pt-5 mt-2 sm:mt-space-sm">
                     {price && (
                          <div className="flex items-baseline justify-between gap-2">
                               <span className="font-label-sm text-xs sm:text-label-sm font-medium text-on-surface-variant">
@@ -108,28 +105,27 @@ export default function RouteCard({ route, whatsapp }: RouteCardProps) {
                          </div>
                     )}
 
-                    <div className="grid grid-cols-2 gap-2 sm:gap-space-sm">
-                         {route.slug ? (
-                              <Link
-                                   href={`/travel/${route.slug}`}
-                                   aria-label={`Lihat detail travel ${origin} ke ${destination}`}
-                                   className="flex items-center justify-center whitespace-nowrap rounded-lg border border-primary/20 bg-primary/10 px-2 py-1.5 sm:px-space-sm sm:py-2 font-label-md text-xs sm:text-label-md font-bold text-primary transition-all hover:border-primary/40 hover:bg-primary/15"
-                              >
-                                   {DETAIL_LABEL}
-                              </Link>
-                         ) : (
-                              <span />
-                         )}
+                    <div className="flex flex-col gap-2">
                          <a
                               href={orderUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              aria-label={`Pesan travel ${origin} ke ${destination} via WhatsApp`}
-                              className="flex items-center justify-center gap-1 sm:gap-space-xs whitespace-nowrap rounded-lg bg-primary px-2 py-1.5 sm:px-space-sm sm:py-2 font-label-md text-xs sm:text-label-md font-bold text-on-primary shadow-sm transition-all hover:bg-primary/90 active:scale-95"
+                              aria-label={`${orderText} via WhatsApp`}
+                              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-2.5 text-sm font-bold text-on-primary shadow-sm transition-all hover:bg-primary/90 active:scale-[0.98]"
                          >
-                              <MessageSquareText className="h-3.5 w-3.5 sm:h-4 sm:w-4" aria-hidden />
-                              {content.orderLabel}
+                              <MessageSquareText size={18} className="shrink-0" aria-hidden />
+                              <span className="truncate">{orderText}</span>
                          </a>
+                         {route.slug && (
+                              <Link
+                                   href={`/travel/${route.slug}`}
+                                   aria-label={`Lihat detail travel ${origin} ke ${destination}`}
+                                   className="inline-flex w-full items-center justify-center gap-1.5 rounded-xl border border-outline-variant/60 bg-surface-container-low py-2.5 text-xs font-bold text-on-surface-variant transition-all hover:border-primary hover:bg-surface-container-high hover:text-primary active:scale-[0.98]"
+                              >
+                                   <span>{DETAIL_LABEL}</span>
+                                   <ChevronRight size={14} aria-hidden />
+                              </Link>
+                         )}
                     </div>
                </div>
           </article>

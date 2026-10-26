@@ -64,8 +64,7 @@ export default function FeaturedRoutes({
      return (
           <section
                id={onlyFeatured ? "rute-travel" : undefined}
-               className={`w-full scroll-mt-24 py-space-xl ${onlyFeatured ? "bg-surface-container-low" : "bg-surface"
-                    }`}
+               className="w-full scroll-mt-24 bg-surface-container-low py-space-xl"
           >
                <div className="mx-auto max-w-6xl space-y-space-lg px-gutter">
                     {/* Header Section */}
@@ -206,7 +205,7 @@ export default function FeaturedRoutes({
                          <div className="flex flex-col items-center justify-between gap-space-md rounded-2xl bg-surface-container-lowest p-space-md shadow-sm lg:flex-row lg:p-space-lg">
                               {/* Kiri: Ikon + Teks */}
                               <div className="flex w-full items-center gap-space-md lg:w-auto">
-                                   <div className="flex shrink-0 items-center justify-center rounded-2xl bg-primary-container/10 p-3.5 text-primary">
+                                   <div className="flex shrink-0 items-center justify-center rounded-2xl bg-primary-container/10 p-3 text-primary sm:p-3.5">
                                         <RouteIcon className="h-6 w-6" aria-hidden="true" />
                                    </div>
                                    <div className="space-y-0.5">
@@ -214,7 +213,10 @@ export default function FeaturedRoutes({
                                              Mencari Rute Lain?
                                         </h3>
                                         <p className="font-body-sm text-body-sm text-on-surface-variant">
-                                             Lihat semua rute travel kami dengan menekan tombol disamping.
+                                             <span className="sm:hidden">Lihat semua rute travel kami.</span>
+                                             <span className="hidden sm:inline">
+                                                  Lihat semua rute travel kami dengan menekan tombol disamping.
+                                             </span>
                                         </p>
                                    </div>
                               </div>
@@ -223,7 +225,7 @@ export default function FeaturedRoutes({
                               <div className="flex w-full shrink-0 flex-col gap-space-xs sm:flex-row lg:w-auto">
                                    <Link
                                         href={seeAllHref}
-                                        className="flex items-center justify-center gap-2 rounded-xl bg-primary px-space-md py-2.5 text-center font-label-md text-label-md font-bold text-on-primary shadow-sm transition-all hover:bg-primary/90 active:scale-95"
+                                        className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary lg:w-auto px-space-md py-2.5 text-center font-label-md text-label-md font-bold text-on-primary shadow-sm transition-all hover:bg-primary/90 active:scale-95"
                                    >
                                         Lihat Semua Rute
                                         <ArrowRight className="h-4 w-4" aria-hidden="true" />

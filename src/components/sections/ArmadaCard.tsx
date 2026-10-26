@@ -7,6 +7,8 @@ import {
      ShieldCheck,
      Sparkles,
      Star,
+     Armchair,
+     Luggage,
      Zap,
 } from "lucide-react";
 import type { Armada } from "@/types/armada";
@@ -57,6 +59,9 @@ export default function ArmadaCard({
      const name = capitalizeFirst(decodeHtml(item.title));
      const label = capitalizeFirst(decodeHtml(item.acf?.label ?? ""));
 
+     const seats = capitalizeFirst(decodeHtml(item.acf?.jumlah_penumpang ?? ""));
+     const luggage = capitalizeFirst(decodeHtml(item.acf?.koper ?? ""));
+
      const hasLepasKunci = Number(item.acf?.harga) > 0;
      const hasAllIn = Number(item.acf?.harga_all_in) > 0;
      const price = hasLepasKunci ? formatPrice(item.acf?.harga) : null;
@@ -90,11 +95,31 @@ export default function ArmadaCard({
                <div className="flex flex-1 flex-col justify-between p-4 @xs:p-5">
                     <div className="flex flex-col gap-3">
                          {/* Judul Armada */}
-                         <Link href={`/sewa-mobil/${item.slug}`} className="group">
-                              <h3 className="font-headline-sm text-lg font-bold text-on-surface transition-colors group-hover:text-primary">
+                         <Link href={`/sewa-mobil/${item.slug}`} className="group block text-center">
+                              <h3 className="font-headline-sm text-xl font-bold text-on-surface transition-colors group-hover:text-primary">
                                    {name}
                               </h3>
                          </Link>
+
+                         {(seats || luggage) && (
+                              <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 border-b border-surface-container pb-3 text-xs font-medium text-on-surface-variant">
+                                   {seats && (
+                                        <span className="inline-flex items-center gap-1.5">
+                                             <Armchair size={15} className="shrink-0 text-primary" aria-hidden="true" />
+                                             {seats}
+                                        </span>
+                                   )}
+                                   {seats && luggage && (
+                                        <span className="h-3 w-px bg-outline-variant/60" aria-hidden="true" />
+                                   )}
+                                   {luggage && (
+                                        <span className="inline-flex items-center gap-1.5">
+                                             <Luggage size={15} className="shrink-0 text-primary" aria-hidden="true" />
+                                             {luggage}
+                                        </span>
+                                   )}
+                              </div>
+                         )}
                     </div>
 
                     {/* Section Pilihan Paket Tarif */}
