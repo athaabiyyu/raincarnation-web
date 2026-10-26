@@ -109,32 +109,6 @@ export default async function Footer() {
                          )}
                     </div>
 
-                    {/* Kotak kemudahan reservasi */}
-                    <div className="mb-space-lg rounded-xl bg-surface-container p-space-md md:px-space-lg">
-                         <div className="flex flex-col justify-between gap-space-md lg:flex-row lg:items-center">
-                              <div className="flex items-center gap-space-sm">
-                                   <MessageSquareText
-                                        size={20}
-                                        className="shrink-0 text-primary"
-                                        aria-hidden="true"
-                                   />
-                                   <span className="font-label-md text-label-md font-bold text-on-surface">
-                                        {c.reservationTitle}
-                                   </span>
-                              </div>
-                              <div className="flex flex-wrap items-center gap-space-sm font-label-sm text-label-sm font-bold text-primary">
-                                   {c.reservationChips.map((chip) => (
-                                        <span
-                                             key={chip}
-                                             className="rounded bg-surface-container-lowest px-space-sm py-1 shadow-sm"
-                                        >
-                                             {chip}
-                                        </span>
-                                   ))}
-                              </div>
-                         </div>
-                    </div>
-
                     <p className="pt-space-md text-center font-body-sm text-body-sm text-on-surface-variant md:text-left">
                          © {year} {c.companyName}. {c.copyrightSuffix}
                     </p>

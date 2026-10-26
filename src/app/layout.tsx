@@ -19,6 +19,10 @@ export const metadata: Metadata = {
   description: "Travel dan Sewa Mobil Malang, Surabaya, Pasuruan, dan Sekitarnya",
   // SEMENTARA: hapus baris robots ini saat domain asli dipasang dan siap rilis.
   robots: { index: false, follow: false },
+  icons: {
+    icon: "/icon.png",
+    apple: "/apple-icon.png",
+  },
 };
 
 export default async function RootLayout({
@@ -38,3 +42,4 @@ export default async function RootLayout({
     </html>
   );
 }
+

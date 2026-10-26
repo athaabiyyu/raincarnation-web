@@ -1,27 +1,23 @@
 // BELUM DIKONFIRMASI BOS: klaim di file ini bersifat sementara.
 export const footerContent = {
      description:
-          "Raincarnation menyediakan layanan sewa mobil dengan sopir atau lepas kunci di Malang, Batu, dan Surabaya, serta travel reguler per kursi untuk rute tertentu. Hubungi admin kami melalui WhatsApp untuk informasi tarif, jadwal keberangkatan, dan ketersediaan layanan.",
+          "Raincarnation melayani sewa mobil dengan sopir di Malang, Batu, dan Surabaya, sewa mobil lepas kunci di Malang dan Batu, serta travel per kursi untuk rute Malang, Batu, Surabaya, Pandaan, dan Bandara Juanda. Admin bisa dihubungi lewat WhatsApp 24\u00A0jam.",
 
      servicesTitle: "Layanan & Navigasi",
      serviceLinks: [
-          { label: "Travel Reguler", href: "/travel" },
-          { label: "Carter Drop Satu Arah (One Way)", href: "/sewa-mobil" },
-          { label: "Pilihan Armada & Spesifikasi", href: "/armada" },
-          { label: "Profil Perusahaan & Driver", href: "/tentang-kami" },
-          { label: "Info Rute, Tips & Berita", href: "/blog" },
-          { label: "FAQ & Hubungi Layanan Bantuan", href: "/pusat-bantuan" },
+          { label: "Sewa Mobil", href: "/sewa-mobil" },
+          { label: "Travel (per kursi)", href: "/travel" },
+          { label: "Pilihan Armada", href: "/armada" },
+          { label: "Info Rute & Tips", href: "/blog" },
+          { label: "Pusat Bantuan", href: "/pusat-bantuan" },
+          { label: "Tentang Kami", href: "/tentang-kami" },
      ],
 
      supportTitle: "Pusat Bantuan & Pemesanan",
      addressLabel: "Operasional Dispatcher & Pemesanan:",
      whatsappLabel: "WhatsApp Layanan Pelanggan:",
      whatsappButton: "Pesan via WhatsApp",
-     whatsappMessage: "Halo Admin Raincarnation, saya butuh bantuan booking travel",
-
-     reservationTitle: "Kemudahan Reservasi & Konfirmasi WhatsApp:",
-     reservationChips: ["Pilihan Kursi Bebas", "Titik Jemput via Admin", "Konfirmasi Cepat"],
-
+     whatsappMessage: "Halo Admin Raincarnation, saya butuh bantuan booking",
      companyName: "PT Raincarnation Indonesia",
      copyrightSuffix: "Hak Cipta Dilindungi Undang-Undang.",
 };
