@@ -34,7 +34,7 @@ export default function TravelHero({ whatsapp, pairs = [] }: TravelHeroProps) {
           <div className="flex flex-col gap-space-md pt-space-xs">
             <RouteSearchForm pairs={pairs} whatsapp={whatsapp} />
 
-            <p className="text-center font-body-md text-body-md text-on-surface-variant">
+            <p className="text-center font-body-md text-body-md text-on-surface-variant sm:pt-space-sm">
               {content.charterLink.text}{" "}
               <br className="sm:hidden" />
               <Link

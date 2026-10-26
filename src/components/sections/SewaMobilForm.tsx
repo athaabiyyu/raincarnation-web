@@ -401,7 +401,7 @@ export default function SewaMobilForm({
                <div
                     className={`flex items-center justify-between gap-space-sm ${bare
                          ? "sm:mb-space-md lg:mb-space-lg"
-                         : "mb-space-lg border-b border-surface-container pb-space-md sm:mb-space-md sm:border-b-0 sm:pb-0"
+                         : "mb-space-lg border-b border-surface-container pb-space-md sm:mb-space-lg sm:border-b-0 sm:pb-0"
                          }`}
                >
                     <div className="flex min-w-0 items-center gap-space-sm">

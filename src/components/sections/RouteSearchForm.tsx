@@ -134,12 +134,12 @@ export default function RouteSearchForm({
                className={
                     bare
                          ? "relative z-20"
-                         : "relative z-20 rounded-2xl bg-surface-container-lowest p-space-md shadow-xl sm:p-5 lg:p-space-lg"
+                         : "relative z-20 rounded-2xl bg-surface-container-lowest p-5 shadow-xl lg:p-space-lg"
                }
           >
                {/* Header form */}
                <div
-     className={`flex items-center justify-between gap-space-sm ${bare ? "sm:mb-space-md lg:mb-space-lg" : "mb-space-lg"
+     className={`flex items-center justify-between gap-space-sm ${bare ? "sm:mb-space-md lg:mb-space-lg" : "mb-space-lg border-b border-surface-container pb-space-md sm:mb-space-lg sm:border-b-0 sm:pb-0"
           }`}
 >
                     <div className="flex min-w-0 items-center gap-space-sm">

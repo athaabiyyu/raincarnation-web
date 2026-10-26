@@ -25,7 +25,7 @@ export default function SewaMobilHero({
                     <div className="flex max-w-3xl flex-col gap-space-md">
                          <h1 className="font-display text-display font-extrabold tracking-tight text-on-surface">
                               {content.titleStart}{" "}
-                              <span className="text-primary underline decoration-primary-fixed decoration-[5px] underline-offset-8">
+                              <span className="text-primary-container">
                                    {content.titleHighlight}
                               </span>
                               {content.titleEnd}
@@ -69,7 +69,7 @@ export default function SewaMobilHero({
                               />
 
                               {/* Teks Link Travel Per Kursi di Bawah Form */}
-                              <p className="text-center font-body-md text-body-md text-on-surface-variant">
+                              <p className="text-center font-body-md text-body-md text-on-surface-variant sm:pt-space-sm">
                                    {content.regularLink.text}{" "}
                                    <br className="sm:hidden" />
                                    <Link
