@@ -12,12 +12,13 @@ import { getRoutes } from "@/lib/wordpress/routes";
 import type { Route } from "@/types/route";
 import { capitalizeFirst } from "@/utils/capitalize-first";
 import { decodeHtml } from "@/utils/decode-html";
+import { formatRupiah, lowestPrice } from "@/utils/price";
 import { getRoutePairs } from "@/utils/route-pairs";
 
 const title = "Travel Malang Door to Door: Jadwal & Tarif | Raincarnation";
 const description =
   "Travel per kursi Malang, Batu, Surabaya, Pandaan, dan Bandara Juanda, door to door. Tarif sudah termasuk tol dan parkir. Admin 24 jam via WhatsApp.";
-  
+
 export const metadata: Metadata = {
   title,
   description,
@@ -59,6 +60,9 @@ export default async function TravelRegulerPage() {
   ]);
   const whatsapp = config.contact?.whatsapp ?? "";
   const pairs = getRoutePairs(routes);
+  const lowestFare = formatRupiah(
+    lowestPrice(routes.map((route) => route.acf?.tarif)),
+  );
 
   // 1. Structured Data Utama (TransportationService / TravelAgency)
   const travelServiceLd = {
@@ -150,7 +154,11 @@ export default async function TravelRegulerPage() {
       )}
 
       {/* Hero & Form Pencarian Menyatu */}
-      <TravelHero whatsapp={whatsapp} pairs={pairs} />
+      <TravelHero
+        whatsapp={whatsapp}
+        pairs={pairs}
+        lowestFare={lowestFare}
+      />
 
       {whatsapp && routes.length > 0 && (
         <FeaturedRoutes

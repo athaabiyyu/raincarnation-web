@@ -72,7 +72,7 @@ export default function RouteCard({ route, whatsapp }: RouteCardProps) {
                                    {SOFT_SCHEDULE_LABEL}
                               </p>
 
-                                                            {/* Kotak jam: satu baris, bisa digeser bila banyak */}
+                              {/* Kotak jam: satu baris, bisa digeser bila banyak */}
                               <div className="-mx-1 flex gap-1.5 overflow-x-auto px-1 pb-1 [scrollbar-width:none] sm:gap-2 [&::-webkit-scrollbar]:hidden">
                                    {times.map((time) => (
                                         <span
