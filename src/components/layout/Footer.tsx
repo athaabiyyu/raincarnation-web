@@ -24,8 +24,9 @@ export default async function Footer() {
                               <Image
                                    src="/logo.webp"
                                    alt="Raincarnation"
-                                   width={240}
-                                   height={80}
+                                   width={190}
+                                   height={51}
+                                   sizes="(max-width: 768px) 140px, 190px"
                                    className="h-12 w-auto rounded-lg object-contain"
                               />
                               <p className="max-w-md font-body-sm text-body-sm text-on-surface-variant">

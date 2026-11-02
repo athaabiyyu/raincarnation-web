@@ -62,9 +62,10 @@ export default async function Navbar() {
                                    <Image
                                         src="/logo.webp"
                                         alt={`Logo ${siteConfig.name}`}
-                                        width={240}
-                                        height={80}
+                                        width={190}
+                                        height={51}
                                         priority
+                                        sizes="(max-width: 768px) 140px, 190px"
                                         className="h-9 md:h-12 w-auto object-contain"
                                    />
                               </Link>

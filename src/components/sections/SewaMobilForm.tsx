@@ -87,8 +87,10 @@ const RENTAL_KINDS: SewaMobilPackageKind[] = [
 
 const selectClass =
      "[color-scheme:light] h-12 w-full appearance-none cursor-pointer rounded-xl border border-slate-200/90 bg-white px-4 pr-9 font-label-md text-base md:text-label-md text-on-surface invalid:text-on-surface-variant [&>option]:text-on-surface transition-all shadow-sm focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none disabled:cursor-not-allowed disabled:opacity-60";
+
 const inputClass =
      "h-12 w-full min-w-0 appearance-none rounded-xl border border-slate-200/90 bg-white px-4 pr-10 text-left font-label-md text-base md:text-label-md text-on-surface transition-all placeholder:text-on-surface-variant shadow-sm focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none [&::-webkit-date-and-time-value]:text-left [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:left-0 [&::-webkit-calendar-picker-indicator]:top-0 [&::-webkit-calendar-picker-indicator]:cursor-pointer";
+
 const labelClass =
      "mb-2 flex items-center gap-1.5 font-label-md text-label-md text-on-surface";
 
@@ -741,7 +743,7 @@ export default function SewaMobilForm({
                     )}
 
                     {/* Tanggal */}
-                    <div className="col-span-1 min-w-0 space-y-1.5 lg:col-span-4">
+                    <div className="col-span-2 min-w-0 space-y-1.5 lg:col-span-4">
                          <label htmlFor="sm-date" className={labelClass}>
                               <CalendarDays size={14} className="text-primary" aria-hidden />
                               {content.labels.date}
@@ -764,7 +766,7 @@ export default function SewaMobilForm({
                     </div>
 
                     {/* Jam */}
-                    <div className="col-span-1 min-w-0 space-y-1.5 lg:col-span-4">
+                    <div className="col-span-2 min-w-0 space-y-1.5 lg:col-span-4">
                          <label htmlFor="sm-time" className={labelClass}>
                               <Clock size={14} className="text-primary" aria-hidden />
                               {content.labels.time}
@@ -812,7 +814,7 @@ export default function SewaMobilForm({
 
                               <span className="font-label-md text-base text-on-surface">
                                    {values.passengers === "" ? (
-                                        <span className="text-slate-400">Contoh: 4 Orang</span>
+                                        <span className="text-slate-600">Contoh: 4 Orang</span>
                                    ) : (
                                         <>
                                              <strong className="font-bold">{passengerCount}</strong> Orang
