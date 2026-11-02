@@ -58,7 +58,6 @@ export default function BerandaServices() {
                          </span>
                          <h2 className="font-headline-lg text-headline-lg font-extrabold tracking-tight text-on-surface">
                               <span>Sewa Mobil &amp; Travel</span>
-                              <span className="block sm:inline"> per Kursi</span>
                          </h2>
                          <p className="mx-auto w-full max-w-2xl font-body-md text-body-md leading-relaxed text-on-surface-variant pt-1 text-center md:max-w-3xl">
                               {berandaServices.description}

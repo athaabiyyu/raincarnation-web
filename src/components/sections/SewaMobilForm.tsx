@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
      Briefcase,
      CalendarDays,
@@ -10,8 +10,11 @@ import {
      LocateFixed,
      MapPin,
      MessageSquareText,
+     Minus,
+     Plus,
      Timer,
      Users,
+     Check,
 } from "lucide-react";
 import { CarIcon } from "@/components/ui/BookingIcons";
 import {
@@ -83,13 +86,13 @@ const RENTAL_KINDS: SewaMobilPackageKind[] = [
 ];
 
 const selectClass =
-     "[color-scheme:light] h-12 w-full appearance-none cursor-pointer rounded-xl border border-surface-container-high/60 bg-surface-container-low px-4 pr-9 font-label-md text-base md:text-label-md text-on-surface invalid:text-on-surface-variant [&>option]:text-on-surface transition-colors focus:bg-surface-container-high focus:outline-none disabled:cursor-not-allowed disabled:opacity-60";
+     "[color-scheme:light] h-12 w-full appearance-none cursor-pointer rounded-xl border border-slate-200/90 bg-white px-4 pr-9 font-label-md text-base md:text-label-md text-on-surface invalid:text-on-surface-variant [&>option]:text-on-surface transition-all shadow-sm focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none disabled:cursor-not-allowed disabled:opacity-60";
 
 const inputClass =
-     "h-12 w-full min-w-0 appearance-none rounded-xl border border-surface-container-high/60 bg-surface-container-low px-4 text-left font-label-md text-base md:text-label-md text-on-surface transition-colors placeholder:text-on-surface-variant focus:bg-surface-container-high focus:outline-none [&::-webkit-date-and-time-value]:text-left";
+     "h-12 w-full min-w-0 appearance-none rounded-xl border border-slate-200/90 bg-white px-4 text-left font-label-md text-base md:text-label-md text-on-surface transition-all placeholder:text-on-surface-variant shadow-sm focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none [&::-webkit-date-and-time-value]:text-left";
 
 const labelClass =
-     "mb-0.5 flex items-center gap-1 font-label-md text-label-md text-on-surface";
+     "mb-2 flex items-center gap-1.5 font-label-md text-label-md text-on-surface";
 
 const chevronClass =
      "pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant";
@@ -163,7 +166,6 @@ function buildMessage(input: MessageInput): string {
      const details = [
           packageType && `- Layanan: ${packageType}`,
           fleetName && `- Unit: ${fleetName}`,
-          duration && `- Durasi: ${duration}`,
           routeText && `- Rute: ${routeText}`,
           customRouteText && `- Rute yang diinginkan: ${customRouteText}`,
           origin && `- Penjemputan: ${origin}`,
@@ -172,7 +174,6 @@ function buildMessage(input: MessageInput): string {
           values.time && `- Jam: ${values.time}`,
           values.passengers.trim() && `- Penumpang: ${values.passengers.trim()}`,
           driverText && `- Tambahan driver: ${driverText}`,
-          priceText && `- Estimasi tarif: ${priceText}`,
      ].filter(Boolean);
 
      return [
@@ -196,8 +197,25 @@ export default function SewaMobilForm({
      const content = sewaMobilForm;
      const config = sewaMobilPackageConfig;
 
-     const [packageType, setPackageType] = useState("");
-     const [fleetId, setFleetId] = useState("");
+     const packageConfigs: PackageConfig[] = config.packages;
+     const packages = packageConfigs.filter((p) => {
+          if (RENTAL_KINDS.includes(p.kind)) {
+               return fleet.some((f) => fleetPrice(f, p.kind, "12-jam") > 0);
+          }
+          return routes.some((r) => r.acf?.paket_sewa === p.name);
+     });
+
+     const defaultPackageConfig =
+          packages.find((p) => p.kind === "all-in") ?? packages[0];
+     const defaultPackageName = defaultPackageConfig?.name ?? "";
+
+     const defaultFleet =
+          fleet.find((f) => f.name.toLowerCase().includes("innova reborn")) ?? fleet[0];
+
+     const [packageType, setPackageType] = useState(defaultPackageName);
+     const [fleetId, setFleetId] = useState(
+          defaultFleet ? String(defaultFleet.id) : "",
+     );
      const [durationValue, setDurationValue] = useState("");
      const [routeValue, setRouteValue] = useState("");
      const [origin, setOrigin] = useState("");
@@ -210,20 +228,95 @@ export default function SewaMobilForm({
           customRoute: "",
      });
 
-     if (!whatsapp) return null;
+     const applyDefaultsForPackage = (pkgName: string, selectedFleetObj?: FleetOption) => {
+          const targetConfig = packages.find((p) => p.name === pkgName);
+          if (!targetConfig) return;
+
+          const targetKind = targetConfig.kind;
+          const targetIsSimple =
+               targetKind !== undefined && RENTAL_KINDS.includes(targetKind);
+
+          if (targetKind === "lepas-kunci") {
+               const currentFleet = selectedFleetObj ?? defaultFleet;
+               const validDurations = (targetConfig.durations ?? []).filter(
+                    (d) => fleetPrice(currentFleet, targetKind, d.value) > 0,
+               );
+               if (validDurations.length > 0) {
+                    setDurationValue(validDurations[0].value);
+               }
+          } else {
+               setDurationValue("");
+          }
+
+          if (targetIsSimple) {
+               const targetRoutes = targetConfig.routes ?? [];
+               if (targetRoutes.length > 0) {
+                    setRouteValue(targetRoutes[0].value ?? targetRoutes[0].label);
+               }
+          } else {
+               const availableRoutes = routes.filter(
+                    (r) => r.acf?.paket_sewa === pkgName,
+               );
+               const availableOrigins = unique(
+                    availableRoutes.map((r) => capitalizeFirst(r.acf?.kota_asal)),
+               );
+               if (availableOrigins.length > 0) {
+                    setOrigin(availableOrigins[0]);
+                    const availableDestinations = unique(
+                         availableRoutes
+                              .filter(
+                                   (r) => capitalizeFirst(r.acf?.kota_asal) === availableOrigins[0],
+                              )
+                              .map((r) => capitalizeFirst(r.acf?.kota_tujuan)),
+                    );
+                    if (availableDestinations.length > 0) {
+                         setDestination(availableDestinations[0]);
+                    }
+               }
+          }
+     };
+
+     useEffect(() => {
+          const now = new Date();
+          const year = now.getFullYear();
+          const month = String(now.getMonth() + 1).padStart(2, "0");
+          const day = String(now.getDate()).padStart(2, "0");
+          const hours = String(now.getHours()).padStart(2, "0");
+          const minutes = String(now.getMinutes()).padStart(2, "0");
+
+          setValues((prev) => ({
+               ...prev,
+               date: `${year}-${month}-${day}`,
+               time: `${hours}:${minutes}`,
+          }));
+
+          if (defaultPackageName) {
+               applyDefaultsForPackage(defaultPackageName);
+          }
+     }, []);
+
+     if (!whatsapp || packages.length === 0) return null;
 
      function update(field: keyof FormValues, value: string) {
           setValues((prev) => ({ ...prev, [field]: value }));
      }
 
-     const packageConfigs: PackageConfig[] = config.packages;
-     const packages = packageConfigs.filter((p) => {
-          if (RENTAL_KINDS.includes(p.kind)) {
-               return fleet.some((f) => fleetPrice(f, p.kind, "12-jam") > 0);
+     const rawPassengerCount = parseInt(values.passengers, 10);
+     const passengerCount = Number.isNaN(rawPassengerCount) ? 1 : rawPassengerCount;
+
+     const handleDecrementPassengers = () => {
+          if (passengerCount > 1) {
+               update("passengers", `${passengerCount - 1} Orang`);
           }
-          return routes.some((r) => r.acf?.paket_sewa === p.name);
-     });
-     if (packages.length === 0) return null;
+     };
+
+     const handleIncrementPassengers = () => {
+          if (values.passengers === "") {
+               update("passengers", "1 Orang");
+          } else {
+               update("passengers", `${passengerCount + 1} Orang`);
+          }
+     };
 
      const selectedConfig = packages.find((p) => p.name === packageType);
      const selectedPackage = selectedConfig?.name ?? "";
@@ -231,7 +324,6 @@ export default function SewaMobilForm({
      const isSimplePackage = kind !== undefined && RENTAL_KINDS.includes(kind);
      const isLepasKunci = kind === "lepas-kunci";
 
-     // Mengatur pembagian grid secara konsisten
      const topSpan = isSimplePackage ? "lg:col-span-4" : "lg:col-span-3";
 
      const packageRoutes = selectedPackage
@@ -283,13 +375,15 @@ export default function SewaMobilForm({
                },
           ]
           : [];
+
      const selectedRoute = routeOptions.find((o) => o.value === routeValue);
      const isCustomRoute = selectedRoute?.value === CUSTOM_ROUTE;
 
      const origins = unique(
           packageRoutes.map((r) => capitalizeFirst(r.acf?.kota_asal)),
      );
-     const selectedOrigin = origins.includes(origin) ? origin : "";
+     const selectedOrigin = origins.includes(origin) ? origin : (origins[0] ?? "");
+
      const destinations = selectedOrigin
           ? unique(
                packageRoutes
@@ -301,11 +395,36 @@ export default function SewaMobilForm({
           : [];
      const selectedDestination = destinations.includes(destination)
           ? destination
-          : "";
+          : (destinations[0] ?? "");
+
+     const handlePackageChange = (newPackage: string) => {
+          setPackageType(newPackage);
+          const targetConfig = packages.find((p) => p.name === newPackage);
+          const targetKind = targetConfig?.kind;
+          const targetIsSimple =
+               targetKind !== undefined && RENTAL_KINDS.includes(targetKind);
+
+          const availableFleets = fleet.filter((f) => {
+               if (targetIsSimple) return fleetPrice(f, targetKind, "12-jam") > 0;
+               return true;
+          });
+
+          let newFleet = selectedFleet;
+          if (availableFleets.length > 0) {
+               newFleet =
+                    availableFleets.find((f) =>
+                         f.name.toLowerCase().includes("innova reborn"),
+                    ) ?? availableFleets[0];
+               setFleetId(String(newFleet.id));
+          }
+
+          applyDefaultsForPackage(newPackage, newFleet);
+     };
 
      const placeFilled = isSimplePackage
           ? Boolean(selectedRoute)
           : Boolean(selectedOrigin) && Boolean(selectedDestination);
+
      const allFilled =
           Boolean(selectedConfig) &&
           selectedFleet !== undefined &&
@@ -332,11 +451,13 @@ export default function SewaMobilForm({
           if (isCustomRoute) return 0;
           return fleetPrice(selectedFleet, kind, selectedDuration?.value ?? "12-jam");
      }
+
      const price = allFilled ? resolvePrice() : 0;
      const priceText = price > 0 ? formatPrice(String(price)) : null;
 
      const askAdmin = allFilled && !priceText;
-     const priceUnit = selectedDuration?.priceUnit ?? selectedConfig?.priceUnit ?? "/rute";
+     const priceUnit =
+          selectedDuration?.priceUnit ?? selectedConfig?.priceUnit ?? "/rute";
      const includes = priceText ? (selectedConfig?.includes ?? []) : [];
      const excludes = priceText ? (selectedConfig?.excludes ?? []) : [];
 
@@ -373,27 +494,33 @@ export default function SewaMobilForm({
           >
                {/* Header form */}
                <div
-                    className={`flex items-center justify-between gap-space-sm ${bare
-                         ? "sm:mb-space-md lg:mb-space-lg"
-                         : "mb-space-lg border-b border-surface-container pb-space-md sm:mb-space-lg sm:border-b-0 sm:pb-0"
+                    className={`flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between mb-3 sm:mb-8 ${bare
+                              ? ""
+                              : "border-b border-surface-container pb-2 sm:pb-6"
                          }`}
                >
-                    <div className="flex min-w-0 items-center gap-space-sm">
+                    <div className="flex min-w-0 items-start gap-space-sm">
                          <span
-                              className={`shrink-0 rounded-lg bg-primary-container/10 p-2 text-primary ${bare ? "hidden sm:block" : ""
+                              className={`mt-0.5 shrink-0 rounded-lg bg-primary-container/10 p-2 text-primary ${bare ? "hidden sm:block" : ""
                                    }`}
                          >
                               <CarIcon className="h-[22px] w-[22px]" />
                          </span>
-                         <Heading
-                              className={`whitespace-nowrap font-label-lg text-label-lg text-on-surface ${bare ? "sr-only sm:not-sr-only" : ""
-                                   }`}
-                         >
-                              {content.title}
-                         </Heading>
+                         <div className="flex flex-col">
+                              <Heading
+                                   className={`whitespace-nowrap font-label-lg text-label-lg text-on-surface ${bare ? "sr-only sm:not-sr-only" : ""
+                                        }`}
+                              >
+                                   {content.title}
+                              </Heading>
+                              <p className="hidden font-label-sm text-xs text-on-surface-variant sm:block md:text-label-sm">
+                                   Pilih armada favorit Anda dengan penawaran terbaik dan garansi layanan tepat waktu.
+                              </p>
+                         </div>
                     </div>
 
-                    <div className="hidden shrink-0 items-center whitespace-nowrap rounded-lg bg-surface-container-low px-3 py-1.5 font-label-sm text-label-sm text-primary sm:inline-flex">
+                    <div className="hidden shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 font-label-sm text-xs text-emerald-700 sm:inline-flex">
+                         <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                          <span>{content.eyebrow}</span>
                     </div>
                </div>
@@ -413,7 +540,7 @@ export default function SewaMobilForm({
                                    id="sm-package"
                                    required
                                    value={selectedPackage}
-                                   onChange={(e) => setPackageType(e.target.value)}
+                                   onChange={(e) => handlePackageChange(e.target.value)}
                                    className={selectClass}
                               >
                                    <option value="">Pilih Jenis Layanan</option>
@@ -486,8 +613,11 @@ export default function SewaMobilForm({
 
                     {isSimplePackage ? (
                          <>
-                              {/* Rute: Selalu 12-col jika Lepas Kunci (karena baris 1 sudah penuh 3 kolom), atau 4-col untuk All In/Non All In */}
-                              <div className={`col-span-2 min-w-0 space-y-1.5 ${isLepasKunci ? "lg:col-span-12" : "lg:col-span-4"}`}>
+                              {/* Rute */}
+                              <div
+                                   className={`col-span-2 min-w-0 space-y-1.5 ${isLepasKunci ? "lg:col-span-12" : "lg:col-span-4"
+                                        }`}
+                              >
                                    <label htmlFor="sm-route" className={labelClass}>
                                         <MapPin
                                              size={14}
@@ -519,7 +649,7 @@ export default function SewaMobilForm({
                                    </div>
                               </div>
 
-                              {/* Rute kustom (Custom rute / Luar kota): satu baris penuh */}
+                              {/* Rute kustom */}
                               {isCustomRoute && (
                                    <div className="col-span-2 min-w-0 space-y-1.5 lg:col-span-12">
                                         <label htmlFor="sm-custom-route" className={labelClass}>
@@ -644,37 +774,76 @@ export default function SewaMobilForm({
                          />
                     </div>
 
-                    {/* Penumpang */}
+                    {/* Jumlah Penumpang */}
                     <div className="col-span-2 min-w-0 space-y-1.5 lg:col-span-4">
-                         <label htmlFor="sm-passengers" className={labelClass}>
-                              <Users size={14} className="text-primary" aria-hidden />
-                              {isSimplePackage
-                                   ? config.labels.passengers
-                                   : content.labels.passengers}
-                         </label>
-                         {isSimplePackage ? (
-                              <input
-                                   id="sm-passengers"
-                                   type="number"
-                                   inputMode="numeric"
-                                   min={1}
-                                   required
-                                   value={values.passengers}
-                                   onChange={(e) => update("passengers", e.target.value)}
-                                   placeholder={config.placeholders.passengers}
-                                   className={inputClass}
-                              />
-                         ) : (
-                              <input
-                                   id="sm-passengers"
-                                   type="text"
-                                   required
-                                   value={values.passengers}
-                                   onChange={(e) => update("passengers", e.target.value)}
-                                   placeholder={content.placeholders.passengers}
-                                   className={inputClass}
-                              />
-                         )}
+                         <div className="flex items-center justify-between">
+                              <label htmlFor="sm-passengers" className={labelClass}>
+                                   <Users size={14} className="text-primary" aria-hidden />
+                                   Jumlah Penumpang
+                              </label>
+                              <span className="mb-2 text-xs font-normal text-slate-500 sm:hidden">
+                                   Kapasitas Armada Aman
+                              </span>
+                         </div>
+
+                         {/* Stepper Mobile */}
+                         <div className="flex h-12 w-full items-center justify-between rounded-xl border border-slate-200/90 bg-white px-3 shadow-sm sm:hidden">
+                              <button
+                                   type="button"
+                                   disabled={passengerCount <= 1 || values.passengers === ""}
+                                   onClick={handleDecrementPassengers}
+                                   className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 text-slate-600 transition-colors disabled:opacity-40 active:bg-slate-100"
+                                   aria-label="Kurangi Penumpang"
+                              >
+                                   <Minus size={14} />
+                              </button>
+
+                              <span className="font-label-md text-base text-on-surface">
+                                   {values.passengers === "" ? (
+                                        <span className="text-slate-400">Contoh: 4 Orang</span>
+                                   ) : (
+                                        <>
+                                             <strong className="font-bold">{passengerCount}</strong> Orang
+                                        </>
+                                   )}
+                              </span>
+
+                              <button
+                                   type="button"
+                                   onClick={handleIncrementPassengers}
+                                   className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 text-slate-600 transition-colors active:bg-slate-100"
+                                   aria-label="Tambah Penumpang"
+                              >
+                                   <Plus size={14} />
+                              </button>
+                         </div>
+
+                         {/* Input Desktop */}
+                         <div className="hidden sm:block">
+                              {isSimplePackage ? (
+                                   <input
+                                        id="sm-passengers"
+                                        type="number"
+                                        inputMode="numeric"
+                                        min={1}
+                                        required
+                                        value={values.passengers}
+                                        onChange={(e) => update("passengers", e.target.value)}
+                                        placeholder="Contoh: 4 Orang"
+                                        className={inputClass}
+                                   />
+                              ) : (
+                                   <input
+                                        id="sm-passengers"
+                                        type="text"
+                                        required
+                                        value={values.passengers}
+                                        onChange={(e) => update("passengers", e.target.value)}
+                                        placeholder="Contoh: 4 Orang"
+                                        className={inputClass}
+                                   />
+                              )}
+                         </div>
                     </div>
 
                     {/* Dengan sopir (hanya Lepas Kunci) */}
@@ -700,7 +869,7 @@ export default function SewaMobilForm({
                     {/* Rincian termasuk */}
                     {priceText &&
                          (includes.length > 0 || excludes.length > 0 || useDriver) && (
-                              <div className="col-span-2 space-y-1.5 lg:col-span-12">
+                              <div className="-mb-2 col-span-2 space-y-1 lg:col-span-12">
                                    {includes.length > 0 && (
                                         <p className="font-label-sm text-label-sm text-on-surface-variant">
                                              <span className="font-bold text-on-surface">
@@ -728,10 +897,10 @@ export default function SewaMobilForm({
                               </div>
                          )}
 
-                    {/* Harga + Tombol */}
-                    <div className="col-span-2 flex flex-col gap-space-md pt-space-xs sm:flex-row sm:items-center sm:justify-between sm:border-t sm:border-surface-container sm:pt-space-md lg:col-span-12">
-                         {priceText && (
-                              <div className="flex items-baseline justify-center gap-2 whitespace-nowrap rounded-lg bg-primary-container/10 px-space-md py-2 sm:flex-col sm:items-start sm:justify-start sm:gap-0 sm:bg-transparent sm:px-0 sm:py-0">
+                    {/* Bottom Section */}
+                    <div className="col-span-2 flex flex-col gap-2.5 pt-0 sm:flex-row sm:items-center sm:justify-between sm:gap-space-sm sm:pt-space-md lg:col-span-12">
+                         {priceText ? (
+                              <div className="flex items-baseline justify-center gap-2 whitespace-nowrap rounded-xl bg-primary-container/10 px-4 py-3 sm:flex-col sm:items-start sm:justify-start sm:gap-0 sm:bg-transparent sm:px-0 sm:py-0">
                                    <span className="font-label-sm text-label-sm text-on-surface-variant">
                                         Harga mulai
                                    </span>
@@ -744,6 +913,18 @@ export default function SewaMobilForm({
                                         </span>
                                    </span>
                               </div>
+                         ) : (
+                              <div className="hidden flex-wrap items-center gap-3 text-xs font-medium text-slate-600 sm:flex sm:text-label-sm">
+                                   <span className="flex items-center gap-1">
+                                        <Check size={14} className="text-emerald-600" />
+                                        Konfirmasi Cepat via WhatsApp
+                                   </span>
+                                   <span className="text-slate-300">•</span>
+                                   <span className="flex items-center gap-1">
+                                        <Check size={14} className="text-emerald-600" />
+                                        Armada Bersih & Terawat
+                                   </span>
+                              </div>
                          )}
 
                          {askAdmin && (
@@ -754,9 +935,9 @@ export default function SewaMobilForm({
 
                          <button
                               type="submit"
-                              className="inline-flex w-full items-center justify-center gap-space-sm rounded-xl bg-primary px-space-md py-3.5 text-center font-label-md text-label-md text-on-primary shadow-md transition-all duration-150 hover:bg-primary/90 sm:ml-auto sm:w-auto sm:gap-space-md sm:px-space-lg sm:py-3 sm:font-label-lg sm:text-label-lg"
+                              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-center font-label-md text-label-md font-semibold text-on-primary shadow-md transition-all duration-150 hover:bg-primary/90 sm:ml-auto sm:w-auto sm:py-2.5"
                          >
-                              <MessageSquareText className="h-4 w-4 shrink-0 sm:h-5 sm:w-5" aria-hidden />
+                              <MessageSquareText className="h-4 w-4 shrink-0" aria-hidden />
                               {content.submitLabel}
                          </button>
                     </div>

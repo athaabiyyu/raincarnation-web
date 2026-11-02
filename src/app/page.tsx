@@ -26,9 +26,9 @@ import { capitalizeFirst } from "@/utils/capitalize-first";
 import { decodeHtml } from "@/utils/decode-html";
 import { getRoutePairs } from "@/utils/route-pairs";
 
-const title = "Sewa Mobil Malang & Travel Door to Door | Raincarnation";
+const title = "Raincarnation Indonesia";
 const description =
-     "Sewa mobil dengan sopir atau lepas kunci di Malang, Batu, dan Surabaya. Travel door to door per kursi. Admin 24 jam, pesan via WhatsApp.";
+     "Sewa mobil dengan sopir atau lepas kunci di Malang, Batu, dan Surabaya. Travel antar rute per kursi. Admin 24 jam, pesan via WhatsApp.";
 
 export const metadata: Metadata = {
      title,

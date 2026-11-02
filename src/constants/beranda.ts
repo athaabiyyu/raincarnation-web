@@ -9,7 +9,7 @@ export type BerandaWhyIcon =
 export const berandaHero = {
      titleStart: "Sewa Mobil",
      titleHighlight: "Malang, Batu & Surabaya",
-     titleEnd: "dan Travel Door to Door",
+     titleEnd: "dan Travel Antar Kota",
      image: {
           src: "/images/interior-armada.webp",
           alt: "Kabin mobil Raincarnation yang bersih dan nyaman untuk sewa mobil di Malang",
@@ -21,7 +21,7 @@ export const berandaHero = {
                "Dengan sopir atau lepas kunci. Titik sewa di Malang, Batu, dan Surabaya, rute bebas sesuai rencana Anda.",
      },
      description:
-          "Sewa mobil dengan sopir atau lepas kunci di Malang, Batu, dan Surabaya, rute bebas lewat custom rute. Butuh kursi saja? Pilih travel door to door per kursi (travel reguler).",
+          "Butuh kendaraan untuk wisata, perjalanan bisnis, atau keperluan keluarga? Temukan pilihan sewa mobil di Malang, Batu, dan Surabaya serta layanan travel antar kota untuk rencana perjalanan Anda.",
      unitLabel: "Armada siap pakai",
      stats: [
           { value: "24 Jam", label: "Layanan admin" },
@@ -30,14 +30,14 @@ export const berandaHero = {
 };
 
 export const berandaBooking = {
-     regulerTab: "Travel (Per Kursi)",
-     carterTab: "Sewa Mobil (Satu Mobil Penuh)",
+     regulerTab: "Travel",
+     carterTab: "Sewa Mobil",
 };
 
 export const berandaServices = {
-     title: "Sewa Mobil & Travel per Kursi",
+     title: "Sewa Mobil & Travel",
      description:
-          "Rental mobil Malang dengan sopir atau lepas kunci, atau travel per kursi untuk rute tetap. Pilih sesuai kebutuhan perjalanan Anda.",
+          "Rental mobil dengan sopir atau lepas kunci, dan travel. Pilih layanan kami sesuai kebutuhan Anda.",
      items: [
           {
                icon: "car",
@@ -195,7 +195,7 @@ export const berandaFaq = {
           {
                question: "Apakah travel bisa dijemput sampai rumah?",
                answer:
-                    "Bisa. Travel kami door to door, jadi Anda dijemput di alamat Anda, kecuali titik di Pandaan dan Juanda. Contohnya dari Malang ke Juanda, Anda dijemput di alamat Anda. Dari Juanda, Anda dijemput di Juanda. Titik pastinya dikonfirmasi admin lewat WhatsApp.",
+                    "Tidak. Layanan travel kami menggunakan sistem pool to pool, yaitu penjemputan dan pengantaran di titik yang telah ditentukan di kota keberangkatan dan tujuan, bukan di alamat rumah. Untuk informasi lokasi pool atau titik jemput di kota yang Anda pilih, silakan hubungi admin melalui WhatsApp.",
           },
           {
                question: "Bagaimana cara melakukan pemesanan sewa mobil di Raincarnation?",

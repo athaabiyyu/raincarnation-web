@@ -25,7 +25,7 @@ export const armadaCatalog = {
      title: "Pilihan Armada untuk Sewa Mobil di Malang",
      pageTitle: "Daftar Armada Raincarnation",
      description:
-          "Pilihan mobil untuk perjalanan pribadi, keluarga, maupun dinas. Pilih sesuai jumlah penumpang, lalu hubungi admin untuk tarif dan ketersediaan unit.",
+          "Pilih sesuai jumlah penumpang dan budget Anda, lalu hubungi admin untuk tarif dan ketersediaan unit.",
      priceLabel: "Mulai",
      buttonLabel: "Reservasi Unit",
 };

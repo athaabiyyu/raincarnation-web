@@ -37,7 +37,7 @@ export default function ArmadaCatalog({
           ? armada.filter(
                (item) =>
                     Number(item.acf?.harga) > 0 && Number(item.acf?.harga_all_in) > 0
-            )
+          )
           : armada;
 
      if (candidates.length === 0) return null;
@@ -51,15 +51,15 @@ export default function ArmadaCatalog({
                className={`w-full scroll-mt-32 ${isHome ? "bg-surface py-space-xl" : "pt-space-xl"}`}
           >
                <div className="mx-auto flex max-w-6xl flex-col gap-space-lg px-gutter">
-                    {/* Section Header (Centered & Optimized Description Width) */}
-                    <div className="mx-auto flex w-full max-w-4xl flex-col items-center gap-space-sm text-center">
+                    {/* Section Header */}
+                    <div className="mx-auto flex max-w-2xl flex-col items-center gap-space-sm text-center sm:max-w-3xl">
                          <span className="mb-0.5 font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
                               KENDARAAN NYAMAN &amp; TERAWAT
                          </span>
                          <h2 className="font-headline-lg text-headline-lg font-extrabold tracking-tight text-on-surface">
                               {heading}
                          </h2>
-                         <p className="mx-auto w-full max-w-2xl font-body-md text-body-md leading-relaxed text-on-surface-variant pt-1 text-center md:max-w-3xl">
+                         <p className="font-body-md text-body-md leading-relaxed text-on-surface-variant pt-1">
                               {armadaCatalog.description}
                          </p>
                     </div>

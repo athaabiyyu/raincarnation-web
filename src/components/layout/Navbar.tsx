@@ -16,8 +16,8 @@ export default async function Navbar() {
      const waGeneral = whatsapp ? buildWhatsAppUrl(whatsapp) : null;
      const waOrder = whatsapp
           ? buildWhatsAppUrl(
-                whatsapp,
-                "Halo Raincarnation, saya ingin pesan layanan travel/carter",
+               whatsapp,
+               "Halo Raincarnation, saya ingin pesan layanan travel/carter",
           )
           : null;
 
@@ -25,8 +25,8 @@ export default async function Navbar() {
           <header className="sticky top-0 z-50">
                {/* Top bar */}
                <div className="bg-primary text-on-primary py-space-xs px-gutter">
-                    <div className="flex items-center justify-between font-label-sm text-label-sm">
-                         <div className="flex min-w-0 items-center gap-space-sm overflow-hidden text-ellipsis whitespace-nowrap">
+                    <div className="flex items-center justify-center sm:justify-between font-label-sm text-label-sm">
+                         <div className="flex min-w-0 items-center justify-center sm:justify-start gap-space-sm overflow-hidden text-ellipsis whitespace-nowrap">
                               <span className="flex items-center gap-1">
                                    <Zap size={14} className="text-primary-fixed" aria-hidden />
                                    {topbarMessages[0]}
