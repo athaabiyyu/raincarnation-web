@@ -48,7 +48,8 @@ export default function ArmadaCatalog({
      return (
           <section
                id={armadaCatalog.id}
-               className={`w-full scroll-mt-32 ${isHome ? "bg-surface py-space-xl" : "pt-space-xl"}`}
+               className={`w-full scroll-mt-32 py-space-xl ${isHome ? "bg-surface" : "bg-surface-container-low"
+                    }`}
           >
                <div className="mx-auto flex max-w-6xl flex-col gap-space-lg px-gutter">
                     {/* Section Header */}

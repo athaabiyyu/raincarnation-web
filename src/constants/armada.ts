@@ -9,11 +9,11 @@ export type ArmadaAmenityIcon =
      | "fan";
 
 export const armadaHero = {
-     titleStart: "Armada Sewa Mobil Malang",
+     titleStart: "Armada Sewa Mobil Raincarnation",
      titleHighlight: "Modern & Terawat",
-     titleEnd: ", untuk Setiap Kilometer Perjalanan Anda.",
+     titleEnd: "untuk Perjalanan Anda",
      description:
-          "Dari perjalanan dinas antarkota, mudik keluarga, hingga tur rombongan. Pilih armada sesuai jumlah penumpang, lalu hubungi admin lewat WhatsApp untuk informasi tarif dan ketersediaan unit.",
+          "Temukan pilihan mobil untuk perjalanan dinas, liburan keluarga, hingga wisata rombongan. Pilih armada sesuai kebutuhan dan jumlah penumpang, lalu hubungi admin melalui WhatsApp untuk informasi tarif dan ketersediaan.",
      primaryButton: "Cek Ketersediaan Unit Hari Ini",
      primaryMessage:
           "Halo Admin Raincarnation, saya ingin cek ketersediaan armada hari ini.",
@@ -31,6 +31,7 @@ export const armadaCatalog = {
 };
 
 export const armadaMaintenance = {
+     eyebrow: "STANDAR PERAWATAN KETAT",
      title: "Perawatan Armada Berkala",
      description:
           "Setiap unit dirawat berkala sebelum dipakai melayani perjalanan Anda.",

@@ -3,13 +3,19 @@ import { armadaMaintenance } from "@/constants/armada";
 
 export default function ArmadaMaintenance() {
      return (
-          <section className="mt-space-xl w-full border-y border-surface-variant bg-surface-container py-space-xl">
+          <section className="w-full border-y border-surface-variant bg-surface py-space-xl">
                <div className="mx-auto max-w-6xl px-gutter">
-                    <div className="flex max-w-3xl flex-col gap-space-md">
-                         <h2 className="font-headline-lg text-headline-lg font-bold tracking-tight text-on-surface">
+                    {/* Header: Ditambahkan eyebrow serta disamakan align center dan spacing-nya */}
+                    <div className="mx-auto mb-space-lg flex max-w-3xl flex-col items-center text-center space-y-2">
+                         {armadaMaintenance.eyebrow && (
+                              <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
+                                   {armadaMaintenance.eyebrow}
+                              </span>
+                         )}
+                         <h2 className="font-headline-lg text-headline-lg font-extrabold tracking-tight text-on-surface">
                               {armadaMaintenance.title}
                          </h2>
-                         <p className="font-body-md text-body-md text-on-surface-variant">
+                         <p className="font-body-md text-body-md leading-relaxed text-on-surface-variant">
                               {armadaMaintenance.description}
                          </p>
                     </div>

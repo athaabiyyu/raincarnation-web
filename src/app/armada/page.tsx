@@ -11,7 +11,7 @@ import { decodeHtml } from "@/utils/decode-html";
 import { capitalizeFirst } from "@/utils/capitalize-first";
 import type { Armada } from "@/types/armada";
 
-const title = "Armada Sewa Mobil Malang: Pilih Unit & Harga | Raincarnation";
+const title = "Armada Raincarnation: Pilih Unit & Harga | Raincarnation";
 const description =
      "Lihat pilihan armada sewa mobil Raincarnation di Malang, Batu, dan Surabaya, lengkap dengan harga per layanan. Pilih unit, lalu pesan via WhatsApp.";
 
