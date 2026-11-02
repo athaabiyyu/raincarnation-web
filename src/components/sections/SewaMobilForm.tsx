@@ -87,10 +87,8 @@ const RENTAL_KINDS: SewaMobilPackageKind[] = [
 
 const selectClass =
      "[color-scheme:light] h-12 w-full appearance-none cursor-pointer rounded-xl border border-slate-200/90 bg-white px-4 pr-9 font-label-md text-base md:text-label-md text-on-surface invalid:text-on-surface-variant [&>option]:text-on-surface transition-all shadow-sm focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none disabled:cursor-not-allowed disabled:opacity-60";
-
 const inputClass =
-     "h-12 w-full min-w-0 appearance-none rounded-xl border border-slate-200/90 bg-white px-4 text-left font-label-md text-base md:text-label-md text-on-surface transition-all placeholder:text-on-surface-variant shadow-sm focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none [&::-webkit-date-and-time-value]:text-left";
-
+     "h-12 w-full min-w-0 appearance-none rounded-xl border border-slate-200/90 bg-white px-4 pr-10 text-left font-label-md text-base md:text-label-md text-on-surface transition-all placeholder:text-on-surface-variant shadow-sm focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none [&::-webkit-date-and-time-value]:text-left [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:left-0 [&::-webkit-calendar-picker-indicator]:top-0 [&::-webkit-calendar-picker-indicator]:cursor-pointer";
 const labelClass =
      "mb-2 flex items-center gap-1.5 font-label-md text-label-md text-on-surface";
 
@@ -495,8 +493,8 @@ export default function SewaMobilForm({
                {/* Header form */}
                <div
                     className={`flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between mb-3 sm:mb-8 ${bare
-                              ? ""
-                              : "border-b border-surface-container pb-2 sm:pb-6"
+                         ? ""
+                         : "border-b border-surface-container pb-2 sm:pb-6"
                          }`}
                >
                     <div className="flex min-w-0 items-start gap-space-sm">
@@ -748,14 +746,21 @@ export default function SewaMobilForm({
                               <CalendarDays size={14} className="text-primary" aria-hidden />
                               {content.labels.date}
                          </label>
-                         <input
-                              id="sm-date"
-                              type="date"
-                              required
-                              value={values.date}
-                              onChange={(e) => update("date", e.target.value)}
-                              className={inputClass}
-                         />
+                         <div className="relative">
+                              <input
+                                   id="sm-date"
+                                   type="date"
+                                   required
+                                   value={values.date}
+                                   onChange={(e) => update("date", e.target.value)}
+                                   className={inputClass}
+                              />
+                              <CalendarDays
+                                   size={16}
+                                   className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant"
+                                   aria-hidden
+                              />
+                         </div>
                     </div>
 
                     {/* Jam */}
@@ -764,14 +769,21 @@ export default function SewaMobilForm({
                               <Clock size={14} className="text-primary" aria-hidden />
                               {content.labels.time}
                          </label>
-                         <input
-                              id="sm-time"
-                              type="time"
-                              required
-                              value={values.time}
-                              onChange={(e) => update("time", e.target.value)}
-                              className={inputClass}
-                         />
+                         <div className="relative">
+                              <input
+                                   id="sm-time"
+                                   type="time"
+                                   required
+                                   value={values.time}
+                                   onChange={(e) => update("time", e.target.value)}
+                                   className={inputClass}
+                              />
+                              <Clock
+                                   size={16}
+                                   className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant"
+                                   aria-hidden
+                              />
+                         </div>
                     </div>
 
                     {/* Jumlah Penumpang */}
@@ -818,7 +830,8 @@ export default function SewaMobilForm({
                               </button>
                          </div>
 
-                         {/* Input Desktop */}
+                         {/* Input Desktop (PERBAIKAN: Gunakan required={false} pada perangkat mobile atau 
+         hilangkan atribut required mutlak yang menjebak validasi tersembunyi) */}
                          <div className="hidden sm:block">
                               {isSimplePackage ? (
                                    <input
@@ -826,17 +839,17 @@ export default function SewaMobilForm({
                                         type="number"
                                         inputMode="numeric"
                                         min={1}
-                                        required
-                                        value={values.passengers}
-                                        onChange={(e) => update("passengers", e.target.value)}
-                                        placeholder="Contoh: 4 Orang"
+                                        required={false} // <--- Mencegah blokir validasi tersembunyi di mobile
+                                        value={parseInt(values.passengers, 10) || ""}
+                                        onChange={(e) => update("passengers", e.target.value ? `${e.target.value} Orang` : "")}
+                                        placeholder="Contoh: 4"
                                         className={inputClass}
                                    />
                               ) : (
                                    <input
                                         id="sm-passengers"
                                         type="text"
-                                        required
+                                        required={false} // <--- Mencegah blokir validasi tersembunyi di mobile
                                         value={values.passengers}
                                         onChange={(e) => update("passengers", e.target.value)}
                                         placeholder="Contoh: 4 Orang"
