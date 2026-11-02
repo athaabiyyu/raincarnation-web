@@ -8,7 +8,7 @@ export const sewaMobilHero = {
      titleHighlight: "dengan Sopir atau Lepas Kunci",
      titleEnd: "",
      description:
-          "Raincarnation menyediakan sewa mobil dengan sopir dan lepas kunci. Pilih layanan sesuai kebutuhan: All In, Non All In, Lepas Kunci, atau Carter Drop Off 1 Arah. Admin bisa dihubungi 24 jam lewat WhatsApp.",
+          "Raincarnation menyediakan sewa mobil dengan sopir dan lepas kunci. Kami menyediakan beberapa layanan untuk Anda. Admin bisa dihubungi 24 jam lewat WhatsApp.",
      stats: [
           { value: "4 Paket", label: "Carter Drop Off, All In, Non All In, Lepas Kunci" },
           { value: "24 Jam", label: "Layanan, Pesan via WhatsApp" },
@@ -32,9 +32,9 @@ export const sewaMobilHero = {
 
 export const sewaMobilPackages = {
      eyebrow: "Kategori Fleksibel",
-     title: "Pilihan Paket Sewa Mobil dengan Sopir dan Lepas Kunci",
+     title: "Pilihan Paket Sewa Mobil Kami",
      description:
-          "Pilih skema sewa yang paling pas untuk kebutuhanmu, mulai dari perjalanan harian, carter sekali jalan, hingga sewa lepas kunci jangka pendek maupun jangka panjang. Titik sewa kami ada di Malang, Batu, dan Surabaya, dengan rute yang bisa disesuaikan."
+          "Titik sewa kami ada di Malang, Batu, dan Surabaya, dengan rute yang bisa disesuaikan."
 };
 
 export const sewaMobilFleet = {

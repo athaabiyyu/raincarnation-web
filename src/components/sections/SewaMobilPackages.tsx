@@ -16,7 +16,6 @@ import { decodeHtml } from "@/utils/decode-html";
 import { formatPrice } from "@/utils/format-price";
 import { buildWhatsAppUrl } from "@/utils/whatsapp";
 
-// Urutan ikon mengikuti urutan kartu: All In, Non All In, Lepas Kunci, Carter.
 const icons: LucideIcon[] = [Car, UserRound, KeyRound, Route];
 
 type SewaMobilPackagesProps = {
@@ -43,8 +42,6 @@ function lowestPrice(values: Array<string | number | undefined>) {
      return prices.length > 0 ? Math.min(...prices) : 0;
 }
 
-// Urutan kartu: All In, Non All In, Lepas Kunci, Carter. Judul tak dikenal di akhir.
-// "non all in" dicek sebelum "all in" karena judulnya memuat kata "all in".
 function getPackageRank(title: string) {
      const name = title.toLowerCase();
      if (name.includes("non all in")) return 1;
@@ -54,8 +51,6 @@ function getPackageRank(title: string) {
      return 4;
 }
 
-// Harga "Mulai dari" per kartu, diambil dari data Armada / rute-carter.
-// Jenis kartu dikenali dari judul entri Paket Sewa di CMS.
 function getStartingPrice(
      title: string,
      armada: Armada[],
@@ -98,23 +93,21 @@ export default function SewaMobilPackages({
                getPackageRank(decodeHtml(b.title)),
      );
 
-     // 1 kolom di HP, 2 kolom di tablet dan laptop (empat kartu = 2 + 2).
-     const listClass = `grid grid-cols-1 gap-space-md ${
-          orderedPrices.length === 1 ? "md:grid-cols-1" : "md:grid-cols-2"
-     }`;
+     const listClass = `grid grid-cols-1 gap-space-md ${orderedPrices.length === 1 ? "md:grid-cols-1" : "md:grid-cols-2"
+          }`;
 
      return (
           <section className="w-full bg-surface-container-low py-space-xl">
-               <div className="mx-auto flex max-w-6xl flex-col gap-space-lg px-gutter">
-                    {/* Section Header */}
-                    <div className="flex flex-col gap-1.5">
-                         <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
+               <div className="mx-auto flex max-w-6xl flex-col gap-space-xl px-gutter">
+                    {/* Header Section */}
+                    <div className="mx-auto flex w-full max-w-4xl flex-col items-center gap-space-sm text-center">
+                         <span className="mb-0.5 font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
                               PILIHAN SEWA FLEKSIBEL
                          </span>
                          <h2 className="font-headline-lg text-headline-lg font-extrabold tracking-tight text-on-surface">
-                              {content.title}
+                              Pilihan Paket Sewa Mobil
                          </h2>
-                         <p className="max-w-3xl font-body-md text-body-md text-on-surface-variant">
+                         <p className="w-full max-w-4xl font-body-md text-body-md leading-relaxed text-on-surface-variant pt-1 text-center">
                               {content.description}
                          </p>
                     </div>
@@ -143,7 +136,6 @@ export default function SewaMobilPackages({
                                         className="group flex h-full flex-col justify-between gap-space-md rounded-3xl border border-surface-container-high/80 bg-surface-container-lowest p-6 shadow-xs transition-all duration-300 hover:border-primary/40 hover:shadow-xl"
                                    >
                                         <div className="flex flex-col gap-space-md">
-                                             {/* Header Card: Icon & Label Sejajar di Kanan */}
                                              <div className="flex items-center justify-between gap-3">
                                                   <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-surface-container-high text-primary shadow-xs transition-all duration-300 group-hover:bg-primary-container group-hover:text-on-primary">
                                                        <Icon size={24} />
@@ -182,7 +174,6 @@ export default function SewaMobilPackages({
                                              )}
                                         </div>
 
-                                        {/* Footer Card: Tarif & Tombol, selalu menempel di bawah kartu */}
                                         <div className="flex flex-col gap-1.5 border-t border-surface-container-high pt-3">
                                              {formatted && (
                                                   <div className="flex items-baseline justify-between gap-2">
@@ -210,7 +201,7 @@ export default function SewaMobilPackages({
                                                        )}
                                                        target="_blank"
                                                        rel="noopener noreferrer"
-                                                       className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-whatsapp px-4 py-2.5 font-label-md text-label-md font-bold text-on-whatsapp shadow-xs transition-all hover:bg-whatsapp-hover active:scale-95"
+                                                       className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-4 py-3 font-label-md text-label-md font-bold text-on-primary shadow-md transition-all hover:bg-primary/90 active:scale-95"
                                                   >
                                                        <MessageSquareText size={18} />
                                                        <span>Tanya via WhatsApp</span>

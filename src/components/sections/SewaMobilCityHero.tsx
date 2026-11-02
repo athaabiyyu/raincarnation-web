@@ -71,9 +71,9 @@ export default function SewaMobilCityHero({
                <div className="mx-auto flex max-w-6xl flex-col items-start sm:items-center gap-space-md sm:gap-space-lg px-gutter pt-space-md text-left sm:text-center">
                     {/* Header Content */}
                     <div className="flex max-w-4xl flex-col items-start sm:items-center gap-space-md w-full">
-                         {/* Badge Pill */}
+                         {/* Eyebrow / Badge Pill */}
                          {badge && (
-                              <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3.5 py-1 font-label-sm text-xs font-semibold uppercase tracking-wider text-primary">
+                              <div className="mb-1 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 font-label-sm text-xs font-semibold uppercase tracking-wider text-primary sm:mb-2">
                                    <span className="size-2 rounded-full bg-primary" />
                                    <span>{badge}</span>
                               </div>
@@ -91,13 +91,13 @@ export default function SewaMobilCityHero({
                          </h1>
 
                          {/* Deskripsi */}
-                         <p className="max-w-2xl font-body-lg text-body-lg text-on-surface-variant">
+                         <p className="max-w-none font-body-lg text-body-lg text-on-surface-variant">
                               {intro}
                          </p>
 
                          {/* Catatan / Note (jika ada) */}
                          {note && (
-                              <p className="max-w-2xl font-body-md text-body-md text-on-surface-variant">
+                              <p className="max-w-none font-body-md text-body-md text-on-surface-variant">
                                    {note.before}{" "}
                                    <Link
                                         href={note.href}
@@ -123,7 +123,7 @@ export default function SewaMobilCityHero({
                                    </a>
                               )}
 
-                              {/* Tombol Lihat Pilihan Mobil dengan Border Abu-Abu Tipis (border-outline-variant/60 & border-gray-300) */}
+                              {/* Tombol Lihat Pilihan Mobil */}
                               <a
                                    href={fleetAnchorId}
                                    className="w-full sm:w-[270px] whitespace-nowrap inline-flex items-center justify-center gap-2 rounded-2xl border border-outline-variant/60 sm:border-gray-300 bg-surface-container-lowest px-space-md py-3.5 font-label-md text-label-md font-semibold text-on-surface shadow-xs transition-all hover:bg-surface-container-low hover:border-gray-400 active:scale-95"

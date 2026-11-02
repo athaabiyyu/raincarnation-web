@@ -27,17 +27,11 @@ import { buildWhatsAppUrl } from "@/utils/whatsapp";
 export type FleetOption = {
      id: number;
      name: string;
-     /** harga Lepas Kunci per 12 jam (dari CMS armada, string angka) */
      harga?: string;
-     /** harga All In per hari */
      hargaAllIn?: string;
-     /** harga Non All In per hari */
      hargaNonAllIn?: string;
-     /** harga Lepas Kunci per bulan */
      hargaLepasKunciBulanan?: string;
-     /** harga Lepas Kunci per tahun */
      hargaLepasKunciTahunan?: string;
-     /** tambahan driver Lepas Kunci per hari */
      tambahanDriver?: string;
 };
 
@@ -80,10 +74,8 @@ type PackageConfig = {
      excludes?: string[];
 };
 
-// Nilai khusus untuk pilihan "Custom rute" / "Luar kota" (tidak punya entri CMS).
 const CUSTOM_ROUTE = "__custom";
 
-// Layanan sewa yang harganya berasal dari data armada.
 const RENTAL_KINDS: SewaMobilPackageKind[] = [
      "all-in",
      "non-all-in",
@@ -91,7 +83,7 @@ const RENTAL_KINDS: SewaMobilPackageKind[] = [
 ];
 
 const selectClass =
-     "[color-scheme:light] h-12 w-full appearance-none cursor-pointer rounded-xl border border-surface-container-high/60 bg-surface-container-low px-4 pr-9 font-label-md text-base md:text-label-md text-on-surface invalid:text-on-surface-variant [&>option]:text-on-surface invalid:text-on-surface-variant [&>option]:text-on-surface transition-colors focus:bg-surface-container-high focus:outline-none disabled:cursor-not-allowed disabled:opacity-60";
+     "[color-scheme:light] h-12 w-full appearance-none cursor-pointer rounded-xl border border-surface-container-high/60 bg-surface-container-low px-4 pr-9 font-label-md text-base md:text-label-md text-on-surface invalid:text-on-surface-variant [&>option]:text-on-surface transition-colors focus:bg-surface-container-high focus:outline-none disabled:cursor-not-allowed disabled:opacity-60";
 
 const inputClass =
      "h-12 w-full min-w-0 appearance-none rounded-xl border border-surface-container-high/60 bg-surface-container-low px-4 text-left font-label-md text-base md:text-label-md text-on-surface transition-colors placeholder:text-on-surface-variant focus:bg-surface-container-high focus:outline-none [&::-webkit-date-and-time-value]:text-left";
@@ -117,13 +109,11 @@ function unique(items: string[]): string[] {
      return [...new Set(items.filter(Boolean))];
 }
 
-// Harga dari CMS berupa string angka; 0 = tidak ada harga.
 function toPrice(value: string | number | undefined): number {
      const number = Number(value);
      return Number.isFinite(number) && number > 0 ? number : 0;
 }
 
-// Harga satu unit untuk satu layanan (Carter tidak lewat sini).
 function fleetPrice(
      unit: FleetOption | undefined,
      kind: SewaMobilPackageKind | undefined,
@@ -226,8 +216,6 @@ export default function SewaMobilForm({
           setValues((prev) => ({ ...prev, [field]: value }));
      }
 
-     // Layanan sewa muncul bila ada armada berharga untuk layanan itu;
-     // Carter Drop Off muncul bila ada entri rute-carter miliknya.
      const packageConfigs: PackageConfig[] = config.packages;
      const packages = packageConfigs.filter((p) => {
           if (RENTAL_KINDS.includes(p.kind)) {
@@ -243,17 +231,13 @@ export default function SewaMobilForm({
      const isSimplePackage = kind !== undefined && RENTAL_KINDS.includes(kind);
      const isLepasKunci = kind === "lepas-kunci";
 
-     // Lebar kolom di laptop: layanan sewa = 3 kolom sejajar (4+4+4),
-     // Carter Drop Off = pola lama (3+3+3+3).
-     const thirdSpan = isSimplePackage ? "lg:col-span-4" : "lg:col-span-3";
+     // Mengatur pembagian grid secara konsisten
+     const topSpan = isSimplePackage ? "lg:col-span-4" : "lg:col-span-3";
 
-     // Entri CMS milik paket terpilih (hanya dipakai Carter Drop Off).
      const packageRoutes = selectedPackage
           ? routes.filter((r) => r.acf?.paket_sewa === selectedPackage)
           : routes;
 
-     // Armada mengikuti layanan terpilih: layanan sewa dari harga armada
-     // (kosong = unit tidak muncul), Carter Drop Off dari entri rute-carter.
      const fleetOptions = fleet.filter((f) => {
           if (isSimplePackage) return fleetPrice(f, kind, "12-jam") > 0;
           if (kind === "drop-off") {
@@ -261,7 +245,6 @@ export default function SewaMobilForm({
                     r.acf?.armada?.some((a) => a.ID === f.id),
                );
           }
-          // Belum memilih layanan: unit yang bisa dipakai layanan mana pun.
           return (
                RENTAL_KINDS.some((k) => fleetPrice(f, k, "12-jam") > 0) ||
                routes.some((r) => r.acf?.armada?.some((a) => a.ID === f.id))
@@ -269,7 +252,6 @@ export default function SewaMobilForm({
      });
      const selectedFleet = fleetOptions.find((f) => String(f.id) === fleetId);
 
-     // Durasi (hanya Lepas Kunci): hanya durasi yang harganya terisi di unit itu.
      const durationOptions: DurationOption[] =
           isLepasKunci && selectedFleet
                ? (selectedConfig?.durations ?? []).filter(
@@ -280,7 +262,6 @@ export default function SewaMobilForm({
           (d) => d.value === durationValue,
      );
 
-     // Tambahan driver (hanya Lepas Kunci, bila unit punya nilainya).
      const driverAmount = isLepasKunci
           ? toPrice(selectedFleet?.tambahanDriver)
           : 0;
@@ -290,7 +271,6 @@ export default function SewaMobilForm({
           ? `${formatPrice(String(driverAmount)) ?? ""}/hari`
           : "";
 
-     // Rute layanan sewa: dari konfigurasi + satu pilihan custom.
      const routeOptions: RouteOption[] = isSimplePackage
           ? [
                ...(selectedConfig?.routes ?? []).map((r) => ({
@@ -306,7 +286,6 @@ export default function SewaMobilForm({
      const selectedRoute = routeOptions.find((o) => o.value === routeValue);
      const isCustomRoute = selectedRoute?.value === CUSTOM_ROUTE;
 
-     // Asal dan tujuan hanya untuk Carter Drop Off (pola lama).
      const origins = unique(
           packageRoutes.map((r) => capitalizeFirst(r.acf?.kota_asal)),
      );
@@ -324,7 +303,6 @@ export default function SewaMobilForm({
           ? destination
           : "";
 
-     // Harga hanya dihitung bila SEMUA isian sudah terisi.
      const placeFilled = isSimplePackage
           ? Boolean(selectedRoute)
           : Boolean(selectedOrigin) && Boolean(selectedDestination);
@@ -338,7 +316,6 @@ export default function SewaMobilForm({
           Boolean(values.passengers.trim()) &&
           (!isCustomRoute || Boolean(values.customRoute.trim()));
 
-     // Carter Drop Off: satu entri CMS = satu kombinasi armada + asal + tujuan.
      const match =
           allFilled && kind === "drop-off"
                ? routes.find(
@@ -350,8 +327,6 @@ export default function SewaMobilForm({
                )
                : undefined;
 
-     // Sumber harga: Carter dari rute-carter; layanan sewa dari armada.
-     // Custom rute / Luar kota tidak punya harga (tanya admin).
      function resolvePrice(): number {
           if (kind === "drop-off") return toPrice(match?.acf?.harga);
           if (isCustomRoute) return 0;
@@ -360,7 +335,6 @@ export default function SewaMobilForm({
      const price = allFilled ? resolvePrice() : 0;
      const priceText = price > 0 ? formatPrice(String(price)) : null;
 
-     // Custom rute atau kombinasi tanpa harga: arahkan ke admin.
      const askAdmin = allFilled && !priceText;
      const priceUnit = selectedDuration?.priceUnit ?? selectedConfig?.priceUnit ?? "/rute";
      const includes = priceText ? (selectedConfig?.includes ?? []) : [];
@@ -406,15 +380,15 @@ export default function SewaMobilForm({
                >
                     <div className="flex min-w-0 items-center gap-space-sm">
                          <span
-     className={`shrink-0 rounded-lg bg-primary-container/10 p-2 text-primary ${bare ? "hidden sm:block" : ""
-          }`}
->
+                              className={`shrink-0 rounded-lg bg-primary-container/10 p-2 text-primary ${bare ? "hidden sm:block" : ""
+                                   }`}
+                         >
                               <CarIcon className="h-[22px] w-[22px]" />
                          </span>
                          <Heading
-     className={`whitespace-nowrap font-label-lg text-label-lg text-on-surface ${bare ? "sr-only sm:not-sr-only" : ""
-          }`}
->
+                              className={`whitespace-nowrap font-label-lg text-label-lg text-on-surface ${bare ? "sr-only sm:not-sr-only" : ""
+                                   }`}
+                         >
                               {content.title}
                          </Heading>
                     </div>
@@ -429,7 +403,7 @@ export default function SewaMobilForm({
                     className="grid grid-cols-2 items-end gap-x-space-md gap-y-6 lg:grid-cols-12 lg:gap-x-space-md"
                >
                     {/* Layanan */}
-                    <div className={`col-span-2 min-w-0 space-y-1.5 ${thirdSpan}`}>
+                    <div className={`col-span-2 min-w-0 space-y-1.5 ${topSpan}`}>
                          <label htmlFor="sm-package" className={labelClass}>
                               <Briefcase size={14} className="text-primary" aria-hidden />
                               {content.labels.packageType}
@@ -454,7 +428,7 @@ export default function SewaMobilForm({
                     </div>
 
                     {/* Armada */}
-                    <div className={`col-span-2 min-w-0 space-y-1.5 ${thirdSpan}`}>
+                    <div className={`col-span-2 min-w-0 space-y-1.5 ${topSpan}`}>
                          <label htmlFor="sm-fleet" className={labelClass}>
                               <Car size={14} className="text-primary" aria-hidden />
                               {content.labels.fleet}
@@ -512,8 +486,8 @@ export default function SewaMobilForm({
 
                     {isSimplePackage ? (
                          <>
-                              {/* Rute */}
-                              <div className="col-span-2 min-w-0 space-y-1.5 lg:col-span-4">
+                              {/* Rute: Selalu 12-col jika Lepas Kunci (karena baris 1 sudah penuh 3 kolom), atau 4-col untuk All In/Non All In */}
+                              <div className={`col-span-2 min-w-0 space-y-1.5 ${isLepasKunci ? "lg:col-span-12" : "lg:col-span-4"}`}>
                                    <label htmlFor="sm-route" className={labelClass}>
                                         <MapPin
                                              size={14}
@@ -639,7 +613,7 @@ export default function SewaMobilForm({
                     )}
 
                     {/* Tanggal */}
-                    <div className={`col-span-1 min-w-0 space-y-1.5 ${thirdSpan}`}>
+                    <div className="col-span-1 min-w-0 space-y-1.5 lg:col-span-4">
                          <label htmlFor="sm-date" className={labelClass}>
                               <CalendarDays size={14} className="text-primary" aria-hidden />
                               {content.labels.date}
@@ -655,7 +629,7 @@ export default function SewaMobilForm({
                     </div>
 
                     {/* Jam */}
-                    <div className={`col-span-1 min-w-0 space-y-1.5 ${thirdSpan}`}>
+                    <div className="col-span-1 min-w-0 space-y-1.5 lg:col-span-4">
                          <label htmlFor="sm-time" className={labelClass}>
                               <Clock size={14} className="text-primary" aria-hidden />
                               {content.labels.time}
@@ -671,10 +645,7 @@ export default function SewaMobilForm({
                     </div>
 
                     {/* Penumpang */}
-                    <div
-                         className={`col-span-2 min-w-0 space-y-1.5 ${isSimplePackage ? "lg:col-span-4" : "lg:col-span-6"
-                              }`}
-                    >
+                    <div className="col-span-2 min-w-0 space-y-1.5 lg:col-span-4">
                          <label htmlFor="sm-passengers" className={labelClass}>
                               <Users size={14} className="text-primary" aria-hidden />
                               {isSimplePackage
@@ -706,9 +677,9 @@ export default function SewaMobilForm({
                          )}
                     </div>
 
-                    {/* Dengan sopir (hanya Lepas Kunci, bila unit punya tambahan driver) */}
+                    {/* Dengan sopir (hanya Lepas Kunci) */}
                     {driverAvailable && (
-                         <div className="col-span-2 min-w-0 lg:col-span-8">
+                         <div className="col-span-2 min-w-0 lg:col-span-12">
                               <label
                                    htmlFor="sm-driver"
                                    className="flex cursor-pointer items-center gap-2 font-label-md text-label-md text-on-surface"
@@ -726,7 +697,7 @@ export default function SewaMobilForm({
                          </div>
                     )}
 
-                    {/* Rincian termasuk (hanya bila harga tampil) */}
+                    {/* Rincian termasuk */}
                     {priceText &&
                          (includes.length > 0 || excludes.length > 0 || useDriver) && (
                               <div className="col-span-2 space-y-1.5 lg:col-span-12">
@@ -757,7 +728,7 @@ export default function SewaMobilForm({
                               </div>
                          )}
 
-                    {/* Harga (kiri) + Tombol (kanan) */}
+                    {/* Harga + Tombol */}
                     <div className="col-span-2 flex flex-col gap-space-md pt-space-xs sm:flex-row sm:items-center sm:justify-between sm:border-t sm:border-surface-container sm:pt-space-md lg:col-span-12">
                          {priceText && (
                               <div className="flex items-baseline justify-center gap-2 whitespace-nowrap rounded-lg bg-primary-container/10 px-space-md py-2 sm:flex-col sm:items-start sm:justify-start sm:gap-0 sm:bg-transparent sm:px-0 sm:py-0">
