@@ -4,11 +4,11 @@ export const sewaMobilHero = {
      badge: "Sewa Mobil dengan Sopir atau Lepas Kunci",
      tagline: "Satu Armada Khusus Rombongan Anda",
      highlightChip: "Tanpa Penumpang Campuran",
-     titleStart: "Sewa Mobil Malang",
-     titleHighlight: "Lepas Kunci atau dengan Sopir",
-     titleEnd: ", Rute Sesuai Rencana Anda.",
+     titleStart: "Sewa Mobil",
+     titleHighlight: "dengan Sopir atau Lepas Kunci",
+     titleEnd: "",
      description:
-          "Melayani sewa mobil dengan sopir di Malang, Batu, dan Surabaya: paket harian atau carter drop off 1 arah. Lepas kunci tersedia di Malang dan Batu per 12 jam, bulanan, atau tahunan. Pesan lewat WhatsApp.",
+          "Raincarnation menyediakan sewa mobil dengan sopir dan lepas kunci. Pilih layanan sesuai kebutuhan: All In, Non All In, Lepas Kunci, atau Carter Drop Off 1 Arah. Admin bisa dihubungi 24 jam lewat WhatsApp.",
      stats: [
           { value: "4 Paket", label: "Carter Drop Off, All In, Non All In, Lepas Kunci" },
           { value: "24 Jam", label: "Layanan, Pesan via WhatsApp" },
@@ -32,14 +32,14 @@ export const sewaMobilHero = {
 
 export const sewaMobilPackages = {
      eyebrow: "Kategori Fleksibel",
-     title: "Pilihan Paket Sewa Mobil Malang",
+     title: "Pilihan Paket Sewa Mobil dengan Sopir dan Lepas Kunci",
      description:
           "Pilih skema sewa yang paling pas untuk kebutuhanmu, mulai dari perjalanan harian, carter sekali jalan, hingga sewa lepas kunci jangka pendek maupun jangka panjang. Titik sewa kami ada di Malang, Batu, dan Surabaya, dengan rute yang bisa disesuaikan."
 };
 
 export const sewaMobilFleet = {
      eyebrow: "Katalog Armada",
-     title: "Pilihan Armada Sewa Mobil Malang",
+     title: "Pilihan Armada Sewa Mobil",
      description:
           "Pilih unit sesuai jumlah penumpang dan bagasi, untuk sewa lepas kunci maupun dengan sopir. Tanyakan ketersediaan dan tarifnya lewat WhatsApp.",
      selectLabel: "Pilih Unit",

@@ -29,7 +29,7 @@ import { getRoutePairs } from "@/utils/route-pairs";
 const title = "Sewa Mobil Malang & Travel Door to Door | Raincarnation";
 const description =
      "Sewa mobil dengan sopir atau lepas kunci di Malang, Batu, dan Surabaya. Travel door to door per kursi. Admin 24 jam, pesan via WhatsApp.";
-     
+
 export const metadata: Metadata = {
      title,
      description,
@@ -44,7 +44,10 @@ export const metadata: Metadata = {
           images: [
                {
                     url: "/images/interior-armada.webp",
-                    alt: "Kabin mobil Raincarnation yang bersih dan nyaman untuk sewa mobil di Malang",
+                    width: 1200,
+                    height: 630,
+                    type: "image/webp",
+                    alt: "Raincarnation Indonesia - sewa mobil dan travel di Malang, Batu, dan Surabaya",
                },
           ],
      },

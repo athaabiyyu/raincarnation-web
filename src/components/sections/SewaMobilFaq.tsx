@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ChevronDown, HelpCircle } from "lucide-react";
 
-type FaqItem = {
+export type FaqItem = {
      question: string;
      answer: string;
 };
@@ -17,6 +17,9 @@ export type FaqStartingPrices = {
 
 type SewaMobilFaqProps = {
      startingPrices?: FaqStartingPrices;
+     items?: FaqItem[];
+     heading?: string;
+     intro?: string;
 };
 
 function buildPriceAnswer(prices?: FaqStartingPrices): string {
@@ -125,9 +128,14 @@ function buildFaqs(prices?: FaqStartingPrices): FaqItem[] {
      ];
 }
 
-export default function SewaMobilFaq({ startingPrices }: SewaMobilFaqProps) {
+export default function SewaMobilFaq({
+     startingPrices,
+     items,
+     heading = "Pertanyaan Seputar Sewa Mobil Lepas Kunci & Dengan Sopir",
+     intro = "Punya pertanyaan seputar sewa mobil, paket lepas kunci, atau carter drop? Cek jawaban lengkapnya di bawah ini.",
+}: SewaMobilFaqProps) {
      const [openIndex, setOpenIndex] = useState<number | null>(0);
-     const faqs = buildFaqs(startingPrices);
+     const faqs = items ?? buildFaqs(startingPrices);
 
      const toggleFaq = (index: number) => {
           setOpenIndex(openIndex === index ? null : index);
@@ -156,56 +164,64 @@ export default function SewaMobilFaq({ startingPrices }: SewaMobilFaqProps) {
                     }}
                />
 
-               <div className="mx-auto max-w-4xl px-gutter">
-                    {/* Header Section */}
-                    <div className="space-y-space-xs text-center pb-space-lg">
-                         <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
-                              PERTANYAAN UMUM
-                         </span>
-                         <h2 className="font-display text-headline-lg font-extrabold tracking-tight text-on-surface">
-                              Pertanyaan Seputar Sewa Mobil Malang Lepas Kunci & Dengan Sopir
-                         </h2>
-                         <p className="mx-auto max-w-2xl font-body-md text-body-sm text-on-surface-variant leading-relaxed md:text-body-md">
-                              Punya pertanyaan seputar sewa mobil, paket lepas kunci, atau carter drop? Cek jawaban lengkapnya di bawah ini.
-                         </p>
-                    </div>
+               <div className="mx-auto flex max-w-6xl flex-col items-center gap-space-xl px-gutter">
+                    <div className="flex w-full max-w-3xl flex-col items-center gap-space-lg text-center">
+                         {/* Header Section (Spacing disamakan persis dengan PILIHAN SEWA FLEKSIBEL) */}
+                         <div className="flex w-full flex-col items-center gap-space-sm">
+                              <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary mb-0.5">
+                                   PERTANYAAN UMUM
+                              </span>
 
-                    {/* Daftar Kartu FAQ Accordion */}
-                    <div className="space-y-3 md:space-y-space-sm">
-                         {faqs.map((item, index) => {
-                              const isOpen = openIndex === index;
-                              return (
-                                   <div
-                                        key={index}
-                                        className="overflow-hidden rounded-xl border border-surface-container-high/60 bg-surface-container-lowest shadow-2xs transition-all duration-200 md:rounded-2xl"
-                                   >
-                                        <button
-                                             type="button"
-                                             onClick={() => toggleFaq(index)}
-                                             className="flex w-full items-center justify-between gap-3 px-4 py-3.5 text-left transition-colors hover:text-primary md:p-space-md"
-                                             aria-expanded={isOpen}
+                              <h2 className="font-headline-lg text-headline-lg font-extrabold tracking-tight text-on-surface">
+                                   {heading}
+                              </h2>
+
+                              {intro && (
+                                   <p className="max-w-2xl font-body-md text-body-md leading-relaxed text-on-surface-variant pt-1">
+                                        {intro}
+                                   </p>
+                              )}
+                         </div>
+
+                         {/* Daftar Kartu FAQ Accordion (Gap antar card menggunakan gap-space-md) */}
+                         <div className="flex w-full flex-col gap-space-md text-left pt-space-xs">
+                              {faqs.map((item, index) => {
+                                   const isOpen = openIndex === index;
+                                   return (
+                                        <div
+                                             key={index}
+                                             className="overflow-hidden rounded-2xl border border-surface-container-high/80 bg-surface-container-lowest shadow-xs transition-all hover:border-primary/30"
                                         >
-                                             <div className="flex items-center gap-2.5">
-                                                  <HelpCircle className="hidden sm:block h-5 w-5 shrink-0 text-primary/80" />
-                                                  <span className="text-sm font-semibold text-on-surface leading-snug md:text-title-md">
-                                                       {item.question}
-                                                  </span>
-                                             </div>
-                                             <ChevronDown
-                                                  className={`h-4 w-4 shrink-0 text-on-surface-variant transition-transform duration-200 md:h-5 md:w-5 ${isOpen ? "rotate-180 text-primary" : ""
-                                                       }`}
-                                             />
-                                        </button>
-                                        {isOpen && (
-                                             <div className="border-t border-surface-container-high/40 px-4 pb-4 pt-3 md:px-space-md md:pb-space-md md:pt-space-xs">
-                                                  <p className="text-xs text-on-surface-variant leading-relaxed sm:pl-7 md:text-body-md">
-                                                       {item.answer}
-                                                  </p>
-                                             </div>
-                                        )}
-                                   </div>
-                              );
-                         })}
+                                             <button
+                                                  type="button"
+                                                  onClick={() => toggleFaq(index)}
+                                                  className="flex w-full items-center justify-between gap-3.5 p-space-md text-left transition-colors hover:text-primary"
+                                                  aria-expanded={isOpen}
+                                             >
+                                                  <div className="flex items-center gap-3">
+                                                       <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                                                            <HelpCircle size={18} aria-hidden="true" />
+                                                       </div>
+                                                       <span className="font-body-md text-body-md font-bold text-on-surface">
+                                                            {item.question}
+                                                       </span>
+                                                  </div>
+                                                  <ChevronDown
+                                                       className={`h-5 w-5 shrink-0 text-on-surface-variant transition-transform duration-200 ${isOpen ? "rotate-180 text-primary" : ""
+                                                            }`}
+                                                  />
+                                             </button>
+                                             {isOpen && (
+                                                  <div className="border-t border-surface-container-high/40 px-space-md pb-space-md pt-space-xs">
+                                                       <p className="font-body-md text-body-md leading-relaxed text-on-surface-variant sm:pl-9">
+                                                            {item.answer}
+                                                       </p>
+                                                  </div>
+                                             )}
+                                        </div>
+                                   );
+                              })}
+                         </div>
                     </div>
                </div>
           </section>

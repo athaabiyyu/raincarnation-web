@@ -17,9 +17,9 @@ import type { PaketSewa } from "@/types/paket-sewa";
 import type { Armada } from "@/types/armada";
 import type { RuteCarter } from "@/types/rute-carter";
 
-const title = "Sewa Mobil Malang Lepas Kunci & Dengan Sopir | Raincarnation";
+const title = "Sewa Mobil dengan Sopir & Lepas Kunci | Raincarnation";
 const description =
-     "Sewa mobil dengan sopir di Malang, Batu, dan Surabaya, rute bebas. Lepas kunci di Malang dan Batu per 12 jam, bulanan, atau tahunan. Pesan via WhatsApp.";
+     "Sewa mobil dengan sopir atau lepas kunci: All In, Non All In, Lepas Kunci, dan Carter Drop Off. Admin 24 jam via WhatsApp.";
 
 export const metadata: Metadata = {
      title,
@@ -85,7 +85,7 @@ export default async function SewaMobilPage() {
      const serviceLd = {
           "@context": "https://schema.org",
           "@type": "TransportationService",
-          name: "Sewa Mobil Malang dengan Sopir atau Lepas Kunci - Raincarnation",
+          name: "Sewa Mobil dengan Sopir atau Lepas Kunci - Raincarnation",
           serviceType: "Sewa mobil dengan sopir dan lepas kunci",
           description,
           url: `${siteConfig.url}/sewa-mobil`,

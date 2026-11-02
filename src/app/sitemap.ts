@@ -7,7 +7,15 @@ import type { Route } from "@/types/route";
 import type { Armada } from "@/types/armada";
 import type { Post } from "@/types/post";
 
-const STATIC_PATHS = ["/", "/travel", "/sewa-mobil", "/armada", "/blog"];
+const STATIC_PATHS = [
+     "/",
+     "/travel",
+     "/sewa-mobil",
+     "/sewa-mobil-malang",
+     "/sewa-mobil-surabaya",
+     "/armada",
+     "/blog",
+];
 
 async function loadRoutes(): Promise<Route[]> {
      try {
