@@ -75,7 +75,8 @@ export default function FeaturedRoutes({
                          <h2 className="font-headline-lg text-headline-lg font-extrabold tracking-tight text-on-surface">
                               {content.title}
                          </h2>
-                         <p className="mx-auto w-full max-w-2xl font-body-md text-body-md leading-relaxed text-on-surface-variant pt-1 text-center md:max-w-3xl">
+                         {/* Diperlebar menggunakan max-w-3xl md:max-w-4xl agar teks tidak cepat turun baris tapi tetap center */}
+                         <p className="mx-auto w-full max-w-3xl font-body-md text-body-md leading-relaxed text-on-surface-variant pt-1 text-center md:max-w-4xl">
                               {content.description}
                          </p>
                     </div>
