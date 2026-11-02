@@ -28,7 +28,7 @@ export default function SewaMobilFleet({
 
 	return (
 		<section id="pilihan-armada" className="w-full bg-surface py-space-xl">
-			<div className="mx-auto flex max-w-6xl flex-col gap-space-xl px-gutter">
+			<div className="mx-auto flex max-w-6xl flex-col gap-space-lg px-gutter">
 				{/* Header Section (Spacing & Alignment disamakan dengan section lain) */}
 				<div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-space-sm text-center">
 					<span className="font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary mb-0.5">

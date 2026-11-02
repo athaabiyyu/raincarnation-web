@@ -37,7 +37,7 @@ export default function ArmadaCatalog({
           ? armada.filter(
                (item) =>
                     Number(item.acf?.harga) > 0 && Number(item.acf?.harga_all_in) > 0
-          )
+            )
           : armada;
 
      if (candidates.length === 0) return null;
@@ -48,23 +48,20 @@ export default function ArmadaCatalog({
      return (
           <section
                id={armadaCatalog.id}
-               className={`w-full scroll-mt-32 ${isHome ? "bg-surface py-space-xl" : "pt-space-xl"
-                    }`}
+               className={`w-full scroll-mt-32 ${isHome ? "bg-surface py-space-xl" : "pt-space-xl"}`}
           >
-               <div className="mx-auto max-w-6xl px-gutter">
-                    {/* Section Header */}
-                    <div className="flex flex-col gap-space-md pb-space-lg">
-                         <div className="space-y-space-xs">
-                              <span className="block font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
-                                   KENDARAAN NYAMAN &amp; TERAWAT
-                              </span>
-                              <h2 className="font-headline-lg text-headline-lg tracking-tight text-on-surface">
-                                   {heading}
-                              </h2>
-                              <p className="max-w-3xl font-body-md text-body-md text-on-surface-variant">
-                                   {armadaCatalog.description}
-                              </p>
-                         </div>
+               <div className="mx-auto flex max-w-6xl flex-col gap-space-lg px-gutter">
+                    {/* Section Header (Centered & Optimized Description Width) */}
+                    <div className="mx-auto flex w-full max-w-4xl flex-col items-center gap-space-sm text-center">
+                         <span className="mb-0.5 font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
+                              KENDARAAN NYAMAN &amp; TERAWAT
+                         </span>
+                         <h2 className="font-headline-lg text-headline-lg font-extrabold tracking-tight text-on-surface">
+                              {heading}
+                         </h2>
+                         <p className="mx-auto w-full max-w-2xl font-body-md text-body-md leading-relaxed text-on-surface-variant pt-1 text-center md:max-w-3xl">
+                              {armadaCatalog.description}
+                         </p>
                     </div>
 
                     {/* Grid Kartu Armada */}
@@ -95,7 +92,7 @@ export default function ArmadaCatalog({
 
                     {/* Banner Promo Desain Baru (Hanya varian home) */}
                     {isHome && (
-                         <div className="mt-space-lg flex flex-col items-center justify-between gap-space-md rounded-2xl bg-surface-container-lowest p-space-md shadow-sm lg:flex-row lg:p-space-lg">
+                         <div className="flex flex-col items-center justify-between gap-space-md rounded-2xl bg-surface-container-lowest p-space-md shadow-sm lg:flex-row lg:p-space-lg">
                               {/* Kiri: Ikon + Teks */}
                               <div className="flex w-full items-center gap-space-md lg:w-auto">
                                    <div className="flex shrink-0 items-center justify-center rounded-2xl bg-primary-container/10 p-3 text-primary sm:p-3.5">
@@ -119,7 +116,7 @@ export default function ArmadaCatalog({
                                    {seeAllHref && (
                                         <Link
                                              href={seeAllHref}
-                                             className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary lg:w-auto px-space-md py-2.5 text-center font-label-md text-label-md font-bold text-on-primary shadow-sm transition-all hover:bg-primary/90 active:scale-95"
+                                             className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary lg:w-auto px-space-md py-2.5 text-center font-label-md text-label-md font-bold text-on-primary shadow-md transition-all hover:bg-primary/90 active:scale-95"
                                         >
                                              Lihat Semua Unit
                                              <ArrowRight className="h-4 w-4" aria-hidden="true" />

@@ -66,26 +66,24 @@ export default function FeaturedRoutes({
                id={onlyFeatured ? "rute-travel" : undefined}
                className="w-full scroll-mt-24 bg-surface-container-low py-space-xl"
           >
-               <div className="mx-auto max-w-6xl space-y-space-lg px-gutter">
-                    {/* Header Section */}
-                    <div className="flex flex-col gap-space-md">
-                         <div className="space-y-space-xs">
-                              <span className="block font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
-                                   JADWAL DAN TARIF TERBUKA
-                              </span>
-                              <h2 className="font-headline-lg text-headline-lg tracking-tight text-on-surface">
-                                   {content.title}
-                              </h2>
-                              <p className="max-w-3xl font-body-md text-body-md text-on-surface-variant">
-                                   {content.description}
-                              </p>
-                         </div>
+               <div className="mx-auto flex max-w-6xl flex-col gap-space-lg px-gutter">
+                    {/* Header Section (Centered & Optimized Description Width) */}
+                    <div className="mx-auto flex w-full max-w-4xl flex-col items-center gap-space-sm text-center">
+                         <span className="mb-0.5 font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
+                              JADWAL DAN TARIF TERBUKA
+                         </span>
+                         <h2 className="font-headline-lg text-headline-lg font-extrabold tracking-tight text-on-surface">
+                              {content.title}
+                         </h2>
+                         <p className="mx-auto w-full max-w-2xl font-body-md text-body-md leading-relaxed text-on-surface-variant pt-1 text-center md:max-w-3xl">
+                              {content.description}
+                         </p>
                     </div>
 
                     <div className="space-y-space-md md:space-y-space-lg">
                          {/* Filter & Search Section */}
                          {!onlyFeatured && (
-                              <div className="relative w-full max-w-2xl">
+                              <div className="relative mx-auto w-full max-w-2xl">
                                    <div className="flex w-full items-center rounded-full border border-surface-container-high/40 bg-surface-container-lowest p-1.5 pl-5 shadow-sm transition-all duration-300 focus-within:border-primary/40 focus-within:ring-4 focus-within:ring-primary/10 hover:shadow-md">
                                         <Search className="h-5 w-5 shrink-0 text-on-surface-variant/70" aria-hidden="true" />
 
@@ -104,10 +102,11 @@ export default function FeaturedRoutes({
                                              <button
                                                   type="button"
                                                   onClick={() => setIsFilterOpen(!isFilterOpen)}
-                                                  className={`flex h-[44px] w-[44px] items-center justify-center rounded-full transition-all duration-200 md:h-[48px] md:w-[48px] ${activeFilter !== "Semua"
-                                                       ? "bg-primary text-on-primary shadow-md shadow-primary/20"
-                                                       : "bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-primary"
-                                                       }`}
+                                                  className={`flex h-[44px] w-[44px] items-center justify-center rounded-full transition-all duration-200 md:h-[48px] md:w-[48px] ${
+                                                       activeFilter !== "Semua"
+                                                            ? "bg-primary text-on-primary shadow-md shadow-primary/20"
+                                                            : "bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-primary"
+                                                  }`}
                                                   aria-label="Filter kota"
                                              >
                                                   <ListFilter className="h-5 w-5" />
@@ -131,10 +130,11 @@ export default function FeaturedRoutes({
                                                                            setVisibleCount(INITIAL_PAGE_SIZE);
                                                                            setIsFilterOpen(false);
                                                                       }}
-                                                                      className={`flex w-full items-center justify-between px-4 py-3 text-left font-body-sm transition-colors md:font-body-md ${activeFilter === city
-                                                                           ? "bg-primary/10 font-bold text-primary"
-                                                                           : "text-on-surface hover:bg-surface-container-low"
-                                                                           }`}
+                                                                      className={`flex w-full items-center justify-between px-4 py-3 text-left font-body-sm transition-colors md:font-body-md ${
+                                                                           activeFilter === city
+                                                                                ? "bg-primary/10 font-bold text-primary"
+                                                                                : "text-on-surface hover:bg-surface-container-low"
+                                                                      }`}
                                                                  >
                                                                       <span>{city === "Semua" ? "Semua Kota" : city}</span>
                                                                       {activeFilter === city && (
@@ -225,7 +225,7 @@ export default function FeaturedRoutes({
                               <div className="flex w-full shrink-0 flex-col gap-space-xs sm:flex-row lg:w-auto">
                                    <Link
                                         href={seeAllHref}
-                                        className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary lg:w-auto px-space-md py-2.5 text-center font-label-md text-label-md font-bold text-on-primary shadow-sm transition-all hover:bg-primary/90 active:scale-95"
+                                        className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary lg:w-auto px-space-md py-2.5 text-center font-label-md text-label-md font-bold text-on-primary shadow-md transition-all hover:bg-primary/90 active:scale-95"
                                    >
                                         Lihat Semua Rute
                                         <ArrowRight className="h-4 w-4" aria-hidden="true" />

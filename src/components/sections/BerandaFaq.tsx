@@ -13,16 +13,16 @@ export default function BerandaFaq() {
 
      return (
           <section className="w-full bg-surface py-space-xl">
-               <div className="mx-auto max-w-4xl px-gutter">
-                    {/* Header: Rata Tengah (text-center) dengan ukuran font judul setara section lain */}
-                    <div className="space-y-space-xs text-center pb-space-lg">
-                         <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
+               <div className="mx-auto flex max-w-4xl flex-col gap-space-lg px-gutter">
+                    {/* Header Section (Centered & Optimized Width) */}
+                    <div className="mx-auto flex w-full max-w-4xl flex-col items-center gap-space-sm text-center">
+                         <span className="mb-0.5 font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
                               {berandaFaq.eyebrow}
                          </span>
                          <h2 className="font-display text-headline-lg font-extrabold tracking-tight text-on-surface">
                               {berandaFaq.title}
                          </h2>
-                         <p className="mx-auto max-w-2xl font-body-md text-body-sm text-on-surface-variant leading-relaxed md:text-body-md">
+                         <p className="mx-auto w-full max-w-2xl font-body-md text-body-sm text-on-surface-variant leading-relaxed pt-1 text-center md:text-body-md md:max-w-3xl">
                               {berandaFaq.description}
                          </p>
                     </div>
@@ -50,8 +50,9 @@ export default function BerandaFaq() {
                                                   </span>
                                              </div>
                                              <ChevronDown
-                                                  className={`h-4 w-4 shrink-0 text-on-surface-variant transition-transform duration-200 md:h-5 md:w-5 ${isOpen ? "rotate-180 text-primary" : ""
-                                                       }`}
+                                                  className={`h-4 w-4 shrink-0 text-on-surface-variant transition-transform duration-200 md:h-5 md:w-5 ${
+                                                       isOpen ? "rotate-180 text-primary" : ""
+                                                  }`}
                                              />
                                         </button>
                                         <div

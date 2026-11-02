@@ -49,19 +49,23 @@ const serviceIcons: Record<BerandaServiceIcon, React.ComponentType<IconProps>> =
 export default function BerandaServices() {
      return (
           <section className="w-full bg-surface-container-low py-space-xl">
-               <div className="mx-auto max-w-6xl px-gutter">
-                    <div className="mb-space-lg space-y-space-xs md:mb-space-xl">
-                         <span className="block font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
+               {/* Menggunakan gap-space-lg agar jarak antara header dan grid kartu lebih rapat */}
+               <div className="mx-auto flex max-w-6xl flex-col gap-space-lg px-gutter">
+                    {/* Header Section (Centered & Optimized Width) */}
+                    <div className="mx-auto flex w-full max-w-4xl flex-col items-center gap-space-sm text-center">
+                         <span className="mb-0.5 font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
                               PILIHAN SERVIS UTAMA
                          </span>
-                         <h2 className="font-headline-lg text-headline-lg tracking-tight text-on-surface">
-                              {berandaServices.title}
+                         <h2 className="font-headline-lg text-headline-lg font-extrabold tracking-tight text-on-surface">
+                              <span>Sewa Mobil &amp; Travel</span>
+                              <span className="block sm:inline"> per Kursi</span>
                          </h2>
-                         <p className="max-w-3xl font-body-md text-body-md text-on-surface-variant">
+                         <p className="mx-auto w-full max-w-2xl font-body-md text-body-md leading-relaxed text-on-surface-variant pt-1 text-center md:max-w-3xl">
                               {berandaServices.description}
                          </p>
                     </div>
 
+                    {/* Cards Grid */}
                     <ul className="grid grid-cols-1 gap-space-md md:grid-cols-2 md:gap-gutter">
                          {berandaServices.items.map((item) => {
                               const Icon = serviceIcons[item.icon];
@@ -69,57 +73,60 @@ export default function BerandaServices() {
                               return (
                                    <li key={item.title} className="flex">
                                         <article
-                                             className={`relative flex w-full flex-col justify-between overflow-hidden rounded-xl bg-surface-container-lowest p-space-md transition-shadow md:p-space-lg ${isSecondary
-                                                  ? "shadow-md hover:shadow-lg"
-                                                  : "shadow-sm hover:shadow-md"
-                                                  }`}
+                                             className={`group relative flex h-full w-full flex-col justify-between gap-space-md rounded-3xl border border-surface-container-high/80 bg-surface-container-lowest p-6 shadow-xs transition-all duration-300 hover:border-primary/40 hover:shadow-xl`}
                                         >
-
-
-                                             <div>
-                                                  <div className="mb-space-md flex items-center justify-between gap-space-sm">
+                                             <div className="flex flex-col gap-space-md">
+                                                  <div className="flex items-center justify-between gap-3">
                                                        <div
-                                                            className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl md:h-14 md:w-14 ${isSecondary
-                                                                 ? "bg-secondary/15 text-secondary"
-                                                                 : "bg-primary/10 text-primary"
+                                                            className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl shadow-xs transition-all duration-300 ${isSecondary
+                                                                      ? "bg-secondary/15 text-secondary group-hover:bg-secondary group-hover:text-on-secondary"
+                                                                      : "bg-surface-container-high text-primary group-hover:bg-primary-container group-hover:text-on-primary"
                                                                  }`}
                                                        >
                                                             <Icon className="h-6 w-6 shrink-0" />
                                                        </div>
                                                        <span
-                                                            className={`inline-block rounded bg-surface-container px-space-xs py-0.5 font-label-sm text-label-sm font-bold ${isSecondary ? "text-secondary" : "text-primary"
+                                                            className={`inline-flex items-center rounded-full px-3 py-1 font-label-sm text-label-sm font-bold ring-1 ${isSecondary
+                                                                      ? "bg-secondary/10 text-secondary ring-secondary/20"
+                                                                      : "bg-surface-container text-primary ring-primary/20"
                                                                  }`}
                                                        >
                                                             {item.tag}
                                                        </span>
                                                   </div>
-                                                  <h3 className="mb-space-sm font-headline-md text-headline-md text-on-surface">
-                                                       {item.title}
-                                                  </h3>
-                                                  <p className="mb-space-md font-body-sm text-body-sm text-on-surface-variant">
-                                                       {item.description}
-                                                  </p>
-                                                  <ul className="mb-space-lg flex flex-col gap-space-xs font-body-sm text-body-sm text-on-surface-variant">
+
+                                                  <div>
+                                                       <h3 className="font-headline-sm text-headline-sm font-bold text-on-surface">
+                                                            {item.title}
+                                                       </h3>
+                                                       <p className="mt-1.5 font-body-sm text-body-sm text-on-surface-variant">
+                                                            {item.description}
+                                                       </p>
+                                                  </div>
+
+                                                  <ul className="space-y-2.5 pt-space-xs font-body-sm text-body-sm text-on-surface-variant">
                                                        {item.points.map((point) => (
-                                                            <li key={point} className="flex items-start gap-2">
+                                                            <li key={point} className="flex items-start gap-2.5">
                                                                  <Check
-                                                                      size={16}
+                                                                      size={18}
                                                                       className={`mt-0.5 shrink-0 ${isSecondary ? "text-secondary" : "text-primary"
                                                                            }`}
                                                                       aria-hidden="true"
                                                                  />
-                                                                 {point}
+                                                                 <span>{point}</span>
                                                             </li>
                                                        ))}
                                                   </ul>
                                              </div>
 
-                                             <Link
-                                                  href={item.href}
-                                                  className="flex w-full items-center justify-center rounded-lg bg-primary py-space-sm text-center font-label-md text-label-md text-on-primary shadow-sm transition-all hover:bg-on-primary-fixed-variant active:scale-95"
-                                             >
-                                                  {item.button}
-                                             </Link>
+                                             <div className="border-t border-surface-container-high pt-3">
+                                                  <Link
+                                                       href={item.href}
+                                                       className="flex w-full items-center justify-center rounded-2xl bg-primary py-3 font-label-md text-label-md font-bold text-on-primary shadow-md transition-all hover:bg-primary/90 active:scale-95"
+                                                  >
+                                                       {item.button}
+                                                  </Link>
+                                             </div>
                                         </article>
                                    </li>
                               );

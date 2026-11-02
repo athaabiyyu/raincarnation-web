@@ -98,7 +98,7 @@ export default function SewaMobilPackages({
 
      return (
           <section className="w-full bg-surface-container-low py-space-xl">
-               <div className="mx-auto flex max-w-6xl flex-col gap-space-xl px-gutter">
+               <div className="mx-auto flex max-w-6xl flex-col gap-space-lg px-gutter">
                     {/* Header Section */}
                     <div className="mx-auto flex w-full max-w-4xl flex-col items-center gap-space-sm text-center">
                          <span className="mb-0.5 font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
