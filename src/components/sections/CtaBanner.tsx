@@ -19,7 +19,8 @@ export default function CtaBanner({ whatsapp }: CtaBannerProps) {
                          aria-hidden="true"
                     />
 
-                    <div className="relative z-10 flex max-w-3xl flex-col items-start gap-space-sm sm:gap-space-md">
+                    {/* Diubah menjadi items-center dan text-center agar rata tengah */}
+                    <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center text-center gap-space-sm sm:gap-space-md">
                          <div className="inline-flex items-center gap-1 rounded-full bg-on-primary/10 px-3 py-1 font-label-sm text-label-sm text-primary-fixed backdrop-blur-md">
                               <Zap size={14} className="shrink-0" aria-hidden="true" />
                               {badge}
@@ -34,10 +35,11 @@ export default function CtaBanner({ whatsapp }: CtaBannerProps) {
                               href={buildWhatsAppUrl(whatsapp, whatsappMessage)}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="mt-space-xs inline-flex w-full items-center justify-center gap-space-xs rounded-lg bg-whatsapp px-space-md py-space-md text-center font-label-lg text-label-lg text-on-whatsapp shadow-[0_4px_16px_rgba(37,211,102,0.35)] transition-all duration-150 hover:bg-whatsapp-hover sm:mt-space-sm sm:w-auto"
+                              // Perubahan pada tombol: bg-white (putih), text-emerald-800 (hijau tua), px-5 py-2.5 (lebih ramping/kecil)
+                              className="mt-space-xs inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-5 py-2.5 text-center font-label-md text-label-md font-semibold text-emerald-800 shadow-md transition-all duration-150 hover:bg-slate-100 sm:mt-space-sm sm:w-auto"
                          >
                               <MessageSquareText
-                                   size={22}
+                                   size={18}
                                    className="shrink-0"
                                    aria-hidden="true"
                               />
