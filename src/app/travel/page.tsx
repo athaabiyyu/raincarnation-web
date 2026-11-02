@@ -15,10 +15,9 @@ import { decodeHtml } from "@/utils/decode-html";
 import { formatRupiah, lowestPrice } from "@/utils/price";
 import { getRoutePairs } from "@/utils/route-pairs";
 
-const title = "Travel Malang Door to Door: Jadwal & Tarif | Raincarnation";
+const title = "Travel Malang per Kursi: Jadwal & Tarif | Raincarnation";
 const description =
-  "Travel per kursi Malang, Batu, Surabaya, Pandaan, dan Bandara Juanda, door to door. Tarif sudah termasuk tol dan parkir. Admin 24 jam via WhatsApp.";
-
+  "Travel Malang, Batu, Surabaya, Pandaan, dan Juanda per kursi. Jemput dan antar di titik yang ditentukan. Tarif termasuk tol dan parkir.";
 export const metadata: Metadata = {
   title,
   description,

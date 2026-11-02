@@ -494,14 +494,14 @@ export default function SewaMobilForm({
           >
                {/* Header form */}
                <div
-                    className={`flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between mb-3 sm:mb-8 ${bare
-                         ? ""
-                         : "border-b border-surface-container pb-2 sm:pb-6"
+                    className={`flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between ${bare
+                              ? "sm:mb-space-md lg:mb-space-lg"
+                              : "mb-space-lg border-b border-surface-container pb-space-md sm:mb-space-lg sm:border-b-0 sm:pb-0"
                          }`}
                >
-                    <div className="flex min-w-0 items-start gap-space-sm">
+                    <div className="flex min-w-0 items-center gap-space-sm">
                          <span
-                              className={`mt-0.5 shrink-0 rounded-lg bg-primary-container/10 p-2 text-primary ${bare ? "hidden sm:block" : ""
+                              className={`shrink-0 rounded-lg bg-primary-container/10 p-2 text-primary ${bare ? "hidden sm:block" : ""
                                    }`}
                          >
                               <CarIcon className="h-[22px] w-[22px]" />
@@ -511,7 +511,9 @@ export default function SewaMobilForm({
                                    className={`whitespace-nowrap font-label-lg text-label-lg text-on-surface ${bare ? "sr-only sm:not-sr-only" : ""
                                         }`}
                               >
-                                   {content.title}
+                                   {/* Teks responsif: Versi pendek di mobile, versi lengkap di desktop */}
+                                   <span className="sm:hidden">Cek Tarif & Mobil Disini</span>
+                                   <span className="hidden sm:inline">{content.title}</span>
                               </Heading>
                               <p className="hidden font-label-sm text-xs text-on-surface-variant sm:block md:text-label-sm">
                                    Pilih armada favorit Anda dengan penawaran terbaik dan garansi layanan tepat waktu.

@@ -180,13 +180,14 @@ export default function RouteSearchForm({
                {/* Header form */}
                <div
                     className={`flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between ${bare
-                         ? "sm:mb-space-md lg:mb-space-lg"
-                         : "mb-space-lg border-b border-surface-container pb-space-md sm:mb-space-lg sm:border-b-0 sm:pb-0"
+                              ? "sm:mb-space-md lg:mb-space-lg"
+                              : "mb-space-lg border-b border-surface-container pb-space-md sm:mb-space-lg sm:border-b-0 sm:pb-0"
                          }`}
                >
-                    <div className="flex min-w-0 items-start gap-space-sm">
+                    {/* Ditambahkan items-center agar ikon dan teks sejajar secara vertikal */}
+                    <div className="flex min-w-0 items-center gap-space-sm">
                          <span
-                              className={`mt-0.5 shrink-0 rounded-lg bg-primary-container/10 p-2 text-primary ${bare ? "hidden sm:block" : ""
+                              className={`shrink-0 rounded-lg bg-primary-container/10 p-2 text-primary ${bare ? "hidden sm:block" : ""
                                    }`}
                          >
                               <SeatIcon className="h-[22px] w-[22px]" />

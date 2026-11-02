@@ -1,12 +1,12 @@
 export const heroContent = {
           titleStart: "Travel Malang Murah",
      titleHighlight: "per Kursi",
-     titleEnd: "Door to Door",
+     titleEnd: "Berangkat dari Titik Jemput",
      description:
-          "Travel reguler per kursi dengan jadwal tetap untuk rute Malang, Batu, Surabaya, Pandaan, dan Bandara Juanda. Dijemput dan diantar sampai alamat, kecuali titik di Pandaan dan Juanda. Tarif sudah termasuk tol dan parkir.",
+          "Travel reguler dengan jadwal tetap untuk perjalanan antara Malang, Batu, Surabaya, Pandaan, dan Bandara Juanda. Tarif sudah termasuk tol dan parkir.",
      charterLink: {
           text: "Butuh satu mobil khusus rombongan?",
-          label: "Lihat Sewa Mobil Carter",
+          label: "Lihat Layanan Sewa Mobil Kami",
           href: "/sewa-mobil",
      },
 };

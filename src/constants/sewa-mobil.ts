@@ -25,7 +25,7 @@ export const sewaMobilHero = {
      },
      regularLink: {
           text: "Tidak butuh satu mobil penuh?",
-          label: "Lihat Travel per kursi",
+          label: "Lihat Layanan Travel Kami",
           href: "/travel",
      },
 };
@@ -76,7 +76,7 @@ export const sewaMobilPillars = {
                icon: "route" as SewaMobilPillarIcon,
                title: "Rute Sesuai Rencana",
                description:
-                    "Carter Drop Off, All In, dan Non All In melayani Malang, Batu, dan Surabaya. Lepas Kunci melayani dalam kota (Malang, Batu), sedangkan luar kota tarifnya ditanyakan ke admin. Butuh tujuan lain? All In dan Non All In bisa lewat custom rute. Mampir ke kota lain dikenakan biaya tambahan.",
+                    "Carter Drop Off, All In, dan Non All In tersedia untuk Malang, Batu, dan Surabaya. Lepas Kunci untuk Malang dan Batu; tarif luar kota hubungi admin. Custom rute tersedia untuk All In dan Non All In, dengan biaya tambahan jika singgah di kota lain.",
           },
           {
                icon: "lock" as SewaMobilPillarIcon,

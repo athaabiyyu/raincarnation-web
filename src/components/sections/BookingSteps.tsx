@@ -25,15 +25,16 @@ export default function BookingSteps() {
 
      return (
           <section className="w-full bg-surface-container-low py-space-lg md:py-space-xl">
-               <div className="mx-auto max-w-6xl space-y-space-lg px-gutter">
-                    <div className="space-y-space-xs">
-                         <span className="block font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
+               <div className="mx-auto flex max-w-6xl flex-col gap-space-lg px-gutter">
+                    {/* Header Section: Eyebrow disamakan seperti RouteSearchForm (tanpa kotak/pil latar belakang) */}
+                    <div className="mx-auto flex max-w-3xl flex-col items-center text-center space-y-2">
+                         <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
                               Cara Pemesanan
                          </span>
                          <h2 className="font-headline-lg text-headline-lg tracking-tight text-on-surface">
                               {title}
                          </h2>
-                         <p className="max-w-3xl font-body-md text-body-md text-on-surface-variant">
+                         <p className="font-body-md text-body-md text-on-surface-variant">
                               {description}
                          </p>
                     </div>
@@ -51,11 +52,10 @@ export default function BookingSteps() {
                                         <div className="space-y-space-sm">
                                              <div className="flex items-center justify-between">
                                                   <span
-                                                       className={`flex h-10 w-10 items-center justify-center rounded-full font-headline-sm text-headline-sm font-bold ${
-                                                            isLast
+                                                       className={`flex h-10 w-10 items-center justify-center rounded-full font-headline-sm text-headline-sm font-bold ${isLast
                                                                  ? "bg-primary-container text-on-primary"
                                                                  : "bg-primary/10 text-primary"
-                                                       }`}
+                                                            }`}
                                                   >
                                                        {index + 1}
                                                   </span>
@@ -75,11 +75,10 @@ export default function BookingSteps() {
 
                                         {step.highlight && (
                                              <div
-                                                  className={`flex items-center gap-1 pt-space-md font-label-sm text-label-sm ${
-                                                       isLast
+                                                  className={`flex items-center gap-1 pt-space-md font-label-sm text-label-sm ${isLast
                                                             ? "font-bold text-primary"
                                                             : "text-on-surface-variant"
-                                                  }`}
+                                                       }`}
                                              >
                                                   {isLast ? (
                                                        <Clock

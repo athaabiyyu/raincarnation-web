@@ -44,7 +44,7 @@ export const facilitiesContent = {
      ] satisfies FacilityItem[],
 
      photo: {
-          src: "/images/interior-armada.webp" as string | null,
+          src: "/images/interior-bersih.webp" as string | null,
           alt: "Interior armada travel Raincarnation",
           badge: "Standar Armada Resmi",
           title: "Interior Armada Terawat",

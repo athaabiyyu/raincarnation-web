@@ -25,14 +25,15 @@ export default function Facilities() {
      return (
           <section className="w-full bg-surface py-space-lg md:py-space-xl">
                <div className="mx-auto max-w-6xl space-y-space-lg px-gutter">
-                    <div className="space-y-space-xs">
-                         <span className="block font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
+                    {/* Header disamakan align center dan eyebrow bersih tanpa pil */}
+                    <div className="mx-auto flex max-w-3xl flex-col items-center text-center space-y-2">
+                         <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
                               Fasilitas &amp; Kenyamanan
                          </span>
                          <h2 className="font-headline-lg text-headline-lg tracking-tight text-on-surface">
                               {title}
                          </h2>
-                         <p className="max-w-3xl font-body-md text-body-md text-on-surface-variant">
+                         <p className="font-body-md text-body-md text-on-surface-variant">
                               {description}
                          </p>
                     </div>

@@ -9,8 +9,9 @@ const faqs = [
           answer: "Travel per kursi atau biasa disebut travel reguler adalah layanan perjalanan antar kota yang dipesan per kursi dengan jadwal keberangkatan tetap, sehingga Anda berbagi mobil dengan penumpang lain dan membayar sesuai jumlah kursi. Kalau Anda butuh satu mobil penuh untuk rombongan, pilih layanan Sewa Mobil."
      },
      {
-          question: "Di mana titik penjemputan travel Anda?",
-          answer: "Travel kami door to door: Anda dijemput dan diantar sampai alamat, kecuali titik di Pandaan dan Juanda yang berupa titik tetap. Misalnya dari Malang ke Juanda, Anda dijemput di alamat Anda lalu diantar ke Bandara Juanda; dari Juanda, Anda dijemput di titik Juanda. Detail titik jemput dan antar dikonfirmasi admin lewat WhatsApp setelah Anda memesan."
+          question: "Di mana titik penjemputan dan pengantaran travel Anda?",
+          answer:
+               "Penjemputan dan pengantaran travel dilakukan di titik yang telah ditentukan di Malang, Batu, Surabaya, Pandaan, dan Bandara Juanda, bukan di alamat rumah. Anda dapat menghubungi admin melalui WhatsApp untuk mengetahui lokasi titik jemput dan turun sesuai rute yang Anda pilih sebelum memesan.",
      },
      {
           question: "Berapa tarif travel per kursi?",
@@ -64,8 +65,8 @@ export default function FaqTravel({ whatsapp }: { whatsapp?: string }) {
                />
                <div className="mx-auto max-w-4xl px-gutter">
 
-                    {/* Header: Rata Tengah dengan ukuran font setara BerandaFaq */}
-                    <div className="space-y-space-xs text-center pb-space-lg">
+                    {/* Header: Disamakan spacing-nya (space-y-2) dan eyebrow bersih tanpa pil */}
+                    <div className="mx-auto flex max-w-3xl flex-col items-center text-center space-y-2 pb-space-lg">
                          <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
                               Pusat Bantuan
                          </span>
