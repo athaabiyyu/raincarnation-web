@@ -60,22 +60,6 @@ function buildPriceAnswer(prices?: FaqStartingPrices): string {
      return sentences.join(" ");
 }
 
-function buildLepasKunciDayAnswer(prices?: FaqStartingPrices): string {
-     const priceText = prices?.lepasKunci
-          ? `Lepas Kunci dihitung per 12 jam, mulai ${prices.lepasKunci}.`
-          : "Lepas Kunci dihitung per 12 jam.";
-
-     return `${priceText} Tersedia juga paket bulanan dan tahunan. Butuh durasi lain, termasuk 24 jam? Tanyakan ke admin lewat WhatsApp.`;
-}
-
-function buildLepasKunciMonthAnswer(prices?: FaqStartingPrices): string {
-     const priceText = prices?.lepasKunciBulanan
-          ? `Sewa mobil lepas kunci bulanan mulai ${prices.lepasKunciBulanan} per bulan, tergantung unit.`
-          : "Sewa mobil lepas kunci tersedia dalam paket bulanan, tergantung unit.";
-
-     return `${priceText} Paket tahunan juga tersedia. Cek tarif tiap unit lewat form simulasi: pilih Lepas Kunci, lalu durasi Bulanan atau Tahunan. Butuh durasi lain? Tanyakan ke admin lewat WhatsApp.`;
-}
-
 function buildFaqs(prices?: FaqStartingPrices): FaqItem[] {
      return [
           {
@@ -89,34 +73,12 @@ function buildFaqs(prices?: FaqStartingPrices): FaqItem[] {
                     "Keduanya sewa mobil dengan sopir per hari dan sudah termasuk unit, BBM, dan driver. Bedanya, All In juga sudah termasuk makan driver, tol, dan parkir, sedangkan Non All In hanya unit, BBM, dan driver. Pilih sesuai kebutuhan perjalanan Anda, atau tanyakan ke admin lewat WhatsApp.",
           },
           {
-               question: "Apa syarat sewa mobil lepas kunci di Malang dan Batu?",
+               question: "Apa maksud lepas kunci sewa mobil?",
                answer:
-                    "Penyewa membawa KTP dan SIM A yang masih berlaku. Durasi sewa tersedia 12 jam, bulanan, atau tahunan, dengan rute dalam kota (Malang, Batu). Rute luar kota tarifnya ditanyakan ke admin.",
+                    "Lepas Kunci adalah sewa mobil tanpa sopir, dikemudikan sendiri. Penyewa membawa KTP dan SIM A yang masih berlaku. Durasi sewa 12 jam, bulanan, atau tahunan. Harga sudah termasuk unit dan biaya cuci, belum termasuk ongkos pengantaran. Layanan ini tersedia di Malang dan Batu; rute luar kota tarifnya ditanyakan ke admin.",
           },
           {
-               question: "Bagaimana sistem sewa mobil lepas kunci?",
-               answer:
-                    "Pilih unit dan durasi (12 jam, bulanan, atau tahunan) lewat form simulasi atau kartu armada, siapkan KTP dan SIM A yang masih berlaku, lalu konfirmasi lewat WhatsApp. Harga sudah termasuk unit dan biaya cuci, belum termasuk ongkos pengantaran. Rute dalam kota (Malang, Batu), sedangkan rute luar kota tarifnya ditanyakan ke admin.",
-          },
-          {
-               question: "Sewa mobil lepas kunci 1 hari berapa?",
-               answer: buildLepasKunciDayAnswer(prices),
-          },
-          {
-               question: "Sewa mobil 1 bulan berapa?",
-               answer: buildLepasKunciMonthAnswer(prices),
-          },
-          {
-               question: "Berapa harga sewa mobil Malang tanpa sopir dan dengan sopir?",
-               answer: buildPriceAnswer(prices),
-          },
-          {
-               question: "Area mana saja yang dilayani untuk sewa mobil?",
-               answer:
-                    "Carter Drop Off, All In, dan Non All In melayani rute standar Malang, Batu, dan Surabaya. Khusus All In dan Non All In, tujuan lain termasuk Pasuruan bisa lewat custom rute, tarifnya ditanyakan ke admin. Lepas Kunci melayani rute dalam kota (Malang, Batu), sedangkan rute luar kota tarifnya ditanyakan ke admin.",
-          },
-          {
-               question: "Bagaimana sistem sewa mobil Surabaya Malang dengan Carter Drop Off?",
+               question: "Bagaimana sistem Carter Drop Off 1 Arah?",
                answer:
                     "Carter Drop Off 1 Arah adalah sewa mobil dengan sopir untuk antar satu arah dari titik jemput ke tujuan di Malang, Batu, atau Surabaya, dengan harga per rute. Titik jemput dan jam berangkat diatur bersama admin.",
           },
@@ -124,6 +86,15 @@ function buildFaqs(prices?: FaqStartingPrices): FaqItem[] {
                question: "Berapa lama durasi sewa mobil: 12 jam atau sehari?",
                answer:
                     "Lepas Kunci tersedia per 12 jam, bulanan, atau tahunan. Sewa Mobil All In dan Non All In per hari (1 hari). Carter Drop Off dihitung per rute, tanpa durasi. Butuh durasi lain? Konsultasikan dengan admin lewat WhatsApp.",
+          },
+          {
+               question: "Berapa harga sewa mobil dengan sopir dan tanpa sopir?",
+               answer: buildPriceAnswer(prices),
+          },
+          {
+               question: "Area mana saja yang dilayani untuk sewa mobil?",
+               answer:
+                    "Carter Drop Off, All In, dan Non All In melayani rute standar Malang, Batu, dan Surabaya. Khusus All In dan Non All In, tujuan lain termasuk Pasuruan bisa lewat custom rute, tarifnya ditanyakan ke admin. Lepas Kunci melayani rute dalam kota (Malang, Batu), sedangkan rute luar kota tarifnya ditanyakan ke admin.",
           },
      ];
 }
@@ -211,13 +182,13 @@ export default function SewaMobilFaq({
                                                             }`}
                                                   />
                                              </button>
-                                             {isOpen && (
-                                                  <div className="border-t border-surface-container-high/40 px-space-md pb-space-md pt-space-xs">
-                                                       <p className="font-body-md text-body-md leading-relaxed text-on-surface-variant sm:pl-9">
-                                                            {item.answer}
-                                                       </p>
-                                                  </div>
-                                             )}
+                                             <div
+                                                  className={`border-t border-surface-container-high/40 px-space-md pb-space-md pt-space-xs ${isOpen ? "" : "hidden"}`}
+                                             >
+                                                  <p className="font-body-md text-body-md leading-relaxed text-on-surface-variant sm:pl-9">
+                                                       {item.answer}
+                                                  </p>
+                                             </div>
                                         </div>
                                    );
                               })}

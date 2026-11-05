@@ -13,6 +13,7 @@ const STATIC_PATHS = [
      "/sewa-mobil",
      "/sewa-mobil-malang",
      "/sewa-mobil-surabaya",
+     "/syarat-sewa-mobil-lepas-kunci",
      "/armada",
      "/blog",
 ];

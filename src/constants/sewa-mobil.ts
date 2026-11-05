@@ -8,10 +8,10 @@ export const sewaMobilHero = {
      titleHighlight: "dengan Sopir atau Lepas Kunci",
      titleEnd: "",
      description:
-          "Raincarnation menyediakan sewa mobil dengan sopir dan lepas kunci. Kami menyediakan beberapa layanan untuk Anda. Admin bisa dihubungi 24 jam lewat WhatsApp.",
+          "Raincarnation menyediakan beberapa pilihan paket sewa mobil untuk Anda di titik sewa Malang, Batu, dan Surabaya. Admin bisa dihubungi 24 jam lewat WhatsApp.",
      stats: [
           { value: "4 Paket", label: "Carter Drop Off, All In, Non All In, Lepas Kunci" },
-          { value: "24 Jam", label: "Layanan, Pesan via WhatsApp" },
+          { value: "Admin 24 Jam", label: "Pesan via WhatsApp" },
           { value: "Rute Fleksibel", label: "Malang, Batu, Surabaya, atau rute lain" },
      ],
      primaryCta: {

@@ -54,9 +54,8 @@ export default function SewaMobilHero({
                          {content.stats.map((stat, index) => (
                               <div
                                    key={stat.label}
-                                   className={`flex flex-col items-start sm:items-center justify-center rounded-2xl border border-surface-container-high/60 bg-surface-container-lowest p-space-md shadow-[0_4px_16px_rgba(18,28,44,0.04)] ${
-                                        index === 2 ? "col-span-2 sm:col-span-1" : ""
-                                   }`}
+                                   className={`flex flex-col items-start sm:items-center justify-center rounded-2xl border border-surface-container-high/60 bg-surface-container-lowest p-space-md shadow-[0_4px_16px_rgba(18,28,44,0.04)] ${index === 2 ? "col-span-2 sm:col-span-1" : ""
+                                        }`}
                               >
                                    <span className="font-headline-md text-headline-md font-extrabold tracking-tight text-primary">
                                         {stat.value}

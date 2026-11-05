@@ -19,7 +19,7 @@ import type { RuteCarter } from "@/types/rute-carter";
 
 const title = "Sewa Mobil dengan Sopir & Lepas Kunci | Raincarnation";
 const description =
-     "Sewa mobil dengan sopir atau lepas kunci: All In, Non All In, Lepas Kunci, dan Carter Drop Off. Admin 24 jam via WhatsApp.";
+     "Sewa mobil dengan sopir atau lepas kunci di Malang, Batu, Surabaya. Admin 24 jam via WhatsApp.";
 
 export const metadata: Metadata = {
      title,
@@ -34,8 +34,10 @@ export const metadata: Metadata = {
           description,
           images: [
                {
-                    url: "/images/interior-armada.webp",
-                    alt: "Interior armada Raincarnation",
+                    url: "/images/og-sewa-mobil.jpg",
+                    width: 1200,
+                    height: 670,
+                    alt: "Armada sewa mobil Raincarnation Indonesia",
                },
           ],
      },
@@ -93,7 +95,6 @@ export default async function SewaMobilPage() {
                { "@type": "AdministrativeArea", name: "Kota Malang" },
                { "@type": "AdministrativeArea", name: "Kota Batu" },
                { "@type": "AdministrativeArea", name: "Kota Surabaya" },
-               { "@type": "AdministrativeArea", name: "Pasuruan" },
           ],
           hasOfferCatalog: {
                "@type": "OfferCatalog",
@@ -104,17 +105,55 @@ export default async function SewaMobilPage() {
                })),
           },
           provider: {
-               "@type": "LocalBusiness",
+               "@type": "AutoRental",
                "@id": `${siteConfig.url}/#business`,
                name: siteConfig.name,
-               image: `${siteConfig.url}/images/interior-armada.webp`,
+               image: `${siteConfig.url}/images/og-sewa-mobil.jpg`,
                telephone,
                address: {
                     "@type": "PostalAddress",
-                    addressLocality: "Batu",
+                    streetAddress: "Jl. Torongrejo, Torongrejo, Kec. Junrejo",
+                    addressLocality: "Kota Batu",
                     addressRegion: "Jawa Timur",
+                    postalCode: "65325",
                     addressCountry: "ID",
                },
+               location: [
+                    {
+                         "@type": "Place",
+                         name: "Garasi Surabaya",
+                         address: {
+                              "@type": "PostalAddress",
+                              streetAddress:
+                                   "Jl. Baruk Barat VIII No.A-103, Kedung Baruk, Kec. Rungkut",
+                              addressLocality: "Kota Surabaya",
+                              addressRegion: "Jawa Timur",
+                              postalCode: "60298",
+                              addressCountry: "ID",
+                         },
+                    },
+               ],
+               openingHoursSpecification: [
+                    {
+                         "@type": "OpeningHoursSpecification",
+                         dayOfWeek: [
+                              "Monday",
+                              "Tuesday",
+                              "Wednesday",
+                              "Thursday",
+                              "Friday",
+                              "Saturday",
+                              "Sunday",
+                         ],
+                         opens: "05:00",
+                         closes: "22:00",
+                    },
+               ],
+               sameAs: [
+                    "https://www.instagram.com/raincar_nation.indonesia",
+                    "https://www.tiktok.com/@raincar.nation_indonesia",
+                    "https://www.threads.com/@raincarnation.indonesia",
+               ],
           },
      };
 

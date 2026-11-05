@@ -7,6 +7,7 @@ import {
      UserRound,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import Link from "next/link";
 import { sewaMobilPackages } from "@/constants/sewa-mobil";
 import type { Armada } from "@/types/armada";
 import type { PaketSewa } from "@/types/paket-sewa";
@@ -108,7 +109,21 @@ export default function SewaMobilPackages({
                               Pilihan Paket Sewa Mobil
                          </h2>
                          <p className="w-full max-w-4xl font-body-md text-body-md leading-relaxed text-on-surface-variant pt-1 text-center">
-                              {content.description}
+                              Titik sewa kami ada di{" "}
+                              <Link
+                                   href="/sewa-mobil-malang"
+                                   className="font-bold text-primary transition-colors hover:text-primary-container"
+                              >
+                                   Malang - Batu
+                              </Link>{" "}
+                              dan{" "}
+                             <Link
+                                   href="/sewa-mobil-surabaya"
+                                   className="font-bold text-primary transition-colors hover:text-primary-container"
+                              >
+                                   Surabaya
+                              </Link>{" "}
+                              , dengan rute yang bisa disesuaikan.
                          </p>
                     </div>
 

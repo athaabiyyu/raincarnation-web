@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
-import SewaMobilCityHero from "@/components/sections/SewaMobilCityHero";
+import { CheckCircle, Clock, Key, UserCheck } from "lucide-react";
+import SewaMobilCityHero, {
+	type FeatureItem,
+} from "@/components/sections/SewaMobilCityHero";
 import SewaMobilCityInfo, {
 	type CityInfoBlock,
 } from "@/components/sections/SewaMobilCityInfo";
@@ -31,8 +34,10 @@ export const metadata: Metadata = {
 		description,
 		images: [
 			{
-				url: "/images/interior-armada.webp",
-				alt: "Interior armada Raincarnation",
+				url: "/images/og-sewa-mobil.jpg",
+				width: 1200,
+				height: 670,
+				alt: "Armada sewa mobil Raincarnation Indonesia",
 			},
 		],
 	},
@@ -109,12 +114,37 @@ function buildFaqs(armada: Armada[]): FaqItem[] {
 		},
 		{
 			question: "Apa syarat sewa mobil lepas kunci?",
-			answer: "Siapkan KTP dan SIM A yang masih berlaku.",
+			answer: "Dokumen utama: KTP dan SIM A yang masih berlaku. Ada syarat tambahan dan deposit. Syarat lengkapnya ada di halaman Syarat Sewa Mobil Lepas Kunci.",
 		},
 		{
 			question: "Apakah mobil bisa diantar ke alamat?",
 			answer:
 				"Bisa. Unit dapat diantar ke alamat Anda di area layanan, atau diambil di kantor kami di Jl. Torongrejo, Kota Batu. Biaya antar dikonfirmasi admin lewat WhatsApp.",
+		},
+		{
+			question: "Apakah ada sewa mobil dengan sopir di Malang dan Batu?",
+			answer:
+				"Ada. Pilihannya All In dan Non All In, dengan harga per hari. All In sudah termasuk unit, BBM, sopir, makan sopir, tol, dan parkir. Non All In termasuk unit, BBM, dan sopir, sedangkan tol dan parkir tidak termasuk. Rute bebas lewat pilihan rute custom.",
+		},
+		{
+			question: "Apakah ada sewa mobil lepas kunci (tanpa sopir) di Malang dan Batu?",
+			answer:
+				"Ada. Mobil dikemudikan sendiri, dengan durasi per 12 jam, bulanan, atau tahunan. Sudah termasuk unit dan biaya cuci, tidak termasuk ongkos pengantaran. Pembayaran di muka. Untuk durasi lain, tanyakan ke admin.",
+		},
+		{
+			question: "Apakah sewa mobil lepas kunci pakai deposit?",
+			answer:
+				"Ya, ada deposit atau jaminan. Besarannya ditentukan oleh jenis kendaraan, durasi sewa, hasil verifikasi penyewa, wilayah penggunaan, dan risiko operasional. Deposit dikembalikan setelah kendaraan diperiksa. Jika ada potongan, kami memberikan rincian dan bukti pendukung.",
+		},
+		{
+			question: "Apakah ada unit matic?",
+			answer:
+				"Ada. Unit matic dan mobil listrik tersedia di Malang dan Batu. Pilihan unitnya bisa dilihat di bagian Pilihan Unit di halaman ini, dan ketersediaan dikonfirmasi admin lewat WhatsApp.",
+		},
+		{
+			question: "Bagaimana cara memesan sewa mobil di Malang dan Batu?",
+			answer:
+				"Klik tombol WhatsApp, sebutkan tanggal, lokasi antar atau ambil di kantor Batu, jenis layanan (lepas kunci atau dengan sopir), dan unit yang dibutuhkan. Admin akan mengonfirmasi ketersediaan dan total biaya.",
 		},
 	];
 }
@@ -126,16 +156,16 @@ const serviceBlocks: CityInfoBlock[] = [
 		subheading: "Sesuaikan kebutuhan perjalanan Anda dengan paket fleksibel yang kami sediakan:",
 		items: [
 			{
-				title: "Lepas Kunci",
-				text: "Per 12 jam, bulanan, atau tahunan. Sudah termasuk unit dan biaya cuci, tidak termasuk ongkos pengantaran. Syarat: KTP dan SIM A.",
+				title: "Lepas Kunci (Tanpa Sopir)",
+				text: "Sewa mobil tanpa sopir, dikemudikan sendiri. Per 12 jam, bulanan, atau tahunan. Sudah termasuk unit dan biaya cuci, tidak termasuk ongkos pengantaran.",
 			},
 			{
-				title: "All In",
-				text: "Harga per hari. Termasuk unit, BBM, sopir, makan sopir, tol, dan parkir.",
+				title: "All In (Dengan Sopir)",
+				text: "Sewa mobil dengan sopir, harga per hari. Termasuk unit, BBM, sopir, makan sopir, tol, dan parkir.",
 			},
 			{
-				title: "Non All In",
-				text: "Harga per hari. Termasuk unit, BBM, dan sopir.",
+				title: "Non All In (Dengan Sopir)",
+				text: "Sewa mobil dengan sopir, harga per hari. Termasuk unit, BBM, dan sopir. Tol dan parkir tidak termasuk.",
 			},
 			{
 				title: "Carter Drop Off 1 Arah",
@@ -161,13 +191,36 @@ const detailBlocks: CityInfoBlock[] = [
 		icon: "file",
 		heading: "Syarat Sewa Mobil Lepas Kunci",
 		paragraphs: [
-			"Siapkan KTP dan SIM A. Lepas Kunci tersedia per 12 jam, bulanan, dan tahunan. Untuk durasi lain, tanyakan ke admin.",
+			"Dokumen utama: KTP dan SIM A. Ada syarat tambahan dan deposit. Lepas Kunci tersedia per 12 jam, bulanan, dan tahunan. Untuk durasi lain, tanyakan ke admin.",
 		],
 		link: {
-			before: "Butuh sewa mobil di Surabaya?",
-			label: "Lihat Sewa Mobil Surabaya",
-			href: "/sewa-mobil-surabaya",
+			before: "Butuh syarat lengkapnya?",
+			label: "Lihat Syarat Sewa Mobil Lepas Kunci",
+			href: "/syarat-sewa-mobil-lepas-kunci",
 		},
+	},
+];
+
+const heroFeatures: FeatureItem[] = [
+	{
+		icon: <Key className="size-5 text-primary" />,
+		tag: "Lepas Kunci",
+		title: "Tanpa Sopir, Per 12 Jam",
+	},
+	{
+		icon: <UserCheck className="size-5 text-primary" />,
+		tag: "Dengan Sopir",
+		title: "All In & Non All In",
+	},
+	{
+		icon: <CheckCircle className="size-5 text-primary" />,
+		tag: "Unit Matic",
+		title: "Tersedia",
+	},
+	{
+		icon: <Clock className="size-5 text-primary" />,
+		tag: "Admin WhatsApp",
+		title: "Chat 24 Jam",
 	},
 ];
 
@@ -203,17 +256,55 @@ export default async function SewaMobilMalangPage() {
 			})),
 		},
 		provider: {
-			"@type": "LocalBusiness",
+			"@type": "AutoRental",
 			"@id": `${siteConfig.url}/#business`,
 			name: siteConfig.name,
-			image: `${siteConfig.url}/images/interior-armada.webp`,
+			image: `${siteConfig.url}/images/og-sewa-mobil.jpg`,
 			telephone,
 			address: {
 				"@type": "PostalAddress",
-				addressLocality: "Batu",
+				streetAddress: "Jl. Torongrejo, Torongrejo, Kec. Junrejo",
+				addressLocality: "Kota Batu",
 				addressRegion: "Jawa Timur",
+				postalCode: "65325",
 				addressCountry: "ID",
 			},
+			location: [
+				{
+					"@type": "Place",
+					name: "Garasi Surabaya",
+					address: {
+						"@type": "PostalAddress",
+						streetAddress:
+							"Jl. Baruk Barat VIII No.A-103, Kedung Baruk, Kec. Rungkut",
+						addressLocality: "Kota Surabaya",
+						addressRegion: "Jawa Timur",
+						postalCode: "60298",
+						addressCountry: "ID",
+					},
+				},
+			],
+			openingHoursSpecification: [
+				{
+					"@type": "OpeningHoursSpecification",
+					dayOfWeek: [
+						"Monday",
+						"Tuesday",
+						"Wednesday",
+						"Thursday",
+						"Friday",
+						"Saturday",
+						"Sunday",
+					],
+					opens: "05:00",
+					closes: "22:00",
+				},
+			],
+			sameAs: [
+				"https://www.instagram.com/raincar_nation.indonesia",
+				"https://www.tiktok.com/@raincar.nation_indonesia",
+				"https://www.threads.com/@raincarnation.indonesia",
+			],
 		},
 	};
 
@@ -261,10 +352,16 @@ export default async function SewaMobilMalangPage() {
 				badge="RENTAL MOBIL TERPERCAYA DI JAWA TIMUR"
 				titleStart="Sewa Mobil Malang & Batu"
 				titleHighlight="Lepas Kunci atau dengan Sopir"
-				intro="Raincarnation melayani sewa mobil di Malang dan Batu, dengan sopir atau lepas kunci. Kantor dan garasi kami ada di Kota Batu dan melayani area Malang. Unit matic tersedia, dan setiap unit dicek sebelum berangkat. Admin bisa dihubungi 24 jam lewat WhatsApp."
+				intro="Raincarnation melayani sewa mobil di Malang dan Batu, dengan sopir atau lepas kunci. Kantor dan garasi kami ada di Kota Batu dan melayani pengantaran area Malang. Kami juga menyediakan unit matic dan mobil listrik."
 				whatsapp={whatsapp}
 				whatsappMessage="Halo Admin Raincarnation, saya ingin tanya sewa mobil di Malang dan Batu."
 				fleetAnchorId="#pilihan-armada"
+				features={heroFeatures}
+				bottomLink={{
+					before: "Butuh sewa mobil di Surabaya?",
+					label: "Lihat Sewa Mobil Surabaya",
+					href: "/sewa-mobil-surabaya",
+				}}
 			/>
 
 			<SewaMobilCityInfo blocks={serviceBlocks} tone="low" />

@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { buildWhatsAppUrl } from "@/utils/whatsapp";
 
-type FeatureItem = {
+export type FeatureItem = {
      icon: React.ReactNode;
      tag: string;
      title: string;
@@ -52,7 +52,9 @@ type SewaMobilCityHeroProps = {
      };
      whatsapp?: string;
      whatsappMessage: string;
-     fleetAnchorId?: string;
+          fleetAnchorId?: string;
+          features?: FeatureItem[];
+     bottomLink?: { before: string; label: string; href: string };
 };
 
 export default function SewaMobilCityHero({
@@ -64,7 +66,9 @@ export default function SewaMobilCityHero({
      note,
      whatsapp,
      whatsappMessage,
-     fleetAnchorId = "#pilihan-armada",
+          fleetAnchorId = "#pilihan-armada",
+          features = defaultFeatures,
+     bottomLink,
 }: SewaMobilCityHeroProps) {
      return (
           <section className="relative w-full overflow-hidden border-b border-surface-container-high/30 bg-linear-to-b from-surface-container-high/50 via-surface to-surface pb-space-lg sm:pb-space-xl pt-space-md">
@@ -137,7 +141,7 @@ export default function SewaMobilCityHero({
                     {/* Feature Highlights Grid */}
                     <div className="w-full border-t border-surface-container-high/40 pt-space-xs sm:pt-space-md">
                          <div className="grid grid-cols-2 gap-space-xs sm:gap-space-sm lg:grid-cols-4">
-                              {defaultFeatures.map((feat) => (
+                                                            {features.map((feat) => (
                                    <div
                                         key={feat.title}
                                         className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 rounded-2xl border border-surface-container-high/40 bg-surface-container-lowest/60 p-3 sm:p-3.5 text-center sm:text-left shadow-xs transition-all hover:border-primary/20"
@@ -154,9 +158,21 @@ export default function SewaMobilCityHero({
                                              </span>
                                         </div>
                                    </div>
-                              ))}
+                                                            ))}
                          </div>
                     </div>
+
+                    {bottomLink && (
+                         <p className="font-body-sm text-body-sm text-on-surface-variant">
+                              {bottomLink.before}{" "}
+                              <Link
+                                   href={bottomLink.href}
+                                   className="font-bold text-primary underline underline-offset-4 transition-colors hover:text-primary-container"
+                              >
+                                   {bottomLink.label}
+                              </Link>
+                         </p>
+                    )}
                </div>
           </section>
      );
