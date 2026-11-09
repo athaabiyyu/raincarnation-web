@@ -200,7 +200,7 @@ export default function RouteSearchForm({
                                    Cari Jadwal Travel
                               </Heading>
                               <p className="hidden font-label-sm text-xs text-on-surface-variant sm:block md:text-label-sm">
-                                   Pilih rute travel reguler terbaik dengan jadwal fleksibel dan keberangkatan tepat waktu.
+                                   Pilih rute travel terbaik dengan jadwal fleksibel dan keberangkatan tepat waktu.
                               </p>
                          </div>
                     </div>

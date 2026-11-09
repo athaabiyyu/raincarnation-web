@@ -26,9 +26,9 @@ import { capitalizeFirst } from "@/utils/capitalize-first";
 import { decodeHtml } from "@/utils/decode-html";
 import { getRoutePairs } from "@/utils/route-pairs";
 
-const title = "Raincarnation Indonesia";
+const title = "Raincarnation: Sewa Mobil & Travel Malang, Batu, Surabaya";
 const description =
-     "Sewa mobil dengan sopir atau lepas kunci di Malang, Batu, dan Surabaya. Travel antar rute per kursi. Admin 24 jam, pesan via WhatsApp.";
+     "Sewa mobil dengan sopir di Malang, Batu, dan Surabaya; lepas kunci di Malang dan Batu. Travel per kursi antar kota. Pesan lewat admin WhatsApp.";
 
 export const metadata: Metadata = {
      title,
@@ -43,10 +43,10 @@ export const metadata: Metadata = {
           description,
           images: [
                {
-                    url: "/images/interior-armada.webp",
+                    url: "/images/og-sewa-mobil.jpg",
                     width: 1200,
-                    height: 630,
-                    type: "image/webp",
+                    height: 670,
+                    type: "image/jpeg",
                     alt: "Raincarnation Indonesia - sewa mobil dan travel di Malang, Batu, dan Surabaya",
                },
           ],
@@ -67,6 +67,7 @@ function buildAutoRentalJsonLd(config: SiteConfig) {
           social?.tiktok,
           social?.facebook,
           social?.youtube,
+          "https://www.threads.com/@raincarnation.indonesia",
      ].filter(Boolean);
 
      return {
@@ -76,7 +77,7 @@ function buildAutoRentalJsonLd(config: SiteConfig) {
           name: siteConfig.name,
           url: siteConfig.url,
           logo: `${siteConfig.url}/logo.webp`,
-          image: `${siteConfig.url}/images/interior-armada.webp`,
+          image: `${siteConfig.url}/images/og-sewa-mobil.jpg`,
           description,
           ...(contact?.whatsapp ? { telephone: `+${contact.whatsapp}` } : {}),
           address: {
@@ -97,11 +98,56 @@ function buildAutoRentalJsonLd(config: SiteConfig) {
                }
                : {}),
           ...(sameAs.length > 0 ? { sameAs } : {}),
+          openingHoursSpecification: {
+               "@type": "OpeningHoursSpecification",
+               dayOfWeek: [
+                    "Monday",
+                    "Tuesday",
+                    "Wednesday",
+                    "Thursday",
+                    "Friday",
+                    "Saturday",
+                    "Sunday",
+               ],
+               opens: "05:00",
+               closes: "22:00",
+          },
+          department: {
+               "@type": "AutoRental",
+               name: `${siteConfig.name} - Garasi Surabaya`,
+               address: {
+                    "@type": "PostalAddress",
+                    streetAddress:
+                         "Jl. Baruk Barat VIII No.A-103, Kedung Baruk, Kec. Rungkut",
+                    addressLocality: "Kota Surabaya",
+                    addressRegion: "Jawa Timur",
+                    postalCode: "60298",
+                    addressCountry: "ID",
+               },
+               geo: {
+                    "@type": "GeoCoordinates",
+                    latitude: -7.319755451312836,
+                    longitude: 112.77812394232852,
+               },
+               openingHoursSpecification: {
+                    "@type": "OpeningHoursSpecification",
+                    dayOfWeek: [
+                         "Monday",
+                         "Tuesday",
+                         "Wednesday",
+                         "Thursday",
+                         "Friday",
+                         "Saturday",
+                         "Sunday",
+                    ],
+                    opens: "05:00",
+                    closes: "22:00",
+               },
+          },
           areaServed: [
-               { "@type": "AdministrativeArea", name: "Malang" },
-               { "@type": "AdministrativeArea", name: "Batu" },
-               { "@type": "AdministrativeArea", name: "Surabaya" },
-               { "@type": "AdministrativeArea", name: "Pasuruan" },
+               { "@type": "AdministrativeArea", name: "Kota Malang" },
+               { "@type": "AdministrativeArea", name: "Kota Batu" },
+               { "@type": "AdministrativeArea", name: "Kota Surabaya" },
                { "@type": "Place", name: "Bandara Juanda" },
           ],
      };
@@ -110,8 +156,11 @@ function buildAutoRentalJsonLd(config: SiteConfig) {
 const webSiteJsonLd = {
      "@context": "https://schema.org",
      "@type": "WebSite",
+     "@id": `${siteConfig.url}/#website`,
      name: siteConfig.name,
+     alternateName: "Raincarnation Indonesia",
      url: siteConfig.url,
+     publisher: { "@id": `${siteConfig.url}/#business` },
 };
 
 const faqJsonLd = {

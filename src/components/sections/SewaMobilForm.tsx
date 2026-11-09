@@ -516,7 +516,7 @@ export default function SewaMobilForm({
                                    <span className="hidden sm:inline">{content.title}</span>
                               </Heading>
                               <p className="hidden font-label-sm text-xs text-on-surface-variant sm:block md:text-label-sm">
-                                   Pilih armada favorit Anda dengan penawaran terbaik dan garansi layanan tepat waktu.
+                                   Pilih layanan dan unit, lalu kirim kebutuhan Anda ke admin lewat WhatsApp.
                               </p>
                          </div>
                     </div>

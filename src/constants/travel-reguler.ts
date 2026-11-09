@@ -1,5 +1,5 @@
 export const heroContent = {
-          titleStart: "Travel Malang Murah",
+     titleStart: "Travel Malang Murah",
      titleHighlight: "per Kursi",
      titleEnd: "Berangkat dari Titik Jemput",
      description:
@@ -32,6 +32,11 @@ export const searchFormContent = {
 };
 
 export const featuredRoutesContent = {
+     eyebrow: "JADWAL DAN TARIF TERBUKA",
+     homeEyebrow: "TRAVEL ANTAR KOTA",
+     homeTitle: "Jadwal & Rute Travel Raincarnation",
+     homeDescription:
+          "Beberapa contoh rute travel per kursi (biasa disebut travel reguler) antara Malang, Batu, Surabaya, Pandaan, dan Bandara Juanda. Rute lainnya ada di halaman Travel.",
      title: "Rute Travel dan Jadwal Keberangkatan",
      description:
           "Travel per kursi (biasa disebut travel reguler) antara Malang, Batu, Surabaya, Pandaan, dan Bandara Juanda. Lihat jadwal dan tarif setiap rute sebelum memesan.",

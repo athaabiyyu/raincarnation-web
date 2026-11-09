@@ -56,6 +56,9 @@ export default function FeaturedRoutes({
      const hasMoreLink = Boolean(seeAllHref) && baseRoutes.length < allRoutes.length;
 
      const content = featuredRoutesContent;
+     const eyebrow = onlyFeatured ? content.homeEyebrow : content.eyebrow;
+     const heading = onlyFeatured ? content.homeTitle : content.title;
+     const intro = onlyFeatured ? content.homeDescription : content.description;
 
      const handleLoadMore = () => {
           setVisibleCount((prev) => prev + INITIAL_PAGE_SIZE);
@@ -70,14 +73,14 @@ export default function FeaturedRoutes({
                     {/* Header Section (Centered & Optimized Description Width) */}
                     <div className="mx-auto flex w-full max-w-4xl flex-col items-center gap-space-sm text-center">
                          <span className="mb-0.5 font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
-                              JADWAL DAN TARIF TERBUKA
+                              {eyebrow}
                          </span>
                          <h2 className="font-headline-lg text-headline-lg font-extrabold tracking-tight text-on-surface">
-                              {content.title}
+                              {heading}
                          </h2>
                          {/* Diperlebar menggunakan max-w-3xl md:max-w-4xl agar teks tidak cepat turun baris tapi tetap center */}
                          <p className="mx-auto w-full max-w-3xl font-body-md text-body-md leading-relaxed text-on-surface-variant pt-1 text-center md:max-w-4xl">
-                              {content.description}
+                              {intro}
                          </p>
                     </div>
 
@@ -103,11 +106,10 @@ export default function FeaturedRoutes({
                                              <button
                                                   type="button"
                                                   onClick={() => setIsFilterOpen(!isFilterOpen)}
-                                                  className={`flex h-[44px] w-[44px] items-center justify-center rounded-full transition-all duration-200 md:h-[48px] md:w-[48px] ${
-                                                       activeFilter !== "Semua"
-                                                            ? "bg-primary text-on-primary shadow-md shadow-primary/20"
-                                                            : "bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-primary"
-                                                  }`}
+                                                  className={`flex h-[44px] w-[44px] items-center justify-center rounded-full transition-all duration-200 md:h-[48px] md:w-[48px] ${activeFilter !== "Semua"
+                                                       ? "bg-primary text-on-primary shadow-md shadow-primary/20"
+                                                       : "bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-primary"
+                                                       }`}
                                                   aria-label="Filter kota"
                                              >
                                                   <ListFilter className="h-5 w-5" />
@@ -131,11 +133,10 @@ export default function FeaturedRoutes({
                                                                            setVisibleCount(INITIAL_PAGE_SIZE);
                                                                            setIsFilterOpen(false);
                                                                       }}
-                                                                      className={`flex w-full items-center justify-between px-4 py-3 text-left font-body-sm transition-colors md:font-body-md ${
-                                                                           activeFilter === city
-                                                                                ? "bg-primary/10 font-bold text-primary"
-                                                                                : "text-on-surface hover:bg-surface-container-low"
-                                                                      }`}
+                                                                      className={`flex w-full items-center justify-between px-4 py-3 text-left font-body-sm transition-colors md:font-body-md ${activeFilter === city
+                                                                           ? "bg-primary/10 font-bold text-primary"
+                                                                           : "text-on-surface hover:bg-surface-container-low"
+                                                                           }`}
                                                                  >
                                                                       <span>{city === "Semua" ? "Semua Kota" : city}</span>
                                                                       {activeFilter === city && (

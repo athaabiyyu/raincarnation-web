@@ -1,5 +1,5 @@
 export const ctaBannerContent = {
-     badge: "Pemesanan Mudah",
+     badge: "Pesan Lewat Admin WhatsApp",
      title: "Rencanakan Perjalanan Anda Bersama Raincarnation",
      description:
           "Butuh sewa mobil di Malang, Batu, atau Surabaya, atau kursi travel untuk rute yang tersedia? Hubungi admin untuk menanyakan tarif, jadwal, dan ketersediaan.",

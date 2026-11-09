@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Check } from "lucide-react";
+import { Check, SquareArrowOutUpRight } from "lucide-react";
 import { berandaServices } from "@/constants/beranda";
 import type { BerandaServiceIcon } from "@/constants/beranda";
 
@@ -54,7 +54,7 @@ export default function BerandaServices() {
                     {/* Header Section (Centered & Optimized Width) */}
                     <div className="mx-auto flex w-full max-w-4xl flex-col items-center gap-space-sm text-center">
                          <span className="mb-0.5 font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
-                              PILIHAN SERVIS UTAMA
+                              PILIHAN LAYANAN UTAMA
                          </span>
                          <h2 className="font-headline-lg text-headline-lg font-extrabold tracking-tight text-on-surface">
                               <span>Sewa Mobil &amp; Travel</span>
@@ -78,16 +78,16 @@ export default function BerandaServices() {
                                                   <div className="flex items-center justify-between gap-3">
                                                        <div
                                                             className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl shadow-xs transition-all duration-300 ${isSecondary
-                                                                      ? "bg-secondary/15 text-secondary group-hover:bg-secondary group-hover:text-on-secondary"
-                                                                      : "bg-surface-container-high text-primary group-hover:bg-primary-container group-hover:text-on-primary"
+                                                                 ? "bg-secondary/15 text-secondary group-hover:bg-secondary group-hover:text-on-secondary"
+                                                                 : "bg-surface-container-high text-primary group-hover:bg-primary-container group-hover:text-on-primary"
                                                                  }`}
                                                        >
                                                             <Icon className="h-6 w-6 shrink-0" />
                                                        </div>
                                                        <span
                                                             className={`inline-flex items-center rounded-full px-3 py-1 font-label-sm text-label-sm font-bold ring-1 ${isSecondary
-                                                                      ? "bg-secondary/10 text-secondary ring-secondary/20"
-                                                                      : "bg-surface-container text-primary ring-primary/20"
+                                                                 ? "bg-secondary/10 text-secondary ring-secondary/20"
+                                                                 : "bg-surface-container text-primary ring-primary/20"
                                                                  }`}
                                                        >
                                                             {item.tag}
@@ -105,14 +105,31 @@ export default function BerandaServices() {
 
                                                   <ul className="space-y-2.5 pt-space-xs font-body-sm text-body-sm text-on-surface-variant">
                                                        {item.points.map((point) => (
-                                                            <li key={point} className="flex items-start gap-2.5">
+                                                            <li
+                                                                 key={typeof point === "string" ? point : point.text}
+                                                                 className="flex items-start gap-2.5"
+                                                            >
                                                                  <Check
                                                                       size={18}
                                                                       className={`mt-0.5 shrink-0 ${isSecondary ? "text-secondary" : "text-primary"
                                                                            }`}
                                                                       aria-hidden="true"
                                                                  />
-                                                                 <span>{point}</span>
+                                                                 {typeof point === "string" ? (
+                                                                      <span>{point}</span>
+                                                                 ) : (
+                                                                      <Link
+                                                                           href={point.href}
+                                                                           className="inline-flex items-start gap-1.5 hover:text-on-surface"
+                                                                      >
+                                                                           {point.text}
+                                                                           <SquareArrowOutUpRight
+                                                                                size={14}
+                                                                                className="mt-1 shrink-0 text-primary"
+                                                                                aria-hidden="true"
+                                                                           />
+                                                                      </Link>
+                                                                 )}
                                                             </li>
                                                        ))}
                                                   </ul>

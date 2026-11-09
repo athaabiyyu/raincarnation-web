@@ -55,7 +55,7 @@ export default function ArmadaCatalog({
                     {/* Section Header */}
                     <div className="mx-auto flex max-w-2xl flex-col items-center gap-space-sm text-center sm:max-w-3xl">
                          <span className="mb-0.5 font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
-                              KENDARAAN NYAMAN &amp; TERAWAT
+                              {armadaCatalog.eyebrow}
                          </span>
                          <h2 className="font-headline-lg text-headline-lg font-extrabold tracking-tight text-on-surface">
                               {heading}

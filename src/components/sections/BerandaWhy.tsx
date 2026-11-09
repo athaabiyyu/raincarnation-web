@@ -34,7 +34,7 @@ export default function BerandaWhy({ whatsapp }: BerandaWhyProps) {
                               {/* Header Teks: Rata tengah di mobile, rata kiri di desktop (lg) */}
                               <div className="space-y-space-xs text-center lg:col-span-5 lg:col-start-1 lg:row-start-1 lg:self-end lg:text-left">
                                    <span className="mb-0.5 font-label-sm text-label-sm font-bold uppercase tracking-wider text-primary">
-                                        LAYANAN YANG TRANSPARAN
+                                        {berandaWhy.eyebrow}
                                    </span>
                                    <h2 className="font-headline-lg text-headline-lg font-extrabold tracking-tight text-on-surface">
                                         {berandaWhy.title}

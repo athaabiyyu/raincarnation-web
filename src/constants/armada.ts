@@ -22,7 +22,8 @@ export const armadaHero = {
 
 export const armadaCatalog = {
      id: "katalog-armada",
-     title: "Pilihan Armada untuk Sewa Mobil di Malang",
+     eyebrow: "UNIT & HARGA SEWA",
+     title: "Unit Armada Sewa Mobil Raincarnation",
      pageTitle: "Daftar Armada Raincarnation",
      description:
           "Pilih sesuai jumlah penumpang dan budget Anda, lalu hubungi admin untuk tarif dan ketersediaan unit.",
